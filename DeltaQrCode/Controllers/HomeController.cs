@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DeltaQrCode.Models;
+using System.IO;
 
 namespace DeltaQrCode.Controllers
 {
@@ -14,7 +15,24 @@ namespace DeltaQrCode.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> CheckQrCode(QrCodeContentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var MembertoUpdate = new QrCodeContentViewModel
+                {
+                };
 
+                using (var memomyStream = new MemoryStream())
+                {
+                    await model.UploadPicture.CopyToAsync(memomyStream);
+                    MembertoUpdate.Image = memomyStream.ToArray();
+                }
+                return Ok("works");
+            }
+            return BadRequest("Picture not good! take another one!");
+        }
         public IActionResult Privacy()
         {
             return View();
