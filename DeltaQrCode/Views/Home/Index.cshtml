@@ -1,7 +1,7 @@
 ﻿@model QrCodeContentViewModel;
 <head>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <div class="text-center">
@@ -22,9 +22,36 @@
                 var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
                 scanner.addListener('scan', function (content) {
                     alert(content);
+                    //scanner.video = null;
                     //window.location.href=content;
                 });
-                Instascan.Camera.getCameras().then(function (cameras) {
+                var cams = Instascan.Camera.getCameras();
+                $(document).ready(function () {
+                    $('#CloseCameraBtn').on('click', function () {
+                        cams.then(function (cameras) {
+                            scanner.stop(cams[0]);
+                            scanner.stop(cams[1]);
+                            $('#preview').hide();
+                        });
+
+                    });
+                    $('#TurnOnCameraBtn').on('click', function () {
+                        cams.then(function (cameras) {
+                            $('#preview').show();
+                            if (cameras.length > 0 && cameras[0] != "") {
+                                if (cameras.length > 1 && cameras[1] != "") {
+                                    scanner.start(cameras[1]);
+                                }
+                                else {
+                                    scanner.start(cameras[0]);
+                                }
+                            }
+                        });
+
+                    });
+
+                });
+                cams.then(function (cameras) {
                     if (cameras.length > 0) {
                         if (cameras.length > 1) {
                             scanner.start(cameras[1]);
@@ -35,12 +62,14 @@
                         $('[name="options"]').on('change', function () {
                             if ($(this).val() == 1) {
                                 if (cameras[0] != "") {
+                                    $('#preview').show();
                                     scanner.start(cameras[0]);
                                 } else {
                                     alert('No Front camera found!');
                                 }
                             } else if ($(this).val() == 2) {
                                 if (cameras[1] != "") {
+                                    $('#preview').show();
                                     scanner.start(cameras[1]);
                                 } else {
                                     alert('No Back camera found!');
@@ -55,11 +84,16 @@
                     console.error(e);
                     alert(e);
                 });
+
             </script>
+
+
             <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
                 <label class="btn btn-primary active">
-                    <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
+                    <input id="backCameraBtn" type="radio" name="options" value="2" autocomplete="off"> Back Camera
                 </label>
+                <button class="btn btn-outline-dark" id="CloseCameraBtn"> Camera Off </button>
+                <button class="btn btn-outline-info" id="TurnOnCameraBtn"> Camera On </button>
             </div>
         </div>
     </div>
