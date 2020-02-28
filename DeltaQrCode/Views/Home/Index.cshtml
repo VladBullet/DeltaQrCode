@@ -7,93 +7,61 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <div class="panel-heading">
-        <h3 class="panel-title">Take photo of QR Code</h3>
+        <h3 class="panel-title">Scan the QR Code</h3>
     </div>
 </div>
-<form asp-controller="Home" asp-action="CheckQrCode" data-ajax="true" data-ajax-method="POST">
 
-</form>
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-@using (Html.BeginForm("CheckQrCode", "Home", FormMethod.Post, new { id = "formAll", style = "margin-top:3%", enctype = "multipart/form-data" }))
-{
-    <div class="panel panel-primary">
-        <div class="panel-body">
-            <div id="form" class="row col-xs-12">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="col-xs-6">
-                    <div class="form-check-inline col-xs-12 alert alert-primary" style="margin-top:2%;margin-left:5%">
-                        @Html.LabelFor(model => model.UploadPicture, "Upload Picture", new { htmlAttributes = new { @id = "ImageLabel" } })
-                        <input type="file" accept="image/*;capture=camera" class="form-control-file btn-light" name="UploadPicture" id="UploadPicture" />
-                    </div>
-                </div>
-                <div class="row col-xs-6" style="margin-left:35%">
-                    <input class="btn btn-info btn-lg" type="submit" value="Check QR code!">
-                </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+            <div class="col-sm-12">
+                <video id="preview" class="p-1 border" style="width:100%;"></video>
+            </div>
+            <script type="text/javascript">
+                var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+                scanner.addListener('scan', function (content) {
+                    alert(content);
+                    //window.location.href=content;
+                });
+                Instascan.Camera.getCameras().then(function (cameras) {
+                    if (cameras.length > 0) {
+                        if (cameras.length > 1) {
+                            scanner.start(cameras[1]);
+                        }
+                        else {
+                            scanner.start(cameras[0]);
+                        }
+                        $('[name="options"]').on('change', function () {
+                            if ($(this).val() == 1) {
+                                if (cameras[0] != "") {
+                                    scanner.start(cameras[0]);
+                                } else {
+                                    alert('No Front camera found!');
+                                }
+                            } else if ($(this).val() == 2) {
+                                if (cameras[1] != "") {
+                                    scanner.start(cameras[1]);
+                                } else {
+                                    alert('No Back camera found!');
+                                }
+                            }
+                        });
+                    } else {
+                        console.error('No cameras found.');
+                        alert('No cameras found.');
+                    }
+                }).catch(function (e) {
+                    console.error(e);
+                    alert(e);
+                });
+            </script>
+            <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
+                </label>
             </div>
         </div>
     </div>
-}
-<div class="btn btn-info" id="bla_btn">
-    blalbla
 </div>
 
-<script>
-    $("#bla_btn").click(function () {
-
-        $("#formAll").submit(function (event) {
-            event.preventDefault();
-            var formData = new FormData();
-            formData.append('UploadPicture', $('#UploadPicture')[0].files[0]);
-
-            $.ajax({
-                url: "https://localhost:45455/Home/CheckQrCode/",
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    alert("a mers");
-
-                },
-                error: function (error) {
-                    alert(error);
-
-                }
-            });
-        });
-        alert("btn");
-
-    });
-
-    function CheckQrCode() {
-        $(function () {
-            $("#formAll").submit(function (event) {
-                event.preventDefault();
-                var formData = new FormData();
-                formData.append('UploadPicture', $('#UploadPicture')[0].files[0]);
-
-                $.ajax({
-                    url: "https://localhost:45455/home/CheckQrCode/",
-                    type: 'POST',
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    dataType: 'json',
-                    success: function (data) {
-                        alert("a mers");
-                    },
-                    error: function (error) {
-                        alert("nu");
-                    }
-                });
-            });
-        });
-    }
-</script>

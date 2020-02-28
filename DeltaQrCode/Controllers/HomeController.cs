@@ -18,18 +18,20 @@ namespace DeltaQrCode.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CheckQrCode(QrCodeContentViewModel model)
+        public IActionResult CheckQrCode(QrCodeContentViewModel model)
         {
+            if (model.UploadPicture == null)
+                return BadRequest("No image selected! Please select an image!");
             if (ModelState.IsValid)
             {
                 var MembertoUpdate = new QrCodeContentViewModel
                 {
                 };
-                Bitmap imageOfQr;
+                //Bitmap imageOfQr;
                 string result;
                 using (var memomyStream = new MemoryStream())
                 {
-                    await model.UploadPicture.CopyToAsync(memomyStream);
+                    model.UploadPicture.CopyTo(memomyStream);
                     MembertoUpdate.Image = memomyStream.ToArray();
                     result = ReadQrCodeFromImage(memomyStream);
 
@@ -38,6 +40,11 @@ namespace DeltaQrCode.Controllers
                     return Ok(result);
             }
             return BadRequest("Picture not good! take another one!");
+        }
+        [HttpPost]
+        public IActionResult SendQrCodeData(string json) 
+        {
+            return Ok("am primit json");
         }
         public IActionResult Privacy()
         {
@@ -60,9 +67,9 @@ namespace DeltaQrCode.Controllers
                 coreCompatResult = result;
             }
 
-            // BarcodeReaderGeneric<DrawingBitmap> barcodeReader = new BarcodeReaderGeneric<Bitmap>();
-            //Bitmap img = new Bitmap(imgStream);
-            //Result result2 = coreCompatReader.Decode(img);
+            //BarcodeReaderGeneric<DrawingBitmap> barcodeReader = new BarcodeReaderGeneric<Bitmap>();
+            Bitmap img = new Bitmap(imgStream);
+            Result result2 = coreCompatReader.Decode(img);
 
             return coreCompatResult?.ToString();
         }
