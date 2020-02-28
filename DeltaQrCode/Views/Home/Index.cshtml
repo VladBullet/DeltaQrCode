@@ -29,90 +29,131 @@
         </div>
     </div>
     <script type="text/javascript">
-                var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
-                scanner.addListener('scan', function (content) {
-                    AjaxCall(content);
-                    alert(content);
-                    //window.location.href=content;
+
+        var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+        scanner.addListener('scan', function (content) {
+            //close cameras
+            CloseCameras();
+            // open Modal
+            $('#operationSelectionModal').modal({ backdrop: 'static', keyboard: false });
+            // wait for selection
+            $('.selectionBtn').on('click',{content: content}, function() {
+                var value = $(this).val();
+                alert("selectat" + content + value);
+                SendQrCodeDataAndSelectionAjax(content,value);
+            });
+        });
+
+        var cams = Instascan.Camera.getCameras();
+        function CloseCameras() {
+            cams.then(function (cameras) {
+                    scanner.stop(cameras[0]);
+                    scanner.stop(cameras[1]);
+                    $('#preview').hide();
                 });
-                var cams = Instascan.Camera.getCameras();
-                function CloseCameras() {
-                    cams.then(function (cameras) {
-                            scanner.stop(cameras[0]);
-                            scanner.stop(cameras[1]);
-                            $('#preview').hide();
-                        });
-                }
+        };
+        // buttons event handlers
+        $(document).ready(function () {
+            $('#CloseCameraBtn').on('click', function () {
+                CloseCameras();
+            });
 
-                $(document).ready(function () {
-                    $('#CloseCameraBtn').on('click', function () {
-                        CloseCameras();
-                    });
-
-                    $('#TurnOnCameraBtn').on('click', function () {
-                        cams.then(function (cameras) {
-                            $('#preview').show();
-                            if (cameras.length > 0 && cameras[0] != "") {
-                                if (cameras.length > 1 && cameras[1] != "") {
-                                    scanner.start(cameras[1]);
-                                }
-                                else {
-                                    scanner.start(cameras[0]);
-                                }
-                            }
-                        });
-
-                    });
-
-                });
+            $('#TurnOnCameraBtn').on('click', function () {
                 cams.then(function (cameras) {
-                    if (cameras.length > 0) {
-                        if (cameras.length > 1) {
+                    $('#preview').show();
+                    if (cameras.length > 0 && cameras[0] != "") {
+                        if (cameras.length > 1 && cameras[1] != "") {
                             scanner.start(cameras[1]);
                         }
                         else {
                             scanner.start(cameras[0]);
                         }
-                        $('[name="options"]').on('change', function () {
-                            if ($(this).val() == 1) {
-                                if (cameras[0] != "") {
-                                    $('#preview').show();
-                                    scanner.start(cameras[0]);
-                                } else {
-                                    alert('No Front camera found!');
-                                }
-                            } else if ($(this).val() == 2) {
-                                if (cameras[1] != "") {
-                                    $('#preview').show();
-                                    scanner.start(cameras[1]);
-                                } else {
-                                    alert('No Back camera found!');
-                                }
-                            }
-                        });
-                    } else {
-                        console.error('No cameras found.');
-                        alert('No cameras found.');
                     }
-                }).catch(function (e) {
-                    console.error(e);
-                    alert(e);
                 });
 
-                function AjaxCall(input) {
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("SendQrCodeData","Home")",
-                        data: {json: input},
-                        dataType: "text",
-                        success: function (msg) {
-                            alert(msg);
-                        },
-                        error: function (req, status, error) {
-                            alert(error);
-                        }
-                    });
+            });
+
+        });
+        cams.then(function (cameras) {
+            if (cameras.length > 0) {
+                if (cameras.length > 1) {
+                    scanner.start(cameras[1]);
                 }
+                else {
+                    scanner.start(cameras[0]);
+                }
+                $('[name="options"]').on('change', function () {
+                    if ($(this).val() == 1) {
+                        if (cameras[0] != "") {
+                            $('#preview').show();
+                            scanner.start(cameras[0]);
+                        } else {
+                            alert('No Front camera found!');
+                        }
+                    } else if ($(this).val() == 2) {
+                        if (cameras[1] != "") {
+                            $('#preview').show();
+                            scanner.start(cameras[1]);
+                        } else {
+                            alert('No Back camera found!');
+                        }
+                    }
+                });
+            } else {
+                console.error('No cameras found.');
+                alert('No cameras found.');
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+
+        function SendQrCodeDataAndSelectionAjax(qrCodeVal, selectionVal) {
+
+            var model = {"QrCodeVal" : qrCodeVal, "Selection" : selectionVal,"DateTimeTicks" : $.now()};
+
+            //AJAX CALL
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("OperationSelection","Home")",
+                dataType: "json",
+                data: JSON.stringify(model),
+                traditional: true,
+                contentType: 'application/json',
+                success: CloseSelectionModal(),
+                error: function (req, status, error) {
+                    alert(error);
+                }
+            });
+        };
+
+        function CloseSelectionModal() {
+             $('#operationSelectionModal').modal('toggle');
+        };
+      
     </script>
 </div>
 
+<div class="modal fade" id="operationSelectionModal" tabindex="-1" role="dialog" aria-labelledby="operationSelectionModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="operationSelectionModalLongTitle">Selectati Operatiunea</h5>
+            </div>
+            <div class="modal-body">
+                <div class="container" style="left:20%; right:20%; margin-top:5%">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <button type="button" id="BtnInterior" name="operations" value="1" class="selectionBtn btn btn-lg btn-danger" style="width: 70%; margin: 20px;">Interior</button>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="button" id="BtnExterior" name="operations" value="2" class="selectionBtn btn btn-lg btn-warning" style="width: 70%;margin: 20px;">Exterior</button>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="button" id="BtnIntExt" name="operations" value="3" class="selectionBtn btn btn-lg btn-success" style="width: 70%; margin: 20px;">Interior + Exterior</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DeltaQrCode.Models;
 using System.IO;
-using ZXing;
 using System.Drawing;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DeltaQrCode.Controllers
 {
@@ -18,10 +19,14 @@ namespace DeltaQrCode.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SendQrCodeData(string json)
+        public IActionResult OperationSelection([FromBody] QrCodeContentViewModel model)
         {
-            return Ok("am primit " + json);
+            var date = DateTimeOffset.FromUnixTimeMilliseconds(model.DateTimeTicks).DateTime;
+            //QrCodeContentViewModel result = JsonConvert.DeserializeObject<QrCodeContentViewModel>(model);
+            // process input and then return some feedback
+            return Ok(JsonConvert.SerializeObject("ok. works"));
         }
+
         public IActionResult Privacy()
         {
             return View();

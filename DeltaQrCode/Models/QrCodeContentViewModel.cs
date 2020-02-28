@@ -8,10 +8,8 @@ namespace DeltaQrCode.Models
 {
     public class QrCodeContentViewModel
     {
-        public int ID { get; set; }
-        public string Company { get; set; }
-        public string CarNumber { get; set; }
-        public byte[] Image { get; set; }
-        public IFormFile UploadPicture { get; set; }
+        public string QrCodeVal { get; set; }
+        public int Selection { get; set; }
+        public long DateTimeTicks { get; set; }
     }
 }
