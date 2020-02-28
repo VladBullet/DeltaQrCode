@@ -24,7 +24,10 @@ namespace DeltaQrCode.Controllers
             var date = DateTimeOffset.FromUnixTimeMilliseconds(model.DateTimeTicks).DateTime;
             //QrCodeContentViewModel result = JsonConvert.DeserializeObject<QrCodeContentViewModel>(model);
             // process input and then return some feedback
-            return Ok(JsonConvert.SerializeObject("ok. works"));
+            return Ok(JsonConvert.SerializeObject("Operatiune adaugata cu succes!"));
+            //otherwise send badrequest
+
+            return BadRequest(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = "RELEASE OACHE!" }); ;
         }
 
         public IActionResult Privacy()
