@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DeltaQrCode.Models;
 using System.IO;
+using ZXing;
+using System.Drawing;
 
 namespace DeltaQrCode.Controllers
 {
@@ -23,13 +25,17 @@ namespace DeltaQrCode.Controllers
                 var MembertoUpdate = new QrCodeContentViewModel
                 {
                 };
-
+                Bitmap imageOfQr;
+                string result;
                 using (var memomyStream = new MemoryStream())
                 {
                     await model.UploadPicture.CopyToAsync(memomyStream);
                     MembertoUpdate.Image = memomyStream.ToArray();
+                    result = ReadQrCodeFromImage(memomyStream);
+
                 }
-                return Ok("works");
+                if (!string.IsNullOrEmpty(result))
+                    return Ok(result);
             }
             return BadRequest("Picture not good! take another one!");
         }
@@ -42,6 +48,23 @@ namespace DeltaQrCode.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private string ReadQrCodeFromImage(MemoryStream imgStream)
+        {
+            Result coreCompatResult;
+            var coreCompatReader = new ZXing.CoreCompat.System.Drawing.BarcodeReader();
+            using (var coreCompatImage = (Bitmap)Bitmap.FromStream(imgStream))
+            {
+                var result = coreCompatReader.Decode(coreCompatImage);
+                coreCompatResult = result;
+            }
+
+            // BarcodeReaderGeneric<DrawingBitmap> barcodeReader = new BarcodeReaderGeneric<Bitmap>();
+            //Bitmap img = new Bitmap(imgStream);
+            //Result result2 = coreCompatReader.Decode(img);
+
+            return coreCompatResult?.ToString();
         }
     }
 }
