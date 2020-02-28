@@ -33,16 +33,26 @@
 
         var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
         scanner.addListener('scan', function (content) {
-            //close cameras
-            CloseCameras();
-            // open Modal
-            $('#operationSelectionModal').modal({ backdrop: 'static', keyboard: false });
-            // wait for selection
-            $('.selectionBtn').on('click',{content: content}, function() {
-                var value = $(this).val();
-                alert("selectat" + content + value);
-                SendQrCodeDataAndSelectionAjax(content,value);
-            });
+
+            var res = content.split(",");
+            array = [];
+            array = array.concat(res);
+
+            if (array.length == 2) {
+                //close cameras
+                CloseCameras();
+                // open Modal
+                $('#operationSelectionModal').modal({ backdrop: 'static', keyboard: false });
+                $("#modalDecodedCar").text("Masina: ").append(res[0]);
+                $("#modalDecodedCo").text("Firma: ").append(res[1]);
+                // wait for selection
+                $('.selectionBtn').on('click', { content: content }, function () {
+                    var value = $(this).val();
+                    //alert("selectat" + content + value);
+                    SendQrCodeDataAndSelectionAjax(content, value);
+                });
+            }
+            else { TurnOnCameras(); }
         });
 
         var cams = Instascan.Camera.getCameras();
@@ -53,9 +63,22 @@
                     $('#preview').hide();
                 });
         };
+        function TurnOnCameras() {
+            cams.then(function (cameras) {
+                $('#preview').show();
+                if (cameras.length > 0 && cameras[0] != "") {
+                    if (cameras.length > 1 && cameras[1] != "") {
+                        scanner.start(cameras[1]);
+                    }
+                    else {
+                        scanner.start(cameras[0]);
+                    }
+                }
+            });
+        };
         // buttons event handlers
         $(document).ready(function () {
-           
+
 
             //$("#success-alert").hide();
             //$("#myWish").click(function showAlert() {
@@ -69,18 +92,7 @@
             });
 
             $('#TurnOnCameraBtn').on('click', function () {
-                cams.then(function (cameras) {
-                    $('#preview').show();
-                    if (cameras.length > 0 && cameras[0] != "") {
-                        if (cameras.length > 1 && cameras[1] != "") {
-                            scanner.start(cameras[1]);
-                        }
-                        else {
-                            scanner.start(cameras[0]);
-                        }
-                    }
-                });
-
+                TurnOnCameras();
             });
 
         });
@@ -166,6 +178,10 @@
                 <h5 class="modal-title" id="operationSelectionModalLongTitle">Selectati Operatiunea</h5>
             </div>
             <div class="modal-body">
+                <div class="text-center">
+                    <h3 id="modalDecodedCar"></h3>
+                    <h3 id="modalDecodedCo"></h3>
+                </div>
                 <div class="container" style="left:20%; right:20%; margin-top:5%">
                     <div class="row">
                         <div class="col-12 text-center">

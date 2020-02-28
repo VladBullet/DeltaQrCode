@@ -27,7 +27,7 @@ namespace DeltaQrCode.Controllers
             return Ok(JsonConvert.SerializeObject("Operatiune adaugata cu succes!"));
             //otherwise send badrequest
 
-            return BadRequest(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = "RELEASE OACHE!" }); ;
+            //return BadRequest(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = "RELEASE OACHE!" }); ;
         }
 
         public IActionResult Privacy()
