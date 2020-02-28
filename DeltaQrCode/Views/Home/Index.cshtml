@@ -18,23 +18,37 @@
             <div class="col-sm-12">
                 <video id="preview" class="p-1 border" style="width:100%;"></video>
             </div>
-            <script type="text/javascript">
+        </div>
+    </div>
+    <div class="row" style="margin:auto;">
+        <div class="col">
+            <div class="btn-group btn-group-lg btn-group-toggle mb-6" style="margin:auto;width:100%" data-toggle="buttons">
+                <button class="btn btn-lg btn-dark " id="CloseCameraBtn"> Camera Off </button>
+                <button class="btn btn-lg btn-info" id="TurnOnCameraBtn"> Camera On </button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
                 var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
                 scanner.addListener('scan', function (content) {
+                    AjaxCall(content);
                     alert(content);
-                    //scanner.video = null;
                     //window.location.href=content;
                 });
                 var cams = Instascan.Camera.getCameras();
-                $(document).ready(function () {
-                    $('#CloseCameraBtn').on('click', function () {
-                        cams.then(function (cameras) {
-                            scanner.stop(cams[0]);
-                            scanner.stop(cams[1]);
+                function CloseCameras() {
+                    cams.then(function (cameras) {
+                            scanner.stop(cameras[0]);
+                            scanner.stop(cameras[1]);
                             $('#preview').hide();
                         });
+                }
 
+                $(document).ready(function () {
+                    $('#CloseCameraBtn').on('click', function () {
+                        CloseCameras();
                     });
+
                     $('#TurnOnCameraBtn').on('click', function () {
                         cams.then(function (cameras) {
                             $('#preview').show();
@@ -85,17 +99,20 @@
                     alert(e);
                 });
 
-            </script>
-
-
-            <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                    <input id="backCameraBtn" type="radio" name="options" value="2" autocomplete="off"> Back Camera
-                </label>
-                <button class="btn btn-outline-dark" id="CloseCameraBtn"> Camera Off </button>
-                <button class="btn btn-outline-info" id="TurnOnCameraBtn"> Camera On </button>
-            </div>
-        </div>
-    </div>
+                function AjaxCall(input) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("SendQrCodeData","Home")",
+                        data: {json: input},
+                        dataType: "text",
+                        success: function (msg) {
+                            alert(msg);
+                        },
+                        error: function (req, status, error) {
+                            alert(error);
+                        }
+                    });
+                }
+    </script>
 </div>
 
