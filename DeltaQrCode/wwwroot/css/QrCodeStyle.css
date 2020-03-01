@@ -1,0 +1,12 @@
+﻿
+.qrCodeDiv {
+    background-color: lightgrey;
+    border-radius: 10px;
+    width: 300px;
+    height: 280px;
+    border-color: black;
+    border-style: dashed;
+    margin-top: 10px;
+    text-align: center;
+
+}

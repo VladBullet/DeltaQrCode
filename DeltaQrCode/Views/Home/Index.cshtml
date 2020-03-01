@@ -1,7 +1,8 @@
 ﻿@model DeltaQrCode.ViewModels.QrCodeContentViewModel;
 <head>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>*@
+    <script type="text/javascript" src="~/lib/Scripts/QrCodeCamera.js"></script>
 </head>
 
 <div class="text-center">
@@ -37,19 +38,20 @@
             var res = content.split(",");
             array = [];
             array = array.concat(res);
-
-            if (array.length == 2) {
+           
+            if (array.length == 3 && res[0] == String(Math.PI)) {
                 //close cameras
                 CloseCameras();
                 // open Modal
                 $('#operationSelectionModal').modal({ backdrop: 'static', keyboard: false });
-                $("#modalDecodedCar").text("Masina: ").append(res[0]);
-                $("#modalDecodedCo").text("Firma: ").append(res[1]);
+                $("#modalDecodedCar").text("Masina: ").append(res[1]);
+                $("#modalDecodedCo").text("Firma: ").append(res[2]);
                 // wait for selection
-                $('.selectionBtn').on('click', { content: content }, function () {
+                 var contentToSend = res[1].concat(", ").concat(res[2]);
+                $('.selectionBtn').on('click', { content: contentToSend }, function () {
                     var value = $(this).val();
                     //alert("selectat" + content + value);
-                    SendQrCodeDataAndSelectionAjax(content, value);
+                    SendQrCodeDataAndSelectionAjax(contentToSend, value);
                 });
             }
             else { TurnOnCameras(); }
@@ -79,13 +81,23 @@
         // buttons event handlers
         $(document).ready(function () {
 
-
-            //$("#success-alert").hide();
-            //$("#myWish").click(function showAlert() {
-            //$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-            //    $("#success-alert").slideUp(500);
-            //});
-            //});
+            $('[name="options"]').on('change', function () {
+                if ($(this).val() == 1) {
+                    if (cameras[0] != "") {
+                        $('#preview').show();
+                        scanner.start(cameras[0]);
+                    } else {
+                        alert('No Front camera found!');
+                    }
+                } else if ($(this).val() == 2) {
+                    if (cameras[1] != "") {
+                        $('#preview').show();
+                        scanner.start(cameras[1]);
+                    } else {
+                        alert('No Back camera found!');
+                    }
+                }
+            });
 
             $('#CloseCameraBtn').on('click', function () {
                 CloseCameras();
@@ -104,24 +116,9 @@
                 else {
                     scanner.start(cameras[0]);
                 }
-                $('[name="options"]').on('change', function () {
-                    if ($(this).val() == 1) {
-                        if (cameras[0] != "") {
-                            $('#preview').show();
-                            scanner.start(cameras[0]);
-                        } else {
-                            alert('No Front camera found!');
-                        }
-                    } else if ($(this).val() == 2) {
-                        if (cameras[1] != "") {
-                            $('#preview').show();
-                            scanner.start(cameras[1]);
-                        } else {
-                            alert('No Back camera found!');
-                        }
-                    }
-                });
-            } else {
+
+            }
+            else {
                 console.error('No cameras found.');
                 alert('No cameras found.');
             }
@@ -151,19 +148,19 @@
                 }
             });
         };
-        function ShowHeaderAlert(response, type) {
-            var alertParam = $("#HeaderAlert");
-            console.log(response);
-            alertParam.text(response);
-            if(type == "success")
-                alertParam.addClass("alert-success");
-            else
-                alertParam.addClass("alert-danger");
-            alertParam.alert();
-            alertParam.fadeTo(2000, 500).slideUp(500, function () {
-                alertParam.slideUp(500);
-            });
-        }
+        //function ShowHeaderAlert(response, type) {
+        //    var alertParam = $("#HeaderAlert");
+        //    console.log(response);
+        //    alertParam.text(response);
+        //    if(type == "success")
+        //        alertParam.addClass("alert-success");
+        //    else
+        //        alertParam.addClass("alert-danger");
+        //    alertParam.alert();
+        //    alertParam.fadeTo(2000, 500).slideUp(500, function () {
+        //        alertParam.slideUp(500);
+        //    });
+        //}
         function CloseSelectionModal() {
              $('#operationSelectionModal').modal('toggle');
         };

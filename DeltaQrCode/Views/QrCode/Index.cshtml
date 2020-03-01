@@ -1,28 +1,31 @@
 ﻿<head>
-    <style>
-        #divqrcode {
-            width: 102px;
-            height: 102px;
-            margin-top: 14px;
-        }
-    </style>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="~/lib/Scripts/qrcode.min.js"></script>
     <script type="text/javascript" src="~/lib/Scripts/qrcode.js"></script>
-</head>
+    <script type="text/javascript" src="~/lib/Scripts/QrCodeCamera.js"></script>
 
+    <link rel="stylesheet" href="~/css/QrCodeStyle.css">
+</head>
 <div class="container">
-    <div class="row" style="width:100%;">
-        <input id="nrInmatriculare" class="form-control qrInputs col-md-6 col-xs-12" type="text" name="qrInputs" placeholder="Numar Inmatriculare..." />
-        <input id="flota" class="form-control qrInputs col-md-6 col-xs-12" type="text" name="qrInputs" placeholder="Flota..." />
+    <div id="HeaderAlert" class="alert" role="alert"></div>
+
+    <div class="row">
+        <div class="container col-md-6 col-xs-12" style="text-align:center; display:inline-block">
+            <div class="row" style="width:100%;">
+                <input id="nrInmatriculare" class="form-control qrInputs col-md-6 col-xs-12" type="text" name="qrInputs" placeholder="Numar Inmatriculare..." />
+                <input id="flota" class="form-control qrInputs col-md-6 col-xs-12" type="text" name="qrInputs" placeholder="Flota..." />
+            </div>
+            <div class="row" style="width:100%">
+                <input id="textpreview" class="form-control col-md-8 col-xs-12" type="text" name="name" value="" readonly="readonly" />
+                <button id="btnGenerate" class="btn btn-outline-success col-md-4 col-xs-12">Generate</button>
+            </div>
+        </div>
+        <div class="container col-md-6 col-xs-12" style="text-align:center">
+            <div class="qrCodeDiv" style="display:inline-block">
+                <div id="demoQr" style="display:inline-block; margin:10px auto;"></div>
+            </div>
+        </div>
     </div>
-    <div class="row" style="width:100%">
-        <input id="textpreview" class="form-control col-md-8 col-xs-12" type="text" name="name" value="" readonly="readonly" />
-        <button id="btnGenerate" class="btn btn-outline-success col-md-4 col-xs-12">Generate</button>
-    </div>
-</div>
-<div class="container">
-    <div id="demoQr"></div>
 </div>
 <script type="text/javascript">
     // Get the input box
@@ -32,6 +35,11 @@
     let pi = Math.PI;
     let timeout = null;
     let qrText = null;
+    var QrExists = false;
+    let previewText = null;
+
+    var QrCodeMatrix = new QRCode($("#demoQr"), "");
+    $("#demoQr").addClass("invisible");
     // Listen for keystroke events
     inputs.on('keyup', function (e) {
         carNr = $("#nrInmatriculare").val();
@@ -63,34 +71,57 @@
         if (car == "" || fleet == "") {
 
         }
-        var previewText = car + ", " + fleet;
+        previewText = car + ", " + fleet;
         qrText = piText + ", " + previewText;
         $("#textpreview").val(previewText);
 
 
-    }
+    };
+    function download(file, img) {
+
+        //creating an invisible element
+        var element = document.createElement('a');
+        element.setAttribute('href', img);
+        element.setAttribute('download', file);
+
+        document.body.appendChild(element);
+
+        //onClick property
+        element.click();
+
+        document.body.removeChild(element);
+    };
 
     $(document).ready(function () {
-        //    $(".qrInputs").keyup(function () {
-        //        var carNr = $("#nrInmatriculare").text();
-        //        var flota = $("#flota").text();
-        //        var qrText = pi.text().append(", ").append(carNr).append(", ").append(flota);
-        //        $("#textpreview").text(qrText);
-        //    });
-        $("#btnGenerate").on("click", function () {
-          new QRCode($("#demoQr"), qrText);
+
+        $("#btnGenerate").on("click", function (e) {
+            try {
+                e.preventDefault();
+                if (QrExists) {
+                    QrCodeMatrix.makeCode(qrText);
+                }
+                else {
+                    QrCodeMatrix.makeCode(qrText);
+                    QrExists = true;
+                }
+                $("#demoQr").removeClass("invisible");
+
+                var canvas = document.querySelector("#demoQr canvas");
+                var img = canvas.toDataURL("image/png");
+                var filename = previewText + ".png";
+                download(filename, img);
+                $("#nrInmatriculare").val('');
+                $("#flota").val('');
+                $("#textpreview").val('');
+                ShowHeaderAlert("Codul QR a fost generat cu success", "success");
+            } catch (e) {
+                ShowHeaderAlert(e.message, "error");
+            }
+
 
         });
+
     });
 
-    //jQuery("#demoQr").qrcode("url or text");
-    //$("#demoQr").qrcode("url or text");
 
-// or
-//jQuery("#demoQr").qrcode({
-//    //render:"table"
-//    width: 128,
-//    height: 128,
-//    text: "http://ourcodeworld.com"
-//});
 </script>
