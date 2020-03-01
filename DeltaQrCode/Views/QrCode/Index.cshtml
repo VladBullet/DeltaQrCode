@@ -78,8 +78,7 @@
         //        $("#textpreview").text(qrText);
         //    });
         $("#btnGenerate").on("click", function () {
-            jQuery("#demoQr").qrcode(qrText);
-            $("#demoQr").qrcode(qrText);
+          new QRCode($("#demoQr"), qrText);
 
         });
     });
