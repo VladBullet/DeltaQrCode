@@ -6,9 +6,8 @@
 </head>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Scaneaza Codul QR din masina</h1>
     <div class="panel-heading">
-        <h3 class="panel-title">Scan the QR Code</h3>
     </div>
 </div>
 <div id="HeaderAlert" class="alert" role="alert">
@@ -54,7 +53,10 @@
                     SendQrCodeDataAndSelectionAjax(contentToSend, value);
                 });
             }
-            else { TurnOnCameras(); }
+            else {
+                TurnOnCameras();
+                ShowHeaderAlert("Codul QR Scanat nu este bun. Asigura-te ca ai scanat codul din masina!","error",3000);
+            }
         });
 
         var cams = Instascan.Camera.getCameras();
@@ -148,19 +150,7 @@
                 }
             });
         };
-        //function ShowHeaderAlert(response, type) {
-        //    var alertParam = $("#HeaderAlert");
-        //    console.log(response);
-        //    alertParam.text(response);
-        //    if(type == "success")
-        //        alertParam.addClass("alert-success");
-        //    else
-        //        alertParam.addClass("alert-danger");
-        //    alertParam.alert();
-        //    alertParam.fadeTo(2000, 500).slideUp(500, function () {
-        //        alertParam.slideUp(500);
-        //    });
-        //}
+      
         function CloseSelectionModal() {
              $('#operationSelectionModal').modal('toggle');
         };

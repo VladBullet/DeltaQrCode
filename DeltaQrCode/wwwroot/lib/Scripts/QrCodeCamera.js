@@ -1,5 +1,7 @@
-﻿
-function ShowHeaderAlert(response, type) {
+﻿function ShowHeaderAlert(response, type) {
+    ShowHeaderAlert(response, type, 2000);
+};
+function ShowHeaderAlert(response, type, milisecs) {
     var alertParam = $("#HeaderAlert");
     console.log(response);
     alertParam.text(response);
@@ -8,7 +10,7 @@ function ShowHeaderAlert(response, type) {
     else
         alertParam.addClass("alert-danger");
     alertParam.alert();
-    alertParam.fadeTo(2000, 500).slideUp(500, function () {
+    alertParam.fadeTo(milisecs, 500).slideUp(500, function () {
         alertParam.slideUp(500);
     });
 }
