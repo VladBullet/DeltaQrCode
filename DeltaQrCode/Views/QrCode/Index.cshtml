@@ -1,0 +1,97 @@
+﻿<head>
+    <style>
+        #divqrcode {
+            width: 102px;
+            height: 102px;
+            margin-top: 14px;
+        }
+    </style>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/lib/Scripts/qrcode.min.js"></script>
+    <script type="text/javascript" src="~/lib/Scripts/qrcode.js"></script>
+</head>
+
+<div class="container">
+    <div class="row" style="width:100%;">
+        <input id="nrInmatriculare" class="form-control qrInputs col-md-6 col-xs-12" type="text" name="qrInputs" placeholder="Numar Inmatriculare..." />
+        <input id="flota" class="form-control qrInputs col-md-6 col-xs-12" type="text" name="qrInputs" placeholder="Flota..." />
+    </div>
+    <div class="row" style="width:100%">
+        <input id="textpreview" class="form-control col-md-8 col-xs-12" type="text" name="name" value="" readonly="readonly" />
+        <button id="btnGenerate" class="btn btn-outline-success col-md-4 col-xs-12">Generate</button>
+    </div>
+</div>
+<div class="container">
+    <div id="demoQr"></div>
+</div>
+<script type="text/javascript">
+    // Get the input box
+    var inputs = $(".qrInputs");
+    let carNr = null;
+    let flota = null;
+    let pi = Math.PI;
+    let timeout = null;
+    let qrText = null;
+    // Listen for keystroke events
+    inputs.on('keyup', function (e) {
+        carNr = $("#nrInmatriculare").val();
+        flota = $("#flota").val();
+        AppendFullQRText(carNr, flota);
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+        }, 1000);
+    });
+
+    inputs.on('change', function (e) {
+        carNr = $("#nrInmatriculare").val();
+        flota = $("#flota").val();
+        AppendFullQRText(carNr, flota);
+        if (carNr == "" || flota == "")
+            $("#textpreview").val("");
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+        }, 1000);
+
+    });
+
+    function AppendFullQRText(car, fleet) {
+        var piText = String(pi);
+        if (car == null)
+            car = "";
+        if (fleet == null)
+            fleet = "";
+        if (car == "" || fleet == "") {
+
+        }
+        var previewText = car + ", " + fleet;
+        qrText = piText + ", " + previewText;
+        $("#textpreview").val(previewText);
+
+
+    }
+
+    $(document).ready(function () {
+        //    $(".qrInputs").keyup(function () {
+        //        var carNr = $("#nrInmatriculare").text();
+        //        var flota = $("#flota").text();
+        //        var qrText = pi.text().append(", ").append(carNr).append(", ").append(flota);
+        //        $("#textpreview").text(qrText);
+        //    });
+        $("#btnGenerate").on("click", function () {
+            jQuery("#demoQr").qrcode(qrText);
+            $("#demoQr").qrcode(qrText);
+
+        });
+    });
+
+    //jQuery("#demoQr").qrcode("url or text");
+    //$("#demoQr").qrcode("url or text");
+
+// or
+//jQuery("#demoQr").qrcode({
+//    //render:"table"
+//    width: 128,
+//    height: 128,
+//    text: "http://ourcodeworld.com"
+//});
+</script>
