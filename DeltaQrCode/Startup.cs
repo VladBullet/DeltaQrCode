@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using DeltaQrCode.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DeltaQrCode.Services;
 
 namespace DeltaQrCode
 {
@@ -34,7 +35,10 @@ namespace DeltaQrCode
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
+            // Register Services for injection
+            services.AddScoped<IQrService, QrService>();
+
             // DBContexts
             // for data
             services.AddDbContext<ApplicationDbContext>(options =>

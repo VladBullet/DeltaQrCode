@@ -4,30 +4,39 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DeltaQrCode.Models;
+using DeltaQrCode.ViewModels;
 using System.IO;
 using System.Drawing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using DeltaQrCode.Services;
 
 namespace DeltaQrCode.Controllers
 {
     public class HomeController : Controller
     {
+        private IQrService qrService;
+        public HomeController(IQrService qrS)
+        {
+            qrService = qrS;
+        }
         public IActionResult Index()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult OperationSelection([FromBody] QrCodeContentViewModel model)
+        public async Task<IActionResult> OperationSelection([FromBody] QrCodeContentViewModel model)
         {
-            var date = DateTimeOffset.FromUnixTimeMilliseconds(model.DateTimeTicks).DateTime;
-            //QrCodeContentViewModel result = JsonConvert.DeserializeObject<QrCodeContentViewModel>(model);
             // process input and then return some feedback
-            return Ok(JsonConvert.SerializeObject("Operatiune adaugata cu succes!"));
-            //otherwise send badrequest
-
-            //return BadRequest(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = "RELEASE OACHE!" }); ;
+            var result = await qrService.SaveOperation(model);
+            if (result.Successful)
+            {
+                return Ok(JsonConvert.SerializeObject("Operatiune adaugata cu succes!"));
+            }
+            else
+            {
+                return BadRequest(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }); ;
+            }
         }
 
         public IActionResult Privacy()

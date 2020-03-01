@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeltaQrCode.Data
 {
-    public class AuthDbContext : IdentityDbContext
+    public partial class AuthDbContext : IdentityDbContext
     {
         public AuthDbContext(DbContextOptions<AuthDbContext> options)
             : base(options)

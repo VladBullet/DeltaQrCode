@@ -1,6 +1,6 @@
 using System;
 
-namespace DeltaQrCode.Models
+namespace DeltaQrCode.ViewModels
 {
     public class ErrorViewModel
     {

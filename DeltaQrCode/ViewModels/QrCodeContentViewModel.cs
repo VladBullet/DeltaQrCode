@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DeltaQrCode.Models
+namespace DeltaQrCode.ViewModels
 {
     public class QrCodeContentViewModel
     {
