@@ -25,6 +25,7 @@
         <div class="col">
             <div class="btn-group btn-group-lg btn-group-toggle mb-6" style="margin:auto;width:100%" data-toggle="buttons">
                 <button class="btn btn-lg btn-dark " id="CloseCameraBtn"> Camera Off </button>
+                <button class="btn btn-lg btn-warning" name="options" id="changeCameraBtn" value="1">Change Camera</button>
                 <button class="btn btn-lg btn-info" id="TurnOnCameraBtn"> Camera On </button>
             </div>
         </div>
@@ -37,7 +38,7 @@
             var res = content.split(",");
             array = [];
             array = array.concat(res);
-           
+
             if (array.length == 3 && res[0] == String(Math.PI)) {
                 //close cameras
                 CloseCameras();
@@ -80,18 +81,16 @@
                 }
             });
         };
-        // buttons event handlers
-        $(document).ready(function () {
-
-            $('[name="options"]').on('change', function () {
-                if ($(this).val() == 1) {
+        function ChangeCamera(cameraVal) {
+            cams.then(function (cameras) {
+                if (cameraVal == 1) {
                     if (cameras[0] != "") {
                         $('#preview').show();
                         scanner.start(cameras[0]);
                     } else {
                         alert('No Front camera found!');
                     }
-                } else if ($(this).val() == 2) {
+                } else if (cameraVal == 2) {
                     if (cameras[1] != "") {
                         $('#preview').show();
                         scanner.start(cameras[1]);
@@ -99,6 +98,23 @@
                         alert('No Back camera found!');
                     }
                 }
+            });
+        };
+        // buttons event handlers
+        $(document).ready(function () {
+
+            $('[name="options"]').on('change', function () {
+                ChangeCamera($(this).val());
+
+            });
+            $('#changeCameraBtn').on('click', function () {
+                if ($(this).val() == 1) {
+                    $(this).val(2);
+                }
+                else {
+                    $(this).val(1);
+                }
+                 ChangeCamera($(this).val());
             });
 
             $('#CloseCameraBtn').on('click', function () {
@@ -150,7 +166,7 @@
                 }
             });
         };
-      
+
         function CloseSelectionModal() {
              $('#operationSelectionModal').modal('toggle');
         };
