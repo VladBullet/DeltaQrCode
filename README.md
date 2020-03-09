@@ -2,6 +2,5 @@
 
 
 TODO:
-  - Encrypt QRCode
   - Add Auth 
   
