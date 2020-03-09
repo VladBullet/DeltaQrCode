@@ -3,6 +3,7 @@
     <script type="text/javascript" src="~/lib/Scripts/qrcode.min.js"></script>
     <script type="text/javascript" src="~/lib/Scripts/qrcode.js"></script>
     <script type="text/javascript" src="~/lib/Scripts/QrCodeCamera.js"></script>
+    <script type="text/javascript" src="~/lib/Scripts/EncDec.js"></script>
 
     <link rel="stylesheet" href="~/css/QrCodeStyle.css">
 </head>
@@ -97,13 +98,12 @@
         $("#btnGenerate").on("click", function (e) {
             try {
                 e.preventDefault();
-                if (QrExists) {
-                    QrCodeMatrix.makeCode(qrText);
-                }
-                else {
-                    QrCodeMatrix.makeCode(qrText);
+                if (!QrExists) {
                     QrExists = true;
                 }
+                qrText = Enc(qrText);
+                QrCodeMatrix.makeCode(qrText);
+
                 $("#demoQr").removeClass("invisible");
 
                 var canvas = document.querySelector("#demoQr canvas");

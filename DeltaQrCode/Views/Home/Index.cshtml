@@ -3,6 +3,8 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>*@
     <script type="text/javascript" src="~/lib/Scripts/QrCodeCamera.js"></script>
+    <script type="text/javascript" src="~/lib/Scripts/EncDec.js"></script>
+
 </head>
 
 <div class="text-center">
@@ -34,8 +36,8 @@
 
         var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
         scanner.addListener('scan', function (content) {
-
-            var res = content.split(",");
+            var decr = Dec(content);
+            var res = decr.split(",");
             array = [];
             array = array.concat(res);
 
