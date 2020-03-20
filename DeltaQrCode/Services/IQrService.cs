@@ -11,6 +11,6 @@ namespace DeltaQrCode.Services
     public interface IQrService
     {
         bool SaveQrCode(Bitmap img);
-        Task<Result<QrCodeContentViewModel>> SaveOperation(QrCodeContentViewModel model);
+       Result<QrCodeContentViewModel> SaveOperation(QrCodeContentViewModel model);
     }
 }

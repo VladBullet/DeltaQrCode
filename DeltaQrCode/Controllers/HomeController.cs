@@ -25,10 +25,10 @@ namespace DeltaQrCode.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> OperationSelection([FromBody] QrCodeContentViewModel model)
+        public IActionResult OperationSelection([FromBody] QrCodeContentViewModel model)
         {
             // process input and then return some feedback
-            var result = await qrService.SaveOperation(model);
+            var result = qrService.SaveOperation(model);
             if (result.Successful)
             {
                 return Ok(JsonConvert.SerializeObject("Operatiune adaugata cu succes!"));

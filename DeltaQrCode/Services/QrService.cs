@@ -27,7 +27,7 @@ namespace DeltaQrCode.Services
             return true;
         }
 
-        public async Task<Result<QrCodeContentViewModel>> SaveOperation(QrCodeContentViewModel model)
+        public Result<QrCodeContentViewModel> SaveOperation(QrCodeContentViewModel model)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace DeltaQrCode.Services
                 };
 
                 dataService.CaClient.Add(toSave);
-                var response = await dataService.SaveChangesAsync();
+                var response = dataService.SaveChangesAsync();
                 return Result<QrCodeContentViewModel>.ResultOk(model);
             }
             catch (Exception e)
