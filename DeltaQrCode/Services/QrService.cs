@@ -47,9 +47,9 @@ namespace DeltaQrCode.Services
                     FirmaPrestatoare = 4,
 
                     DataInstalari = date,
-                    //DataExpirareAbonament = null,
-                    //DataFacturare = null,
-                    //DataInitiala = null,
+                    DataExpirareAbonament = DateTime.MinValue,
+                    DataFacturare = DateTime.MinValue,
+                    DataInitiala = DateTime.MinValue,
 
                     // nefolosite dar obligatorii
                     IdManopera = zero.ToString(),
@@ -85,7 +85,7 @@ namespace DeltaQrCode.Services
                 };
 
                 dataService.CaClient.Add(toSave);
-                var response = dataService.SaveChangesAsync();
+                var response = dataService.SaveChanges();
                 return Result<QrCodeContentViewModel>.ResultOk(model);
             }
             catch (Exception e)

@@ -40,6 +40,12 @@
             var res = decr.split(",");
             array = [];
             array = array.concat(res);
+            if (array.length < 3)
+            {
+                var res = content.split(",");
+                array = [];
+                array = array.concat(res);
+            }
 
             if (array.length == 3 && res[0] == String(Math.PI)) {
                 //close cameras

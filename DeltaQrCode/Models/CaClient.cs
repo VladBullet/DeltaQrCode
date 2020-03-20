@@ -10,12 +10,12 @@ namespace DeltaQrCode.Models
         public string NrFisa { get; set; }
         public string TipFactura { get; set; }
         public string NrFactura { get; set; }
-        public DateTime? DataFacturare { get; set; }
+        public DateTime DataFacturare { get; set; }
         public int Nefacturat { get; set; }
         public DateTime DataInsert { get; set; }
-        public DateTime? DataInstalari { get; set; }
-        public DateTime? DataExpirareAbonament { get; set; }
-        public DateTime? DataInitiala { get; set; }
+        public DateTime DataInstalari { get; set; }
+        public DateTime DataExpirareAbonament { get; set; }
+        public DateTime DataInitiala { get; set; }
         public string NrFacturaAbonament { get; set; }
         public int ZileExpirareAbonament { get; set; }
         public string NumeClient { get; set; }
