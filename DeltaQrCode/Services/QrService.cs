@@ -41,9 +41,16 @@ namespace DeltaQrCode.Services
                     DataInsert = date,
                     NrMasina = nrMasina,
                     NumeClient = flota,
-                    TipServiciu = selectie.ToString(),
+                    TipAparat = selectie.ToString(),
+                    TipServiciu = "cosmetica",
+                    UserAccount = "cosmetica",
+                    FirmaPrestatoare = 4,
+
                     DataInstalari = date,
-                    
+                    //DataExpirareAbonament = null,
+                    //DataFacturare = null,
+                    //DataInitiala = null,
+
                     // nefolosite dar obligatorii
                     IdManopera = zero.ToString(),
                     Instalator = instalator,
@@ -58,7 +65,6 @@ namespace DeltaQrCode.Services
                     Custodie = zero,
                     KmBord = (float)zero,
                     KmEfectuati = (float)zero,
-                    FirmaPrestatoare = zero,
                     NrFactura = string.Empty,
                     SeriaSim = string.Empty,
                     SerieGps = string.Empty,
@@ -68,14 +74,12 @@ namespace DeltaQrCode.Services
                     ReprezentantClientMail = string.Empty,
                     ReprezentantClientTelefon = string.Empty,
                     Vin = string.Empty,
-                    TipAparat = string.Empty,
                     TipAuto = string.Empty,
                     TipFactura = string.Empty,
                     TipVanzare = string.Empty,
                     Nefacturat = zero,
                     Stare = string.Empty,
                     PerioadaContractuala = (float)zero,
-                    UserAccount = string.Empty,
                     ZileExpirareAbonament = zero
 
                 };
