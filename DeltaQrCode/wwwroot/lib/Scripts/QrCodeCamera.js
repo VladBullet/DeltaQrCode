@@ -1,5 +1,5 @@
 ﻿function ShowHeaderAlert(response, type) {
-    ShowHeaderAlert(response, type, 2000);
+    ShowHeaderAlert(response, type, 3000);
 };
 function ShowHeaderAlert(response, type, milisecs) {
     var alertParam = $("#HeaderAlert");

@@ -52,11 +52,13 @@
                 CloseCameras();
                 // open Modal
                 $('#operationSelectionModal').modal({ backdrop: 'static', keyboard: false });
+                 $('.selectionBtn').removeAttr('disabled');
                 $("#modalDecodedCar").text("Masina: ").append(res[1]);
                 $("#modalDecodedCo").text("Firma: ").append(res[2]);
                 // wait for selection
                  var contentToSend = res[1].concat(", ").concat(res[2]);
                 $('.selectionBtn').on('click', { content: contentToSend }, function () {
+                    $('.selectionBtn').attr('disabled', 'true');
                     var value = $(this).val();
                     //alert("selectat" + content + value);
                     SendQrCodeDataAndSelectionAjax(contentToSend, value);
@@ -64,7 +66,7 @@
             }
             else {
                 TurnOnCameras();
-                ShowHeaderAlert("Codul QR Scanat nu este bun. Asigura-te ca ai scanat codul din masina!","error",3000);
+                ShowHeaderAlert("Codul QR Scanat nu este bun. Asigura-te ca ai scanat codul din masina!","error",4000);
             }
         });
 
@@ -166,11 +168,11 @@
                 contentType: 'application/json',
                 success: function (response) {
                     CloseSelectionModal();
-                    ShowHeaderAlert(response,"success");
+                    ShowHeaderAlert(response,"success",3000);
                 },
                 error: function (error) {
                      CloseSelectionModal();
-                     ShowHeaderAlert(error.message,"error");
+                     ShowHeaderAlert(error.message,"error",4000);
                 }
             });
         };
