@@ -35,7 +35,7 @@ namespace DeltaQrCode.Controllers
             }
             else
             {
-                return BadRequest(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }); ;
+                return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message + " InnerEx: "+ result.Error.InnerException.Message }));
             }
         }
 

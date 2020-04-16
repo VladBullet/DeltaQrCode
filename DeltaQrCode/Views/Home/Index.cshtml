@@ -171,8 +171,23 @@
                     ShowHeaderAlert(response,"success",3000);
                 },
                 error: function (error) {
-                     CloseSelectionModal();
-                     ShowHeaderAlert(error.message,"error",4000);
+                    CloseSelectionModal();
+                    ShowHeaderAlert(error.responseJSON.Message, "error", 4000);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("ErrorModal","Error")",
+                        dataType: "text",
+                        traditional: true,
+                        contentType: 'application/json',
+                        success: function (response) {
+                            $("#GetModalCode").html(response);
+                            $("#ErrorModal").modal('show');
+                        },
+                        error: function (error) {
+                            alert(error);
+                        }
+                    });
                 }
             });
         };
@@ -183,7 +198,7 @@
 
     </script>
 </div>
-
+<div id="GetModalCode"></div>
 <div class="modal fade" id="operationSelectionModal" tabindex="-1" role="dialog" aria-labelledby="operationSelectionModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
