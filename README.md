@@ -1,6 +1,3 @@
 # DeltaQrCode
 
-
-TODO:
-  - Add Auth 
-  - Bug -> when scan it duplicates the last entry - remove async
+App that scans custom qr codes
