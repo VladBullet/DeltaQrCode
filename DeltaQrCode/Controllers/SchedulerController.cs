@@ -13,10 +13,11 @@ namespace DeltaQrCode.Controllers
 
     using DeltaQrCode.ModelsDto;
 
+    using Microsoft.AspNetCore.Authorization;
+
+    [Authorize]
     public class SchedulerController : Controller
     {
-
-
         // GET: Appointments
         public ActionResult Index(string startDateString, string activeDateString, string professionalIdString)
         {

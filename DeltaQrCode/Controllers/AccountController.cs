@@ -62,7 +62,7 @@ namespace DeltaQrCode.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     new AuthenticationProperties());
 
-                if (!String.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 {
                     return Redirect(returnUrl);
                 }
