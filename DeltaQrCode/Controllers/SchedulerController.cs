@@ -44,7 +44,7 @@ namespace DeltaQrCode.Controllers
 
 
 
-        public JsonResult GetAppointmentsForDate(string apptDate, string professionalId)
+        public JsonResult GetAppointmentsForDate(string apptDate)
         {
             DateTime dt;
             DateTime.TryParse(apptDate, out dt);

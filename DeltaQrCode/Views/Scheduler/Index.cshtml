@@ -86,8 +86,12 @@
         overflow: hidden;
     }
 
-    .hour0, .hour1, .hour2, .hour3, .hour4, .hour5 .hour19, .hour20, .hour21, .hour22, .hour23 {
+    .hour-disabled {
         background-color: #f1f1f1 !important;
+    }
+
+    .hour-red {
+        background-color: #ffcccb !important;
     }
 
     /* the standard text in the control - e.g. 8am */
@@ -148,33 +152,20 @@
 
     <div class="hour-container">
         <div>
-            <div id="hour0" class="hour hour0"><div class="hourText">12am</div></div>
-            <div id="hour1" class="hour hour1"><div class="hourText">1am</div></div>
-            <div id="hour2" class="hour hour2"><div class="hourText">2am</div></div>
-            <div id="hour3" class="hour hour3"><div class="hourText">3am</div></div>
-            <div id="hour4" class="hour hour4"><div class="hourText">4am</div></div>
-            <div id="hour5" class="hour hour5"><div class="hourText">5am</div></div>
-            <div id="hour6" class="hour hour6"><div class="hourText">6am</div></div>
-            <div id="hour7" class="hour hour7"><div class="hourText">7am</div></div>
-            <div id="hour8" class="hour hour8"><div class="hourText">8am</div></div>
-            <div id="hour9" class="hour hour9"><div class="hourText">9am</div></div>
-
-            <div id="hour10" class="hour hour10"><div class="hourText">10am</div></div>
-            <div id="hour11" class="hour hour11"><div class="hourText">11am</div></div>
-            <div id="hour12" class="hour hour12"><div class="hourText">12pm</div></div>
-            <div id="hour13" class="hour hour13"><div class="hourText">1pm</div></div>
-            <div id="hour14" class="hour hour14"><div class="hourText">2pm</div></div>
-            <div id="hour15" class="hour hour15"><div class="hourText">3pm</div></div>
-            <div id="hour16" class="hour hour16"><div class="hourText">4pm</div></div>
-            <div id="hour17" class="hour hour17"><div class="hourText">5pm</div></div>
-            <div id="hour18" class="hour hour18"><div class="hourText">6pm</div></div>
-            <div id="hour19" class="hour hour19"><div class="hourText">7pm</div></div>
-            <div id="hour20" class="hour hour20"><div class="hourText">8pm</div></div>
-            <div id="hour21" class="hour hour21"><div class="hourText">9pm</div></div>
-            <div id="hour22" class="hour hour22"><div class="hourText">10pm</div></div>
-            <div id="hour23" class="hour hour23"><div class="hourText">11pm</div></div>
-
-            <div style="height:200px; background-color:lightgray;"></div>
+            @for (int i = 8; i < 18; i++)
+            {
+                <div id="hour@(i)" class="hour">
+                    <div class="hourText">@i:00</div>
+                </div>
+                string breaktime = i == 12 ? "hour-red" : "";
+                <div id="hour@(i):30" class="hour @breaktime">
+                    <div class="hourText">@i:30</div>
+                </div>
+            }
+            <div id="hour20" class="hour">
+                <div class="hourText">18:00</div>
+            </div>
+            <div style="height: auto; width: auto; background-color: lightgray;"></div>
         </div>
     </div>
 
@@ -245,7 +236,7 @@
             // Get the selectedvalue of the dropdown
             var professionalIdForAppts = getSelectedProfessionalId();
 
-            $.get('@Url.Action("GetAppointmentsForDate", "Scheduler")', { apptDate: calendarDate, professionalId: professionalIdForAppts }, function (data) {
+            $.get('@Url.Action("GetAppointmentsForDate", "Scheduler")', { apptDate: calendarDate}, function (data) {
 
                 clearAppointments();
 
