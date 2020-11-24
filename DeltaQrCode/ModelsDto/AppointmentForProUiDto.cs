@@ -59,12 +59,12 @@ namespace DeltaQrCode.ModelsDto
         public string EmailAddress { get; set; }
 
         [Display(Name = "Phone Number")]
-        [RegularExpression(@"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$", ErrorMessage = "Please enter a valid phone number"), StringLength(12)]
+        [RegularExpression(@"^\+[1-9]{1}[0-9]{3,14}$", ErrorMessage = "Please enter a valid phone number"), StringLength(12)]
         public string Telephone { get; set; } = "";
 
         [Required]
         [Display(Name = "Mobile")]
-        [RegularExpression(@"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$", ErrorMessage = "Please enter a valid phone number"), StringLength(12)]
+        [RegularExpression(@"^\+[1-9]{1}[0-9]{3,14}$", ErrorMessage = "Please enter a valid phone number"), StringLength(12)]
         public string TelephoneMobile { get; set; } = "";
 
 

@@ -1,17 +1,18 @@
-﻿@model AppointmentsMvc.ViewModels.AppointmentModalVm
+﻿@using DeltaQrCode.ModelsDto
+@model AppointmentsMvc.ViewModels.AppointmentModalVm
 
 <style>
-  .modal-min-height {
-      min-height: 450px;
-  }
+    .modal-min-height {
+        min-height: 450px;
+    }
 
-  .required-field::before {
-      content: "*";
-  }
+    .required-field::before {
+        content: "*";
+    }
 
-  .margin150left{
-      margin-left:150px;
-  }
+    .margin150left {
+        margin-left: 150px;
+    }
 </style>
 
 <div class="modal-header">
@@ -19,7 +20,7 @@
     <h3 id="myModalLabel">@(Model.Appointment.AppointmentIndex == 0 ? "Create Appointment" : "Edit Appointment")</h3>
 </div>
 <div>
-    @using (Html.BeginForm("EditModal", "Appt", FormMethod.Post, new { @id = "apptform" }))
+    @using (Html.BeginForm("EditModal", "Scheduler", FormMethod.Post, new { @id = "apptform" }))
     {
         @Html.ValidationSummary()
         @Html.AntiForgeryToken()
@@ -33,17 +34,17 @@
             <div class="form-group">
 
                 <!-- visbile, but disabled if only 1 pro in the company. -->
-                <label for="ddlProfessionalModal" class="control-label col-md-3">For:</label>
-                @Html.DropDownListFor(model => model.Appointment.ProfessionalId,
+                @*   <label for="ddlProfessionalModal" class="control-label col-md-3">For:</label>*@
+                @*@Html.DropDownListFor(model => model.Appointment.ProfessionalId,
                     new SelectList(Model.ProfessionalsAccessableEmployeesDropDownModal, "Value", "Text", "Selected"),
-                    new { @class = "form-control half-margin-bottom margin150left", @id = "ddlProfessionalModal" })
+                    new { @class = "form-control half-margin-bottom margin150left", @id = "ddlProfessionalModal" })*@
 
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Appointment.StartTime_Date, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Appointment.StartTime_Date, new { htmlAttributes = new { @id="tbStartTimeDate", @class = "form-control width200 half-margin-bottom" } })
+                    @Html.EditorFor(model => model.Appointment.StartTime_Date, new { htmlAttributes = new { @id = "tbStartTimeDate", @class = "form-control width200 half-margin-bottom" } })
                     @Html.ValidationMessageFor(model => model.Appointment.StartTime_Date, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -89,10 +90,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Appointment.AppointmentType, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EnumDropDownListFor(
-                        x => x.Appointment.AppointmentType,
-                        "Select",
-                        new { @class = "form-control half-margin-bottom" })
+                    <select asp-for="Appointment.AppointmentType" asp-items="Html.GetEnumSelectList(typeof (AppointmentType))"></select>
+
                     @Html.ValidationMessageFor(model => model.Appointment.AppointmentType, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -169,7 +168,7 @@
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("EditModal", "Appointments")",
+            url: "@Url.Action("EditModal", "Scheduler")",
             data: $('#apptform').serialize(),
             success: function (result) {
                 if (result == "success") {
@@ -177,7 +176,7 @@
                     //location.reload();
                     var proIdModal = $('#ddlProfessionalModal').find(":selected").val();
                     var dateToView = $('#tbStartTimeDate').val();
-                    
+
                     location.href = location.protocol + '//' + location.host + location.pathname + '?startDateString=""&activeDateString=' + dateToView + '&professionalIdString=' + proIdModal;
 
                 } else {
