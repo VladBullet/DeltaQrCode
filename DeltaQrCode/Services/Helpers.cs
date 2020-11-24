@@ -27,7 +27,26 @@ namespace DeltaQrCode.Services
                 return sb.ToString().ToLower();
             }
         }
+    }
+    public static class GuidHelper
+    {
+        public static Guid GetGuid(string guidString)
+        {
+            Guid returnValue;
+            Guid.TryParse(guidString, out returnValue);
+            return returnValue;
+        }
+    }
+    public static class EnumHelper
+    {
+        public static string ToDisplayString(this Enum eff)
+        {
+            return Enum.GetName(eff.GetType(), eff) ?? "";
+        }
 
-
+        public static EnumType ToEnumValue<EnumType>(this String enumValue)
+        {
+            return (EnumType)Enum.Parse(typeof(EnumType), enumValue);
+        }
     }
 }
