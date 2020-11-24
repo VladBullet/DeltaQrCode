@@ -7,32 +7,35 @@
 
 </head>
 
-<div class="text-center">
-    <h1 class="display-4">Scaneaza Codul QR din masina</h1>
-    <div class="panel-heading">
-    </div>
-</div>
-<div id="HeaderAlert" class="alert" role="alert">
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-            <div class="col-sm-12">
-                <video id="preview" class="p-1 border" style="width:100%;"></video>
-            </div>
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+    <div class="text-center">
+        <h1 class="display-4">Scaneaza Codul QR din masina</h1>
+        <div class="panel-heading">
         </div>
     </div>
-    <div class="row" style="margin:auto;">
-        <div class="col">
-            <div class="btn-group btn-group-lg btn-group-toggle mb-6" style="margin:auto;width:100%" data-toggle="buttons">
-                <button class="btn btn-lg btn-dark " id="CloseCameraBtn"> Camera Off </button>
-                <button class="btn btn-lg btn-warning" name="options" id="changeCameraBtn" value="1">Change Camera</button>
-                <button class="btn btn-lg btn-info" id="TurnOnCameraBtn"> Camera On </button>
+    <div id="HeaderAlert" class="alert" role="alert">
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+                <div class="col-sm-12">
+                    <video id="preview" class="p-1 border" style="width:100%;"></video>
+                </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript">
+        <div class="row" style="margin:auto;">
+            <div class="col">
+                <div class="btn-group btn-group-lg btn-group-toggle mb-6" style="margin:auto;width:100%" data-toggle="buttons">
+                    <button class="btn btn-lg btn-dark " id="CloseCameraBtn"> Camera Off </button>
+                    <button class="btn btn-lg btn-warning" name="options" id="changeCameraBtn" value="1">Change Camera</button>
+                    <button class="btn btn-lg btn-info" id="TurnOnCameraBtn"> Camera On </button>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
 
         var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
         scanner.addListener('scan', function (content) {
@@ -196,34 +199,42 @@
              $('#operationSelectionModal').modal('toggle');
         };
 
-    </script>
-</div>
-<div id="GetModalCode"></div>
-<div class="modal fade" id="operationSelectionModal" tabindex="-1" role="dialog" aria-labelledby="operationSelectionModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="operationSelectionModalLongTitle">Selectati Operatiunea</h5>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <h3 id="modalDecodedCar"></h3>
-                    <h3 id="modalDecodedCo"></h3>
+        </script>
+    </div>
+    <div id="GetModalCode"></div>
+    <div class="modal fade" id="operationSelectionModal" tabindex="-1" role="dialog" aria-labelledby="operationSelectionModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="operationSelectionModalLongTitle">Selectati Operatiunea</h5>
                 </div>
-                <div class="container" style="left:20%; right:20%; margin-top:5%">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <button type="button" id="BtnInterior" name="operations" value="1" class="selectionBtn btn btn-lg btn-danger" style="width: 70%; margin: 20px;">Interior</button>
-                        </div>
-                        <div class="col-12 text-center">
-                            <button type="button" id="BtnExterior" name="operations" value="2" class="selectionBtn btn btn-lg btn-warning" style="width: 70%;margin: 20px;">Exterior</button>
-                        </div>
-                        <div class="col-12 text-center">
-                            <button type="button" id="BtnIntExt" name="operations" value="3" class="selectionBtn btn btn-lg btn-success" style="width: 70%; margin: 20px;">Interior + Exterior</button>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h3 id="modalDecodedCar"></h3>
+                        <h3 id="modalDecodedCo"></h3>
+                    </div>
+                    <div class="container" style="left:20%; right:20%; margin-top:5%">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <button type="button" id="BtnInterior" name="operations" value="1" class="selectionBtn btn btn-lg btn-danger" style="width: 70%; margin: 20px;">Interior</button>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="button" id="BtnExterior" name="operations" value="2" class="selectionBtn btn btn-lg btn-warning" style="width: 70%;margin: 20px;">Exterior</button>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="button" id="BtnIntExt" name="operations" value="3" class="selectionBtn btn btn-lg btn-success" style="width: 70%; margin: 20px;">Interior + Exterior</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    }
+    else
+    {
+        <div class="container">
+            <h3> Intra in cont pentru a putea utiliza aplicatia!</h3>
+        </div>
+    }
+}

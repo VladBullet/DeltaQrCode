@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DeltaQrCode.Models
 {
-    public partial class CaClient
+    public class CaClient
     {
         public int Id { get; set; }
         public string IdManopera { get; set; }

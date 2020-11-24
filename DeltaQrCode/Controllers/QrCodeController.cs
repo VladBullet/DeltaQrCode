@@ -12,6 +12,5 @@ namespace DeltaQrCode.Controllers
         {
             return View();
         }
-        //TODO: Add function to save the QrCode
     }
 }

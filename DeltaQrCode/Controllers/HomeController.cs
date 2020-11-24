@@ -13,13 +13,17 @@ using DeltaQrCode.Services;
 
 namespace DeltaQrCode.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+
+    [Authorize]
     public class HomeController : Controller
     {
-        private IQrService qrService;
+        private readonly IQrService qrService;
         public HomeController(IQrService qrS)
         {
             qrService = qrS;
         }
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -35,7 +39,7 @@ namespace DeltaQrCode.Controllers
             }
             else
             {
-                return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message + " InnerEx: "+ result.Error.InnerException.Message }));
+                return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message + " InnerEx: " + result.Error.InnerException.Message }));
             }
         }
 

@@ -17,6 +17,11 @@ using DeltaQrCode.Services;
 
 namespace DeltaQrCode
 {
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.DataProtection;
+    using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+    using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -38,6 +43,7 @@ namespace DeltaQrCode
 
             // Register Services for injection
             services.AddScoped<IQrService, QrService>();
+            services.AddScoped<IUserService, UserService>();
 
             // DBContexts
             // for data
@@ -47,11 +53,24 @@ namespace DeltaQrCode
             services.AddDbContext<AuthDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("AuthConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<AuthDbContext>();
-
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddDefaultUI(UIFramework.Bootstrap4)
+            //    .AddEntityFrameworkStores<AuthDbContext>();
+            services.AddDataProtection().UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration()
+            {
+                EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
+                ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.ConfigureApplicationCookie(options =>
+                {
+                    options.LoginPath = $"/Account/Login";
+                    options.LogoutPath = $"/Account/Logout";
+                    options.AccessDeniedPath = $"/Account/AccessDenied";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +91,13 @@ namespace DeltaQrCode
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy(new CookiePolicyOptions()
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict
+            });
 
             app.UseAuthentication();
 
