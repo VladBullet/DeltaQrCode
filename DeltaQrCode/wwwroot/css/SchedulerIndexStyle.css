@@ -1,0 +1,114 @@
+﻿html, body {
+    background: white;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow: -moz-scrollbars-none;
+    font-family: arial, helvetica, sans-serif;
+}
+
+.container-grab {
+    overflow: scroll;
+    cursor: grab;
+    cursor: -o-grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+
+/* container for whole control */
+.date-control-container {
+    height: 70vh; /* controls how many hours we'll see*/
+    background-color: cornflowerblue;
+    margin: 10px 20px 0 10px;
+    overflow: hidden;
+}
+
+
+/* container for top row of dates */
+.dates-container {
+    position: relative;
+    background-color: #EEEEEE;
+    height: 50px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap; /*stops newline of divs*/
+    margin-top: 5px;
+}
+
+/* each individual date */
+.date {
+    display: inline-block;
+    height: 30px;
+    width: 100px;
+    background-color: lightgray;
+    margin-top: 15px;
+    margin-right: 5px;
+    overflow: hidden;
+}
+
+.date-selected {
+    background-color: lightgreen !important;
+}
+
+
+
+/* container for all hours */
+.hour-container {
+    position: relative;
+    background-color: lightgray;
+    height: calc(100% - 50px);
+    height: -moz-calc(100% - 50px);
+    height: -webkit-calc(100% - 50px);
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    white-space: nowrap; /*stops newline of divs*/
+}
+
+/* each hour */
+.hour {
+    display: block;
+    height: 30px; /* the height of each hour */
+    width: 100%;
+    background-color: white;
+    margin: 1.5px;
+    overflow: hidden;
+}
+
+.hour-disabled {
+    background-color: #f1f1f1 !important;
+}
+
+.hour-red {
+    background-color: #ffcccb !important;
+}
+
+/* the standard text in the control - e.g. 8am */
+.hourText {
+    font-size: 8pt;
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+/* standard appointment container */
+.appt-no-height {
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    background-color: silver;
+    position: absolute;
+    margin: 0 0 0 10px;
+    border: solid 1px black;
+    border-radius: 5px;
+    padding: 3px;
+    font-size: 0.9em;
+}
+
+
+/* Employee Selections */
+.professional-select-container {
+    margin: 70px 0 0 10px;
+}
