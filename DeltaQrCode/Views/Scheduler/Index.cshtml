@@ -21,33 +21,10 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12">
-            <div> Rampa 1</div>
-            <div class="date-control-container">
-
-                <div class="hour-container">
-                    <div>
-                        @for (int i = 8; i < 18; i++)
-                        {
-                            <div id="hour@(i)" class="hour">
-                                <div class="hourText">@i:00</div>
-                            </div>
-                            string breaktime = i == 12 ? "hour-red" : "";
-                            <div id="hour@(i):30" class="hour @breaktime">
-                                <div class="hourText">@i:30</div>
-                            </div>
-                        }
-                        <div id="hour20" class="hour">
-                            <div class="hourText">18:00</div>
-                        </div>
-                        <div style="height: auto; width: auto; background-color: lightgray;"></div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-
+        @for (int rampNr = 1; rampNr < 5; rampNr++)
+        {
+            <partial model="@rampNr" name="_RampPartial" />
+        }
     </div>
 </div>
 <!--  this is the modal dialog that will house the partial content-->
@@ -64,12 +41,10 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-                //$("#datepicker").datepicker();
-                $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).datepicker("setDate", new Date());
+            $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).datepicker({ minDate: new Date() }).datepicker("setDate", new Date());
         });
 
         $(function() {
-
             // Clear the existing appts.
             $('.appt-no-height').remove();
 
@@ -83,22 +58,14 @@
                 $(scrollContainer).animate({ scrollTop: aTag.offset().top }, 'slow');
             };
 
-            /* Get the value from the professional ddl*/
-            var getSelectedProfessionalId = function() {
-                var professionalIdForAppts = $('#ddlProfessional').find(":selected").val();
-                return professionalIdForAppts;
-            }
-
             var clearAppointments = function() {
                 // Clear the existing appts.
                 $('.appt-no-height').remove();
             };
 
             var apptNewModalDialog = function(startDate, startHour) {
-                var professionalId = getSelectedProfessionalId();
-
                 var url = "/Scheduler/EditModalNew"; // the url to the controller
-                $.get(url + '?startDateStr=' + startDate + '&startHour=' + startHour + '&professionalId=' + professionalId,
+                $.get(url + '?startDateStr=' + startDate + '&startHour=' + startHour,
                     function(data) {
                         $('#partialInfo').html(data);
                         $('#myApptModal').modal('show');
@@ -107,10 +74,8 @@
 
             var apptEditModalDialog = function(id) {
 
-                var professionalIdForAppts = getSelectedProfessionalId();
-
                 var url = "/Scheduler/EditModal"; // the url to the controller
-                $.get(url + '?id=' + id + '&professionalId=' + professionalIdForAppts,
+                $.get(url + '?id=' + id,
                     function(data) {
                         $('#partialInfo').html(data);
                         $('#myApptModal').modal('show');
@@ -119,12 +84,10 @@
 
             var showAppointmentsForDate = function(calendarDate) {
 
-                // Get the selectedvalue of the dropdown
-                var professionalIdForAppts = getSelectedProfessionalId();
 
                 $.get('@Url.Action("GetAppointmentsForDate", "Scheduler")',
-                    { apptDate: calendarDate, professionalId: professionalIdForAppts },
-                    function(data) {
+                    { apptDate: calendarDate },
+                    function(response) {
 
                         clearAppointments();
 
@@ -133,55 +96,63 @@
                         var oneHourPxHeight = 30;
 
                         var oneMinutePxHeight = oneHourPxHeight / 60;
+                        if (response != "") {
 
-                        // Add appts in the right position
-                        for (var i = 0; i < data.length; i++) {
-                            var row = data[i];
-                            var apptRow = $('#hour' + row.StartTime_Hour);
+                        var obj = $.parseJSON(response);
+                        $.each(obj, function (key, data) {
+                            var rampId = "#Ramp" + data.rampId;
+                            // Add appts in the right position
+                            for (var i = 0; i < data.Appointments.length; i++) {
+                                var row = data.Appointments[i];
+                                var apptRow = $(rampId + " " + ".hour" + row.StartTime_Hour);
 
-                            var minutesText = row.StartTime_Minutes === 0 ? '00' : row.StartTime_Minutes;
+                                var minutesText = row.StartTime_Minutes === 0 ? '00' : row.StartTime_Minutes;
 
-                            apptRow.append('<div id="appt' +
-                                row.AppointmentId +
-                                '" class="appt-no-height">' +
-                                row.StartTime_Hour +
-                                ":" +
-                                minutesText +
-                                ' (' +
-                                row.DurationInMinutes +
-                                'm)' +
-                                '&nbsp;' +
-                                row.Forename +
-                                ' ' +
-                                row.Surname +
-                                ' (' +
-                                row.AppointmentTypeAsDisplay +
-                                ')</div>');
+                                apptRow.append('<div id="appt' +
+                                    row.AppointmentId +
+                                    '" class="appt-no-height">' +
+                                    //row.StartTime_Hour +
+                                    //":" +
+                                    //minutesText +
+                                    //' (' +
+                                    //row.DurationInMinutes +
+                                    //'m)' +
+                                    //'&nbsp;' +
+                                    row.carNr +
+                                    ' | ' +
+                                    row.clientName +
+                                    ' | ' +
+                                    row.phoneNr +
+                                    ' | ' +
+                                    row.apptTypeString +
+                                    ')</div>');
 
-                            var objHeight = (row.DurationInMinutes * oneMinutePxHeight) + 'px';
-                            var marginTop = (row.StartTime_Minutes * oneMinutePxHeight) + 'px';
-                            var marginLeft = ((apptRow.children().length - 1) * marginLeftPerItem) + 'px';
+                                var objHeight = (row.DurationInMinutes * oneMinutePxHeight) + 'px';
+                                var marginTop = (row.StartTime_Minutes * oneMinutePxHeight) + 'px';
+                                var marginLeft = ((apptRow.children().length - 1) * marginLeftPerItem) + 'px';
 
-                            var thisAppt = $("#appt" + row.AppointmentId);
-                            thisAppt.css("height", objHeight);
-                            thisAppt.css("margin-top", marginTop);
-                            thisAppt.css("margin-left", marginLeft);
+                                var thisAppt = $("#appt" + row.AppointmentId);
+                                thisAppt.css("height", objHeight);
+                                thisAppt.css("margin-top", marginTop);
+                                thisAppt.css("margin-left", marginLeft);
 
-                            //default color is silver on appt-no-height.
-                            switch (row.AppointmentType) {
-                            case 2:
-                                thisAppt.css("background-color", 'lightblue');
-                                break;
-                            case 1024:
-                                thisAppt.css("background-color", 'lightgreen');
-                                break;
-                            default:
-                                // do nothing.
-                                break;
+                                //default color is silver on appt-no-height.
+                                switch (row.AppointmentType) {
+                                case 2:
+                                    thisAppt.css("background-color", 'lightblue');
+                                    break;
+                                case 1024:
+                                    thisAppt.css("background-color", 'lightgreen');
+                                    break;
+                                default:
+                                    // do nothing.
+                                    break;
+                                }
+
+
                             }
-
-
-                        }
+                        });
+                        };
 
                         /* click event for editing an appt*/
                         $('.appt-no-height').on('click',
@@ -204,18 +175,18 @@
                     var startHourOnly = this.id.replace('hour', '');
                     var startHour = parseInt(startHourOnly);
 
-                    var selectedDateDiv = $('.date-selected');
+                    var selectedDateDiv = $('#datepicker');
 
                     // Make the modal here!
-                    apptNewModalDialog(selectedDateDiv[0].innerText, startHour);
+                    apptNewModalDialog(selectedDateDiv.val(), startHour);
                 });
 
 
             /* Get the appointments for whatever date is selected */
             var getAppointmentsForSelectedDate = function() {
-                var selectedDateDiv = $('.date-selected');
-                var parts = selectedDateDiv[0].innerText.split('/');
-                showAppointmentsForDate(parts[2] + '-' + parts[1] + '-' + parts[0]);
+                var selectedDateDiv = $('#datepicker');
+                var parts = selectedDateDiv.val();
+                showAppointmentsForDate(parts);
             }
 
 
