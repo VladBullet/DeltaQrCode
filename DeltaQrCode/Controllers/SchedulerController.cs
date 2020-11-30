@@ -9,9 +9,9 @@ namespace DeltaQrCode.Controllers
     using System.Net;
     using System.Text;
 
-    using AppointmentsMvc.ViewModels;
 
     using DeltaQrCode.ModelsDto;
+    using DeltaQrCode.ViewModels.Scheduler;
 
     using Microsoft.AspNetCore.Authorization;
 

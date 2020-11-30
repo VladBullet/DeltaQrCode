@@ -20,7 +20,6 @@
 /* container for whole control */
 .date-control-container {
     height: 70vh; /* controls how many hours we'll see*/
-    background-color: cornflowerblue;
     margin: 10px 20px 0 10px;
     overflow: hidden;
 }
