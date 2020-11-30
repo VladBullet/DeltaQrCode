@@ -1,4 +1,5 @@
 ﻿@using DeltaQrCode.ModelsDto
+@using Microsoft.AspNetCore.Razor.TagHelpers
 @model DeltaQrCode.ViewModels.Scheduler.AppointmentModalVm
 
 <style>
@@ -32,19 +33,12 @@
             @Html.HiddenFor(model => model.Appointment.StartTime)
 
             <div class="form-group">
-
-                <!-- visbile, but disabled if only 1 pro in the company. -->
-                @*   <label for="ddlProfessionalModal" class="control-label col-md-3">For:</label>*@
-                @*@Html.DropDownListFor(model => model.Appointment.ProfessionalId,
-                    new SelectList(Model.ProfessionalsAccessableEmployeesDropDownModal, "Value", "Text", "Selected"),
-                    new { @class = "form-control half-margin-bottom margin150left", @id = "ddlProfessionalModal" })*@
-
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Appointment.StartTime_Date, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Appointment.StartTime_Date, new { htmlAttributes = new { @id = "tbStartTimeDate", @class = "form-control width200 half-margin-bottom" } })
+                    @Html.EditorFor(model => model.Appointment.StartTime_Date, new{ @id="datepickerModal",@class="form-control"})
                     @Html.ValidationMessageFor(model => model.Appointment.StartTime_Date, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -185,7 +179,9 @@
             }
         });
     });
-
+    $(function() {
+        $("#datepickerModal").datepicker({ minDate: new Date() }).datepicker("setDate", new Date());
+    });
 
 
 </script>
