@@ -17,41 +17,43 @@
 </style>
 
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">@(Model.Appointment.AppointmentIndex == 0 ? "Create Appointment" : "Edit Appointment")</h3>
+    <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
     @using (Html.BeginForm("EditModal", "Scheduler", FormMethod.Post, new { @id = "apptform" }))
     {
-        @Html.ValidationSummary()
+        @*@Html.ValidationSummary()*@
         @Html.AntiForgeryToken()
         <div class="modal-body modal-min-height">
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Appointment.AppointmentId)
-            @Html.HiddenFor(model => model.Appointment.AppointmentIndex)
-            @Html.HiddenFor(model => model.Appointment.StartTime)
+            @* @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+            @*@Html.HiddenFor(model => model.Appointment.AppointmentId)
+                @Html.HiddenFor(model => model.Appointment.AppointmentIndex)*@
+            @*@Html.HiddenFor(model => model.Appointment.StartTime)*@
 
             <div class="form-group">
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.StartTime_Date, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                @* @Html.LabelFor(model => model.Appointment.StartTime_Date, htmlAttributes: new { @class = "col-md-3 required-field" })*@
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Appointment.StartTime_Date, new{ @id="datepickerModal",@class="form-control"})
-                    @Html.ValidationMessageFor(model => model.Appointment.StartTime_Date, "", new { @class = "text-danger" })
+                    <input id="datepickerModal" type="text" class="form-control" placeholder="Selecteaza data" />
+                    @*@Html.EditorFor(model => model.Appointment.StartTime_Date, new{ @id="datepickerModal",@class="form-control"})*@
+                    @*@Html.ValidationMessageFor(model => model.Appointment.StartTime_Date, "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-md-3 required-field">Time</label>
                 <div class="col-md-9">
-
                     <div class="inline-block width100 half-margin-bottom">
-                        @Html.EditorFor(model => model.Appointment.StartTime_Hour, new { htmlAttributes = new { @class = "form-control" } })
+                        @* @Html.EditorFor(model => model.Appointment.StartTime_Hour, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <input type="number" class="form-control" asp-for="Appointment.StartTime_Hour" />
                     </div>
                     <div class="inline-block width100">
-                        @Html.EditorFor(model => model.Appointment.StartTime_Minutes, new { htmlAttributes = new { @class = "form-control" } })
+                        @*                        @Html.EditorFor(model => model.Appointment.StartTime_Minutes, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <input type="number" class="form-control" asp-for="Appointment.StartTime_Minutes" />
                     </div>
 
                     @Html.ValidationMessageFor(model => model.Appointment.StartTime_Hour, "", new { @class = "text-danger" })
@@ -63,7 +65,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Appointment.DurationInMinutes, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Appointment.DurationInMinutes, new { htmlAttributes = new { @class = "form-control width100 half-margin-bottom" } })
+                    @*@Html.EditorFor(model => model.Appointment.DurationInMinutes, new { htmlAttributes = new { @class = "form-control width100 half-margin-bottom" } })*@
+                    <input type="number" class="form-control" asp-for="Appointment.DurationInMinutes" />
                     @Html.ValidationMessageFor(model => model.Appointment.DurationInMinutes, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -149,7 +152,7 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-danger btn-ok" id="apptsSubmitButton">Submit</a>
+            <a class="btn btn-success btn-ok" id="apptsSubmitButton">Submit</a>
         </div>
     }
 
@@ -179,9 +182,7 @@
             }
         });
     });
-    $(function() {
-        $("#datepickerModal").datepicker({ minDate: new Date() }).datepicker("setDate", new Date());
-    });
+
 
 
 </script>

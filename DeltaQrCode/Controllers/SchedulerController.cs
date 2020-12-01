@@ -58,10 +58,11 @@ namespace DeltaQrCode.Controllers
         }
 
 
-        public ActionResult EditModalNew(string startDateStr, int startHour, string professionalId)
+        public ActionResult EditModalNew(string startDateStr, string startHour, string rampNr)
         {
             DateTime startDate = DateTime.Parse(startDateStr);
-            DateTime appointmentStart = startDate.AddHours(startHour);
+            var s = startHour.Split('_');
+            DateTime appointmentStart = startDate.AddHours(int.Parse(s[0])).AddMinutes(int.Parse(s[1]));
 
             var appointment = new AppointmentForProUiDto(appointmentStart);
             appointment.DurationInMinutes = 60;

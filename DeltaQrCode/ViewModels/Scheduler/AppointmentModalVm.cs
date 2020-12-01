@@ -15,17 +15,6 @@ namespace DeltaQrCode.ViewModels.Scheduler
     public class AppointmentModalVm
     {
 
-        /// <summary>
-        /// This is a list of other professionals this professional can view the calendar for.
-        /// This professional can also set appointments for them.
-        /// </summary>
-
-        /// <summary>
-        /// The list of ProfessionalsAccessableEmployees in a format MVC can use for selection.
-        /// </summary>
-        public IEnumerable<SelectListItem> ProfessionalsAccessableEmployeesDropDownModal;
-
-
         public DateTime ActiveDate { get; set; }
 
 

@@ -9,10 +9,6 @@ namespace DeltaQrCode.ModelsDto
 {
     using DeltaQrCode.Services;
 
-    /// <summary>
-    /// Appointments as shown in the UI.
-    /// Remember FillAdditionalUiProperties() and UpdateStartTimeFromAdditionalUiProperties() to get the dates right.   
-    /// </summary>
     public class AppointmentForProUiDto
     {
         public AppointmentForProUiDto()
@@ -135,7 +131,6 @@ namespace DeltaQrCode.ModelsDto
 
 
         [Display(Name = "Start Date")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime StartTime_Date { get; set; }
 
         [Display(Name = "Start Hour")]
