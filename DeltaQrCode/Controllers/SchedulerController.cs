@@ -81,13 +81,13 @@ namespace DeltaQrCode.Controllers
             appointment.NumeClient = "";
             appointment.PhoneNumber = "";
 
-            AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, appointment);
+            AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, appointment, CreateOrEdit.Create);
 
             return PartialView("_editAppointmentPartial", appointmentVm);
         }
 
 
-        public ActionResult EditModal(Guid? id, string professionalId)
+        public ActionResult EditModal(Guid? id, string startDateStr)
         {
             if (id == null)
             {
@@ -103,8 +103,14 @@ namespace DeltaQrCode.Controllers
             //}
 
             //AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, professionalId, appointment);
-
-            return PartialView("_editAppointmentPartial", new AppointmentModalVm() /*,appointmentVm*/);
+            DateTime startDate = DateTime.Parse(startDateStr);
+            var appointment = new AppointmentModalVm
+            {
+                Appointment = AppointmentForProUiDto.FakeList(startDate).FirstOrDefault(x => x.AppointmentId == id),
+                CreateOrEdit = CreateOrEdit.Edit,
+                ActiveDate = startDate
+            };
+            return PartialView("_editAppointmentPartial", appointment /*,appointmentVm*/);
         }
 
 

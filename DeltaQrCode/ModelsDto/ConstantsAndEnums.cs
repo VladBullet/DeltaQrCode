@@ -14,6 +14,11 @@ namespace DeltaQrCode.ModelsDto
     {
         Vulcanizare = 1,
         Mecanica = 2
+    }
 
+    public enum CreateOrEdit
+    {
+        Create = 1,
+        Edit = 2
     }
 }

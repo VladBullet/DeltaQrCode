@@ -16,7 +16,7 @@ namespace DeltaQrCode.ModelsDto
             return new List<AppointmentForProUiDto>()
                                                                 { new AppointmentForProUiDto()
                                                                       {
-                                                                          AppointmentId = Guid.NewGuid(),
+                                                                          AppointmentId = Guid.Parse("d724f1c8-173f-43bb-b60d-bbd2ccce900c"),
                                                                           StartTime_Date = dt.AddMinutes(30).AddHours(12),
                                                                           DurationInMinutes = 30,
                                                                           StartTime_Hour = 13,
@@ -33,7 +33,7 @@ namespace DeltaQrCode.ModelsDto
                                                                       },
                                                                     new AppointmentForProUiDto()
                                                                         {
-                                                                            AppointmentId = Guid.NewGuid(),
+                                                                            AppointmentId = Guid.Parse("d724f1c8-173f-43bb-b60d-bbd2ccce900b"),
                                                                             StartTime_Date = dt.AddMinutes(30).AddHours(13),
                                                                             DurationInMinutes = 30,
                                                                             StartTime_Hour = 13,
@@ -50,7 +50,7 @@ namespace DeltaQrCode.ModelsDto
                                                                         },
                                                                     new AppointmentForProUiDto()
                                                                         {
-                                                                            AppointmentId = Guid.NewGuid(),
+                                                                            AppointmentId = Guid.Parse("d724f1c8-173f-43bb-b60d-bbd2ccce900a"),
                                                                             StartTime_Date = dt.AddMinutes(30).AddHours(14),
                                                                             DurationInMinutes = 60,
                                                                             StartTime_Hour = 13,
