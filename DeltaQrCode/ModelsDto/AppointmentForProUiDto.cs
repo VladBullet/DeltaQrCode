@@ -11,6 +11,63 @@ namespace DeltaQrCode.ModelsDto
 
     public class AppointmentForProUiDto
     {
+        public static List<AppointmentForProUiDto> FakeList(DateTime dt)
+        {
+            return new List<AppointmentForProUiDto>()
+                                                                { new AppointmentForProUiDto()
+                                                                      {
+                                                                          AppointmentId = Guid.NewGuid(),
+                                                                          StartTime_Date = dt.AddMinutes(30).AddHours(12),
+                                                                          DurationInMinutes = 30,
+                                                                          StartTime_Hour = 13,
+                                                                          StartTime_Minutes = 0,
+                                                                          AppointmentType = AppointmentType.Vulcanizare,
+                                                                          CreatedTime = dt,
+                                                                          EmailAddress = "email@email.com",
+                                                                          NrMasina = "B 55 NWN",
+                                                                          NumeClient = "Vlad",
+                                                                          PhoneNumber = "+40748885529",
+                                                                          StartTime = dt.AddMinutes(30).AddHours(12),
+                                                                          IsConfirmed = true,
+                                                                          RampId = 1
+                                                                      },
+                                                                    new AppointmentForProUiDto()
+                                                                        {
+                                                                            AppointmentId = Guid.NewGuid(),
+                                                                            StartTime_Date = dt.AddMinutes(30).AddHours(13),
+                                                                            DurationInMinutes = 30,
+                                                                            StartTime_Hour = 13,
+                                                                            StartTime_Minutes = 30,
+                                                                            AppointmentType = AppointmentType.Vulcanizare,
+                                                                            CreatedTime = dt,
+                                                                            EmailAddress = "email@email.com",
+                                                                            NrMasina = "B 55 NWN",
+                                                                            NumeClient = "Vlad",
+                                                                            PhoneNumber = "+40748885529",
+                                                                            StartTime = dt.AddMinutes(30).AddHours(13),
+                                                                            IsConfirmed = true,
+                                                                            RampId = 1
+                                                                        },
+                                                                    new AppointmentForProUiDto()
+                                                                        {
+                                                                            AppointmentId = Guid.NewGuid(),
+                                                                            StartTime_Date = dt.AddMinutes(30).AddHours(14),
+                                                                            DurationInMinutes = 60,
+                                                                            StartTime_Hour = 13,
+                                                                            StartTime_Minutes = 0,
+                                                                            AppointmentType = AppointmentType.Vulcanizare,
+                                                                            CreatedTime = dt,
+                                                                            EmailAddress = "email@email.com",
+                                                                            NrMasina = "B 55 NWN",
+                                                                            NumeClient = "Vlad",
+                                                                            PhoneNumber = "+40748885529",
+                                                                            StartTime = dt.AddMinutes(30).AddHours(14),
+                                                                            IsConfirmed = true,
+                                                                            RampId = 2
+                                                                        }
+                                                                };
+        }
+
         public AppointmentForProUiDto()
         {
 
@@ -25,6 +82,7 @@ namespace DeltaQrCode.ModelsDto
         public Guid AppointmentId { get; set; }
 
         public int AppointmentIndex { get; set; }
+        public int RampId { get; set; }
 
 
         [Required]
@@ -32,22 +90,15 @@ namespace DeltaQrCode.ModelsDto
         [Range(1, int.MaxValue, ErrorMessage = "Please select an appointment type")]
         public AppointmentType AppointmentType { get; set; }
 
-        public string AppointmentTypeAsDisplay
-        {
-            get
-            {
-                return this.AppointmentType.ToDisplayString();
-            }
-        }
-
+        public string AppointmentTypeAsDisplay => this.AppointmentType.ToDisplayString();
 
         [Required]
         [StringLength(200, MinimumLength = 2)]
-        public string Forename { get; set; }
+        public string NrMasina { get; set; }
 
         [Required]
         [StringLength(200, MinimumLength = 2)]
-        public string Surname { get; set; }
+        public string NumeClient { get; set; }
 
         [Display(Name = "Email Address")]
         [StringLength(200, MinimumLength = 2)]
@@ -56,13 +107,7 @@ namespace DeltaQrCode.ModelsDto
 
         [Display(Name = "Phone Number")]
         [RegularExpression(@"^\+[1-9]{1}[0-9]{3,14}$", ErrorMessage = "Please enter a valid phone number"), StringLength(12)]
-        public string Telephone { get; set; } = "";
-
-        [Required]
-        [Display(Name = "Mobile")]
-        [RegularExpression(@"^\+[1-9]{1}[0-9]{3,14}$", ErrorMessage = "Please enter a valid phone number"), StringLength(12)]
-        public string TelephoneMobile { get; set; } = "";
-
+        public string PhoneNumber { get; set; } = "";
 
         #region "Appointment Time"
 

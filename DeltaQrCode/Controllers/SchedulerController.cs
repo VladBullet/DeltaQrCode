@@ -15,6 +15,8 @@ namespace DeltaQrCode.Controllers
 
     using Microsoft.AspNetCore.Authorization;
 
+    using Newtonsoft.Json;
+
     [Authorize]
     public class SchedulerController : Controller
     {
@@ -52,9 +54,18 @@ namespace DeltaQrCode.Controllers
                 dt = DateTime.Now.Date;
 
             //List<AppointmentForProUiDto> appointmentsList = _appointmentQueries.GetUiDto_AppointmentsForProfessionalOrEmployee(User.Identity.GetUserId(), professionalId, dt.Date, dt.Date.AddDays(1));
+            List<AppointmentForProUiDto> appointmentsList = AppointmentForProUiDto.FakeList(dt);
+            var rampIds = appointmentsList.Select(x => x.RampId).Distinct();
+            var result = new List<AppointmentsIndexVm>();
+            foreach (var item in rampIds)
+            {
+                var list = appointmentsList.Where(x => x.RampId == item).ToList();
+                var aux = new AppointmentsIndexVm(item, list);
+                result.Add(aux);
+            }
 
-            //return Json(appointmentsList, JsonRequestBehavior.AllowGet);
-            return Json(/*appointmentsList*/"");
+            return new JsonResult(result);
+            //return Json(/*appointmentsList*/"");
         }
 
 
@@ -66,9 +77,9 @@ namespace DeltaQrCode.Controllers
 
             var appointment = new AppointmentForProUiDto(appointmentStart);
             appointment.DurationInMinutes = 60;
-            appointment.Forename = "";
-            appointment.Surname = "";
-            appointment.TelephoneMobile = "";
+            appointment.NrMasina = "";
+            appointment.NumeClient = "";
+            appointment.PhoneNumber = "";
 
             AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, appointment);
 
@@ -99,7 +110,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditModal([Bind(include: "ProfessionalId, AppointmentId,AppointmentIndex,AppointmentType,Forename,Surname,EmailAddress,Telephone,TelephoneMobile,DurationInMinutes,IsCancelled,ProfessionalNotes,StartTime_Date,StartTime_Hour,StartTime_Minutes")] AppointmentForProUiDto appointment)
+        public ActionResult EditModal([Bind(include: "ProfessionalId, AppointmentId,AppointmentIndex,AppointmentType,NrMasina,NumeClient,EmailAddress,PhoneNumber,TelephoneMobile,DurationInMinutes,IsCancelled,ProfessionalNotes,StartTime_Date,StartTime_Hour,StartTime_Minutes")] AppointmentForProUiDto appointment)
         {
             if (ModelState.IsValid)
             {

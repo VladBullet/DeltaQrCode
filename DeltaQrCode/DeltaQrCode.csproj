@@ -34,8 +34,4 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview1-final" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\Scheduler\" />
-  </ItemGroup>
-
 </Project>
