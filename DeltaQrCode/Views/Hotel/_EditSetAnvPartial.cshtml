@@ -1,0 +1,215 @@
+﻿@using DeltaQrCode.ModelsDto
+@using Microsoft.AspNetCore.Razor.TagHelpers
+@model DeltaQrCode.ViewModels.HotelModalVM
+
+<style>
+    .modal-min-height {
+        min-height: 450px;
+    }
+
+    .required-field::before {
+        content: "*";
+    }
+
+    .margin150left {
+        margin-left: 150px;
+    }
+</style>
+
+<div class="modal-header">
+    @{ if (Model.ActionType == ActionType.Add)
+        {
+            <h3 id="myModalLabel">Add Set</h3>
+        }
+        else if (Model.ActionType == ActionType.Edit)
+        {
+            <h3 id = "myModalLabel" > Edit Set </h3>
+        }
+        else if (Model.ActionType == ActionType.Info)
+        {
+            <h3 id = "myModalLabel" > Info Set </h3>
+        }
+
+    }
+
+
+    <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+<div>
+    @using (Html.BeginForm("EditModal", "Hotel", FormMethod.Post, new { @id = "apptform" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="modal-body modal-min-height">
+
+
+        <div class="form-group">
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.NrAuto, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.NrAuto, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.NrAuto, "NrAuto", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Client, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.Client, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Client, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Marca, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.Marca, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Marca, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.NrBucati, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.NrBucati, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.NrBucati, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Diametru, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.Diametru, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Diametru, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Latime, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.Latime, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Latime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Inaltime, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.Inaltime, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Inaltime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.StangaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.StangaFata, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.StangaFata, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.StangaSpate, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.StangaSpate, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.StangaSpate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.DreaptaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.DreaptaFata, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.DreaptaFata, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.DreaptaSpate, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.DreaptaSpate, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.DreaptaSpate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Tip, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                <select asp-for="SetAnvelope.Tip" asp-items="Html.GetEnumSelectList(typeof (TyreType))"></select>
+
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Tip, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Evaluare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Evaluare, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Rand, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.Rand, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Rand, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SetAnvelope.Poz, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.SetAnvelope.Poz, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Poz, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+        <div>
+            <p id="serverErrorMsg" style="color:red; padding: 5px;"></p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-success btn-ok" id="apptsSubmitButton">Submit</a>
+        </div>
+    }
+
+</div>
+
+
+<script type="text/javascript">
+
+    $("#apptsSubmitButton").click(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("EditModal", "Hotel")",
+            data: $('#apptform').serialize(),
+            success: function (result) {
+                if (result == "success") {
+                    $('#myApptModal').modal('hide');
+                    //location.reload();
+                    var proIdModal = $('#ddlProfessionalModal').find(":selected").val();
+
+                    location.href = location.protocol + '//' + location.host + location.pathname + '&professionalIdString=' + proIdModal;
+
+                } else {
+                    $('#serverErrorMsg').html(result);
+                }
+            }
+        });
+    });
+
+
+
+</script>

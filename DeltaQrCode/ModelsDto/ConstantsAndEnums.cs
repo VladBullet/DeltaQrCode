@@ -16,9 +16,17 @@ namespace DeltaQrCode.ModelsDto
         Mecanica = 2
     }
 
-    public enum CreateOrEdit
+    public enum TyreType
     {
-        Create = 1,
-        Edit = 2
+        Summer = 1,
+        Winter = 2,
+        AllSeason = 3
+    }
+
+    public enum ActionType
+    {
+        Add = 1,
+        Edit = 2,
+        Info = 3
     }
 }

@@ -16,11 +16,20 @@
         <span class=" button input-group-text border-0" id="search-addon">
             <i class="fas fa-search"></i>
         </span>
+        <div style="margin-left:50px;" type="button" id="AddSetAnv" class="btn btn-success">Adauga anvelope</div>
     </div>
     <br />
 </div>
 <div id="tableResult" class="container">
-    <partial name="_HotelList" model="@Model"></partial>
+    <partial name="_HotelList" model="@Model" />
+</div>
+
+<div id="myHotelModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="partialInfo"></div>
+        </div>
+    </div>
 </div>
 
 @section Scripts{
@@ -44,5 +53,59 @@
                 $("#tableResult").load("/Hotel/Search", data);
             });
         });
+        var setAnvNewModalDialog = function () {
+            var url = "/Hotel/EditModalNew"; // the url to the controller
+            $.get(url,
+                function (data) {
+                    $('#partialInfo').html(data);
+                    $('#myHotelModal').modal('show');
+                });
+        };
+
+        var setAnvEditModalDialog = function (id, actionType) {
+
+            var url = "/Hotel/EditModal"; // the url to the controller
+            $.get(url + '?id=' + id + '&actionType=' + actionType,
+                function (data) {
+                    $('#partialInfo').html(data);
+                    $('#myHotelModal').modal('show');
+                });
+        };
+        var deleteSetAnvModalDialog = function (id) {
+
+            var url = "/Hotel/DeleteSetAnv"; // the url to the controller
+            $.get(url + '?id=' + id,
+                function (data) {
+                    $('#partialInfo').html(data);
+                    $('#myHotelModal').modal('show');
+                });
+        };
+
+        $('#AddSetAnv').on('click',
+            function (event) {
+                // dont allow the event to propagate
+                event.stopPropagation();
+                setAnvNewModalDialog();
+            });
+
+        $('.actionButton').on('click',
+            function (event) {
+                // dont allow the event to propagate
+                event.stopPropagation();
+                var id = $(this).attr("data-value");
+                var actionType = $(this).attr("data-actionType");
+
+                setAnvEditModalDialog(id, actionType);
+            });
+
+        $('.deleteButton').on('click',
+            function (event) {
+                // dont allow the event to propagate
+                event.stopPropagation();
+                var id = $(this).attr("data-value");
+                deleteSetAnvModalDialog(id);
+            });
     </script>
+
+
 }

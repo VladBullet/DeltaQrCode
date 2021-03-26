@@ -13,13 +13,16 @@
                 </div>
                 <div class="form-group col-md-12">
                     <label class="text-dark" asp-for="Password">Password</label>
+                    @{#if DEBUG}
+                    <label class="text-dark" asp-for="Password">P455w0rd</label>
+                    @{#endif}
                     <input class="form-control py-4" asp-for="Password" id="password" type="password" placeholder="********">
                 </div>
             </div>
             <div class="col-md-4">
                 @*<div class="form-group col-md-12">
-                    <a class="text-dark" id="forgot-password" asp-action="ForgotPass" asp-controller="Account">Forgot your password?</a>
-                </div>*@
+                        <a class="text-dark" id="forgot-password" asp-action="ForgotPass" asp-controller="Account">Forgot your password?</a>
+                    </div>*@
                 <div class="form-group col-md-12">
                     <button id="btnLogin" class="btn btn-primary btn-block btn-marketing rounded-pill" type="submit">Login</button>
                 </div>

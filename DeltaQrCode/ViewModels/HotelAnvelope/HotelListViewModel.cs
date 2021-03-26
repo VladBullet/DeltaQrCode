@@ -11,14 +11,14 @@ namespace DeltaQrCode.ViewModels
         {
 
         }
-        public HotelListViewModel(List<HotelViewModel> list, int totalPagesNR, int currentPage)
+        public HotelListViewModel(List<SetAnvelopeVM> list, int totalPagesNR, int currentPage)
         {
             List = list;
             TotalPages = totalPagesNR;
             CurrentPage = currentPage;
         }
 
-        public List<HotelViewModel> List { get; set; }
+        public List<SetAnvelopeVM> List { get; set; }
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
 

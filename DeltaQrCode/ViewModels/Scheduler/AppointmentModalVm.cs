@@ -17,7 +17,7 @@ namespace DeltaQrCode.ViewModels.Scheduler
 
         public DateTime ActiveDate { get; set; }
 
-        public CreateOrEdit CreateOrEdit { get; set; }
+        public ActionType CreateOrEdit { get; set; }
 
         public AppointmentForProUiDto Appointment { get; set; }
 
@@ -25,15 +25,15 @@ namespace DeltaQrCode.ViewModels.Scheduler
         {
             Appointment = new AppointmentForProUiDto();
         }
-        public AppointmentModalVm(CreateOrEdit createOrEdit)
+        public AppointmentModalVm(ActionType createOrEdit)
         {
             Appointment = new AppointmentForProUiDto();
             CreateOrEdit = createOrEdit;
         }
-        public AppointmentModalVm(string userId, AppointmentForProUiDto appointment, CreateOrEdit? creteOrEdit = null)
+        public AppointmentModalVm(string userId, AppointmentForProUiDto appointment, ActionType? creteOrEdit = null)
         {
             Appointment = appointment;
-            CreateOrEdit = CreateOrEdit.Create;
+            CreateOrEdit = ActionType.Add;
         }
     }
 }

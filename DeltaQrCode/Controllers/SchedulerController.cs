@@ -81,9 +81,9 @@ namespace DeltaQrCode.Controllers
             appointment.NumeClient = "";
             appointment.PhoneNumber = "";
 
-            AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, appointment, CreateOrEdit.Create);
+            AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, appointment, ActionType.Add);
 
-            return PartialView("_editAppointmentPartial", appointmentVm);
+            return PartialView("_EditAppointmentPartial", appointmentVm);
         }
 
 
@@ -107,10 +107,10 @@ namespace DeltaQrCode.Controllers
             var appointment = new AppointmentModalVm
             {
                 Appointment = AppointmentForProUiDto.FakeList(startDate).FirstOrDefault(x => x.AppointmentId == id),
-                CreateOrEdit = CreateOrEdit.Edit,
+                CreateOrEdit = ActionType.Edit,
                 ActiveDate = startDate
             };
-            return PartialView("_editAppointmentPartial", appointment /*,appointmentVm*/);
+            return PartialView("_EditAppointmentPartial", appointment /*,appointmentVm*/);
         }
 
 
