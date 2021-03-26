@@ -11,14 +11,14 @@ namespace DeltaQrCode.Controllers
 
 
     using DeltaQrCode.ModelsDto;
-    using DeltaQrCode.ViewModels.Scheduler;
+    using DeltaQrCode.ViewModels.Appointments;
 
     using Microsoft.AspNetCore.Authorization;
 
     using Newtonsoft.Json;
 
     [Authorize]
-    public class SchedulerController : Controller
+    public class AppointmentsController : Controller
     {
         // GET: Appointments
         public ActionResult Index(string startDateString, string activeDateString, string professionalIdString)
@@ -65,7 +65,6 @@ namespace DeltaQrCode.Controllers
             }
 
             return new JsonResult(result);
-            //return Json(/*appointmentsList*/"");
         }
 
 

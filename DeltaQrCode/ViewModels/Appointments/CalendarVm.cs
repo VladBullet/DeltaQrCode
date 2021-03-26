@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DeltaQrCode.ViewModels.Scheduler
+namespace DeltaQrCode.ViewModels.Appointments
 {
     using AppointmentsDb.ModelsDto.Custom;
 
@@ -13,9 +13,6 @@ namespace DeltaQrCode.ViewModels.Scheduler
 
     public class CalendarVm
     {
-        /// <summary>
-        /// The list of ProfessionalsAccessableEmployees in a format MVC can use for selection.
-        /// </summary>
         public List<DateTime> AvailableDates { get; set; }
 
         public DateTime ActiveDate { get; set; }

@@ -22,13 +22,20 @@ namespace DeltaQrCode.Models
                 Error = null
             };
         }
-        public static Result<T> ResultError(T obj, Exception er)
+        public static Result<T> ResultError(T obj, Exception er, string errorMessage = null)
         {
+            if (string.IsNullOrEmpty(errorMessage))
+                return new Result<T>
+                {
+                    Successful = false,
+                    Entity = obj,
+                    Error = er
+                };
             return new Result<T>
             {
                 Successful = false,
                 Entity = obj,
-                Error = er
+                Error = new Exception(errorMessage, er)
             };
         }
 

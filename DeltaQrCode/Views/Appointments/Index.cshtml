@@ -1,5 +1,5 @@
 ﻿@using System.Security.Cryptography.X509Certificates
-@model DeltaQrCode.ViewModels.Scheduler.CalendarVm
+@model DeltaQrCode.ViewModels.Appointments.CalendarVm
 
 @{
     ViewBag.Title = "Calendar";
@@ -69,7 +69,7 @@
             };
 
             var apptNewModalDialog = function(startDate, startHour, rampNr) {
-                var url = "/Scheduler/EditModalNew"; // the url to the controller
+                var url = "/Appointments/EditModalNew"; // the url to the controller
                 $.get(url + '?startDateStr=' + startDate + '&startHour=' + startHour + '&rampNr=' + rampNr,
                     function(data) {
                         $('#partialInfo').html(data);
@@ -83,7 +83,7 @@
 
             var apptEditModalDialog = function(id, startHour) { // TODO: REMOVE startHour param after link with db. Now it is used for fakeList creation
 
-                var url = "/Scheduler/EditModal"; // the url to the controller
+                var url = "/Appointments/EditModal"; // the url to the controller
                 $.get(url + '?id=' + id + '&startDateStr=' + startHour  ,
                     function(data) {
                         $('#partialInfo').html(data);
@@ -99,7 +99,7 @@
             var showAppointmentsForDate = function(calendarDate) {
 
 
-                $.get('@Url.Action("GetAppointmentsForDate", "Scheduler")',
+                $.get('@Url.Action("GetAppointmentsForDate", "Appointments")',
                     { apptDate: calendarDate },
                     function(response) {
 
@@ -170,7 +170,7 @@
 
                                 var fullId = this.id.replace('appt', '');
                                 var selectedDateDiv = $('#datepicker');
-                                apptEditModalDialog(fullId, selectedDateDiv.val()); 
+                                apptEditModalDialog(fullId, selectedDateDiv.val());
                             });
 
                         /* scroll to a better position */

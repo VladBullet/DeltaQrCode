@@ -1,6 +1,6 @@
 ﻿@using DeltaQrCode.ModelsDto
 @using Microsoft.AspNetCore.Razor.TagHelpers
-@model DeltaQrCode.ViewModels.Scheduler.AppointmentModalVm
+@model DeltaQrCode.ViewModels.Appointments.AppointmentModalVm
 
 <style>
     .modal-min-height {
@@ -21,7 +21,7 @@
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
-    @using (Html.BeginForm("EditModal", "Scheduler", FormMethod.Post, new { @id = "apptform" }))
+    @using (Html.BeginForm("EditModal", "Appointments", FormMethod.Post, new { @id = "apptform" }))
     {
 
         @Html.AntiForgeryToken()

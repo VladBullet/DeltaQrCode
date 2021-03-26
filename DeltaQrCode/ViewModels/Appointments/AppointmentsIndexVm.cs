@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DeltaQrCode.ViewModels.Scheduler
+namespace DeltaQrCode.ViewModels.Appointments
 {
     using DeltaQrCode.ModelsDto;
 
