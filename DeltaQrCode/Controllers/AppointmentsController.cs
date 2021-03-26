@@ -9,7 +9,7 @@ namespace DeltaQrCode.Controllers
     using System.Net;
     using System.Text;
 
-
+    using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.ViewModels.Appointments;
 
@@ -27,8 +27,8 @@ namespace DeltaQrCode.Controllers
 
             // Get the appointments with a list of employees details this user can access
             CalendarVm calendarVm = new CalendarVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value);
-            var startDate = GetStartDateFromStringParam(startDateString);
-            var activeDate = GetStartDateFromStringParam(activeDateString);
+            var startDate = Helpers.GetStartDateFromStringParam(startDateString);
+            var activeDate = Helpers.GetStartDateFromStringParam(activeDateString);
 
             if (startDate < DateTime.Now) startDate = DateTime.Now;
             if (activeDate < startDate) activeDate = startDate;
@@ -38,7 +38,7 @@ namespace DeltaQrCode.Controllers
                 startDate = activeDate.AddDays(-2);
             }
 
-            calendarVm.AvailableDates = CreateAvailableDatesList(startDate);
+            calendarVm.AvailableDates = Helpers.CreateAvailableDatesList(startDate);
             calendarVm.ActiveDate = activeDate;
 
             return View(calendarVm);
@@ -141,43 +141,7 @@ namespace DeltaQrCode.Controllers
 
 
 
-        #region "Helpers"
-
-        DateTime GetStartDateFromStringParam(string dateString)
-        {
-            if (String.IsNullOrWhiteSpace(dateString))
-            {
-                dateString = DateTime.Now.Date.ToString();
-            }
-
-            DateTime dt;
-            if (DateTime.TryParse(dateString, out dt))
-            {
-                return dt;
-            }
-
-            return DateTime.Now;
-
-        }
-
-        /// <summary>
-        /// Return a list of dates
-        /// </summary>
-        /// <param name="startDate"></param>
-        /// <returns></returns>
-        List<DateTime> CreateAvailableDatesList(DateTime startDate)
-        {
-            var numberOfDaysToShow = 31;
-            List<DateTime> availableDatesList = new List<DateTime>();
-            for (int i = 0; i < numberOfDaysToShow; i++)
-            {
-                availableDatesList.Add(startDate.Date.AddDays(i));
-            }
-
-            return availableDatesList;
-        }
-
-        #endregion
+     
 
 
     }

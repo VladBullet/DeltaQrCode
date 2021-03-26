@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 namespace DeltaQrCode.ModelsDto
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Security.Policy;
 
-    public class ConstantsAndEnums
+    public static class ConstantsAndEnums
     {
+
+        public static readonly Dictionary<int, string> RowsDictionary = new Dictionary<int, string> { { 1, "A" }, { 2, "B" }, { 3, "C" }, { 4, "D" }, { 5, "E" } };
+
+        public static readonly string[] Rows = { "A", "B", "C", "D", "E" };
+        
+        public static readonly int PozMax = 25; // TODO : --- VLAD --- : MAKE SURE WHAT THE MAX LIMITS ARE AND SET THEM RIGHT
+
     }
     public enum AppointmentType
     {

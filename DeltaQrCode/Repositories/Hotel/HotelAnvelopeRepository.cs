@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 namespace DeltaQrCode.Repositories
 {
     using DeltaQrCode.Data;
+    using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
+    using DeltaQrCode.ModelsDto;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -61,6 +63,24 @@ namespace DeltaQrCode.Repositories
             {
                 return Result<CaSetAnvelope>.ResultError(null, er, "Ceva nu a mers bine la modificarea setului de anvelope!");
             }
+        }
+
+        public async Task<Result<List<Position>>> GetAvailablePositionsAsync()
+        {
+            try
+            {
+                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie)).ToListAsync();
+                var allCombinations = Helpers.GetAllCombinationsRowsAndPositions();
+                var availablePositions = allCombinations.Except(occupiedPositions).ToList();
+
+                return Result<List<Position>>.ResultOk(availablePositions);
+            }
+            catch (Exception er)
+            {
+                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
+            }
+
+
         }
 
         public async Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
