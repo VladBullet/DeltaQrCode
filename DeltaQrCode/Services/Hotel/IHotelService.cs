@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Services.Hotel
 {
-    interface IHotelService
+    public interface IHotelService
     {
     }
 }
