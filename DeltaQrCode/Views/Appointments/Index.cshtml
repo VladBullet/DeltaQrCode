@@ -81,7 +81,7 @@
                     });
             };
 
-            var apptEditModalDialog = function(id, startHour) { // TODO: REMOVE startHour param after link with db. Now it is used for fakeList creation
+            var apptEditModalDialog = function(id, startHour) { // TODO --- VLAD --- : REMOVE startHour param after link with db. Now it is used for fakeList creation
 
                 var url = "/Appointments/EditModal"; // the url to the controller
                 $.get(url + '?id=' + id + '&startDateStr=' + startHour  ,

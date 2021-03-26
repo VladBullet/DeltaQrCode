@@ -17,6 +17,9 @@ using DeltaQrCode.Services;
 
 namespace DeltaQrCode
 {
+    using DeltaQrCode.Repositories;
+    using DeltaQrCode.Services.Hotel;
+
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
@@ -44,6 +47,11 @@ namespace DeltaQrCode
             // Register Services for injection
             services.AddScoped<IQrService, QrService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IHotelService, HotelService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+
+            services.AddScoped<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
+            services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
 
             // DBContexts
             // for data
