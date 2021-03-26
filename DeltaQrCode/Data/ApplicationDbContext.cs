@@ -1,17 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using DeltaQrCode.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DeltaQrCode.Data
 {
     public partial class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext()
+        {
+        }
 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public virtual DbSet<CaAppointments> CaAppointments { get; set; }
         public virtual DbSet<CaClient> CaClient { get; set; }
+        public virtual DbSet<CaLogOperatiune> CaLogOperatiune { get; set; }
+        public virtual DbSet<CaMarca> CaMarca { get; set; }
+        public virtual DbSet<CaOperatiuneSchimbAnvelope> CaOperatiuneSchimbAnvelope { get; set; }
+        public virtual DbSet<CaServicetypes> CaServicetypes { get; set; }
+        public virtual DbSet<CaSetAnvelope> CaSetAnvelope { get; set; }
+        public virtual DbSet<CaUsers> CaUsers { get; set; }
+        public virtual DbSet<HistoryAnvelope> HistoryAnvelope { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -200,10 +213,270 @@ namespace DeltaQrCode.Data
 
                 entity.Property(e => e.ZileExpirareAbonament).HasColumnName("zile_expirare_abonament");
             });
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
 
+            modelBuilder.Entity<CaAppointments>(entity =>
+            {
+                entity.ToTable("ca_appointments");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ApptIndex).HasColumnName("appt_index");
+
+                entity.Property(e => e.DataAppointment)
+                    .HasColumnName("data_appointment")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DataIntroducere)
+                    .IsRequired()
+                    .HasColumnName("data_introducere")
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.NrMasina)
+                    .IsRequired()
+                    .HasColumnName("nr_masina")
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.NrTelefon)
+                    .IsRequired()
+                    .HasColumnName("nr_telefon")
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.NumeClient)
+                    .IsRequired()
+                    .HasColumnName("nume_client")
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.OraInceput)
+                    .HasColumnName("ora_inceput")
+                    .HasColumnType("time");
+
+                entity.Property(e => e.Serviciu)
+                    .HasColumnName("serviciu")
+                    .HasColumnType("varchar(45)");
+            });
+
+            modelBuilder.Entity<CaLogOperatiune>(entity =>
+            {
+                entity.ToTable("ca_log_operatiune");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.AjunsLaTimp).HasColumnType("bit(1)");
+            });
+
+            modelBuilder.Entity<CaMarca>(entity =>
+            {
+                entity.ToTable("ca_marca");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Label)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
+            });
+
+            modelBuilder.Entity<CaOperatiuneSchimbAnvelope>(entity =>
+            {
+                entity.ToTable("ca_operatiune_schimb_anvelope");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.DataSchimb).HasColumnType("datetime");
+
+                entity.Property(e => e.NumarInmatriculare)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Observatii).HasColumnType("varchar(256)");
+
+                entity.Property(e => e.OperatiuneFinalizata).HasColumnType("bit(1)");
+
+                entity.Property(e => e.OraInceput).HasColumnType("time");
+
+                entity.Property(e => e.OraSfarsit).HasColumnType("time");
+
+                entity.Property(e => e.PersoanaContact)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+            });
+
+            modelBuilder.Entity<CaServicetypes>(entity =>
+            {
+                entity.ToTable("ca_servicetypes");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Label)
+                    .IsRequired()
+                    .HasColumnName("label")
+                    .HasColumnType("varchar(45)");
+            });
+
+            modelBuilder.Entity<CaSetAnvelope>(entity =>
+            {
+                entity.ToTable("ca_set_anvelope");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.DataUltimaModificare).HasColumnType("datetime");
+
+                entity.Property(e => e.Deleted).HasColumnType("bit(1)");
+
+                entity.Property(e => e.Dimensiuni)
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.Evaluare)
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.NumarInmatriculare)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.NumarTelefon)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.NumeClient)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
+
+                entity.Property(e => e.NumeSet)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Pozitie)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Rand)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.StatusCurent)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.TipSezon)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Uzura)
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
+            });
+
+            modelBuilder.Entity<CaUsers>(entity =>
+            {
+                entity.ToTable("ca_users");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.UserAccount)
+                    .HasName("user_account")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.UserAccount)
+                    .IsRequired()
+                    .HasColumnName("user_account")
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.UserCompany)
+                    .IsRequired()
+                    .HasColumnName("user_company")
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.UserEmailAddress)
+                    .IsRequired()
+                    .HasColumnName("user_email_address")
+                    .HasColumnType("varchar(60)");
+
+                entity.Property(e => e.UserFirstName)
+                    .IsRequired()
+                    .HasColumnName("user_first_name")
+                    .HasColumnType("varchar(40)");
+
+                entity.Property(e => e.UserLastName)
+                    .IsRequired()
+                    .HasColumnName("user_last_name")
+                    .HasColumnType("varchar(40)");
+
+                entity.Property(e => e.UserLock)
+                    .HasColumnName("user_lock")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.UserMobile)
+                    .IsRequired()
+                    .HasColumnName("user_mobile")
+                    .HasColumnType("varchar(12)");
+
+                entity.Property(e => e.UserPassword)
+                    .IsRequired()
+                    .HasColumnName("user_password")
+                    .HasColumnType("varchar(120)");
+
+                entity.Property(e => e.UserPhone)
+                    .HasColumnName("user_phone")
+                    .HasColumnType("varchar(15)");
+
+                entity.Property(e => e.UserRights)
+                    .IsRequired()
+                    .HasColumnName("user_rights")
+                    .HasColumnType("text");
+
+                entity.Property(e => e.UserRightsAdmin)
+                    .IsRequired()
+                    .HasColumnName("user_rights_admin")
+                    .HasColumnType("varchar(4)")
+                    .HasDefaultValueSql("'0000'");
+
+                entity.Property(e => e.UserRightsBycompany)
+                    .IsRequired()
+                    .HasColumnName("user_rights_bycompany")
+                    .HasColumnType("varchar(255)");
+            });
+
+            modelBuilder.Entity<HistoryAnvelope>(entity =>
+            {
+                entity.ToTable("history_anvelope");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Changes)
+                    .IsRequired()
+                    .HasColumnType("varchar(256)");
+
+                entity.Property(e => e.DataModificare).HasColumnType("datetime");
+            });
         }
     }
 }
