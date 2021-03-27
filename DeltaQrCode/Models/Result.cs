@@ -38,6 +38,22 @@ namespace DeltaQrCode.Models
                 Error = new Exception(errorMessage, er)
             };
         }
+        public static Result<T> ResultError(Exception er, string errorMessage = null)
+        {
+            if (string.IsNullOrEmpty(errorMessage))
+                return new Result<T>
+                {
+                    Successful = false,
+                    Entity = null,
+                    Error = er
+                };
+            return new Result<T>
+            {
+                Successful = false,
+                Entity = null,
+                Error = new Exception(errorMessage, er)
+            };
+        }
 
     }
     public enum Operatiune

@@ -15,7 +15,7 @@ namespace DeltaQrCode.ModelsDto
 
         public static readonly string[] Rows = { "A", "B", "C", "D", "E" };
         
-        public static readonly int PozMax = 25; // TODO : --- VLAD --- : MAKE SURE WHAT THE MAX LIMITS ARE AND SET THEM RIGHT
+        public static readonly int PozMax = 5; // TODO : --- VLAD --- : MAKE SURE WHAT THE MAX LIMITS ARE AND SET THEM RIGHT
 
     }
     public enum AppointmentType

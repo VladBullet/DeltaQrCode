@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.ModelsDto
 {
-    using DeltaQrCode.Services;
+    using DeltaQrCode.HelpersAndExtensions;
 
     public class AppointmentForProUiDto
     {

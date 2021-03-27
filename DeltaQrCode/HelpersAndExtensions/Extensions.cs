@@ -14,7 +14,7 @@ namespace DeltaQrCode.HelpersAndExtensions
         #region Encription
         public static string ToMd5(this string input)
         {
-            return Helpers.MD5Hash(input);
+            return EncriptionHelpers.MD5Hash(input);
         }
         #endregion
 

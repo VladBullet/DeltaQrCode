@@ -23,19 +23,13 @@ namespace DeltaQrCode.Models
         public string EmailAddress { get; set; }
 
         public DateTime StartTime { get; set; }
-        public int StartTime_Hour { get; set; }
-        public int StartTime_Minutes { get; set; }
         public int DurationInMinutes { get; set; }
-
-        public string StartTimeString => StartTime_Hour.ToString() + ":" + StartTime_Minutes + ":00";
 
         public DateTime CreatedTime { get; set; }
         public bool IsConfirmed { get; set; }
         public bool IsCancelled { get; set; }
         public DateTime CancelledTime { get; set; }
         public string ProfessionalNotes { get; set; }
-
-
 
     }
 
