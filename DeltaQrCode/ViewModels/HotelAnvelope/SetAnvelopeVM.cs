@@ -14,7 +14,7 @@ namespace DeltaQrCode.ViewModels
         public string NumarInmatriculare { get; set; }
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
-        public string Pozitie { get; set; }
+        public Position Position { get; set; }
         public int? MarcaId { get; set; }
         public string NumeSet { get; set; }
         public int NrBucati { get; set; }
@@ -50,7 +50,6 @@ namespace DeltaQrCode.ViewModels
                 TipSezon="nush",
                 Evaluare=10,
                 //Rand=1,
-                Pozitie="A3"
                 },
                 new SetAnvelopeVM {
 
@@ -67,7 +66,6 @@ namespace DeltaQrCode.ViewModels
                 TipSezon="nush",
                 Evaluare=10,
                 //Rand=1,
-                Pozitie="B3"
 
                 },
                 new SetAnvelopeVM {
@@ -85,7 +83,6 @@ namespace DeltaQrCode.ViewModels
                 TipSezon="nush",
                 Evaluare=10,
                 //Rand=1,
-                Pozitie="D2"
 
                 }
             };

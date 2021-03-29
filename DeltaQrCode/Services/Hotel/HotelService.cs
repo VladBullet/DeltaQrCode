@@ -47,7 +47,7 @@ namespace DeltaQrCode.Services.Hotel
                 set.Uzura = "{ " + setAnv.UzuraString + " }";
 
                 // Set right position
-                var position = setAnv.Pozitie.ToPosition();
+                var position = setAnv.Position;
                 set.Pozitie = position.Poz;
                 set.Rand = position.Rand;
 
@@ -74,6 +74,11 @@ namespace DeltaQrCode.Services.Hotel
             try
             {
                 var set = _mapper.Map<CaSetAnvelope>(setAnv);
+
+                var position = setAnv.Position;
+                set.Pozitie = position.Poz;
+                set.Rand = position.Rand;
+
                 var value = await _hotelRepository.UpdateSetAnvelopeAsync(set);
                 var model = _mapper.Map<SetAnvelopeVM>(value);
                 return Result<SetAnvelopeVM>.ResultOk(model);

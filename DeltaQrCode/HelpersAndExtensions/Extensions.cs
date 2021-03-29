@@ -23,10 +23,11 @@ namespace DeltaQrCode.HelpersAndExtensions
 
         public static Position ToPosition(this string input)
         {
-            // split string - get string[0] and 1
+            var rand = input[0].ToString();
+            var pozitie = input[1].ToString();
 
-            // return new Position(rand, poz)
-            return null;
+            return new Position(rand, pozitie);
+
         }
 
         public static string ToJson(this Dimensiuni dim)
