@@ -7,13 +7,15 @@ using DeltaQrCode.ViewModels;
 
 namespace DeltaQrCode.Services.Hotel
 {
+    using DeltaQrCode.ModelsDto;
+
     public interface IHotelService
     {
-        Task<Result<SetAnvelopeVM>> GetSetAnvelopeByIdAsync(int id);
-        Task<Result<SetAnvelopeVM>> AddSetAnvelopeAsync(SetAnvelopeVM setAnv);
-        Task<Result<SetAnvelopeVM>> UpdateSetAnvelopeAsync(SetAnvelopeVM setAnv);
+        Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id);
+        Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv);
+        Task<Result<SetAnvelopeDto>> UpdateSetAnvelopeAsync(SetAnvelopeDto setAnv);
         Task<Result<List<Position>>> GetAvailablePositionsAsync();
-        Task<Result<List<SetAnvelopeVM>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
-        Task<Result<SetAnvelopeVM>> DeleteSetAnvelopeAsync(int id);
+        Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
+        Task<Result<SetAnvelopeDto>> DeleteSetAnvelopeAsync(int id);
     }
 }

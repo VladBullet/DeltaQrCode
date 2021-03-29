@@ -11,50 +11,68 @@ namespace DeltaQrCode.Controllers
     using DeltaQrCode.ModelsDto;
     using System.Text;
     using DeltaQrCode.HelpersAndExtensions;
+    using DeltaQrCode.Services.Hotel;
+    using DeltaQrCode.ViewModels.HotelAnvelope;
+
     using Microsoft.AspNetCore.Authorization;
 
     [Authorize]
     public class HotelController : Controller
     {
+        private readonly IHotelService _hotelService;
         private const int PageSize = 20;
-        public IActionResult Index()
+
+        public HotelController(IHotelService hotelService)
         {
-            var list = SetAnvelopeVM.fakelist();
-            int count = (int)Math.Ceiling((decimal)list.Count / (decimal)20);
-            list = list.Skip(0).Take(PageSize).ToList();
+            _hotelService = hotelService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            //var list = SetAnvelopeVM.fakelist();
+            var result = await _hotelService.SearchAnvelopeAsync(string.Empty, 1, 20);
+            var list = new List<SetAnvelopeDto>();
+            int count = 0;
+            if (result.Successful)
+            {
+                count = (int)Math.Ceiling((decimal)result.Entity.Count / (decimal)20);
+                list = result.Entity.Skip(0).Take(PageSize).ToList();
+            }
+
             var model = new HotelListViewModel(list, count, 1);
             return View(model);
         }
 
-        public IActionResult Search(string searchString = null, int? page = 1)
+        public async Task<IActionResult> Search(string searchString = null, int? page = 1)
         {
-            var list = SetAnvelopeVM.fakelist();
-            int count = (int)Math.Ceiling((decimal)list.Count / (decimal)PageSize);
-            if (!string.IsNullOrEmpty(searchString))
+            var result = await _hotelService.SearchAnvelopeAsync(searchString, page != null ? page.Value : 1, 20);
+            var list = new List<SetAnvelopeDto>();
+            int count = 0;
+            if (result.Successful)
             {
-                list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower())).ToList();
+                count = (int)Math.Ceiling((decimal)result.Entity.Count / (decimal)20);
+                list = result.Entity.Skip(0).Take(PageSize).ToList();
             }
-            list = list.Skip((page.Value - 1) * PageSize).Take(PageSize).ToList();
-            var model = new HotelListViewModel(list, count, page.Value);
+
+            var model = new HotelListViewModel(list, count, 1);
 
             return PartialView("_HotelList", model);
         }
 
-        public ActionResult EditModal(int id, string actionType)
+        public IActionResult EditModal(int id, string actionType)
         {
             ActionType actType = ActionType.Edit;
             if (actionType == "info")
             {
                 actType = ActionType.Info;
             }
-            var set = new SetAnvelopeVM();
+            var set = new AddEditSetAnvelopeVM();
 
             HotelModalVM setVm = new HotelModalVM(set, actType);
 
             return PartialView("_EditSetAnvPartial", setVm);
         }
 
-        public ActionResult EditModalNew()
+        public IActionResult EditModalNew()
         {
             return PartialView("_EditSetAnvPartial", new HotelModalVM() { ActionType = ActionType.Add });
         }
@@ -62,27 +80,11 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditModal([Bind(include: "")] SetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> EditModal([Bind(include: "Id, NumarInmatriculare, NumeClient, NumarTelefon, Rand, Pozitie, MarcaId, NumeSet, NrBucati, Diametru, Latime, Inaltime, StangaFata, StangaSpate, DreaptaFata, DreaptaSpate, TipSezon, Evaluare, StatusCurent, DataUltimaModificare, Deleted")] AddEditSetAnvelopeVM setAnvelope)
         {
-            if (ModelState.IsValid)
-            {
+            // setAnvelope 
 
-                return Content("success");
-            }
-            else
-            {
-                // List the errors.
-                StringBuilder sbError = new StringBuilder();
-                foreach (var row in ModelState.Values)
-                {
-                    foreach (var err in row.Errors)
-                    {
-                        sbError.AppendLine(err.ErrorMessage);
-                    }
-                }
-                return Content(sbError.ToString());
-            }
-
+            return null;
         }
     }
 }

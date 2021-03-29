@@ -7,9 +7,9 @@ namespace DeltaQrCode.ModelsDto
 {
     public class Uzura
     {
-        public string StangaFata { get; set; }
-        public string StangaSpate { get; set; }
-        public string DreaptaFata { get; set; }
-        public string DreaptaSpate { get; set; }
+        public string StF { get; set; }
+        public string StS { get; set; }
+        public string DrF { get; set; }
+        public string DrS { get; set; }
     }
 }

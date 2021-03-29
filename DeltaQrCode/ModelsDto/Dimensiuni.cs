@@ -7,8 +7,8 @@ namespace DeltaQrCode.ModelsDto
 {
     public class Dimensiuni
     {
-        public string Diametru { get; set; }
-        public string Latime { get; set; }
-        public string Inaltime { get; set; }
+        public string Diam { get; set; }
+        public string Lat { get; set; }
+        public string H { get; set; }
     }
 }

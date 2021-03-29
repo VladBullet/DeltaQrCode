@@ -6,13 +6,15 @@ using DeltaQrCode.ModelsDto;
 
 namespace DeltaQrCode.ViewModels
 {
+    using DeltaQrCode.ViewModels.HotelAnvelope;
+
     public class HotelModalVM
     {
         public HotelModalVM()
         {
 
         }
-        public HotelModalVM(SetAnvelopeVM set, ActionType actionType)
+        public HotelModalVM(AddEditSetAnvelopeVM set, ActionType actionType)
         {
             SetAnvelope = set;
             ActionType = actionType;
@@ -20,7 +22,7 @@ namespace DeltaQrCode.ViewModels
 
 
         public TyreType Tip { get; set; }
-        public SetAnvelopeVM SetAnvelope { get; set; }
+        public AddEditSetAnvelopeVM SetAnvelope { get; set; }
         public ActionType ActionType { get; set; }
     }
 

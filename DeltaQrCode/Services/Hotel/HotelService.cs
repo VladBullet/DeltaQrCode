@@ -9,6 +9,7 @@ namespace DeltaQrCode.Services.Hotel
 
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
+    using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.ViewModels;
 
@@ -25,63 +26,69 @@ namespace DeltaQrCode.Services.Hotel
             _mapper = mapper;
         }
 
-        public async Task<Result<SetAnvelopeVM>> GetSetAnvelopeByIdAsync(int id)
+        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id)
         {
             try
             {
                 var value = await _hotelRepository.GetSetAnvelopeByIdAsync(id);
-                var model = _mapper.Map<SetAnvelopeVM>(value);
-                return Result<SetAnvelopeVM>.ResultOk(model);
+                var model = _mapper.Map<SetAnvelopeDto>(value);
+                return Result<SetAnvelopeDto>.ResultOk(model);
             }
             catch (Exception er)
             {
-                return Result<SetAnvelopeVM>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
+                return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
             }
         }
-        public async Task<Result<SetAnvelopeVM>> AddSetAnvelopeAsync(SetAnvelopeVM setAnv)
+        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv)
         {
             try
             {
-                var set = _mapper.Map<CaSetAnvelope>(setAnv);
-                set.Dimensiuni = "{ " + setAnv.DimensiuniString + " }";
-                set.Uzura = "{ " + setAnv.UzuraString + " }";
+                var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
                 // Set right position
-                var position = setAnv.Pozitie.ToPosition();
-                set.Pozitie = position.Poz;
-                set.Rand = position.Rand;
+                var position = setAnv.PositionString.ToPosition();
+                modelForDatabase.Pozitie = position.Poz;
+                modelForDatabase.Rand = position.Rand;
 
 
+                // setare dimensiuni
+                modelForDatabase.Dimensiuni = setAnv.Dimensiuni.ToJson();
 
-                // set right uzura
-
-                // set right dimensiuni
+                // setare uzura
+                modelForDatabase.Uzura = setAnv.Uzura.ToJson();
 
                 // send model to database
-                var value = await _hotelRepository.AddSetAnvelopeAsync(set);
-                var model = _mapper.Map<SetAnvelopeVM>(value);
-                return Result<SetAnvelopeVM>.ResultOk(model);
+                var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
+                var returnModel = _mapper.Map<SetAnvelopeDto>(value);
+                return Result<SetAnvelopeDto>.ResultOk(returnModel);
 
             }
             catch (Exception er)
             {
-                return Result<SetAnvelopeVM>.ResultError(null, er, "Ceva nu a mers bine la adaugarea setului de anvelope!");
+                return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la adaugarea setului de anvelope!");
             }
         }
 
-        public async Task<Result<SetAnvelopeVM>> UpdateSetAnvelopeAsync(SetAnvelopeVM setAnv)
+        public async Task<Result<SetAnvelopeDto>> UpdateSetAnvelopeAsync(SetAnvelopeDto setAnv)
         {
             try
             {
-                var set = _mapper.Map<CaSetAnvelope>(setAnv);
-                var value = await _hotelRepository.UpdateSetAnvelopeAsync(set);
-                var model = _mapper.Map<SetAnvelopeVM>(value);
-                return Result<SetAnvelopeVM>.ResultOk(model);
+                var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
+
+                // setare dimensiuni
+                modelForDatabase.Dimensiuni = setAnv.Dimensiuni.ToJson();
+
+                // setare uzura
+                modelForDatabase.Uzura = setAnv.Uzura.ToJson();
+
+                var value = await _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);
+                var returnModel = _mapper.Map<SetAnvelopeDto>(value);
+                return Result<SetAnvelopeDto>.ResultOk(returnModel);
 
             }
             catch (Exception er)
             {
-                return Result<SetAnvelopeVM>.ResultError(null, er, "Ceva nu a mers bine la modificarea setului de anvelope!");
+                return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la modificarea setului de anvelope!");
             }
         }
 
@@ -98,23 +105,23 @@ namespace DeltaQrCode.Services.Hotel
                 return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
             }
         }
-        public async Task<Result<List<SetAnvelopeVM>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
+        public async Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
         {
             throw new NotImplementedException();
         }
-        public async Task<Result<SetAnvelopeVM>> DeleteSetAnvelopeAsync(int id)
+        public async Task<Result<SetAnvelopeDto>> DeleteSetAnvelopeAsync(int id)
         {
             try
             {
                 var value = await _hotelRepository.DeleteSetAnvelopeAsync(id);
-                var model = _mapper.Map<SetAnvelopeVM>(value);
+                var model = _mapper.Map<SetAnvelopeDto>(value);
 
-                return Result<SetAnvelopeVM>.ResultOk(model);
+                return Result<SetAnvelopeDto>.ResultOk(model);
 
             }
             catch (Exception er)
             {
-                return Result<SetAnvelopeVM>.ResultError(null, er, "Ceva nu a mers bine la stergerea setului de anvelope!");
+                return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la stergerea setului de anvelope!");
             }
         }
 

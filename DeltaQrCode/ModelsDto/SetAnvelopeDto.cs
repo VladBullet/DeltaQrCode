@@ -4,27 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using DeltaQrCode.ModelsDto;
 
-namespace DeltaQrCode.ViewModels
+namespace DeltaQrCode.ModelsDto
 {
+    using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
 
-    public class SetAnvelopeVM
+    public class SetAnvelopeDto
     {
         public uint Id { get; set; }
         public string NumarInmatriculare { get; set; }
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
-        public string Pozitie { get; set; }
+        public string PositionString { get; set; }
         public int? MarcaId { get; set; }
         public string NumeSet { get; set; }
         public int NrBucati { get; set; }
 
         public Dimensiuni Dimensiuni { get; set; }
         public Uzura Uzura { get; set; }
-
-        public string DimensiuniString => string.Format("Diam:{0}, Lat:{1}, H:{2}", Dimensiuni.Diametru, Dimensiuni.Latime, Dimensiuni.Inaltime);
-
-        public string UzuraString => string.Format("StF:{0}, DrF:{1}, StS:{2}, DrS:{3}", Uzura.StangaFata, Uzura.DreaptaFata, Uzura.StangaSpate, Uzura.DreaptaSpate);
+        public string DimensiuniString => Dimensiuni.ToCustomString();
+        public string UzuraString => Uzura.ToCustomString();
         public string TipSezon { get; set; }
         public int Evaluare { get; set; }
         public string StatusCurent { get; set; }
@@ -32,10 +31,10 @@ namespace DeltaQrCode.ViewModels
         public bool Deleted { get; set; }
 
 
-        public static List<SetAnvelopeVM> fakelist()
+        public static List<SetAnvelopeDto> fakelist()
         {
-            return new List<SetAnvelopeVM>() {
-                new SetAnvelopeVM {
+            return new List<SetAnvelopeDto>() {
+                new SetAnvelopeDto {
 
                 NumarInmatriculare="bz02gdm",
                 NumeClient="delta",
@@ -50,9 +49,9 @@ namespace DeltaQrCode.ViewModels
                 TipSezon="nush",
                 Evaluare=10,
                 //Rand=1,
-                Pozitie="A3"
+                PositionString="A3"
                 },
-                new SetAnvelopeVM {
+                new SetAnvelopeDto {
 
                 NumarInmatriculare="bz01gdk",
                 NumeClient="delta1",
@@ -67,10 +66,10 @@ namespace DeltaQrCode.ViewModels
                 TipSezon="nush",
                 Evaluare=10,
                 //Rand=1,
-                Pozitie="B3"
+                PositionString="B3"
 
                 },
-                new SetAnvelopeVM {
+                new SetAnvelopeDto {
 
                 NumarInmatriculare="bz01gdk",
                 NumeClient="delta1",
@@ -85,7 +84,7 @@ namespace DeltaQrCode.ViewModels
                 TipSezon="nush",
                 Evaluare=10,
                 //Rand=1,
-                Pozitie="D2"
+                PositionString="D2"
 
                 }
             };
