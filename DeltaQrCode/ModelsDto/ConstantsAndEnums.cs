@@ -37,4 +37,10 @@ namespace DeltaQrCode.ModelsDto
         Edit = 2,
         Info = 3
     }
+    public enum OperatiuneSpalare
+    {
+        Interior = 1,
+        Exterior = 2,
+        InteriorExterior = 3
+    }
 }

@@ -13,53 +13,54 @@ namespace DeltaQrCode.Models
 
         public Exception Error { get; private set; }
 
-        public static Result<T> ResultOk(T obj)
+        public string Message { get; private set; }
+
+        public static Result<T> ResultOk(T obj, string message = null)
         {
             return new Result<T>
             {
                 Successful = true,
                 Entity = obj,
-                Error = null
-            };
-        }
-        public static Result<T> ResultError(T obj, Exception er, string errorMessage = null)
-        {
-            if (string.IsNullOrEmpty(errorMessage))
-                return new Result<T>
-                {
-                    Successful = false,
-                    Entity = obj,
-                    Error = er
-                };
+                Error = null,
+                Message = message
+        };
+    }
+    public static Result<T> ResultError(T obj, Exception er, string errorMessage = null)
+    {
+        if (string.IsNullOrEmpty(errorMessage))
             return new Result<T>
             {
                 Successful = false,
                 Entity = obj,
-                Error = new Exception(errorMessage, er)
+                Error = er,
+                Message =  errorMessage
             };
-        }
-        public static Result<T> ResultError(Exception er, string errorMessage = null)
+        return new Result<T>
         {
-            if (string.IsNullOrEmpty(errorMessage))
-                return new Result<T>
-                {
-                    Successful = false,
-                    Entity = null,
-                    Error = er
-                };
+            Successful = false,
+            Entity = obj,
+            Error = new Exception(errorMessage, er),
+            Message = errorMessage
+        };
+    }
+    public static Result<T> ResultError(Exception er, string errorMessage = null)
+    {
+        if (string.IsNullOrEmpty(errorMessage))
             return new Result<T>
             {
                 Successful = false,
                 Entity = null,
-                Error = new Exception(errorMessage, er)
+                Error = er,
+                Message =  errorMessage
             };
-        }
+        return new Result<T>
+        {
+            Successful = false,
+            Entity = null,
+            Error = new Exception(errorMessage, er),
+            Message = errorMessage
+        };
+    }
+}
 
-    }
-    public enum Operatiune
-    {
-        Interior = 1,
-        Exterior = 2,
-        InteriorExterior = 3
-    }
 }

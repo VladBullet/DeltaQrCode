@@ -9,6 +9,8 @@ using DeltaQrCode.ViewModels;
 
 namespace DeltaQrCode.Services
 {
+    using DeltaQrCode.ModelsDto;
+
     public class QrService : IQrService
     {
         private ApplicationDbContext dataService;
@@ -35,7 +37,7 @@ namespace DeltaQrCode.Services
                 var str = model.QrCodeVal.Split(",");
                 var nrMasina = str[0].Trim();
                 var flota = str[1].Trim();
-                var selectie = (Operatiune)model.Selection;
+                var selectie = (OperatiuneSpalare)model.Selection;
                 Models.CaClient toSave = new Models.CaClient
                 {
                     DataInsert = date,

@@ -8,8 +8,8 @@ namespace DeltaQrCode.ViewModels
 {
     public class SetAnvelopeVM
     {
-        public string NrAuto { get; set; }
-        public string Client { get; set; }
+        public string NumarInmatriculare { get; set; }
+        public string NumeClient { get; set; }
         public string Marca { get; set; }
         public int NrBucati { get; set; }
         public string Diametru { get; set; }
@@ -31,8 +31,8 @@ namespace DeltaQrCode.ViewModels
             return new List<SetAnvelopeVM>() {
                 new SetAnvelopeVM {
 
-                NrAuto="bz02gdm",
-                Client="delta",
+                NumarInmatriculare="bz02gdm",
+                NumeClient="delta",
                 Marca="ford",
                 NrBucati=4,
                 Diametru="15",
@@ -49,8 +49,8 @@ namespace DeltaQrCode.ViewModels
                 },
                 new SetAnvelopeVM {
 
-                NrAuto="bz01gdk",
-                Client="delta1",
+                NumarInmatriculare="bz01gdk",
+                NumeClient="delta1",
                 Marca="mercedes",
                 NrBucati=3,
                 Diametru="15",
@@ -68,8 +68,8 @@ namespace DeltaQrCode.ViewModels
                 },
                 new SetAnvelopeVM {
 
-                NrAuto="bz01gdk",
-                Client="delta1",
+                NumarInmatriculare="bz01gdk",
+                NumeClient="delta1",
                 Marca="mercedes",
                 NrBucati=3,
                 Diametru="15",
