@@ -64,10 +64,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SetAnvelope.Marca, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            @Html.LabelFor(model => model.SetAnvelope.MarcaId, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
             <div class="col-md-9">
-                @Html.EditorFor(model => model.SetAnvelope.Marca, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                @Html.ValidationMessageFor(model => model.SetAnvelope.Marca, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.SetAnvelope.MarcaId, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.MarcaId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -140,11 +140,11 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SetAnvelope.Tip, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            @Html.LabelFor(model => model.SetAnvelope.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
             <div class="col-md-9">
-                <select asp-for="SetAnvelope.Tip" asp-items="Html.GetEnumSelectList(typeof (TyreType))"></select>
+                <select asp-for="SetAnvelope.TipSezon" asp-items="Html.GetEnumSelectList(typeof (TyreType))"></select>
 
-                @Html.ValidationMessageFor(model => model.SetAnvelope.Tip, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.TipSezon, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -165,10 +165,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SetAnvelope.Poz, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            @Html.LabelFor(model => model.SetAnvelope.Pozitie, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
             <div class="col-md-9">
-                @Html.EditorFor(model => model.SetAnvelope.Poz, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                @Html.ValidationMessageFor(model => model.SetAnvelope.Poz, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.SetAnvelope.Pozitie, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.Pozitie, "", new { @class = "text-danger" })
             </div>
         </div>
 

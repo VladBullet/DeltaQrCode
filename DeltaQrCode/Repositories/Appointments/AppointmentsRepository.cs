@@ -92,7 +92,7 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception e)
             {
-                return Result<CaAppointment>.ResultError(e, "Ceva nu a mers bine la anularea programarii!");
+                return Result<CaAppointment>.ResultError(e, "Ceva nu a mers bine la confirmarea programarii!");
             }
         }
 

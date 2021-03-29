@@ -32,7 +32,7 @@ namespace DeltaQrCode.Controllers
             int count = (int)Math.Ceiling((decimal)list.Count / (decimal)PageSize);
             if (!string.IsNullOrEmpty(searchString))
             {
-                list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.Marca.ToLower().Contains(searchString.ToLower())).ToList();
+                list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower())).ToList();
             }
             list = list.Skip((page.Value - 1) * PageSize).Take(PageSize).ToList();
             var model = new HotelListViewModel(list, count, page.Value);
