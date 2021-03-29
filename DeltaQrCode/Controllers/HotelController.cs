@@ -42,18 +42,16 @@ namespace DeltaQrCode.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Search(string searchString = null, int? page = 1)
+        public async Task<IActionResult> Search(string searchString = null, int page = 1)
         {
-            var result = await _hotelService.SearchAnvelopeAsync(searchString, page != null ? page.Value : 1, 20);
-            var list = new List<SetAnvelopeDto>();
+            var result = await _hotelService.SearchAnvelopeAsync(searchString, page, 20);
             int count = 0;
             if (result.Successful)
             {
                 count = (int)Math.Ceiling((decimal)result.Entity.Count / (decimal)20);
-                list = result.Entity.Skip(0).Take(PageSize).ToList();
             }
 
-            var model = new HotelListViewModel(list, count, 1);
+            var model = new HotelListViewModel(result.Entity, count, page);
 
             return PartialView("_HotelList", model);
         }

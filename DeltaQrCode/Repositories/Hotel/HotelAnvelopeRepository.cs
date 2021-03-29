@@ -88,9 +88,23 @@ namespace DeltaQrCode.Repositories
 
         }
 
-        public async Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
+        public async Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page = 1, int itemsPerPage = 20)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var list = await _db.CaSetAnvelope.Where(x => !x.Deleted).ToListAsync();
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower())).ToList();
+                }
+                list = list.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+                return Result<List<CaSetAnvelope>>.ResultOk(list);
+            }
+            catch (Exception e)
+            {
+                return Result<List<CaSetAnvelope>>.ResultError(null, e, "Ceva nu a mers bine la gasirea anvelopelor!");
+
+            }
             // should return first ItemsPerPage for page 1 if everything is null. I mean if search string is null or empty, should still return data.
             // make sure you also filter them to have Deleted == FALSE
         }

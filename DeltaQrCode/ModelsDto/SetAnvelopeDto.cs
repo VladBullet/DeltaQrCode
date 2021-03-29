@@ -15,7 +15,7 @@ namespace DeltaQrCode.ModelsDto
         public string NumarInmatriculare { get; set; }
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
-        public string PositionString { get; set; }
+        public Position Position { get; set; }
         public int? MarcaId { get; set; }
         public string NumeSet { get; set; }
         public int NrBucati { get; set; }
@@ -25,7 +25,7 @@ namespace DeltaQrCode.ModelsDto
         public string DimensiuniString => Dimensiuni.ToCustomString();
         public string UzuraString => Uzura.ToCustomString();
         public string TipSezon { get; set; }
-        public int Evaluare { get; set; }
+        public string Evaluare { get; set; }
         public string StatusCurent { get; set; }
         public DateTime DataUltimaModificare { get; set; }
         public bool Deleted { get; set; }
@@ -47,9 +47,8 @@ namespace DeltaQrCode.ModelsDto
                 //DreaptaFata="1",
                 //DreaptaSpate="2",
                 TipSezon="nush",
-                Evaluare=10,
+                Evaluare="Ok",
                 //Rand=1,
-                PositionString="A3"
                 },
                 new SetAnvelopeDto {
 
@@ -64,9 +63,8 @@ namespace DeltaQrCode.ModelsDto
                 //DreaptaFata="1",
                 //DreaptaSpate="2",
                 TipSezon="nush",
-                Evaluare=10,
+                Evaluare="OK",
                 //Rand=1,
-                PositionString="B3"
 
                 },
                 new SetAnvelopeDto {
@@ -82,9 +80,8 @@ namespace DeltaQrCode.ModelsDto
                 //DreaptaFata="1",
                 //DreaptaSpate="2",
                 TipSezon="nush",
-                Evaluare=10,
+                Evaluare="OK",
                 //Rand=1,
-                PositionString="D2"
 
                 }
             };

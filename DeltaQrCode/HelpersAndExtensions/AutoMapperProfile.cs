@@ -18,34 +18,27 @@ namespace DeltaQrCode.HelpersAndExtensions
         public AutoMapperProfile()
         {
             // Add as many of these lines as you need to map your objects
-            //CreateMap<SetAnvelopeVM, CaSetAnvelope>().ReverseMap();
-            CreateMap<SetAnvelopeDto, CaSetAnvelope>().ReverseMap();
+            CreateMap<CaSetAnvelope, SetAnvelopeDto>()
+                .ForMember(d => d.Dimensiuni, opt =>opt.Ignore())
+                .ForMember(d => d.Uzura, opt =>opt.Ignore())
+                .ForMember(d => d.Dimensiuni, opt =>opt.Ignore())
+
+                .ReverseMap();
             CreateMap<CaAppointment, AppointmentVM>().ReverseMap();
 
-            //CreateMap<SetAnvelopeDto, AddEditSetAnvelopeVM>();
-
             CreateMap<AddEditSetAnvelopeVM, SetAnvelopeDto>()
-            .ForMember(d => d.Dimensiuni.Diam, m => m.MapFrom(s =>
-                s.Diametru))
-            .ForMember(d => d.Dimensiuni.H, m => m.MapFrom(s =>
-                s.Inaltime))
-            .ForMember(d => d.Dimensiuni.Lat, m => m.MapFrom(s =>
-                s.Latime))
-            .ForMember(d => d.Uzura.DrF, m => m.MapFrom(s =>
-                s.DreaptaFata))
-            .ForMember(d => d.Uzura.DrS, m => m.MapFrom(s =>
-                s.DreaptaSpate))
-            .ForMember(d => d.Uzura.StF, m => m.MapFrom(s =>
-                s.StangaFata))
-            .ForMember(d => d.Uzura.StS, m => m.MapFrom(s =>
-                s.StangaSpate))
-            //.ForMember(d => d.PositionString, m => m.MapFrom(s =>
-            //    ))
-            //.ForMember(d => d.PositionString, m => m.MapFrom(s =>
-            //    s.StangaSpate))
-            .ReverseMap();
+            .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => new Dimensiuni()))
+            .ForMember(d => d.Uzura, m => m.MapFrom(s => new Uzura()))
+            .ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
 
-
+            CreateMap<SetAnvelopeDto, AddEditSetAnvelopeVM>()
+                .ForMember(d => d.Diametru, opt => opt.Ignore())
+                .ForMember(d => d.Latime, opt => opt.Ignore())
+                .ForMember(d => d.Inaltime, opt => opt.Ignore())
+                .ForMember(d => d.StangaSpate, opt => opt.Ignore())
+                .ForMember(d => d.StangaFata, opt => opt.Ignore())
+                .ForMember(d => d.DreaptaFata, opt => opt.Ignore())
+                .ForMember(d => d.DreaptaSpate, opt => opt.Ignore());
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Services.Hotel
 {
+    using System.Net.Http.Headers;
+
     using AutoMapper;
 
     using DeltaQrCode.HelpersAndExtensions;
@@ -46,7 +48,7 @@ namespace DeltaQrCode.Services.Hotel
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
                 // Set right position
-                var position = setAnv.PositionString.ToPosition();
+                var position = setAnv.Position;
                 modelForDatabase.Pozitie = position.Poz;
                 modelForDatabase.Rand = position.Rand;
 
@@ -75,6 +77,9 @@ namespace DeltaQrCode.Services.Hotel
             {
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
+                var position = setAnv.Position;
+                modelForDatabase.Pozitie = position.Poz;
+                modelForDatabase.Rand = position.Rand;
                 // setare dimensiuni
                 modelForDatabase.Dimensiuni = setAnv.Dimensiuni.ToJson();
 
@@ -107,7 +112,15 @@ namespace DeltaQrCode.Services.Hotel
         }
         public async Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
         {
-            throw new NotImplementedException();
+
+            var result = await _hotelRepository.SearchAnvelopeAsync(searchString, page, itemsPerPage);
+            var model = new List<SetAnvelopeDto>();
+            if (result.Successful)
+            {
+                model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
+                return Result<List<SetAnvelopeDto>>.ResultOk(model);
+            }
+            return Result<List<SetAnvelopeDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
         }
         public async Task<Result<SetAnvelopeDto>> DeleteSetAnvelopeAsync(int id)
         {
