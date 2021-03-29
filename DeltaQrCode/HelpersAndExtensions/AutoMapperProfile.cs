@@ -9,6 +9,7 @@ namespace DeltaQrCode.HelpersAndExtensions
 
     using DeltaQrCode.Models;
     using DeltaQrCode.ViewModels;
+    using DeltaQrCode.ViewModels.Appointments;
 
     public class AutoMapperProfile : Profile
     {
@@ -16,11 +17,12 @@ namespace DeltaQrCode.HelpersAndExtensions
         {
             // Add as many of these lines as you need to map your objects
             //CreateMap<SetAnvelopeVM, CaSetAnvelope>().ReverseMap();
-            CreateMap<SetAnvelopeVM, CaSetAnvelope>()
-                .ForMember(d => d.NumarInmatriculare, m => m.MapFrom(s =>
-                    s.NumarInmatriculare))
-                .ForMember(d => d.NrBucati, m => m.MapFrom(s =>
-                    s.NrBucati));
+            CreateMap<SetAnvelopeVM, CaSetAnvelope>().ReverseMap();
+            CreateMap<CaAppointment, AppointmentVM>().ReverseMap();
+            //.ForMember(d => d.NumarInmatriculare, m => m.MapFrom(s =>
+            //    s.NumarInmatriculare))
+            //.ForMember(d => d.NrBucati, m => m.MapFrom(s =>
+            //    s.NrBucati));
 
 
         }

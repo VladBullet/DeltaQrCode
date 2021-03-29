@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Models
 {
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+
     public class Position
     {
         public Position()
@@ -19,6 +21,8 @@ namespace DeltaQrCode.Models
         public string Rand { get; set; }
         public string Poz { get; set; }
 
+        public string PositionString => Rand + Poz;
 
+        
     }
 }
