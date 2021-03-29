@@ -22,8 +22,10 @@ namespace DeltaQrCode.ModelsDto
 
         public Dimensiuni Dimensiuni { get; set; }
         public Uzura Uzura { get; set; }
-        public string DimensiuniString => Dimensiuni.ToCustomString();
-        public string UzuraString => Uzura.ToCustomString();
+
+        public string DimensiuniString { get; set; }
+        public string UzuraString { get; set; }
+
         public string TipSezon { get; set; }
         public string Evaluare { get; set; }
         public string StatusCurent { get; set; }

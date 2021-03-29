@@ -1,7 +1,8 @@
 ﻿
+@using DeltaQrCode.HelpersAndExtensions
 @model DeltaQrCode.ViewModels.HotelListViewModel
 
-<table class="table table-bordered" style="width:100%;border:1px solid black;">
+<table class="table table-bordered table-responsive-sm table-responsive-md table-responsive" style="width:100%;border:1px solid black;">
     <thead>
         <tr>
             <th scope="col">Actiune</th>
@@ -27,16 +28,16 @@
                     <div class="btn btn-outline-warning actionButton" data-value="@item.SetId" data-actionType="edit"><i class="far fa-edit"></i></div>
                     <div class="btn btn-outline-danger deleteButton" data-value="@item.SetId"><i class="fas fa-trash-alt"></i></div>
                 </td>
-                <td class="col">@item.NumarInmatriculare</td>
-                <td class="col">@item.NumeClient</td>
-                <td class="col">@item.MarcaId</td>
-                <td class="col">@item.NrBucati</td>
-                <td class="col">@item.DimensiuniString</td>
-                <td class="col">@item.UzuraString</td>
-                <td class="col">@item.TipSezon</td>
-                <td class="col">@item.Evaluare</td>
+                <td>@item.NumarInmatriculare</td>
+                <td>@item.NumeClient</td>
+                <td>@item.MarcaId</td>
+                <td>@item.NrBucati</td>
+                <td>@item.Dimensiuni.ToCustomString()</td>
+                <td>@item.Uzura.ToCustomString()</td>
+                <td>@item.TipSezon</td>
+                <td>@item.Evaluare</td>
                 @*<td class="col">@item.Rand</td>*@
-                <td class="col">@item.Position?.PositionString</td>
+                <td>@item.Position?.PositionString</td>
             </tr>
         }
     </tbody>

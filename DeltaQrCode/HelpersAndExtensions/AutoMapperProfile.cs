@@ -19,9 +19,12 @@ namespace DeltaQrCode.HelpersAndExtensions
         {
             // Add as many of these lines as you need to map your objects
             CreateMap<CaSetAnvelope, SetAnvelopeDto>()
-                .ForMember(d => d.Dimensiuni, opt =>opt.Ignore())
-                .ForMember(d => d.Uzura, opt =>opt.Ignore())
-                .ForMember(d => d.Dimensiuni, opt =>opt.Ignore())
+                //.ForMember(d => d.Dimensiuni, opt => opt.Ignore())
+                .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => s.Dimensiuni.ToDimensiuniFromJsonString()))
+                .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.Dimensiuni))
+                .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToUzuraFromJsonString()))
+                .ForMember(d => d.UzuraString, m => m.MapFrom(s => s.Uzura))
+                .ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie)))
 
                 .ReverseMap();
             CreateMap<CaAppointment, AppointmentVM>().ReverseMap();

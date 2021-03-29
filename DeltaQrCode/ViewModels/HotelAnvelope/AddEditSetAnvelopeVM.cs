@@ -18,6 +18,8 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string Diametru { get; set; }
         public string Latime { get; set; }
         public string Inaltime { get; set; }
+        public string DimensiuniString { get; set; }
+        public string UzuraString { get; set; }
         public string StangaFata { get; set; }
         public string StangaSpate { get; set; }
         public string DreaptaFata { get; set; }

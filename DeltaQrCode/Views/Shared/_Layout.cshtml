@@ -18,14 +18,14 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm  flex-column flex-sm-row navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-expand-md flex-column flex-sm-row flex-md-row navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Delta Online Tools</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse d-md-inline-flex flex-md-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -52,7 +52,7 @@
         </main>
     </div>
 
-    <footer class="border-top flex-column flex-sm-row text-muted text-center">
+    <footer class="border-top flex-column flex-sm-row flex-md-row text-muted text-center">
         <div class="container">
             &copy; 2020 - Delta Auto Center - Vlad Bulete
             @*<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
