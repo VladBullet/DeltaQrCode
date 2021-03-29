@@ -22,94 +22,94 @@ namespace DeltaQrCode.Services
             _mapper = mapper;
         }
 
-        public async Task<Result<AppointmentsVM>> GetAppointmentByIdAsync(int id)
+        public async Task<Result<AppointmentVM>> GetAppointmentByIdAsync(int id)
         {
             try
             {
                 var value = await _appointmentsRepository.GetAppointmentByIdAsync(id);
-                var model = _mapper.Map<AppointmentsVM>(value);
-                return Result<AppointmentsVM>.ResultOk(model);
+                var model = _mapper.Map<AppointmentVM>(value);
+                return Result<AppointmentVM>.ResultOk(model);
             }
             catch (Exception er)
             {
-                return Result<AppointmentsVM>.ResultError(null, er, "Ceva nu a mers bine la gasirea programarii!");
+                return Result<AppointmentVM>.ResultError(null, er, "Ceva nu a mers bine la gasirea programarii!");
             }
         }
 
-        public async Task<Result<AppointmentsVM>> AddAppointmentAsync(AppointmentsVM appointment)
+        public async Task<Result<AppointmentVM>> AddAppointmentAsync(AppointmentVM appointment)
         {
             try
             {
                 var app = _mapper.Map<CaAppointment>(appointment);
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
-                var model = _mapper.Map<AppointmentsVM>(value);
-                return Result<AppointmentsVM>.ResultOk(model);
+                var model = _mapper.Map<AppointmentVM>(value);
+                return Result<AppointmentVM>.ResultOk(model);
 
             }
             catch (Exception er)
             {
-                return Result<AppointmentsVM>.ResultError(null, er, "Ceva nu a mers bine la adaugarea programarii!");
+                return Result<AppointmentVM>.ResultError(null, er, "Ceva nu a mers bine la adaugarea programarii!");
             }
         }
 
-        public async Task<Result<AppointmentsVM>> UpdateAppointmentAsync(AppointmentsVM setAnv)
+        public async Task<Result<AppointmentVM>> UpdateAppointmentAsync(AppointmentVM setAnv)
         {
             try
             {
                 var app = _mapper.Map<CaAppointment>(setAnv);
                 var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
-                var model = _mapper.Map<AppointmentsVM>(value);
-                return Result<AppointmentsVM>.ResultOk(model);
+                var model = _mapper.Map<AppointmentVM>(value);
+                return Result<AppointmentVM>.ResultOk(model);
 
             }
             catch (Exception er)
             {
-                return Result<AppointmentsVM>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
+                return Result<AppointmentVM>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
             }
         }
 
-        public async Task<Result<AppointmentsVM>> CancelAppointmentAsync(int id)
+        public async Task<Result<AppointmentVM>> CancelAppointmentAsync(int id)
         {
             try
             {
                 var value = await _appointmentsRepository.CancelAppointmentAsync(id);
-                var model = _mapper.Map<AppointmentsVM>(value);
+                var model = _mapper.Map<AppointmentVM>(value);
 
-                return Result<AppointmentsVM>.ResultOk(model);
+                return Result<AppointmentVM>.ResultOk(model);
             }
             catch (Exception e)
             {
-                return Result<AppointmentsVM>.ResultError(e, "Ceva nu a mers bine la anularea programarii!");
+                return Result<AppointmentVM>.ResultError(e, "Ceva nu a mers bine la anularea programarii!");
             }
         }
 
-        public async Task<Result<AppointmentsVM>> ConfirmAppointmentAsync(int id)
+        public async Task<Result<AppointmentVM>> ConfirmAppointmentAsync(int id)
         {
             try
             {
                 var value = await _appointmentsRepository.ConfirmAppointmentAsync(id);
-                var model = _mapper.Map<AppointmentsVM>(value);
+                var model = _mapper.Map<AppointmentVM>(value);
 
-                return Result<AppointmentsVM>.ResultOk(model);
+                return Result<AppointmentVM>.ResultOk(model);
             }
             catch (Exception e)
             {
-                return Result<AppointmentsVM>.ResultError(e, "Ceva nu a mers bine la confirmarea programarii!");
+                return Result<AppointmentVM>.ResultError(e, "Ceva nu a mers bine la confirmarea programarii!");
             }
         }
 
-        public async Task<Result<List<AppointmentsVM>>> GetAppointmentsAsync(DateTime date)
+        public async Task<Result<List<AppointmentVM>>> GetAppointmentsAsync(DateTime date)
         {
             try
             {
                 var value = await _appointmentsRepository.GetAppointmentsAsync(date);
-                var model = _mapper.Map<List<AppointmentsVM>>(value);
+                var model = _mapper.Map<List<AppointmentVM>>(value);
 
-                return Result<List<AppointmentsVM>>.ResultOk(model);
+                return Result<List<AppointmentVM>>.ResultOk(model);
             }
             catch (Exception e)
             {
-                return Result<List<AppointmentsVM>>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+                return Result<List<AppointmentVM>>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
             }
         }
 

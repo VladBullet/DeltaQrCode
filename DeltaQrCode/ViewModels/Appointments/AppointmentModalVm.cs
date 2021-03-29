@@ -5,7 +5,6 @@ using System.Web;
 
 namespace DeltaQrCode.ViewModels.Appointments
 {
-    using AppointmentsDb.ModelsDto;
 
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Services;

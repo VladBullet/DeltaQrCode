@@ -5,8 +5,6 @@ using System.Web;
 
 namespace DeltaQrCode.ViewModels.Appointments
 {
-    using AppointmentsDb.ModelsDto.Custom;
-
     using DeltaQrCode.Services;
 
     using Microsoft.AspNetCore.Mvc.Rendering;

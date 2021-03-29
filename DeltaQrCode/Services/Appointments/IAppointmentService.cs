@@ -9,11 +9,11 @@ namespace DeltaQrCode.Services
 {
     public interface IAppointmentService
     {
-        Task<Result<AppointmentsVM>> GetAppointmentByIdAsync(int id);
-        Task<Result<AppointmentsVM>> AddAppointmentAsync(AppointmentsVM appointment);
-        Task<Result<AppointmentsVM>> UpdateAppointmentAsync(AppointmentsVM appointment);
-        Task<Result<AppointmentsVM>> CancelAppointmentAsync(int id);
-        Task<Result<AppointmentsVM>> ConfirmAppointmentAsync(int id);
-        Task<Result<List<AppointmentsVM>>> GetAppointmentsAsync(DateTime date);
+        Task<Result<AppointmentVM>> GetAppointmentByIdAsync(int id);
+        Task<Result<AppointmentVM>> AddAppointmentAsync(AppointmentVM appointment);
+        Task<Result<AppointmentVM>> UpdateAppointmentAsync(AppointmentVM appointment);
+        Task<Result<AppointmentVM>> CancelAppointmentAsync(int id);
+        Task<Result<AppointmentVM>> ConfirmAppointmentAsync(int id);
+        Task<Result<List<AppointmentVM>>> GetAppointmentsAsync(DateTime date);
     }
 }

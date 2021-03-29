@@ -65,13 +65,18 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<List<Position>>> GetAvailablePositionsAsync()
+        public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
         {
             try
             {
                 var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie)).ToListAsync();
                 var allCombinations = Helpers.GetAllCombinationsRowsAndPositions();
                 var availablePositions = allCombinations.Except(occupiedPositions).ToList();
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
+                }
 
                 return Result<List<Position>>.ResultOk(availablePositions);
             }

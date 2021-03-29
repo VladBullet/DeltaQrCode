@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.ViewModels.Appointments
 {
-    public class AppointmentsVM
+    public class AppointmentVM
     {
         public uint Id { get; set; }
         public int? ApptIndex { get; set; }

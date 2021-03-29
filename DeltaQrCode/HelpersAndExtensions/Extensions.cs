@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.HelpersAndExtensions
 {
+    using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
 
     using Microsoft.AspNetCore.WebSockets.Internal;
+
+    using Newtonsoft.Json;
 
     public static class Extensions
     {
@@ -18,15 +21,27 @@ namespace DeltaQrCode.HelpersAndExtensions
         }
         #endregion
 
-        public static string ToStringPosition(this int input)
+        public static Position ToPosition(this string input)
         {
-            var position = ConstantsAndEnums.RowsDictionary.FirstOrDefault(x => x.Key == input);
-            return position.Value;
+            // split string - get string[0] and 1
+
+            // return new Position(rand, poz)
+            return null;
         }
-        public static string ToIntPosition(this string input)
+
+        public static string ToJson(this Dimensiuni dim)
         {
-            var position = ConstantsAndEnums.RowsDictionary.FirstOrDefault(x => x.Value.ToUpper() == input.ToUpper());
-            return position.Value;
+            return string.Join("{", dim.ToString(), "}");
         }
+        public static string ToString(this Dimensiuni dim)
+        {
+            return  string.Format("Diam:{0}, Lat:{1}, H:{2}", dim.Diametru, dim.Latime, dim.Inaltime);
+        } 
+        public static Dimensiuni ToDimensiuniFromJsonString(this string str)
+        {
+            var result = JsonConvert.DeserializeObject<Dimensiuni>(str);
+            return null;
+        }
+
     }
 }

@@ -7,9 +7,12 @@ namespace DeltaQrCode.Services.Hotel
 {
     using AutoMapper;
 
+    using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.ViewModels;
+
+    using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
     public class HotelService : IHotelService
     {
@@ -40,6 +43,21 @@ namespace DeltaQrCode.Services.Hotel
             try
             {
                 var set = _mapper.Map<CaSetAnvelope>(setAnv);
+                set.Dimensiuni = "{ " + setAnv.DimensiuniString + " }";
+                set.Uzura = "{ " + setAnv.UzuraString + " }";
+
+                // Set right position
+                var position = setAnv.Pozitie.ToPosition();
+                set.Pozitie = position.Poz;
+                set.Rand = position.Rand;
+
+
+
+                // set right uzura
+
+                // set right dimensiuni
+
+                // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(set);
                 var model = _mapper.Map<SetAnvelopeVM>(value);
                 return Result<SetAnvelopeVM>.ResultOk(model);
