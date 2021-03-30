@@ -117,7 +117,13 @@ namespace DeltaQrCode.Services.Hotel
             var model = new List<SetAnvelopeDto>();
             if (result.Successful)
             {
+               
                 model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
+                // add marca as string
+                //foreach (var item in model)
+                //{
+                //    item.Marca = _hotelRepository.GetMarcaByIdAsync().Label;
+                //}
                 return Result<List<SetAnvelopeDto>>.ResultOk(model);
             }
             return Result<List<SetAnvelopeDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");

@@ -69,8 +69,8 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie)).ToListAsync();
-                var allCombinations = Helpers.GetAllCombinationsRowsAndPositions();
+                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie,x.Interval)).ToListAsync();
+                var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
                 var availablePositions = allCombinations.Except(occupiedPositions).ToList();
 
                 if (!string.IsNullOrEmpty(searchString))

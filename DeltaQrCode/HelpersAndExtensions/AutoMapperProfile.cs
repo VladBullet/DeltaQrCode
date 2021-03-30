@@ -24,7 +24,7 @@ namespace DeltaQrCode.HelpersAndExtensions
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.Dimensiuni))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToUzuraFromJsonString()))
                 .ForMember(d => d.UzuraString, m => m.MapFrom(s => s.Uzura))
-                .ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie)))
+                .ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie,s.Interval)))
 
                 .ReverseMap();
             CreateMap<CaAppointment, AppointmentVM>().ReverseMap();

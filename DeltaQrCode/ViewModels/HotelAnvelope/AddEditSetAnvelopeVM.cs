@@ -12,6 +12,10 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
         public string PozitieInRaft { get; set; }
+        public string Rand { get; set; }
+        public string Pozitie { get; set; }
+        public string Interval { get; set; }
+
         public int? MarcaId { get; set; }
         public string NumeSet { get; set; }
         public int NrBucati { get; set; }

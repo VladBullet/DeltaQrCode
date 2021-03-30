@@ -23,10 +23,12 @@ namespace DeltaQrCode.HelpersAndExtensions
 
         public static Position ToPosition(this string input)
         {
-            var rand = input[0].ToString();
-            var pozitie = input[1].ToString();
+            var str = input.Split(",");
+            var rand = str[0].Split(":")[1];
+            var pozitie = str[1].Split(":")[1];
+            var interval = str[2].Split(":")[1];
 
-            return new Position(rand, pozitie);
+            return new Position(rand, pozitie, interval);
 
         }
 
@@ -46,6 +48,10 @@ namespace DeltaQrCode.HelpersAndExtensions
         public static Dimensiuni ToDimensiuniFromJsonString(this string str)
         {
             var result = JsonConvert.DeserializeObject<Dimensiuni>(str);
+            if (result == null)
+            {
+                result = new Dimensiuni("0", "0", "0");
+            }
             return result;
         }
 
@@ -66,6 +72,10 @@ namespace DeltaQrCode.HelpersAndExtensions
         public static Uzura ToUzuraFromJsonString(this string str)
         {
             var result = JsonConvert.DeserializeObject<Uzura>(str);
+            if (result == null)
+            {
+                result = new Uzura("nan", "nan", "nan", "nan");
+            }
             return result;
         }
 

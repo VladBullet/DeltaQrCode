@@ -51,22 +51,35 @@ namespace DeltaQrCode.HelpersAndExtensions
 
         #endregion
 
-        public static List<Position> GetAllCombinationsRowsAndPositions()
+        public static List<Position> GetAllCombinationsRowsAndPositionsAndIntervals()
         {
-            var randuri = ConstantsAndEnums.Rows;
+            var intervale = ConstantsAndEnums.Intervals;
             var listaDePozitii = new List<string>();
             for (int i = 1; i <= ConstantsAndEnums.PozMax; i++)
             {
                 listaDePozitii.Add(i.ToString());
             }
+            var randuri = new List<string>();
+            for (int i = 1; i <= ConstantsAndEnums.RandMax; i++)
+            {
+                randuri.Add(i.ToString());
+            }
 
             var pozitii = listaDePozitii.ToArray();
+            var randuriArray = randuri.ToArray();
 
-            var generated = randuri.Where(x => x != null)
-                .SelectMany(g => pozitii.Where(c => c != null)
-                    .Select(c => new Position(g, c))
-                ).ToList();
-            return generated;
+            //var generated = randuri.Where(x => x != null)
+            //    .SelectMany(g => pozitii.Where(c => c != null)
+            //        .Select(c => new Position(g, c))
+            //    ).ToList();
+
+            var gen = randuriArray.Where(x => x != null)
+                .SelectMany(
+                    y => pozitii.Where(c => c != null)
+                        .SelectMany(
+                            h => intervale.Where(a => a != null)
+                                .Select(f => new Position(y, h, f)))).ToList();
+            return gen;
         }
     }
 

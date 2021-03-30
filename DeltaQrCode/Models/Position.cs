@@ -13,16 +13,18 @@ namespace DeltaQrCode.Models
         {
 
         }
-        public Position(string rand, string poz)
+        public Position(string rand, string poz, string interval)
         {
             Rand = rand;
             Poz = poz;
+            Interval = interval;
         }
         public string Rand { get; set; }
         public string Poz { get; set; }
+        public string Interval { get; set; }
 
-        public string PositionString => Rand + Poz;
 
-        
+        public string PositionString => string.Format("Rand:{0}, Poz:{1}, Int:{2}", Rand, Poz, Interval);
+
     }
 }

@@ -409,6 +409,9 @@ namespace DeltaQrCode.Data
                 entity.Property(e => e.Rand)
                     .IsRequired()
                     .HasColumnType("varchar(45)");
+                entity.Property(e => e.Interval)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
 
                 entity.Property(e => e.StatusCurent)
                     .IsRequired()
