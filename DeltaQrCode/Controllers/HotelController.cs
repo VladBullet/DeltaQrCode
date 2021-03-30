@@ -22,6 +22,7 @@ namespace DeltaQrCode.Controllers
         private readonly IHotelService _hotelService;
         private const int PageSize = 20;
 
+
         public HotelController(IHotelService hotelService)
         {
             _hotelService = hotelService;
@@ -78,11 +79,11 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal([Bind(include: "Id, NumarInmatriculare, NumeClient, NumarTelefon, Rand, Pozitie, MarcaId, NumeSet, NrBucati, Diametru, Latime, Inaltime, StangaFata, StangaSpate, DreaptaFata, DreaptaSpate, TipSezon, Evaluare, StatusCurent, DataUltimaModificare, Deleted")] AddEditSetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> AddModal(SetAnvelopeDto setAnvelope)
         {
-            // setAnvelope 
+            var result = await _hotelService.AddSetAnvelopeAsync(setAnvelope);
 
-            return null;
+            return View("Index");
         }
     }
 }

@@ -51,6 +51,7 @@ namespace DeltaQrCode.Services.Hotel
                 var position = setAnv.Position;
                 modelForDatabase.Pozitie = position.Poz;
                 modelForDatabase.Rand = position.Rand;
+                modelForDatabase.Interval = position.Interval;
 
 
                 // setare dimensiuni

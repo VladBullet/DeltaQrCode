@@ -17,6 +17,7 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string Interval { get; set; }
 
         public int? MarcaId { get; set; }
+        public string Marca { get; set; }
         public string NumeSet { get; set; }
         public int NrBucati { get; set; }
         public string Diametru { get; set; }
