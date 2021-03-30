@@ -36,15 +36,10 @@
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
-    @using (Html.BeginForm("EditModal", "Hotel", FormMethod.Post, new { @id = "apptform" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="modal-body modal-min-height">
-
-
-            <div class="form-group">
-            </div>
-            <div class="row">
+    <div class="modal-body modal-min-height">
+        <form id="apptform">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
                 <div class="col">
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.SetAnvelope.NumeClient, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
@@ -72,8 +67,16 @@
                         </div>
                     </div>
 
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.SetAnvelope.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.SetAnvelope.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                            @Html.ValidationMessageFor(model => model.SetAnvelope.NumarTelefon, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-                    <div class="form-group col-md-6">
+
+                    <div class="form-group col-md-12 col-sm-6">
                         @Html.LabelFor(model => model.SetAnvelope.NrBucati, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9 ">
                             @Html.EditorFor(model => model.SetAnvelope.NrBucati, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
@@ -84,7 +87,7 @@
                 <br />
                 <div class="col">
                     <div class="row">
-                        <div class="col"style="margin-top:35px;">
+                        <div class="col">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SetAnvelope.StangaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                                 <div class="col-md-9">
@@ -101,7 +104,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col" style="margin-top:35px;">
+                        <div class="col">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SetAnvelope.DreaptaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                                 <div class="col-md-9">
@@ -119,76 +122,70 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
-
-
-            <div class="row align-items-md-center" style="margin-top:20px;">
-
-                <h6 style="margin-left:50px;">Dimensiuni: </h6>
-
-                <div class="form-inline col-md-3">
-                    @Html.LabelFor(model => model.SetAnvelope.Diametru, htmlAttributes: new { @class = "control-label required-field" })
-                    @Html.EditorFor(model => model.SetAnvelope.Diametru, new { htmlAttributes = new { @class = "form-control w-25 half-margin-bottom" } })
+            <div class="form-row">
+                <h6 style="margin-left: 50px;">Dimensiuni: </h6>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-4">
+                    @Html.LabelFor(model => model.SetAnvelope.Diametru, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
+                    @Html.EditorFor(model => model.SetAnvelope.Diametru, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
                     @Html.ValidationMessageFor(model => model.SetAnvelope.Diametru, "", new { @class = "text-danger" })
 
                 </div>
 
 
-                <div class="form-inline col-md-3">
-                    @Html.LabelFor(model => model.SetAnvelope.Latime, htmlAttributes: new { @class = "control-label required-field" })
-                    @Html.EditorFor(model => model.SetAnvelope.Latime, new { htmlAttributes = new { @class = "form-control w-25 half-margin-bottom" } })
+                <div class="form-group col-md-4 col-sm-4">
+                    @Html.LabelFor(model => model.SetAnvelope.Latime, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
+                    @Html.EditorFor(model => model.SetAnvelope.Latime, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
                     @Html.ValidationMessageFor(model => model.SetAnvelope.Latime, "", new { @class = "text-danger" })
                 </div>
 
 
-                <div class="form-inline col-md-3">
-                    @Html.LabelFor(model => model.SetAnvelope.Inaltime, htmlAttributes: new { @class = "control-label required-field" })
-                    @Html.EditorFor(model => model.SetAnvelope.Inaltime, new { htmlAttributes = new { @class = "form-control w-25 half-margin-bottom" } })
+                <div class="form-group col-md-4 col-sm-4">
+                    @Html.LabelFor(model => model.SetAnvelope.Inaltime, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
+                    @Html.EditorFor(model => model.SetAnvelope.Inaltime, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
                     @Html.ValidationMessageFor(model => model.SetAnvelope.Inaltime, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="row" style="margin-top:30px;">
-                <div class="form-group col-md-3">
+            <div class="form-row" style="margin-top: 30px;">
+                <div class="form-group col-md-3 col-sm-3">
                     @Html.LabelFor(model => model.SetAnvelope.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
-                        <select asp-for="SetAnvelope.TipSezon" asp-items="Html.GetEnumSelectList(typeof (TyreType))"></select>
+                        <select asp-for="SetAnvelope.TipSezon" asp-items="Html.GetEnumSelectList(typeof(TyreType))"></select>
 
                         @Html.ValidationMessageFor(model => model.SetAnvelope.TipSezon, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-8">
-                    @Html.LabelFor(model => model.SetAnvelope.Evaluare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                <div class="form-group col-md-3 col-sm-3">
+                    @Html.LabelFor(model => model.SetAnvelope.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.SetAnvelope.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                        @Html.ValidationMessageFor(model => model.SetAnvelope.Evaluare, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.SetAnvelope.PozitieInRaft, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                        @Html.ValidationMessageFor(model => model.SetAnvelope.PozitieInRaft, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SetAnvelope.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+            <div class="form-row col-md-12 col-sm-12">
+                @Html.LabelFor(model => model.SetAnvelope.Evaluare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.SetAnvelope.PozitieInRaft, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.SetAnvelope.PozitieInRaft, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.SetAnvelope.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                    @Html.ValidationMessageFor(model => model.SetAnvelope.Evaluare, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </form>
+    </div>
 
-        </div>
+    <div>
+        <p id="serverErrorMsg" style="color:red; padding: 5px;"></p>
+    </div>
 
-        <div>
-            <p id="serverErrorMsg" style="color:red; padding: 5px;"></p>
-        </div>
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-success btn-ok" id="apptsSubmitButton">Submit</a>
-        </div>
-    }
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-success btn-ok" id="apptsSubmitButton">Submit</a>
+    </div>
 
 </div>
 
@@ -201,21 +198,30 @@
             type: "POST",
             url: "@Url.Action("AddModal", "Hotel")",
             data: $('#apptform').serialize(),
-            success: function (result) {
-                if (result == "success") {
-                    $('#myApptModal').modal('hide');
-                    //location.reload();
-                    var proIdModal = $('#ddlProfessionalModal').find(":selected").val();
+            success: function (response) {
+                CloseModalById('myHotelModal');
+                ShowHeaderAlert(response,"success");
+            },
+            error: function (error) {
+                CloseModalById('myHotelModal');
+                ShowHeaderAlert(error.responseJSON.Message, "error");
 
-                    location.href = location.protocol + '//' + location.host + location.pathname + '&professionalIdString=' + proIdModal;
-
-                } else {
-                    $('#serverErrorMsg').html(result);
-                }
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ErrorModal","Error")",
+                    dataType: "text",
+                    traditional: true,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $("#GetModalCode").html(response);
+                        $("#ErrorModal").modal('show');
+                    },
+                    error: function (error) {
+                        alert(error);
+                    }
+                });
             }
         });
     });
-
-
 
 </script>

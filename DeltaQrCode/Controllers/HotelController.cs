@@ -10,22 +10,32 @@ namespace DeltaQrCode.Controllers
 {
     using DeltaQrCode.ModelsDto;
     using System.Text;
+
+    using AutoMapper;
+
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Services.Hotel;
     using DeltaQrCode.ViewModels.HotelAnvelope;
 
     using Microsoft.AspNetCore.Authorization;
 
+    using Newtonsoft.Json;
+    using System.Diagnostics;
+
+    using DeltaQrCode.Models;
+
     [Authorize]
     public class HotelController : Controller
     {
         private readonly IHotelService _hotelService;
+        private readonly IMapper _mapper;
         private const int PageSize = 20;
 
 
-        public HotelController(IHotelService hotelService)
+        public HotelController(IHotelService hotelService, IMapper mapper)
         {
             _hotelService = hotelService;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -79,11 +89,32 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddModal(SetAnvelopeDto setAnvelope)
+        public async Task<ActionResult> AddModal(AddEditSetAnvelopeVM setAnvelope)
         {
-            var result = await _hotelService.AddSetAnvelopeAsync(setAnvelope);
 
-            return View("Index");
+            var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
+            dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
+            dto.UzuraString = dto.Uzura.ToCustomString();
+            
+            dto.Dimensiuni= new Dimensiuni(setAnvelope.Diametru,setAnvelope.Latime,setAnvelope.Inaltime);
+            dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
+
+            var result = await _hotelService.AddSetAnvelopeAsync(dto);
+            if (result.Successful)
+            {
+                return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
+            }
+
+            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditModal([FromBody] AddEditSetAnvelopeVM setAnvelope)
+        {
+            // setAnvelope 
+
+            return null;
         }
     }
 }

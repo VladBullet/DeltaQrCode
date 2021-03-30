@@ -59,6 +59,11 @@ namespace DeltaQrCode.Services.Hotel
 
                 // setare uzura
                 modelForDatabase.Uzura = setAnv.Uzura.ToJson();
+                modelForDatabase.DataUltimaModificare = DateTime.Now;
+                //TODO: REMOVE BELLOW 2 lines and get them from controller
+                modelForDatabase.Deleted = false;
+                modelForDatabase.StatusCurent = "InRaft";
+
 
                 // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
@@ -118,7 +123,7 @@ namespace DeltaQrCode.Services.Hotel
             var model = new List<SetAnvelopeDto>();
             if (result.Successful)
             {
-               
+
                 model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
                 // add marca as string
                 foreach (var item in model)
@@ -128,7 +133,7 @@ namespace DeltaQrCode.Services.Hotel
                         var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
                         item.Marca = marca.Entity.Label;
                     }
-                    
+
                 }
                 return Result<List<SetAnvelopeDto>>.ResultOk(model);
             }

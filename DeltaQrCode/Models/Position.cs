@@ -13,6 +13,12 @@ namespace DeltaQrCode.Models
         {
 
         }
+        public Position(string input) //TODO: remove after avaiable positions drompdown is in place
+        {
+            Rand = input[0].ToString();
+            Poz = input[1].ToString();
+            Interval = input[2].ToString();
+        }
         public Position(string rand, string poz, string interval)
         {
             Rand = rand;

@@ -34,7 +34,7 @@ namespace DeltaQrCode.HelpersAndExtensions
 
         public static string ToJson(this Dimensiuni dim)
         {
-            return string.Join("{", dim.ToCustomString(), "}");
+            return "{ "+ dim.ToCustomString() + " }";
         }
         public static string ToCustomString(this Dimensiuni dim)
         {
@@ -58,7 +58,7 @@ namespace DeltaQrCode.HelpersAndExtensions
 
         public static string ToJson(this Uzura uz)
         {
-            return string.Join("{", uz.ToCustomString(), "}");
+            return "{ " + uz.ToCustomString() + " }";
         }
         public static string ToCustomString(this Uzura uz)
         {
@@ -81,7 +81,7 @@ namespace DeltaQrCode.HelpersAndExtensions
 
         public static string ToJson(this string input)
         {
-            return string.Concat("{", input, "}");
+            return JsonConvert.SerializeObject(input);
         }
 
         public static Dimensiuni FromStringToDimensiuni(this string input)
