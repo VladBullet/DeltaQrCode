@@ -16,5 +16,6 @@ namespace DeltaQrCode.Repositories
         Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null);
         Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
         Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(int id);
+        Task<Result<CaMarca>> GetMarcaByIdAsync(int id);
     }
 }

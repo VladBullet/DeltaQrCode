@@ -127,6 +127,20 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+        public async Task<Result<CaMarca>> GetMarcaByIdAsync(int id)
+        {
+            try
+            {
+                var value = await _db.CaMarca.FirstAsync(x => x.Id == id);
+                return Result<CaMarca>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaMarca>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
+            }
+
+        }
+
 
     }
 }

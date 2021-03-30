@@ -120,10 +120,15 @@ namespace DeltaQrCode.Services.Hotel
                
                 model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
                 // add marca as string
-                //foreach (var item in model)
-                //{
-                //    item.Marca = _hotelRepository.GetMarcaByIdAsync().Label;
-                //}
+                foreach (var item in model)
+                {
+                    if (item.MarcaId != null)
+                    {
+                        var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
+                        item.Marca = marca.Entity.Label;
+                    }
+                    
+                }
                 return Result<List<SetAnvelopeDto>>.ResultOk(model);
             }
             return Result<List<SetAnvelopeDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
