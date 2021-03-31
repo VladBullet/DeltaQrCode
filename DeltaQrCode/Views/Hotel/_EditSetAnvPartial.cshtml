@@ -18,13 +18,15 @@
 <input id="actionType" hidden="hidden" data-value="@Model.ActionType" />
 <div class="modal-header">
 
-            <h3 id="myModalLabel"> Edit Set </h3>
+    <h3 id="myModalLabel"> Edit Set </h3>
 
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
     <div class="modal-body modal-min-height">
         <form id="apptform">
+            @*<input hidden="hidden" asp-for="SetAnvelope.Id" />*@
+            @Html.EditorFor(model => model.SetAnvelope.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()
             <div class="form-row">
                 <div class="col">
@@ -201,6 +203,7 @@
             type: "POST",
             url: "@Url.Action("EditModal", "Hotel")",
             data: $('#apptform').serialize(),
+            dataType:"json",
             success: function (response) {
                 CloseModalById('myHotelModal');
                 ShowHeaderAlert(response,"success");
@@ -212,7 +215,7 @@
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("ErrorModal","Error")",
-                    dataType: "text",
+                    dataType: "json",
                     traditional: true,
                     contentType: 'application/json',
                     success: function (response) {

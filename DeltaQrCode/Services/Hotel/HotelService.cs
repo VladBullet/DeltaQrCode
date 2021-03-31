@@ -95,7 +95,7 @@ namespace DeltaQrCode.Services.Hotel
                 modelForDatabase.TipSezon = tipSezon.ToDisplayString();
 
                 var value = await _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);
-                var returnModel = _mapper.Map<SetAnvelopeDto>(value);
+                var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
                 return Result<SetAnvelopeDto>.ResultOk(returnModel);
 
             }
@@ -120,33 +120,42 @@ namespace DeltaQrCode.Services.Hotel
         }
         public async Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
         {
-
-            var result = await _hotelRepository.SearchAnvelopeAsync(searchString, page, itemsPerPage);
-            var model = new List<SetAnvelopeDto>();
-            if (result.Successful)
+            try
             {
 
-                model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
-                // add marca as string
-                foreach (var item in model)
-                {
-                    if (item.MarcaId != null)
-                    {
-                        var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
-                        item.Marca = marca.Entity.Label;
-                    }
 
+                var result = await _hotelRepository.SearchAnvelopeAsync(searchString, page, itemsPerPage);
+                var model = new List<SetAnvelopeDto>();
+                if (result.Successful)
+                {
+
+                    model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
+                    // add marca as string
+                    foreach (var item in model)
+                    {
+                        if (item.MarcaId != null)
+                        {
+                            var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
+                            item.Marca = marca.Entity.Label;
+                        }
+
+                    }
+                    return Result<List<SetAnvelopeDto>>.ResultOk(model);
                 }
-                return Result<List<SetAnvelopeDto>>.ResultOk(model);
+                return Result<List<SetAnvelopeDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
             }
-            return Result<List<SetAnvelopeDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
+            catch (Exception e)
+            {
+                return Result<List<SetAnvelopeDto>>.ResultError(null, null, "Eroare la citirea din serviciu!");
+
+            }
         }
         public async Task<Result<SetAnvelopeDto>> DeleteSetAnvelopeAsync(int id)
         {
             try
             {
                 var value = await _hotelRepository.DeleteSetAnvelopeAsync(id);
-                var model = _mapper.Map<SetAnvelopeDto>(value);
+                var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
 
                 return Result<SetAnvelopeDto>.ResultOk(model);
 

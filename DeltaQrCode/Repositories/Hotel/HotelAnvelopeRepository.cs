@@ -53,12 +53,10 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                //var value = _db.CaSetAnvelope.Update(setAnv);
-                var value = await _db.CaSetAnvelope.FindAsync(setAnv.Id);
-                value = setAnv;
+                var value = _db.CaSetAnvelope.Update(setAnv);
                 await _db.SaveChangesAsync();
 
-                return Result<CaSetAnvelope>.ResultOk(value);
+                return Result<CaSetAnvelope>.ResultOk(value.Entity);
 
             }
             catch (Exception er)

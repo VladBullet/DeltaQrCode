@@ -115,7 +115,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal( AddEditSetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> EditModal(AddEditSetAnvelopeVM setAnvelope)
         {
             var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
             var result = await _hotelService.UpdateSetAnvelopeAsync(dto);

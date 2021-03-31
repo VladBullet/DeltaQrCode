@@ -19,6 +19,7 @@ namespace DeltaQrCode.HelpersAndExtensions
         {
             // Add as many of these lines as you need to map your objects
             CreateMap<CaSetAnvelope, SetAnvelopeDto>()
+                .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => s.Dimensiuni.ToDimensiuniFromJsonString()))
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.Dimensiuni))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToUzuraFromJsonString()))
@@ -26,8 +27,10 @@ namespace DeltaQrCode.HelpersAndExtensions
                 .ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie, s.Interval)))
                 ;
             CreateMap<SetAnvelopeDto, CaSetAnvelope>()
-                .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => s.Dimensiuni.ToCustomString().ToJson()))
-                .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToCustomString().ToJson()))
+
+                .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
+                .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => s.Dimensiuni.ToJson()))
+                .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToJson()))
                 .ForMember(d => d.Rand, m => m.MapFrom(s => s.Position.Rand))
                 .ForMember(d => d.Pozitie, m => m.MapFrom(s => s.Position.Poz))
                 .ForMember(d => d.Interval, m => m.MapFrom(s => s.Position.Interval));
@@ -36,13 +39,14 @@ namespace DeltaQrCode.HelpersAndExtensions
             CreateMap<CaAppointment, AppointmentVM>().ReverseMap();
 
             CreateMap<AddEditSetAnvelopeVM, SetAnvelopeDto>()
-            .ForMember(d => d.Dimensiuni, m => m.Ignore())
-            .ForMember(d => d.Uzura, m => m.Ignore())
-            .ForMember(d => d.DimensiuniString, m => m.Ignore())
-            .ForMember(d => d.UzuraString, m => m.Ignore())
-            .ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
+                .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
+                .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => new Dimensiuni(s.Diametru, s.Latime, s.Inaltime)))
+                .ForMember(d => d.Uzura, m => m.MapFrom(s => new Uzura(s.StangaFata, s.StangaSpate, s.DreaptaFata, s.DreaptaSpate)))
+                .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.DimensiuniString))
+                .ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
 
             CreateMap<SetAnvelopeDto, AddEditSetAnvelopeVM>()
+                .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Diametru, m => m.MapFrom(s => s.Dimensiuni.Diam))
                 .ForMember(d => d.Latime, m => m.MapFrom(s => s.Dimensiuni.Lat))
                 .ForMember(d => d.Inaltime, m => m.MapFrom(s => s.Dimensiuni.H))

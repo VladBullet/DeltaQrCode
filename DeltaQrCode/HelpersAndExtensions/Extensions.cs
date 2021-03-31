@@ -84,12 +84,5 @@ namespace DeltaQrCode.HelpersAndExtensions
             return JsonConvert.SerializeObject(input);
         }
 
-        public static Dimensiuni FromStringToDimensiuni(this string input)
-        {
-            var json = input.ToJson();
-            var model = json.ToDimensiuniFromJsonString();
-            return model;
-        }
-
     }
 }
