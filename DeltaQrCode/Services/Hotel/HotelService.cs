@@ -67,7 +67,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
-                var returnModel = _mapper.Map<SetAnvelopeDto>(value);
+                var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
                 return Result<SetAnvelopeDto>.ResultOk(returnModel);
 
             }
