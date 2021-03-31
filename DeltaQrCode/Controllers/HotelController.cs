@@ -81,6 +81,10 @@ namespace DeltaQrCode.Controllers
 
             HotelModalVM setVm = new HotelModalVM(model, actType);
 
+            if(actType == ActionType.Info)
+            {
+                return PartialView("_InfoSetAnvPartial", setVm);
+            }
             return PartialView("_EditSetAnvPartial", setVm);
         }
 
