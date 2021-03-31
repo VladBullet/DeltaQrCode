@@ -21,7 +21,7 @@ namespace DeltaQrCode.ViewModels
         }
 
 
-        public TyreType Tip { get; set; }
+        public TireType Tip { get; set; }
         public AddEditSetAnvelopeVM SetAnvelope { get; set; }
         public ActionType ActionType { get; set; }
     }

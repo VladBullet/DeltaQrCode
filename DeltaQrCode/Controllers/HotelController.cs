@@ -68,7 +68,6 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditModal(int id, string actionType)
         {
             ActionType actType = ActionType.Edit;
@@ -78,7 +77,7 @@ namespace DeltaQrCode.Controllers
             }
             var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
 
-            var model = _mapper.Map<AddEditSetAnvelopeVM>(set);
+            var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
 
             HotelModalVM setVm = new HotelModalVM(model, actType);
 
@@ -99,8 +98,8 @@ namespace DeltaQrCode.Controllers
             var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
             dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
             dto.UzuraString = dto.Uzura.ToCustomString();
-            
-            dto.Dimensiuni= new Dimensiuni(setAnvelope.Diametru,setAnvelope.Latime,setAnvelope.Inaltime);
+
+            dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime);
             dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
 
             var result = await _hotelService.AddSetAnvelopeAsync(dto);
@@ -115,7 +114,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal([FromBody] AddEditSetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> EditModal( AddEditSetAnvelopeVM setAnvelope)
         {
             var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
             var result = await _hotelService.UpdateSetAnvelopeAsync(dto);

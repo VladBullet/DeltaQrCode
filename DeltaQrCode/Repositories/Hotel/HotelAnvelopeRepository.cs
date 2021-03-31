@@ -53,10 +53,12 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var value = _db.CaSetAnvelope.Update(setAnv);
+                //var value = _db.CaSetAnvelope.Update(setAnv);
+                var value = await _db.CaSetAnvelope.FindAsync(setAnv.Id);
+                value = setAnv;
                 await _db.SaveChangesAsync();
 
-                return Result<CaSetAnvelope>.ResultOk(value.Entity);
+                return Result<CaSetAnvelope>.ResultOk(value);
 
             }
             catch (Exception er)
@@ -69,7 +71,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie,x.Interval)).ToListAsync();
+                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
                 var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
                 var availablePositions = allCombinations.Except(occupiedPositions).ToList();
 

@@ -33,7 +33,7 @@ namespace DeltaQrCode.Services.Hotel
             try
             {
                 var value = await _hotelRepository.GetSetAnvelopeByIdAsync(id);
-                var model = _mapper.Map<SetAnvelopeDto>(value);
+                var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
                 return Result<SetAnvelopeDto>.ResultOk(model);
             }
             catch (Exception er)
@@ -91,6 +91,8 @@ namespace DeltaQrCode.Services.Hotel
 
                 // setare uzura
                 modelForDatabase.Uzura = setAnv.Uzura.ToJson();
+                var tipSezon = (TireType)int.Parse(setAnv.TipSezon);
+                modelForDatabase.TipSezon = tipSezon.ToDisplayString();
 
                 var value = await _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);
                 var returnModel = _mapper.Map<SetAnvelopeDto>(value);

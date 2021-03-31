@@ -25,7 +25,7 @@ namespace DeltaQrCode.ModelsDto
         Mecanica = 2
     }
 
-    public enum TyreType
+    public enum TireType
     {
         Summer = 1,
         Winter = 2,

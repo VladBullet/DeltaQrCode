@@ -26,6 +26,7 @@ namespace DeltaQrCode.ModelsDto
 
         public string DimensiuniString { get; set; }
         public string UzuraString { get; set; }
+        public string PositionString { get; set; }
 
         public string TipSezon { get; set; }
         public string Evaluare { get; set; }
@@ -92,6 +93,6 @@ namespace DeltaQrCode.ModelsDto
 
         public Guid SetId { get; set; }
 
-        public TyreType TyreType { get; set; }
+        public TireType TireType { get; set; }
     }
 }

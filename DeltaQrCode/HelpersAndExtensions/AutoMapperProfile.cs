@@ -23,7 +23,8 @@ namespace DeltaQrCode.HelpersAndExtensions
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.Dimensiuni))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToUzuraFromJsonString()))
                 .ForMember(d => d.UzuraString, m => m.MapFrom(s => s.Uzura))
-                .ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie, s.Interval)));
+                .ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie, s.Interval)))
+                ;
             CreateMap<SetAnvelopeDto, CaSetAnvelope>()
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => s.Dimensiuni.ToCustomString().ToJson()))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToCustomString().ToJson()))
@@ -39,7 +40,23 @@ namespace DeltaQrCode.HelpersAndExtensions
             .ForMember(d => d.Uzura, m => m.Ignore())
             .ForMember(d => d.DimensiuniString, m => m.Ignore())
             .ForMember(d => d.UzuraString, m => m.Ignore())
-            .ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition())).ReverseMap();
+            .ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
+
+            CreateMap<SetAnvelopeDto, AddEditSetAnvelopeVM>()
+                .ForMember(d => d.Diametru, m => m.MapFrom(s => s.Dimensiuni.Diam))
+                .ForMember(d => d.Latime, m => m.MapFrom(s => s.Dimensiuni.Lat))
+                .ForMember(d => d.Inaltime, m => m.MapFrom(s => s.Dimensiuni.H))
+
+                .ForMember(d => d.StangaFata, m => m.MapFrom(s => s.Uzura.StF))
+                .ForMember(d => d.DreaptaFata, m => m.MapFrom(s => s.Uzura.DrF))
+                .ForMember(d => d.StangaSpate, m => m.MapFrom(s => s.Uzura.StS))
+                .ForMember(d => d.DreaptaSpate, m => m.MapFrom(s => s.Uzura.DrS))
+
+                .ForMember(d => d.PozitieInRaft, m => m.MapFrom(s => s.Position.PositionString))
+
+
+                ;
+
 
         }
     }

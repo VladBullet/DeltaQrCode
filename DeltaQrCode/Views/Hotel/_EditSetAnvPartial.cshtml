@@ -15,7 +15,7 @@
         margin-left: 150px;
     }
 </style>
-
+<input id="actionType" hidden="hidden" data-value="@Model.ActionType" />
 <div class="modal-header">
     @{ if (Model.ActionType == ActionType.Add)
         {
@@ -44,7 +44,7 @@
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.SetAnvelope.NumeSet, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.SetAnvelope.NumeSet, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @value = Model.ActionType==ActionType.Edit? Model.SetAnvelope.NumarInmatriculare : String.Empty} })
+                            @Html.EditorFor(model => model.SetAnvelope.NumeSet, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
                             @Html.ValidationMessageFor(model => model.SetAnvelope.NumeSet, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                 <div class="form-group col-md-3 col-sm-3">
                     @Html.LabelFor(model => model.SetAnvelope.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
-                        <select asp-for="SetAnvelope.TipSezon" asp-items="Html.GetEnumSelectList(typeof(TyreType))"></select>
+                        <select asp-for="SetAnvelope.TipSezon" asp-items="Html.GetEnumSelectList(typeof(TireType))"></select>
 
                         @Html.ValidationMessageFor(model => model.SetAnvelope.TipSezon, "", new { @class = "text-danger" })
                     </div>
@@ -209,10 +209,15 @@
 <script type="text/javascript">
 
     $("#apptsSubmitButton").click(function () {
+        var url = @Url.Action("AddModal", "Hotel");
+        var actionType = $("#actionType").attr("data-value");
+        if (actionType == "Edit") {
+            url = @Url.Action("EditModal", "Hotel");
+        }
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("AddModal", "Hotel")",
+            url: url,
             data: $('#apptform').serialize(),
             success: function (response) {
                 CloseModalById('myHotelModal');
