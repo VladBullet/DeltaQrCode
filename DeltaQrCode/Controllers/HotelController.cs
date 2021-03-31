@@ -67,16 +67,20 @@ namespace DeltaQrCode.Controllers
             return PartialView("_HotelList", model);
         }
 
-        public IActionResult EditModal(int id, string actionType)
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditModal(int id, string actionType)
         {
             ActionType actType = ActionType.Edit;
             if (actionType == "info")
             {
                 actType = ActionType.Info;
             }
-            var set = new AddEditSetAnvelopeVM();
+            var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
 
-            HotelModalVM setVm = new HotelModalVM(set, actType);
+            var model = _mapper.Map<AddEditSetAnvelopeVM>(set);
+
+            HotelModalVM setVm = new HotelModalVM(model, actType);
 
             return PartialView("_EditSetAnvPartial", setVm);
         }
@@ -108,13 +112,19 @@ namespace DeltaQrCode.Controllers
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditModal([FromBody] AddEditSetAnvelopeVM setAnvelope)
         {
-            // setAnvelope 
+            var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
+            var result = await _hotelService.UpdateSetAnvelopeAsync(dto);
+            if (result.Successful)
+            {
+                return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
+            }
 
-            return null;
+            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
     }
 }
