@@ -25,7 +25,6 @@
 <div>
     <div class="modal-body modal-min-height">
         <form id="apptform">
-            @*<input hidden="hidden" asp-for="SetAnvelope.Id" />*@
             @Html.EditorFor(model => model.SetAnvelope.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()
             <div class="form-row">
@@ -45,7 +44,6 @@
                             @Html.ValidationMessageFor(model => model.SetAnvelope.NumeClient, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
 
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.SetAnvelope.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
@@ -108,7 +106,8 @@
                 <div class="form-group col-md-6 col-sm-4">
                     @Html.LabelFor(model => model.SetAnvelope.Marca, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.SetAnvelope.Marca, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                        <input id="Marca" type="text" name="Marca" />
+                        @*@Html.EditorFor(model => model.SetAnvelope.Marca, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })*@
                         @Html.ValidationMessageFor(model => model.SetAnvelope.Marca, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -176,7 +175,7 @@
             <div class="form-row col-md-12 col-sm-12">
                 @Html.LabelFor(model => model.SetAnvelope.Evaluare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.SetAnvelope.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom"} })
+                    @Html.EditorFor(model => model.SetAnvelope.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
                     @Html.ValidationMessageFor(model => model.SetAnvelope.Evaluare, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -187,21 +186,30 @@
         <p id="serverErrorMsg" style="color:red; padding: 5px;"></p>
     </div>
 
-    @{
-        if (Model.ActionType == ActionType.Edit)
-        {
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-outline-success btn-ok" id="apptsEditSubmitButton">Save</a>
-            </div>
-        }
-    }
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-outline-success btn-ok" id="apptsEditSubmitButton">Save</a>
+    </div>
 </div>
 
 
 <script type="text/javascript">
 
-    $("#apptsEditSubmitButton").click(function () {
+        $(document).ready(function () {
+            $.ajax({
+                url: "/Hotel/GetMarci",
+                type: "GET",
+                success: function(data) {
+                    $('#Marca').autocomplete({
+                        source: data
+                    });
+                },
+                error: function(error) {
+                }
+            });
+        });
+
+        $("#apptsEditSubmitButton").click(function () {
 
         $.ajax({
             type: "POST",

@@ -124,7 +124,7 @@ namespace DeltaQrCode.Controllers
 
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
-
+        [HttpGet]
         public IActionResult AddModalNew()
         {
             return PartialView("_AddSetAnvPartial", new HotelModalVM() { ActionType = ActionType.Add });
@@ -149,6 +149,13 @@ namespace DeltaQrCode.Controllers
             }
 
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+        }
+
+        [Produces("application/json")]
+        public async Task<IActionResult> GetMarci()
+        {
+            var marci = await _hotelService.GetMarci();
+            return Ok(marci.Entity.Select(x => x.Label).ToList());
         }
     }
 }

@@ -67,7 +67,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
-                var returnModel = _mapper.Map<SetAnvelopeDto>(value);
+                var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
                 return Result<SetAnvelopeDto>.ResultOk(returnModel);
 
             }
@@ -163,6 +163,19 @@ namespace DeltaQrCode.Services.Hotel
             catch (Exception er)
             {
                 return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la stergerea setului de anvelope!");
+            }
+        }
+
+        public async Task<Result<List<CaMarca>>> GetMarci()
+        {
+            try
+            {
+                var result = await _hotelRepository.GetMarci();
+                return Result<List<CaMarca>>.ResultOk(result.Entity);
+            }
+            catch (Exception e)
+            {
+                return Result<List<CaMarca>>.ResultError(e);
             }
         }
 
