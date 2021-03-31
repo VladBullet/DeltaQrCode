@@ -175,7 +175,7 @@
             <div class="form-row col-md-12 col-sm-12">
                 @Html.LabelFor(model => model.SetAnvelope.Evaluare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.SetAnvelope.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                    @Html.EditorFor(model => model.SetAnvelope.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom"} })
                     @Html.ValidationMessageFor(model => model.SetAnvelope.Evaluare, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -221,11 +221,11 @@
             dataType:"json",
             success: function (response) {
                 CloseModalById('myHotelModal');
-                ShowHeaderAlert(response,"success");
+                ShowHeaderAlert(response,"success",5000);
             },
             error: function (error) {
                 CloseModalById('myHotelModal');
-                ShowHeaderAlert(error.responseJSON.Message, "error");
+                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
 
                 $.ajax({
                     type: "POST",

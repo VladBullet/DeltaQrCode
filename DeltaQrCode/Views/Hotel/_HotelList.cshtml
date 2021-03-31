@@ -4,8 +4,8 @@
 
 <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive" style="width:100%;border:1px solid black;">
     <thead>
-        <tr>
-            <th scope="col">Actiune</th>
+        <tr class="text-center">
+            <th style="min-width:130px;" scope="col">Actiune</th>
             <th scope="col">Nr. Auto</th>
             <th scope="col">Client</th>
             <th scope="col">Marca</th>
@@ -22,11 +22,11 @@
     <tbody>
         @foreach (var item in Model.List)
         {
-            <tr>
+            <tr class="text-center">
                 <td>
-                    <div class="btn btn-outline-info actionButton" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle"></i></div>
-                    <div class="btn btn-outline-warning actionButton" data-value="@item.Id" data-actionType="edit"><i class="far fa-edit"></i></div>
-                    <div class="btn btn-outline-danger deleteButton" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
+                    <div class="btn btn-outline-info btn-sm actionButton " data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle"></i></div>
+                    <div class="btn btn-outline-warning btn-sm actionButton" data-value="@item.Id" data-actionType="edit"><i class="far fa-edit"></i></div>
+                    <div class="btn btn-outline-danger btn-sm deleteButton" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
                 </td>
                 <td>@item.NumarInmatriculare</td>
                 <td>@item.NumeClient</td>
