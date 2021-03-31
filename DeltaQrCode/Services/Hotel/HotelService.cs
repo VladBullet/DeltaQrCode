@@ -166,5 +166,18 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
+        public async Task<Result<List<CaMarca>>> GetMarci()
+        {
+            try
+            {
+                var result = await _hotelRepository.GetMarci();
+                return Result<List<CaMarca>>.ResultOk(result.Entity);
+            }
+            catch (Exception e)
+            {
+                return Result<List<CaMarca>>.ResultError(e);
+            }
+        }
+
     }
 }

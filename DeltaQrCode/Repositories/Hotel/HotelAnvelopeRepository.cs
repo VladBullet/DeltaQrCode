@@ -140,7 +140,19 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+        public async Task<Result<List<CaMarca>>> GetMarci()
+        {
+            try
+            {
+                var value = await _db.CaMarca.ToListAsync();
+                return Result<List<CaMarca>>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<List<CaMarca>>.ResultError(null, er, "Ceva nu a mers bine gasirea marcilor!");
+            }
 
+        }
 
     }
 }
