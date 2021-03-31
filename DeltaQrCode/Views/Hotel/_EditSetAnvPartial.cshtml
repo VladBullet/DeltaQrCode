@@ -210,11 +210,11 @@
             dataType:"json",
             success: function (response) {
                 CloseModalById('myHotelModal');
-                ShowHeaderAlert(response,"success");
+                ShowHeaderAlert(response,"success",5000);
             },
             error: function (error) {
                 CloseModalById('myHotelModal');
-                ShowHeaderAlert(error.responseJSON.Message, "error");
+                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
 
                 $.ajax({
                     type: "POST",

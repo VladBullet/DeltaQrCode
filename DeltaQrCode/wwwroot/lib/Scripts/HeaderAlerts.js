@@ -11,6 +11,6 @@ function ShowHeaderAlert(response, type, milisecs) {
         alertParam.addClass("alert-danger");
     alertParam.alert();
     alertParam.fadeTo(milisecs, 1000).slideUp(1000, function () {
-        alertParam.slideUp(5000);
+        alertParam.slideUp(milisecs);
     });
 }
