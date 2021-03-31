@@ -84,9 +84,10 @@ namespace DeltaQrCode.Controllers
             return PartialView("_EditSetAnvPartial", setVm);
         }
 
-        public IActionResult EditModalNew()
+        
+        public IActionResult AddModalNew()
         {
-            return PartialView("_EditSetAnvPartial", new HotelModalVM() { ActionType = ActionType.Add });
+            return PartialView("_AddSetAnvPartial", new HotelModalVM() { ActionType = ActionType.Add });
         }
 
 

@@ -57,8 +57,8 @@
                 $("#tableResult").load("/Hotel/Search", data);
             });
         });
-        var setAnvNewModalDialog = function () {
-            var url = "/Hotel/EditModalNew"; // the url to the controller
+        var setAnvNewAddModalDialog = function () {
+            var url = "/Hotel/AddModalNew"; // the url to the controller
             $.get(url,
                 function (data) {
                     $('#partialInfo').html(data);
@@ -89,7 +89,7 @@
             function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
-                setAnvNewModalDialog();
+                setAnvNewAddModalDialog();
             });
 
         $('.actionButton').on('click',

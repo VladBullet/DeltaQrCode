@@ -18,7 +18,9 @@
 <input id="actionType" hidden="hidden" data-value="@Model.ActionType" />
 <div class="modal-header">
 
-            <h3 id="myModalLabel"> Edit Set </h3>
+            <h3 id="myModalLabel">Add Set</h3>
+
+
 
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
@@ -187,7 +189,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-success btn-ok" id="apptsEditSubmitButton">Submit</a>
+        <a class="btn btn-success btn-ok" id="apptsAddSubmitButton">Submit</a>
     </div>
 
 </div>
@@ -195,11 +197,11 @@
 
 <script type="text/javascript">
 
-    $("#apptsEditSubmitButton").click(function () {
+    $("#apptsAddSubmitButton").click(function () {
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("EditModal", "Hotel")",
+            url: "@Url.Action("AddModal", "Hotel")",
             data: $('#apptform').serialize(),
             success: function (response) {
                 CloseModalById('myHotelModal');
