@@ -113,7 +113,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var entity = await _db.CaSetAnvelope.FindAsync(id);
+                var entity = await _db.CaSetAnvelope.FirstAsync(x => x.Id == id);
                 entity.Deleted = true;
                 var value = _db.CaSetAnvelope.Update(entity);
                 await _db.SaveChangesAsync();

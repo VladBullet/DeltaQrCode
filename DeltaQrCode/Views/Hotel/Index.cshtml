@@ -34,6 +34,15 @@
         </div>
     </div>
 </div>
+
+<div id="myHotelDeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id="partialInfo"></div>
+        </div>
+    </div>
+</div>
+
 <div id="GetModalCode"></div>
 
 @section Scripts{
@@ -77,7 +86,7 @@
         };
         var deleteSetAnvModalDialog = function (id) {
 
-            var url = "/Hotel/DeleteSetAnv"; // the url to the controller
+            var url = "/Hotel/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
                 function (data) {
                     $('#partialInfo').html(data);

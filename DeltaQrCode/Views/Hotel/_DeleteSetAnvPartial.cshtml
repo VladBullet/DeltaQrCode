@@ -1,0 +1,54 @@
+﻿@using DeltaQrCode.ModelsDto
+@using Microsoft.AspNetCore.Razor.TagHelpers
+@model int
+
+<div class="modal-header">
+
+    <h3 id="myDeleteModalLabel"> Are you sure you want to delete this set? </h3>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-outline-success " data-dismiss="modal">Cancel</button>
+    <a class="btn btn-outline-danger btn-ok" id="confirmDelete" data-value="@Model">Delete</a>
+</div>
+
+
+<script type="text/javascript">
+
+    $("#confirmDelete").click(function () {
+
+        var model = { id: $("#confirmDelete").attr("data-value") };
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ConfirmDelete", "Hotel")",
+            data: model,
+            dataType:"json",
+            success: function (response) {
+                CloseModalById('myHotelDeleteModal');
+                ShowHeaderAlert(response,"success",5000);
+            },
+            error: function (error) {
+                CloseModalById('myHotelDeleteModal');
+                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ErrorModal","Error")",
+                    dataType: "json",
+                    traditional: true,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $("#GetModalCode").html(response);
+                        $("#ErrorModal").modal('show');
+                    },
+                    error: function (error) {
+                        alert(error);
+                    }
+                });
+            }
+        });
+    });
+
+</script>

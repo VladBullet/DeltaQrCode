@@ -88,12 +88,21 @@ namespace DeltaQrCode.Controllers
             return PartialView("_EditSetAnvPartial", setVm);
         }
 
-        
-        public IActionResult AddModalNew()
-        {
-            return PartialView("_AddSetAnvPartial", new HotelModalVM() { ActionType = ActionType.Add });
-        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditModal(AddEditSetAnvelopeVM setAnvelope)
+        {
+            var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
+            var result = await _hotelService.UpdateSetAnvelopeAsync(dto);
+            if (result.Successful)
+            {
+                return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
+            }
+
+            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+            //return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = "Eroare" }));
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -116,20 +125,30 @@ namespace DeltaQrCode.Controllers
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
 
+        public IActionResult AddModalNew()
+        {
+            return PartialView("_AddSetAnvPartial", new HotelModalVM() { ActionType = ActionType.Add });
+        }
+
+
+        [HttpGet]
+        public IActionResult DeleteModal(int id)
+        {
+            return PartialView("_DeleteSetAnvPartial", id);
+        }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal(AddEditSetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> ConfirmDelete(int id)
         {
-            var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
-            var result = await _hotelService.UpdateSetAnvelopeAsync(dto);
+
+            var result = await _hotelService.DeleteSetAnvelopeAsync(id);
+
             if (result.Successful)
             {
-                return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
+                return Ok(JsonConvert.SerializeObject("Setul de anvelope a fost sters!"));
             }
 
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
-            //return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = "Eroare" }));
         }
     }
 }

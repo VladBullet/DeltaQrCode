@@ -203,6 +203,7 @@
             type: "POST",
             url: "@Url.Action("AddModal", "Hotel")",
             data: $('#apptform').serialize(),
+            dataType: "json",
             success: function (response) {
                 CloseModalById('myHotelModal');
                 ShowHeaderAlert(response,"success",5000);
@@ -214,7 +215,7 @@
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("ErrorModal","Error")",
-                    dataType: "text",
+                    dataType: "json",
                     traditional: true,
                     contentType: 'application/json',
                     success: function (response) {
