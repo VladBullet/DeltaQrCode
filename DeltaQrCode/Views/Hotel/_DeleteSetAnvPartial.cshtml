@@ -2,19 +2,26 @@
 @using Microsoft.AspNetCore.Razor.TagHelpers
 @model int
 
-<div class="modal-header">
-
-    <h3 id="myDeleteModalLabel"> Are you sure you want to delete this set? </h3>
-
-</div>
-
-<div class="modal-footer">
-    <button type="button" class="btn btn-default btn-outline-success " data-dismiss="modal">Cancel</button>
-    <a class="btn btn-outline-danger btn-ok" id="confirmDelete" data-value="@Model">Delete</a>
-</div>
 
 
-<script type="text/javascript">
+
+    <div class="modal-header">
+
+        <h3 id="myDeleteModalLabel"> Are you sure?  </h3>
+
+    </div>
+
+    <div class="modal-body">
+        <h5> Do you want to delete this set? You will not be able to see this set in then list anymore.</h5>
+    </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-outline-success " data-dismiss="modal">Cancel</button>
+            <a class="btn btn-outline-danger btn-ok" id="confirmDelete" data-value="@Model">Delete</a>
+        </div>
+
+
+        <script type="text/javascript">
 
     $("#confirmDelete").click(function () {
 
@@ -51,4 +58,4 @@
         });
     });
 
-</script>
+        </script>
