@@ -1,4 +1,5 @@
 DELIMITER $$
+DROP TRIGGER IF EXISTS before_update_ca_set_anvelope;
 CREATE TRIGGER before_update_ca_set_anvelope
 BEFORE UPDATE
 ON ca_set_anvelope FOR EACH ROW
