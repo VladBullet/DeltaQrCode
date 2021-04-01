@@ -77,9 +77,7 @@ namespace DeltaQrCode.Controllers
             }
             var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
             var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
-            var availablePositions = await _hotelService.GetAvailablePositionsAsync();
-            availablePositions.Entity.Add(set.Entity.Position);
-            HotelModalVM setVm = new HotelModalVM(model, actType, availablePositions.Entity);
+            HotelModalVM setVm = new HotelModalVM(model, actType);
 
             if (actType == ActionType.Info)
             {
@@ -127,9 +125,7 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public async Task<IActionResult> AddModalNew()
         {
-            var availablePositions = await _hotelService.GetAvailablePositionsAsync();
-
-            return PartialView("_AddSetAnvPartial", new HotelModalVM(null, ActionType.Add, availablePositions.Entity));
+            return PartialView("_AddSetAnvPartial", new HotelModalVM(null, ActionType.Add));
         }
 
 
