@@ -144,9 +144,9 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 return Result<List<SetAnvelopeDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<List<SetAnvelopeDto>>.ResultError(null, null, "Eroare la citirea din serviciu!");
+                return Result<List<SetAnvelopeDto>>.ResultError(null, er, "Eroare la citirea din serviciu!");
 
             }
         }

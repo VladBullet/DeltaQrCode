@@ -36,9 +36,9 @@
 </div>
 
 <div id="myHotelDeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div id="partialInfo"></div>
+            <div id="partialInfoo"></div>
         </div>
     </div>
 </div>
@@ -89,8 +89,8 @@
             var url = "/Hotel/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
                 function (data) {
-                    $('#partialInfo').html(data);
-                    $('#myHotelModal').modal('show');
+                    $('#partialInfoo').html(data);
+                    $('#myHotelDeleteModal').modal('show');
                 });
         };
 
