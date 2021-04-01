@@ -83,7 +83,7 @@ namespace DeltaQrCode.Controllers
             {
                 return PartialView("_InfoSetAnvPartial", setVm);
             }
-            return PartialView("_EditSetAnvPartial", setVm);
+            return PartialView("_EditSetAnvPartial", setVm.SetAnvelope);
         }
 
 

@@ -127,7 +127,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaMarca>> GetMarcaByIdAsync(int id)
+        public async Task<Result<CaMarca>> GetMarcaByIdAsync(uint id)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace DeltaQrCode.Repositories
             }
 
         }
-        public async Task<Result<List<CaMarca>>> GetMarci()
+        public async Task<Result<List<CaMarca>>> GetMarciAsync()
         {
             try
             {
@@ -154,5 +154,34 @@ namespace DeltaQrCode.Repositories
 
         }
 
+        public async Task<Result<CaMarca>> AddMarcaAsync(CaMarca marca)
+        {
+            try
+            {
+                var value = await _db.CaMarca.AddAsync(marca);
+                await _db.SaveChangesAsync();
+                return Result<CaMarca>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                return Result<CaMarca>.ResultError(null, er, "Ceva nu a mers bine la adaugarea marcii!");
+            }
+        }
+
+        public async Task<Result<CaMarca>> GetMarcaByLableAsync(string label)
+        {
+            try
+            {
+                label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
+                var value = await _db.CaMarca.FirstOrDefaultAsync(x => x.Label.ToLower().Contains(label.ToLower()));
+                return Result<CaMarca>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaMarca>.ResultError(null, er, "Ceva nu a mers bine gasirea marcilor!");
+            }
+
+        }
     }
 }

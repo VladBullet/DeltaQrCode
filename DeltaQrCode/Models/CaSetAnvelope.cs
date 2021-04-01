@@ -12,7 +12,7 @@ namespace DeltaQrCode.Models
         public string Rand { get; set; }
         public string Pozitie { get; set; }
         public string Interval { get; set; }
-        public int? MarcaId { get; set; }
+        public uint? MarcaId { get; set; }
         public string NumeSet { get; set; }
         public int NrBucati { get; set; }
         public string Dimensiuni { get; set; }

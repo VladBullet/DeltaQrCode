@@ -34,6 +34,11 @@ namespace DeltaQrCode.Services.Hotel
             {
                 var value = await _hotelRepository.GetSetAnvelopeByIdAsync(id);
                 var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                if (value.Entity.MarcaId != null)
+                {
+                    var marca = await _hotelRepository.GetMarcaByIdAsync(value.Entity.MarcaId.Value);
+                    model.Marca = marca.Entity.Label;
+                }
                 return Result<SetAnvelopeDto>.ResultOk(model);
             }
             catch (Exception er)
@@ -45,6 +50,23 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
+                var marca = await _hotelRepository.GetMarcaByLableAsync(setAnv.Marca);
+                if (!marca.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(marca.Error, "Problema la gasirea marcii!");
+                }
+
+                if (marca.Entity == null && !string.IsNullOrEmpty(setAnv.Marca))
+                {
+                    marca = await _hotelRepository.AddMarcaAsync(new CaMarca() { Label = setAnv.Marca });
+                }
+
+                if (!marca.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(marca.Error, "Problema la adaugarea marcii!");
+                }
+                setAnv.MarcaId = marca.Entity.Id;
+
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
                 // Set right position
@@ -60,9 +82,11 @@ namespace DeltaQrCode.Services.Hotel
                 // setare uzura
                 modelForDatabase.Uzura = setAnv.Uzura.ToJson();
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
-                //TODO: REMOVE BELLOW 2 lines and get them from controller
+                
                 modelForDatabase.Deleted = false;
-                modelForDatabase.StatusCurent = "InRaft";
+                
+                //TODO: REMOVE BELLOW line and get it from controller
+                //modelForDatabase.StatusCurent = "InRaft";
 
                 var tipSezon = (TireType)int.Parse(setAnv.TipSezon);
                 modelForDatabase.TipSezon = tipSezon.ToDisplayString();
@@ -84,6 +108,23 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
+                var marca = await _hotelRepository.GetMarcaByLableAsync(setAnv.Marca);
+                if (!marca.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(marca.Error, "Problema la gasirea marcii!");
+                }
+
+                if (marca.Entity == null && !string.IsNullOrEmpty(setAnv.Marca))
+                {
+                    marca = await _hotelRepository.AddMarcaAsync(new CaMarca() { Label = setAnv.Marca });
+                }
+
+                if (!marca.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(marca.Error, "Problema la adaugarea marcii!");
+                }
+                setAnv.MarcaId = marca.Entity.Id;
+
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
                 var position = setAnv.Position;
@@ -94,8 +135,11 @@ namespace DeltaQrCode.Services.Hotel
 
                 // setare uzura
                 modelForDatabase.Uzura = setAnv.Uzura.ToJson();
+                
                 var tipSezon = (TireType)int.Parse(setAnv.TipSezon);
                 modelForDatabase.TipSezon = tipSezon.ToDisplayString();
+                
+                modelForDatabase.DataUltimaModificare = DateTime.Now;
 
                 var value = await _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);
                 var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
@@ -133,6 +177,7 @@ namespace DeltaQrCode.Services.Hotel
                 {
 
                     model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
+
                     // add marca as string
                     foreach (var item in model)
                     {
@@ -173,7 +218,7 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
-                var result = await _hotelRepository.GetMarci();
+                var result = await _hotelRepository.GetMarciAsync();
                 return Result<List<CaMarca>>.ResultOk(result.Entity);
             }
             catch (Exception e)
