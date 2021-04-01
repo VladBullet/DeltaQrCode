@@ -64,6 +64,9 @@ namespace DeltaQrCode.Services.Hotel
                 modelForDatabase.Deleted = false;
                 modelForDatabase.StatusCurent = "InRaft";
 
+                var tipSezon = (TireType)int.Parse(setAnv.TipSezon);
+                modelForDatabase.TipSezon = tipSezon.ToDisplayString();
+
 
                 // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
