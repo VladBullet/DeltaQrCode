@@ -23,7 +23,7 @@
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
-    <div class="modal-body modal-min-height">
+    <div class="modal-body modal-min-height ui-front">
         <form id="apptform">
             @Html.EditorFor(model => model.SetAnvelope.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()
