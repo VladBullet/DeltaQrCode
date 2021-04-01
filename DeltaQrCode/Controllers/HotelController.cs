@@ -76,10 +76,10 @@ namespace DeltaQrCode.Controllers
                 actType = ActionType.Info;
             }
             var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
-
             var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
-
-            HotelModalVM setVm = new HotelModalVM(model, actType);
+            var availablePositions = await _hotelService.GetAvailablePositionsAsync();
+            availablePositions.Entity.Add(set.Entity.Position);
+            HotelModalVM setVm = new HotelModalVM(model, actType, availablePositions.Entity);
 
             if (actType == ActionType.Info)
             {
@@ -125,9 +125,11 @@ namespace DeltaQrCode.Controllers
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
         [HttpGet]
-        public IActionResult AddModalNew()
+        public async Task<IActionResult> AddModalNew()
         {
-            return PartialView("_AddSetAnvPartial", new HotelModalVM() { ActionType = ActionType.Add });
+            var availablePositions = await _hotelService.GetAvailablePositionsAsync();
+
+            return PartialView("_AddSetAnvPartial", new HotelModalVM(null, ActionType.Add, availablePositions.Entity));
         }
 
 
@@ -159,6 +161,18 @@ namespace DeltaQrCode.Controllers
             if (!string.IsNullOrEmpty(term))
             {
                 list = list.Where(x => x.ToLower().Contains(term.ToLower())).ToList();
+            }
+            return new JsonResult(list);
+        }
+        [HttpGet]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetAvailablePositions(string term)
+        {
+            var marci = await _hotelService.GetAvailablePositionsAsync();
+            var list = marci.Entity.Select(x => x.PositionString).ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                list = marci.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
             }
             return new JsonResult(list);
         }
