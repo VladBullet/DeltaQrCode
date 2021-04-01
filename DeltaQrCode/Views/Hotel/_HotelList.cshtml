@@ -8,14 +8,15 @@
             <th style="min-width:130px;" scope="col">Actiune</th>
             <th scope="col">Nr. Auto</th>
             <th scope="col">Client</th>
+            <th scope="col">Nr. Telefon</th>
             <th scope="col">Marca</th>
             <th scope="col">Nr.Buc</th>
             <th scope="col">Dimensiuni</th>
             <th scope="col">Uzura</th>
             <th scope="col">Tip</th>
             <th scope="col">Evaluare</th>
-            @*<th scope="col">Rand</th>*@
             <th scope="col">Poz</th>
+            <th scope="col">Status Curent</th>
         </tr>
 
     </thead>
@@ -30,14 +31,15 @@
                 </td>
                 <td>@item.NumarInmatriculare</td>
                 <td>@item.NumeClient</td>
+                <td>@item.NumarTelefon</td>
                 <td>@item.Marca</td>
                 <td>@item.NrBucati</td>
                 <td>@item.Dimensiuni.ToCustomString()</td>
                 <td>@item.Uzura.ToCustomString()</td>
                 <td>@item.TipSezon</td>
                 <td>@item.Evaluare</td>
-                @*<td class="col">@item.Rand</td>*@
                 <td>@item.Position?.PositionString</td>
+                <td>@item.StatusCurent</td>
             </tr>
         }
     </tbody>
