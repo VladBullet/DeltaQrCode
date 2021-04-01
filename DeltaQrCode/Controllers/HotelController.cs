@@ -81,7 +81,7 @@ namespace DeltaQrCode.Controllers
 
             HotelModalVM setVm = new HotelModalVM(model, actType);
 
-            if(actType == ActionType.Info)
+            if (actType == ActionType.Info)
             {
                 return PartialView("_InfoSetAnvPartial", setVm);
             }
@@ -152,10 +152,15 @@ namespace DeltaQrCode.Controllers
         }
 
         [Produces("application/json")]
-        public async Task<IActionResult> GetMarci()
+        public async Task<IActionResult> GetMarci(string term)
         {
             var marci = await _hotelService.GetMarci();
-            return Ok(marci.Entity.Select(x => x.Label).ToList());
+            var list = marci.Entity.Select(x => x.Label).ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                list = list.Where(x => x.ToLower().Contains(term.ToLower())).ToList();
+            }
+            return new JsonResult(list);
         }
     }
 }

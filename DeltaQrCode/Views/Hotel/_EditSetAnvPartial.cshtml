@@ -106,7 +106,7 @@
                 <div class="form-group col-md-6 col-sm-4">
                     @Html.LabelFor(model => model.SetAnvelope.Marca, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
-                        <input id="Marca" type="text" name="Marca" />
+                        <input id="Marca" type="text" name="Marca" asp-for="SetAnvelope.Marca" />
                         @*@Html.EditorFor(model => model.SetAnvelope.Marca, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })*@
                         @Html.ValidationMessageFor(model => model.SetAnvelope.Marca, "", new { @class = "text-danger" })
                     </div>
@@ -195,19 +195,14 @@
 
 <script type="text/javascript">
 
-        $(document).ready(function () {
-            $.ajax({
-                url: "/Hotel/GetMarci",
-                type: "GET",
-                success: function(data) {
-                    $('#Marca').autocomplete({
-                        source: data
-                    });
-                },
-                error: function(error) {
-                }
-            });
+    $(document).ready(function() {
+        var term = $("#Marca").val();
+        var url = "/Hotel/GetMarci";
+        $("#Marca").autocomplete({
+            source:url ,
+            minLength: 2
         });
+    });
 
         $("#apptsEditSubmitButton").click(function () {
 
