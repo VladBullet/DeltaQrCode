@@ -172,5 +172,15 @@ namespace DeltaQrCode.Controllers
             }
             return new JsonResult(list);
         }
+        [HttpGet]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetTireTypes()
+        {
+            var list = new List<string>();
+            list.Add(TireType.Vara.ToDisplayString());
+            list.Add(TireType.Iarna.ToDisplayString());
+            list.Add(TireType.AllSeason.ToDisplayString());
+            return new JsonResult(list);
+        }
     }
 }

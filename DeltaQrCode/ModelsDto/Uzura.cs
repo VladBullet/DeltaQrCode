@@ -12,16 +12,16 @@ namespace DeltaQrCode.ModelsDto
 
         }
 
-        public Uzura(string stF, string stS, string drF, string drS)
+        public Uzura(int stF, int stS, int drF, int drS)
         {
             StF = stF;
             StS = stS;
             DrF = drF;
             DrS = drS;
         }
-        public string StF { get; set; }
-        public string StS { get; set; }
-        public string DrF { get; set; }
-        public string DrS { get; set; }
+        public int StF { get; set; }
+        public int StS { get; set; }
+        public int DrF { get; set; }
+        public int DrS { get; set; }
     }
 }

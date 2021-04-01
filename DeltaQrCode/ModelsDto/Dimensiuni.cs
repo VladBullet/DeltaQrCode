@@ -11,14 +11,14 @@ namespace DeltaQrCode.ModelsDto
         {
             
         }
-        public Dimensiuni(string diam, string lat, string h)
+        public Dimensiuni(int diam, int lat, int h)
         {
             Diam = diam;
             Lat = lat;
             H = h;
         }
-        public string Diam { get; set; }
-        public string Lat { get; set; }
-        public string H { get; set; }
+        public int Diam { get; set; }
+        public int Lat { get; set; }
+        public int H { get; set; }
     }
 }

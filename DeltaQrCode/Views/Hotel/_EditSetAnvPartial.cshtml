@@ -1,7 +1,6 @@
 ﻿@using DeltaQrCode.ModelsDto
 @using Microsoft.AspNetCore.Razor.TagHelpers
 @model DeltaQrCode.ViewModels.HotelAnvelope.AddEditSetAnvelopeVM
-
 <style>
     .modal-min-height {
         min-height: 450px;
@@ -17,6 +16,7 @@
 </style>
 <input id="defaultPosition" hidden="hidden" data-value="@Model.PozitieInRaft" />
 <input id="defaultMarca" hidden="hidden" data-value="@Model.Marca" />
+<input id="defaultTipSezon" hidden="hidden" data-value="@Model.TipSezon" />
 <div class="modal-header">
 
     <h3 id="myModalLabel"> Edit Set </h3>
@@ -148,35 +148,36 @@
                 </div>
             </div>
 
+
             <div class="form-row" style="margin-top: 30px;">
                 <div class="form-group col-md-3 col-sm-3">
-                    @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "tipSezonLabel", @name = "tipSezonLabel" })
                     <div class="col-md-9">
-                        <select asp-for="TipSezon" asp-items="Html.GetEnumSelectList(typeof(TireType))"></select>
+                        <select class="form-control" id="tipSezon" asp-for="TipSezon"></select>
 
                         @Html.ValidationMessageFor(model => model.TipSezon, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group col-md-6 col-sm-3">
-                    @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "pozitieInRaftLabel", @name = "pozitieInRaftLabel" })
                     <div class="col-md-9">
                         <select id="selPoz" class="form-control" asp-for="PozitieInRaft" data-placeholder="@Model.PozitieInRaft" value="@Model.PozitieInRaft"></select>
                         @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group col-md-3 col-sm-3">
-                    @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusLabel", @name = "statusLabel" })
                     <div class="col-md-9 ">
-                        @Html.EditorFor(model => model.StatusCurent, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                        @Html.EditorFor(model => model.StatusCurent, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @id = "status", @name = "status" } })
                         @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
             <div class="form-row col-md-12 col-sm-12">
-                @Html.LabelFor(model => model.Evaluare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                @Html.LabelFor(model => model.Evaluare, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "evaluareLabel", @name = "evaluareLabel" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                    @Html.EditorFor(model => model.Evaluare, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @id = "evaluare", @name = "evaluare" } })
                     @Html.ValidationMessageFor(model => model.Evaluare, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -188,17 +189,18 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-secondary btn-default" data-dismiss="modal">Cancel</button>
         <a class="btn btn-outline-success btn-ok" id="apptsEditSubmitButton">Save</a>
     </div>
 </div>
 
-
+<script src="~/js/form-validations.js"></script>
+<script src="~/js/validationRules.js"></script>
 <script type="text/javascript">
 
-    $(document).ready(function() {
 
         // Initialize select2
+        //Select2 for Position
         $("#selPoz").select2({
             dropdownParent: "#hotelModalBody",
             theme: "bootstrap4",
@@ -225,6 +227,7 @@
             }
         });
 
+        // Select2 for Marca
         $("#Marca").select2({
             tags: true,
             dropdownParent: "#hotelModalBody",
@@ -251,6 +254,28 @@
                 }
             }
         });
+          // Select2 for TipSezon
+        $("#tipSezon").select2({
+            dropdownParent: "#hotelModalBody",
+            theme: "bootstrap4",
+            minimumResultsForSearch: Infinity,
+            ajax: {
+                url: '/Hotel/GetTireTypes',
+                dataType: 'json',
+                processResults: function (result) {
+                    return {
+                        results: $.map(result, function (item) {
+                            return {
+                                id: item,
+                                text: item
+                            };
+                        }),
+                    };
+                }
+            }
+        });
+
+        // select2 initial value for position
         var selPozObj = $('#selPoz');
         var selPozVal = $("#defaultPosition").attr("data-value");
         if (selPozVal != NaN && selPozVal != '') {
@@ -260,6 +285,7 @@
             selPozObj.trigger('change'); // Notify any JS components that the value changed
         }
 
+        // select2 initial value for marca
         var marcaObj = $('#Marca');
         var marcaVal = $("#defaultMarca").attr("data-value");
         if (marcaVal != NaN && marcaVal != '') {
@@ -269,39 +295,56 @@
             marcaObj.trigger('change'); // Notify any JS components that the value changed
         }
 
-    });
+        // select2 initial value for tipSezon
+        var tipSezonObj = $('#tipSezon');
+        var tipSezonValue = $("#defaultTipSezon").attr("data-value");
+        if (tipSezonValue != NaN && tipSezonValue != '') {
+            tipSezonObj.val(tipSezonValue).trigger('change'); // Notify any JS components that the value changed
+        }
+        $(document).ready(function() {
 
-        $("#apptsEditSubmitButton").click(function () {
-
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("EditModal", "Hotel")",
-            data: $('#apptform').serialize(),
-            dataType:"json",
-            success: function (response) {
-                CloseModalById('myHotelModal');
-                ShowHeaderAlert(response,"success",5000);
-            },
-            error: function (error) {
-                CloseModalById('myHotelModal');
-                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
-
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("ErrorModal","Error")",
-                    dataType: "json",
-                    traditional: true,
-                    contentType: 'application/json',
-                    success: function (response) {
-                        $("#GetModalCode").html(response);
-                        $("#ErrorModal").modal('show');
-                    },
-                    error: function (error) {
-                        alert(error);
-                    }
-                });
-            }
         });
+    // when nrBucati changes we need to disable some fields and / or activate the validations
+    //$("#nrBucati").on("change", function() {
+    //    validateUzura($(this).val());
+    //    console.log("validate uzura triggered");
+    //});
+
+    // SAVE BTN CLICK EVENT
+    $("#apptsEditSubmitButton").click(function () {
+        //var valid = $("#apptform").valid();
+        //console.log("is valid or not: " + valid.toString());
+        //if (valid) { // send the form only if it is valid
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("EditModal", "Hotel")",
+                data: $('#apptform').serialize(),
+                dataType:"json",
+                success: function (response) {
+                    CloseModalById('myHotelModal');
+                    ShowHeaderAlert(response,"success",5000);
+                },
+                error: function (error) {
+                    CloseModalById('myHotelModal');
+                    ShowHeaderAlert(error.responseJSON.Message, "error",5000);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("ErrorModal","Error")",
+                        dataType: "json",
+                        traditional: true,
+                        contentType: 'application/json',
+                        success: function (response) {
+                            $("#GetModalCode").html(response);
+                            $("#ErrorModal").modal('show');
+                        },
+                        error: function (error) {
+                            alert(error);
+                        }
+                    });
+                }
+            });
+        //}
     });
 
 </script>

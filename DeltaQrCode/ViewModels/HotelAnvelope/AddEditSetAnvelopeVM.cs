@@ -16,14 +16,14 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string Marca { get; set; }
         public string NumeSet { get; set; }
         public int NrBucati { get; set; }
-        public string Diametru { get; set; }
-        public string Latime { get; set; }
-        public string Inaltime { get; set; }
+        public int Diametru { get; set; }
+        public int Latime { get; set; }
+        public int Inaltime { get; set; }
         public string DimensiuniString { get; set; }
-        public string StangaFata { get; set; }
-        public string StangaSpate { get; set; }
-        public string DreaptaFata { get; set; }
-        public string DreaptaSpate { get; set; }
+        public int StangaFata { get; set; }
+        public int StangaSpate { get; set; }
+        public int DreaptaFata { get; set; }
+        public int DreaptaSpate { get; set; }
         public string TipSezon { get; set; }
         public string Evaluare { get; set; }
         public string StatusCurent { get; set; }
