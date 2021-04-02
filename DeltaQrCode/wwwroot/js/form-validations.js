@@ -35,7 +35,6 @@
 ////            required: true
 ////        },
 ////        Status: { requred: true },
-////        Evaluare: { requred: true }
 ////    },
 ////    // Specify validation error messages
 ////    messages: {
@@ -56,7 +55,6 @@
 ////        Latime: "Va rugam introduceti latimea anvelopelor !",
 ////        Inaltime: "Va rugam introduceti inaltimea anvelopelor !",
 ////        Status: "Va rugam selectati status-ul anvelopelor !",
-////        Evaluare: "Va rugam introduceti evaluarea anvelopelor !"
 ////    },
 ////    highlight: function (element) {
 ////        $(element).closest('.form-group').addClass('has-error');

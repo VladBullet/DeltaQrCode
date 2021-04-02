@@ -29,7 +29,7 @@ namespace DeltaQrCode.ModelsDto
         public string PositionString { get; set; }
 
         public string TipSezon { get; set; }
-        public string Evaluare { get; set; }
+        public string Observatii { get; set; }
         public string StatusCurent { get; set; }
         public DateTime DataUltimaModificare { get; set; }
         public bool Deleted { get; set; }

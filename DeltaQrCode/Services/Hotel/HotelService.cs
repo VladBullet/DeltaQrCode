@@ -109,18 +109,6 @@ namespace DeltaQrCode.Services.Hotel
 
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
-                var position = setAnv.Position;
-                modelForDatabase.Pozitie = position.Poz;
-                modelForDatabase.Rand = position.Rand;
-                // setare dimensiuni
-                modelForDatabase.Dimensiuni = setAnv.Dimensiuni.ToJson();
-
-                // setare uzura
-                modelForDatabase.Uzura = setAnv.Uzura.ToJson();
-                
-                //var tipSezon = (TireType)int.Parse(setAnv.TipSezon);
-                //modelForDatabase.TipSezon = tipSezon.ToDisplayString();
-                
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
                 var value = await _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);

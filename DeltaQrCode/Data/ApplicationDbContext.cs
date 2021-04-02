@@ -382,8 +382,7 @@ namespace DeltaQrCode.Data
                     .IsRequired()
                     .HasColumnType("varchar(100)");
 
-                entity.Property(e => e.Evaluare)
-                    .IsRequired()
+                entity.Property(e => e.Observatii)
                     .HasColumnType("varchar(100)");
 
                 entity.Property(e => e.NumarInmatriculare)
