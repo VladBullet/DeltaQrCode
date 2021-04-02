@@ -1,6 +1,6 @@
 ﻿@using DeltaQrCode.ModelsDto
 @using Microsoft.AspNetCore.Razor.TagHelpers
-@model DeltaQrCode.ViewModels.HotelModalVM
+@model DeltaQrCode.ViewModels.HotelAnvelope.AddEditSetAnvelopeVM
 
 <style>
     .modal-min-height {
@@ -15,7 +15,6 @@
         margin-left: 150px;
     }
 </style>
-<input id="actionType" hidden="hidden" data-value="@Model.ActionType" />
 <div class="modal-header">
 
     <h3 id="myModalLabel"> Info Set </h3>
@@ -23,43 +22,42 @@
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
-    <div class="modal-body modal-min-height">
+    <div class="modal-body modal-min-height ui-front">
         <form id="apptform">
-            @*<input hidden="hidden" asp-for="SetAnvelope.Id" />*@
-            @Html.EditorFor(model => model.SetAnvelope.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
+            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()
             <div class="form-row">
                 <div class="col">
                     <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.SetAnvelope.NumeSet, htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.LabelFor(model => model.NumeSet, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.SetAnvelope.NumeSet, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                            @Html.ValidationMessageFor(model => model.SetAnvelope.NumeSet, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NumeSet, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.NumeSet, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.SetAnvelope.NumeClient, htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.LabelFor(model => model.NumeClient, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.SetAnvelope.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                            @Html.ValidationMessageFor(model => model.SetAnvelope.NumeClient, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.NumeClient, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
 
                     <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.SetAnvelope.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.LabelFor(model => model.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.SetAnvelope.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                            @Html.ValidationMessageFor(model => model.SetAnvelope.NumarInmatriculare, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.NumarInmatriculare, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.SetAnvelope.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.LabelFor(model => model.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.SetAnvelope.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                            @Html.ValidationMessageFor(model => model.SetAnvelope.NumarTelefon, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -67,36 +65,37 @@
                 <div class="col">
                     <div class="row">
                         <div class="col">
+                            <h6 style="margin-left: 50px;">Uzura: </h6>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.SetAnvelope.StangaFata, htmlAttributes: new { @class = "control-label col-md-3" })
+                                @Html.LabelFor(model => model.StangaFata, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.SetAnvelope.StangaFata, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @readonly = "readonly" } })
-                                    @Html.ValidationMessageFor(model => model.SetAnvelope.StangaFata, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.StangaFata, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.StangaFata, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.SetAnvelope.StangaSpate, htmlAttributes: new { @class = "control-label col-md-3" })
+                                @Html.LabelFor(model => model.StangaSpate, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.SetAnvelope.StangaSpate, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @readonly = "readonly" } })
-                                    @Html.ValidationMessageFor(model => model.SetAnvelope.StangaSpate, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.StangaSpate, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.StangaSpate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col" style="margin-top:27px;">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.SetAnvelope.DreaptaFata, htmlAttributes: new { @class = "control-label col-md-3" })
+                                @Html.LabelFor(model => model.DreaptaFata, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.SetAnvelope.DreaptaFata, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @readonly = "readonly" } })
-                                    @Html.ValidationMessageFor(model => model.SetAnvelope.DreaptaFata, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.DreaptaFata, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.DreaptaFata, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.SetAnvelope.DreaptaSpate, htmlAttributes: new { @class = "control-label col-md-3" })
+                                @Html.LabelFor(model => model.DreaptaSpate, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.SetAnvelope.DreaptaSpate, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @readonly = "readonly" } })
-                                    @Html.ValidationMessageFor(model => model.SetAnvelope.DreaptaSpate, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.DreaptaSpate, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.DreaptaSpate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -106,19 +105,19 @@
 
             <div class="form-row">
                 <div class="form-group col-md-6 col-sm-4">
-                    @Html.LabelFor(model => model.SetAnvelope.Marca, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.SetAnvelope.Marca, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                        @Html.ValidationMessageFor(model => model.SetAnvelope.Marca, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Marca, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
 
                 <div class="form-group col-md-4 col-sm-4">
-                    @Html.LabelFor(model => model.SetAnvelope.NrBucati, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.NrBucati, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9 ">
-                        @Html.EditorFor(model => model.SetAnvelope.NrBucati, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                        @Html.ValidationMessageFor(model => model.SetAnvelope.NrBucati, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.NrBucati, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.NrBucati, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -127,57 +126,56 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4 col-sm-4">
-                    @Html.LabelFor(model => model.SetAnvelope.Diametru, htmlAttributes: new { @class = "control-label col-md-4" })
-                    @Html.EditorFor(model => model.SetAnvelope.Diametru, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.SetAnvelope.Diametru, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.Diametru, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.EditorFor(model => model.Diametru, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Diametru, "", new { @class = "text-danger" })
 
                 </div>
 
 
                 <div class="form-group col-md-4 col-sm-4">
-                    @Html.LabelFor(model => model.SetAnvelope.Latime, htmlAttributes: new { @class = "control-label col-md-4" })
-                    @Html.EditorFor(model => model.SetAnvelope.Latime, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.SetAnvelope.Latime, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.Latime, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.EditorFor(model => model.Latime, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Latime, "", new { @class = "text-danger" })
                 </div>
 
 
                 <div class="form-group col-md-4 col-sm-4">
-                    @Html.LabelFor(model => model.SetAnvelope.Inaltime, htmlAttributes: new { @class = "control-label col-md-4" })
-                    @Html.EditorFor(model => model.SetAnvelope.Inaltime, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.SetAnvelope.Inaltime, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.Inaltime, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.EditorFor(model => model.Inaltime, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Inaltime, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-row" style="margin-top: 30px;">
                 <div class="form-group col-md-3 col-sm-3">
-                    @Html.LabelFor(model => model.SetAnvelope.TipSezon, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        <select asp-for="SetAnvelope.TipSezon" asp-items="Html.GetEnumSelectList(typeof(TireType))" disabled = "disabled"></select>
-
-                        @Html.ValidationMessageFor(model => model.SetAnvelope.TipSezon, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.TipSezon, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.TipSezon, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group col-md-6 col-sm-3">
-                    @Html.LabelFor(model => model.SetAnvelope.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.SetAnvelope.PozitieInRaft, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                        @Html.ValidationMessageFor(model => model.SetAnvelope.PozitieInRaft, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.PozitieInRaft, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group col-md-3 col-sm-3">
-                    @Html.LabelFor(model => model.SetAnvelope.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9 ">
-                        @Html.EditorFor(model => model.SetAnvelope.StatusCurent, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
-                        @Html.ValidationMessageFor(model => model.SetAnvelope.StatusCurent, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.StatusCurent, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
             <div class="form-row col-md-12 col-sm-12">
-                @Html.LabelFor(model => model.SetAnvelope.Observatii, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.Observatii, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.SetAnvelope.Observatii, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly"} })
-                    @Html.ValidationMessageFor(model => model.SetAnvelope.Observatii, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Observatii, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Observatii, "", new { @class = "text-danger" })
                 </div>
             </div>
         </form>
