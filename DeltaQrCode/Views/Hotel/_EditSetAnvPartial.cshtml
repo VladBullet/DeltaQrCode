@@ -153,7 +153,7 @@
                 <div class="form-group col-md-3 col-sm-3">
                     @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "tipSezonLabel", @name = "tipSezonLabel" })
                     <div class="col-md-9">
-                        <select class="form-control" id="tipSezon" asp-for="TipSezon"></select>
+                        <select class="form-control" id="tipSezon" asp-for="TipSezon" data-placeholder="@Model.TipSezon" value="@Model.TipSezon"></select>
 
                         @Html.ValidationMessageFor(model => model.TipSezon, "", new { @class = "text-danger" })
                     </div>
@@ -255,7 +255,8 @@
             }
         });
           // Select2 for TipSezon
-        $("#tipSezon").select2({
+    $("#tipSezon").select2({
+            tags: true,
             dropdownParent: "#hotelModalBody",
             theme: "bootstrap4",
             minimumResultsForSearch: Infinity,
@@ -298,7 +299,9 @@
         // select2 initial value for tipSezon
         var tipSezonObj = $('#tipSezon');
         var tipSezonValue = $("#defaultTipSezon").attr("data-value");
-        if (tipSezonValue != NaN && tipSezonValue != '') {
+    if (tipSezonValue != NaN && tipSezonValue != '') {
+            var optionTipSezon = new Option(tipSezonValue, tipSezonValue, true, true);
+            tipSezonObj.append(optionTipSezon);
             tipSezonObj.val(tipSezonValue).trigger('change'); // Notify any JS components that the value changed
         }
         $(document).ready(function() {
@@ -322,7 +325,7 @@
                 dataType:"json",
                 success: function (response) {
                     CloseModalById('myHotelModal');
-                    ShowHeaderAlert(response,"success",5000);
+                    ShowHeaderAlert(response, "success", 5000);
                 },
                 error: function (error) {
                     CloseModalById('myHotelModal');

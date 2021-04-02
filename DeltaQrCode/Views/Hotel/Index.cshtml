@@ -38,7 +38,7 @@
 <div id="myHotelDeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div id="partialInfoo"></div>
+            <div id="partialInfoDelete"></div>
         </div>
     </div>
 </div>
@@ -49,7 +49,8 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#search-addon").on("click", function () {
+            $("#search-addon").on("click", function (event) {
+                event.preventDefault();
                 var data = { searchString: $("#search").val(), page: 1 };
                 $("#tableResult").load("/Hotel/Search", data);
             });
@@ -89,7 +90,7 @@
             var url = "/Hotel/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
                 function (data) {
-                    $('#partialInfoo').html(data);
+                    $('#partialInfoDelete').html(data);
                     $('#myHotelDeleteModal').modal('show');
                 });
         };
@@ -101,7 +102,7 @@
                 setAnvNewAddModalDialog();
             });
 
-        $('.actionButton').on('click',
+         $(document).on('click', '.actionButton',
             function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
@@ -111,7 +112,7 @@
                 setAnvEditModalDialog(id, actionType);
             });
 
-        $('.deleteButton').on('click',
+                $(document).on('click', '.deleteButton',
             function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
