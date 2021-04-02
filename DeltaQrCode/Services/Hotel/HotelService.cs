@@ -70,9 +70,9 @@ namespace DeltaQrCode.Services.Hotel
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
-                
+
                 modelForDatabase.Deleted = false;
-                
+
 
                 // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
@@ -112,6 +112,10 @@ namespace DeltaQrCode.Services.Hotel
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
                 var value = await _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);
+                if (!value.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(value.Error);
+                }
                 var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
                 return Result<SetAnvelopeDto>.ResultOk(returnModel);
 

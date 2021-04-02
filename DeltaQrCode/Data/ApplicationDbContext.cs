@@ -382,8 +382,11 @@ namespace DeltaQrCode.Data
                     .IsRequired()
                     .HasColumnType("varchar(100)");
 
-                entity.Property(e => e.Observatii)
-                    .HasColumnType("varchar(100)");
+                entity.Property(e => e.Interval)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.NrBucati).HasColumnType("int(11)");
 
                 entity.Property(e => e.NumarInmatriculare)
                     .IsRequired()
@@ -398,16 +401,16 @@ namespace DeltaQrCode.Data
                     .HasColumnType("varchar(50)");
 
                 entity.Property(e => e.NumeSet)
+                    .IsRequired()
                     .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Observatii).HasColumnType("varchar(100)");
 
                 entity.Property(e => e.Pozitie)
                     .IsRequired()
                     .HasColumnType("varchar(45)");
 
                 entity.Property(e => e.Rand)
-                    .IsRequired()
-                    .HasColumnType("varchar(45)");
-                entity.Property(e => e.Interval)
                     .IsRequired()
                     .HasColumnType("varchar(45)");
 
