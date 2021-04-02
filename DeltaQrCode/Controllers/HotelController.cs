@@ -81,7 +81,7 @@ namespace DeltaQrCode.Controllers
 
             if (actType == ActionType.Info)
             {
-                return PartialView("_InfoSetAnvPartial", setVm);
+                return PartialView("_InfoSetAnvPartial", setVm.SetAnvelope);
             }
             return PartialView("_EditSetAnvPartial", setVm.SetAnvelope);
         }
