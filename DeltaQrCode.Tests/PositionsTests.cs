@@ -4,6 +4,8 @@ using System.Text;
 
 namespace DeltaQrCode.Tests
 {
+    using DeltaQrCode.Repositories;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -13,7 +15,7 @@ namespace DeltaQrCode.Tests
         public void GeneratingPositionsShouldWork()
         {
             var x = HelpersAndExtensions.Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
-
+            
             Assert.IsNotNull(x);
         }
     }
