@@ -35,8 +35,7 @@
             success: function (response) {
                 CloseModalById('myHotelDeleteModal');
                 ShowHeaderAlert(response, "success", 5000);
-                setTimeout(function (){}, 1500);
-                window.location.replace("@Url.Action("Index","Hotel")");
+                $('#hotelListState').change();
             },
             error: function (error) {
                 CloseModalById('myHotelDeleteModal');

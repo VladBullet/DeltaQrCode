@@ -11,7 +11,7 @@
 
 <div id="HeaderAlert" class="alert" role="alert">
 </div>
-
+<input type="text" id="hotelListState" value="0" hidden="hidden" />
 <div class="container text-center">
     <div class="input-group rounded">
         <input type="text" id="search" class="form-control rounded" placeholder="Search" aria-label="Search"
@@ -48,62 +48,65 @@
 @section Scripts{
 
     <script type="text/javascript">
-        $(function () {
-            $("#search-addon").on("click", function (event) {
-                event.preventDefault();
-                var data = { searchString: $("#search").val(), page: 1 };
-                $("#tableResult").load("/Hotel/Search", data);
-            });
+        $(function() {
+            $("#search-addon").on("click",
+                function(event) {
+                    event.preventDefault();
+                    var data = { searchString: $("#search").val(), page: 1 };
+                    $("#tableResult").load("/Hotel/Search", data);
+                });
         });
 
-        $(function () {
-            $(".CustomPagination").on("click", function () {
-                var page = $(this).attr("data-value");
-                var searchString = $("#search").val();
-                var data = {
-                    searchString: searchString,
-                    page: page
-                };
-                $("#tableResult").load("/Hotel/Search", data);
-            });
+        $(function() {
+            $(".CustomPagination").on("click",
+                function() {
+                    var page = $(this).attr("data-value");
+                    var searchString = $("#search").val();
+                    var data = {
+                        searchString: searchString,
+                        page: page
+                    };
+                    $("#tableResult").load("/Hotel/Search", data);
+                });
         });
-        var setAnvNewAddModalDialog = function () {
+        var setAnvNewAddModalDialog = function() {
             var url = "/Hotel/AddModalNew"; // the url to the controller
             $.get(url,
-                function (data) {
+                function(data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
                 });
         };
 
-        var setAnvEditModalDialog = function (id, actionType) {
+        var setAnvEditModalDialog = function(id, actionType) {
 
             var url = "/Hotel/EditModal"; // the url to the controller
             $.get(url + '?id=' + id + '&actionType=' + actionType,
-                function (data) {
+                function(data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
                 });
         };
-        var deleteSetAnvModalDialog = function (id) {
+        var deleteSetAnvModalDialog = function(id) {
 
             var url = "/Hotel/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
-                function (data) {
+                function(data) {
                     $('#partialInfoDelete').html(data);
                     $('#myHotelDeleteModal').modal('show');
                 });
         };
 
         $('#AddSetAnv').on('click',
-            function (event) {
+            function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 setAnvNewAddModalDialog();
             });
 
-         $(document).on('click', '.actionButton',
-            function (event) {
+        $(document).on('click',
+            '.actionButton',
+            function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
@@ -112,12 +115,20 @@
                 setAnvEditModalDialog(id, actionType);
             });
 
-                $(document).on('click', '.deleteButton',
-            function (event) {
+        $(document).on('click',
+            '.deleteButton',
+            function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
                 deleteSetAnvModalDialog(id);
+            });
+
+        $(document).on("change", "#hotelListState",
+            function() {
+                event.preventDefault();
+                var data = { searchString: $("#search").val(), page: 1 };
+                $("#tableResult").load("/Hotel/Search", data);
             });
     </script>
 
