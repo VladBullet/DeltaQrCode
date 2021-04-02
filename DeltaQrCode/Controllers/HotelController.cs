@@ -182,5 +182,17 @@ namespace DeltaQrCode.Controllers
             list.Add(TireType.AllSeason.ToDisplayString());
             return new JsonResult(list);
         }
+
+        [HttpGet]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetStatusAnvelope()
+        {
+            var list = new List<string>();
+            list.Add(StatusAnvelope.Casate.ToDisplayString());
+            list.Add(StatusAnvelope.InRaft.ToDisplayString());
+            list.Add(StatusAnvelope.Montate.ToDisplayString());
+            list.Add(StatusAnvelope.Predate.ToDisplayString());
+            return new JsonResult(list);
+        }
     }
 }

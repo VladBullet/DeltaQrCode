@@ -152,7 +152,7 @@
                 <div class="form-group col-md-3 col-sm-3">
                     @Html.LabelFor(model => model.SetAnvelope.TipSezon, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        <select asp-for="SetAnvelope.TipSezon" asp-items="Html.GetEnumSelectList(typeof(TireType))" disabled = "true"></select>
+                        <select asp-for="SetAnvelope.TipSezon" asp-items="Html.GetEnumSelectList(typeof(TireType))" disabled = "disabled"></select>
 
                         @Html.ValidationMessageFor(model => model.SetAnvelope.TipSezon, "", new { @class = "text-danger" })
                     </div>
