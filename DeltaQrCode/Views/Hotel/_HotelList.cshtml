@@ -39,7 +39,20 @@
                 <td>@item.TipSezon</td>
                 <td>@item.Evaluare</td>
                 <td>@item.Position?.PositionString</td>
-                <td>@item.StatusCurent</td>
+                @{
+                    string color = "red";
+                    if (item.StatusCurent == StatusAnvelope.InRaft.ToDisplayString())
+                    {
+                        color = "lightgreen";
+                    }
+                    else if (item.StatusCurent == StatusAnvelope.Montate.ToDisplayString())
+                    {
+                        color = "yellow";
+                    }
+                    <td style="background-color: @color">
+                        @item.StatusCurent
+                    </td>
+                }
             </tr>
         }
     </tbody>
