@@ -136,8 +136,8 @@ namespace DeltaQrCode.Services.Hotel
                 // setare uzura
                 modelForDatabase.Uzura = setAnv.Uzura.ToJson();
                 
-                var tipSezon = (TireType)int.Parse(setAnv.TipSezon);
-                modelForDatabase.TipSezon = tipSezon.ToDisplayString();
+                //var tipSezon = (TireType)int.Parse(setAnv.TipSezon);
+                //modelForDatabase.TipSezon = tipSezon.ToDisplayString();
                 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
