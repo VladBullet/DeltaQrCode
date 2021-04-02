@@ -125,7 +125,7 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public async Task<IActionResult> AddModalNew()
         {
-            return PartialView("_AddSetAnvPartial", new HotelModalVM(null, ActionType.Add));
+            return PartialView("_AddSetAnvPartial", new AddEditSetAnvelopeVM());
         }
 
 

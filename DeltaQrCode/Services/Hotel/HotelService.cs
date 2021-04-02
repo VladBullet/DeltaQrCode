@@ -69,28 +69,10 @@ namespace DeltaQrCode.Services.Hotel
 
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
-                // Set right position
-                var position = setAnv.Position;
-                modelForDatabase.Pozitie = position.Poz;
-                modelForDatabase.Rand = position.Rand;
-                modelForDatabase.Interval = position.Interval;
-
-
-                // setare dimensiuni
-                modelForDatabase.Dimensiuni = setAnv.Dimensiuni.ToJson();
-
-                // setare uzura
-                modelForDatabase.Uzura = setAnv.Uzura.ToJson();
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
                 
                 modelForDatabase.Deleted = false;
                 
-                //TODO: REMOVE BELLOW line and get it from controller
-                //modelForDatabase.StatusCurent = "InRaft";
-
-                var tipSezon = (TireType)int.Parse(setAnv.TipSezon);
-                modelForDatabase.TipSezon = tipSezon.ToDisplayString();
-
 
                 // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
