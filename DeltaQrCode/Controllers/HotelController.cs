@@ -27,7 +27,7 @@ namespace DeltaQrCode.Controllers
     {
         private readonly IHotelService _hotelService;
         private readonly IMapper _mapper;
-        private const int PageSize = 2;
+        private const int PageSize = 20;
 
 
         public HotelController(IHotelService hotelService, IMapper mapper)
@@ -54,6 +54,8 @@ namespace DeltaQrCode.Controllers
             var model = new HotelListViewModel(paginatedModel);
             return PartialView("_HotelList", model);
         }
+
+        //EDIT
 
         [HttpGet]
         public async Task<IActionResult> EditModal(int id, string actionType)
@@ -90,6 +92,8 @@ namespace DeltaQrCode.Controllers
             //return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = "Eroare" }));
         }
 
+        //ADD
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddModal(AddEditSetAnvelopeVM setAnvelope)
@@ -111,10 +115,12 @@ namespace DeltaQrCode.Controllers
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
         [HttpGet]
-        public async Task<IActionResult> AddModalNew()
+        public IActionResult AddModalNew()
         {
             return PartialView("_AddSetAnvPartial", new AddEditSetAnvelopeVM());
         }
+
+        //DELETE
 
 
         [HttpGet]
@@ -135,6 +141,19 @@ namespace DeltaQrCode.Controllers
             }
 
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetAvailablePositions(string term)
+        {
+            var marci = await _hotelService.GetAvailablePositionsAsync();
+            var list = marci.Entity.Select(x => x.PositionString).ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                list = marci.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
+            }
+            return new JsonResult(list);
         }
 
         [Produces("application/json")]
@@ -161,22 +180,9 @@ namespace DeltaQrCode.Controllers
             return new JsonResult(list);
         }
 
-
         [HttpGet]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAvailablePositions(string term)
-        {
-            var marci = await _hotelService.GetAvailablePositionsAsync();
-            var list = marci.Entity.Select(x => x.PositionString).ToList();
-            if (!string.IsNullOrEmpty(term))
-            {
-                list = marci.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
-            }
-            return new JsonResult(list);
-        }
-        [HttpGet]
-        [Produces("application/json")]
-        public async Task<IActionResult> GetTireTypes()
+        public IActionResult GetTireTypes()
         {
             var list = new List<string>();
             list.Add(TireType.Vara.ToDisplayString());
@@ -187,7 +193,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        public async Task<IActionResult> GetStatusAnvelope()
+        public IActionResult GetStatusAnvelope()
         {
             var list = new List<string>();
             list.Add(StatusAnvelope.Casate.ToDisplayString());

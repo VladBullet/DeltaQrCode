@@ -80,34 +80,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
-        {
-            try
-            {
-                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
-                var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
-                //var availablePositions = allCombinations.Except(occupiedPositions).ToList();
-                var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
 
-                //var generated = randuri.Where(x => x != null)
-                //    .SelectMany(g => pozitii.Where(c => c != null)
-                //        .Select(c => new Position(g, c))
-                //    ).ToList();
-
-                if (!string.IsNullOrEmpty(searchString))
-                {
-                    availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
-                }
-                // 
-                return Result<List<Position>>.ResultOk(availablePositions);
-            }
-            catch (Exception er)
-            {
-                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
-            }
-
-
-        }
 
         public async Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page = 1, int itemsPerPage = 20)
         {
@@ -125,8 +98,6 @@ namespace DeltaQrCode.Repositories
                 return Result<List<CaSetAnvelope>>.ResultError(null, e, "Ceva nu a mers bine la gasirea anvelopelor!");
 
             }
-            // should return first ItemsPerPage for page 1 if everything is null. I mean if search string is null or empty, should still return data.
-            // make sure you also filter them to have Deleted == FALSE
         }
 
         public async Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(int id)
@@ -146,6 +117,30 @@ namespace DeltaQrCode.Repositories
                 return Result<CaSetAnvelope>.ResultError(null, er, "Ceva nu a mers bine la stergerea setului de anvelope!");
             }
         }
+
+        public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
+        {
+            try
+            {
+                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
+                var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
+                var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
+
+
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
+                }
+                return Result<List<Position>>.ResultOk(availablePositions);
+            }
+            catch (Exception er)
+            {
+                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
+            }
+        }
+
+
 
         public async Task<Result<CaMarca>> GetMarcaByIdAsync(uint id)
         {
@@ -203,6 +198,9 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
+
+
 
         public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
         {

@@ -14,10 +14,14 @@
         margin-left: 150px;
     }
 </style>
+
+
 <input id="defaultPosition" hidden="hidden" data-value="@Model.PozitieInRaft" />
 <input id="defaultMarca" hidden="hidden" data-value="@Model.Marca" />
+<input id="defaultFlota" hidden="hidden" data-value="@Model.Flota" />
 <input id="defaultTipSezon" hidden="hidden" data-value="@Model.TipSezon" />
 <input id="defaultStatusAnv" hidden="hidden" data-value="@Model.StatusCurent" />
+
 
 <div class="modal-header">
 
@@ -25,6 +29,8 @@
 
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
+
+
 <div>
     <div class="modal-body modal-min-height ui-front" id="hotelModalBody">
         <form id="apptform">
@@ -32,6 +38,7 @@
             @Html.AntiForgeryToken()
             <div class="form-row">
                 <div class="col">
+
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.NumeSet, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
@@ -63,12 +70,14 @@
                             @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                 </div>
                 <br />
                 <div class="col">
                     <div class="row">
                         <div class="col">
                             <h6 style="margin-left: 50px;">Uzura: </h6>
+
                             <div class="form-group">
                                 @Html.LabelFor(model => model.StangaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                                 <div class="col-md-9">
@@ -84,8 +93,10 @@
                                     @Html.ValidationMessageFor(model => model.StangaSpate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+
                         </div>
                         <div class="col" style="margin-top:27px;">
+
                             <div class="form-group">
                                 @Html.LabelFor(model => model.DreaptaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                                 <div class="col-md-9">
@@ -101,12 +112,14 @@
                                     @Html.ValidationMessageFor(model => model.DreaptaSpate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="form-row">
+
                 <div class="form-group col-md-6 col-sm-4">
                     @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
@@ -123,8 +136,6 @@
                     </div>
                 </div>
 
-
-
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.NrBucati, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9 ">
@@ -132,25 +143,26 @@
                         @Html.ValidationMessageFor(model => model.NrBucati, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
             </div>
+
             <div class="form-row">
                 <h6 style="margin-left: 50px;">Dimensiuni: </h6>
             </div>
+
             <div class="form-row">
+
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Diametru, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
                     @Html.EditorFor(model => model.Diametru, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @type = "text" } })
                     @Html.ValidationMessageFor(model => model.Diametru, "", new { @class = "text-danger" })
-
                 </div>
-
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Latime, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
                     @Html.EditorFor(model => model.Latime, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @type = "text" } })
                     @Html.ValidationMessageFor(model => model.Latime, "", new { @class = "text-danger" })
                 </div>
-
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Inaltime, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
@@ -161,6 +173,7 @@
 
 
             <div class="form-row" style="margin-top: 30px;">
+
                 <div class="form-group col-md-3 col-sm-3">
                     @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "tipSezonLabel", @name = "tipSezonLabel" })
                     <div class="col-md-9">
@@ -177,13 +190,7 @@
                         @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                @*<div class="form-group col-md-3 col-sm-3">
-            @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusLabel", @name = "statusLabel" })
-            <div class="col-md-9 ">
-                @Html.EditorFor(model => model.StatusCurent, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @id = "status", @name = "status" } })
-                @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+
                 <div class="form-group col-md-3 col-sm-3">
                     @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusAnvLabel", @name = "statusAnvLabel" })
                     <div class="col-md-9">
@@ -192,7 +199,9 @@
                         @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
             </div>
+
             <div class="form-row col-md-12 col-sm-12">
                 @Html.LabelFor(model => model.Observatii, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "observatiiLabel", @name = "observatiiLabel" })
                 <div class="col-md-9">
@@ -200,6 +209,7 @@
                     @Html.ValidationMessageFor(model => model.Observatii, "", new { @class = "text-danger" })
                 </div>
             </div>
+
         </form>
     </div>
 
@@ -363,6 +373,16 @@
             marcaObj.val(marcaVal);
             marcaObj.trigger('change'); // Notify any JS components that the value changed
         }
+
+        // select2 initial value for flota
+        var flotaObj = $('#Flota');
+        var flotaVal = $("#defaultFlota").attr("data-value");
+        if (flotaVal != NaN && flotaVal != '') {
+             var optionFlota = new Option(flotaVal, flotaVal, true, true);
+             flotaObj.append(optionFlota);
+             flotaObj.val(flotaVal);
+             flotaObj.trigger('change'); // Notify any JS components that the value changed
+         }
 
         // select2 initial value for tipSezon
         var tipSezonObj = $('#tipSezon');

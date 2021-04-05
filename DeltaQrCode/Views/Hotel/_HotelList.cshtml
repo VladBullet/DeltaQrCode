@@ -22,6 +22,7 @@
             <th scope="col">Status Curent</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model.List)
         {
@@ -63,6 +64,7 @@
         }
     </tbody>
 </table>
+
 
 <div hidden="hidden" id="hasPrev" data-value="@Model.List.HasPreviousPage.ToString().ToLower()"></div>
 <div hidden="hidden" id="hasNext" data-value="@Model.List.HasNextPage.ToString().ToLower()"></div>

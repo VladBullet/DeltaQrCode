@@ -181,19 +181,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<List<Position>>> GetAvailablePositionsAsync()
-        {
-            try
-            {
-                var positions = await _hotelRepository.GetAvailablePositionsAsync();
 
-                return positions;
-            }
-            catch (Exception er)
-            {
-                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
-            }
-        }
         public async Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
         {
             try
@@ -243,6 +231,20 @@ namespace DeltaQrCode.Services.Hotel
             catch (Exception er)
             {
                 return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la stergerea setului de anvelope!");
+            }
+        }
+
+        public async Task<Result<List<Position>>> GetAvailablePositionsAsync()
+        {
+            try
+            {
+                var positions = await _hotelRepository.GetAvailablePositionsAsync();
+
+                return positions;
+            }
+            catch (Exception er)
+            {
+                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
             }
         }
 
