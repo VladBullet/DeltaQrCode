@@ -72,6 +72,8 @@ var Checks = {
     }
 };
 // ------------------- HOW TO USE Checks   ---------------
+// ------------------- --------------- IDEA  - MAKE IT USE "NAME" INSTEAD OF ELEMENT_ID
+
 //var equals = Checks.equals;
 //var id = "#test";
 //var value = "t";
