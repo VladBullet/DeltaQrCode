@@ -203,5 +203,63 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
+        public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
+        {
+            try
+            {
+                var value = await _db.CaFlota.FirstAsync(x => x.Id == id);
+                return Result<CaFlota>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaFlota>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
+            }
+
+        }
+
+        public async Task<Result<List<CaFlota>>> GetFlotaAsync()
+        {
+            try
+            {
+                var value = await _db.CaFlota.ToListAsync();
+                return Result<List<CaFlota>>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<List<CaFlota>>.ResultError(null, er, "Ceva nu a mers bine gasirea flotelor!");
+            }
+
+        }
+
+        public async Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota)
+        {
+            try
+            {
+                var value = await _db.CaFlota.AddAsync(flota);
+                await _db.SaveChangesAsync();
+                return Result<CaFlota>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                return Result<CaFlota>.ResultError(null, er, "Ceva nu a mers bine la adaugarea flotei!");
+            }
+        }
+
+        public async Task<Result<CaFlota>> GetFlotaByLableAsync(string label)
+        {
+            try
+            {
+                label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
+                var value = await _db.CaFlota.FirstOrDefaultAsync(x => x.Label.ToLower().Contains(label.ToLower()));
+                return Result<CaFlota>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaFlota>.ResultError(null, er, "Ceva nu a mers bine gasirea flotelor!");
+            }
+
+        }
     }
 }

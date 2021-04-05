@@ -27,7 +27,7 @@ namespace DeltaQrCode.Controllers
     {
         private readonly IHotelService _hotelService;
         private readonly IMapper _mapper;
-        private const int PageSize = 20;
+        private const int PageSize = 2;
 
 
         public HotelController(IHotelService hotelService, IMapper mapper)
@@ -148,6 +148,20 @@ namespace DeltaQrCode.Controllers
             }
             return new JsonResult(list);
         }
+
+        [Produces("application/json")]
+        public async Task<IActionResult> GetFlote(string term)
+        {
+            var flote = await _hotelService.GetFlote();
+            var list = flote.Entity.Select(x => x.Label).ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                list = list.Where(x => x.ToLower().Contains(term.ToLower())).ToList();
+            }
+            return new JsonResult(list);
+        }
+
+
         [HttpGet]
         [Produces("application/json")]
         public async Task<IActionResult> GetAvailablePositions(string term)

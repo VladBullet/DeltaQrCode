@@ -18,9 +18,13 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(int id);
         Task<Result<CaMarca>> GetMarcaByIdAsync(uint id);
         Task<Result<List<CaSetAnvelope>>> GetAllSetAnvelopeAsync();
-
         Task<Result<List<CaMarca>>> GetMarciAsync(); 
-        Task<Result<CaMarca>> AddMarcaAsync(CaMarca marca);
+        Task<Result<CaMarca>> AddMarcaAsync(CaMarca flota);
         Task<Result<CaMarca>> GetMarcaByLableAsync(string label);
+        Task<Result<CaFlota>> GetFlotaByIdAsync(uint id);
+        Task<Result<List<CaFlota>>> GetFlotaAsync();
+        Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota);
+        Task<Result<CaFlota>> GetFlotaByLableAsync(string label);
+
     }
 }

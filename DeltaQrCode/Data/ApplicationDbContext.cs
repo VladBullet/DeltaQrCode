@@ -20,6 +20,7 @@ namespace DeltaQrCode.Data
         public virtual DbSet<CaClient> CaClient { get; set; }
         public virtual DbSet<CaLogOperatiune> CaLogOperatiune { get; set; }
         public virtual DbSet<CaMarca> CaMarca { get; set; }
+        public virtual DbSet<CaFlota> CaFlota { get; set; }
         public virtual DbSet<CaOperatiuneSchimbAnvelope> CaOperatiuneSchimbAnvelope { get; set; }
         public virtual DbSet<CaServicetypes> CaServicetypes { get; set; }
         public virtual DbSet<CaSetAnvelope> CaSetAnvelope { get; set; }
@@ -309,6 +310,21 @@ namespace DeltaQrCode.Data
             modelBuilder.Entity<CaMarca>(entity =>
             {
                 entity.ToTable("ca_marca");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Label)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
+            });
+
+            modelBuilder.Entity<CaFlota>(entity =>
+            {
+                entity.ToTable("ca_flota");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("id_UNIQUE")

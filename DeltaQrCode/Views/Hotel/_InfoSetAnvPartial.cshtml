@@ -112,6 +112,14 @@
                     </div>
                 </div>
 
+                <div class="form-group col-md-6 col-sm-4">
+                    @Html.LabelFor(model => model.Flota, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Flota, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Flota, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.NrBucati, htmlAttributes: new { @class = "control-label col-md-3" })

@@ -11,6 +11,7 @@
             <th scope="col">Nr. Auto</th>
             <th scope="col">Client</th>
             <th scope="col">Nr. Telefon</th>
+            <th scope="col">Flota</th>
             <th scope="col">Marca</th>
             <th scope="col">Nr.Buc</th>
             <th scope="col">Dimensiuni</th>
@@ -30,9 +31,10 @@
                     <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="edit"><i class="far fa-edit"></i></div>
                     <div class="btn btn-outline-danger btn-sm deleteButton" type="button" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
                 </td>
-                <td>@item.NumarInmatriculare</td>
+                <td >@item.NumarInmatriculare</td>
                 <td>@item.NumeClient</td>
                 <td>@item.NumarTelefon</td>
+                <td>@item.Flota</td>
                 <td>@item.Marca</td>
                 <td>@item.NrBucati</td>
                 <td>@item.Dimensiuni.ToCustomString()</td>
@@ -49,6 +51,9 @@
                     else if (item.StatusCurent == StatusAnvelope.Montate.ToDisplayString())
                     {
                         color = "yellow";
+                    }else if(item.StatusCurent == StatusAnvelope.Predate.ToDisplayString())
+                    {
+                        color = "tomato";
                     }
                     <td style="background-color: @color">
                         @item.StatusCurent
