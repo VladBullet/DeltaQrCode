@@ -423,9 +423,6 @@ namespace DeltaQrCode.Data
                     .IsRequired()
                     .HasColumnType("varchar(50)");
 
-                entity.Property(e => e.NumeSet)
-                    .IsRequired()
-                    .HasColumnType("varchar(45)");
 
                 entity.Property(e => e.Observatii).HasColumnType("varchar(100)");
 

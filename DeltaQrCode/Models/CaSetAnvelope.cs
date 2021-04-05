@@ -14,7 +14,6 @@ namespace DeltaQrCode.Models
         public string Interval { get; set; }
         public uint? MarcaId { get; set; }
         public uint? FlotaId { get; set; }
-        public string NumeSet { get; set; }
         public int NrBucati { get; set; }
         public string Dimensiuni { get; set; }
         public string Uzura { get; set; }
