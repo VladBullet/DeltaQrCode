@@ -170,12 +170,12 @@
                     </div>
                 </div>
                 @*<div class="form-group col-md-3 col-sm-3">
-            @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusLabel", @name = "statusLabel" })
-            <div class="col-md-9 ">
-                @Html.EditorFor(model => model.StatusCurent, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @id = "status", @name = "status" } })
-                @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                        @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusLabel", @name = "statusLabel" })
+                        <div class="col-md-9 ">
+                            @Html.EditorFor(model => model.StatusCurent, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @id = "status", @name = "status" } })
+                            @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
                 <div class="form-group col-md-3 col-sm-3">
                     @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusAnvLabel", @name = "statusAnvLabel" })
                     <div class="col-md-9">
@@ -373,24 +373,8 @@
                 error: function (error) {
                     CloseModalById('myHotelModal');
                     ShowHeaderAlert(error.responseJSON.Message, "error",5000);
-
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("ErrorModal","Error")",
-                        dataType: "json",
-                        traditional: true,
-                        contentType: 'application/json',
-                        success: function (response) {
-                            $("#GetModalCode").html(response);
-                            $("#ErrorModal").modal('show');
-                        },
-                        error: function (error) {
-                            alert(error);
-                        }
-                    });
                 }
             });
-        //}
     });
 
 </script>
