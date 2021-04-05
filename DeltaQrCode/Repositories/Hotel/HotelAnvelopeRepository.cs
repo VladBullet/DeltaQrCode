@@ -122,7 +122,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
+                var occupiedPositions = await _db.CaSetAnvelope.Where(x=> !x.Deleted).Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
                 var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
                 var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
 
