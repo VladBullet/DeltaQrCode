@@ -67,7 +67,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-            public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv)
+        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv)
         {
             try
             {
@@ -88,10 +88,16 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 setAnv.MarcaId = marca.Entity.Id;
 
-                var flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
+                var flota = Result<CaFlota>.ResultOk(null);
+
+                if ( !string.IsNullOrEmpty(setAnv.Flota))
+                {
+                    flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
+                }
+
                 if (!flota.Successful)
                 {
-                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la gasirea marcii!");
+                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la gasirea flotei!");
                 }
 
                 if (flota.Entity == null && !string.IsNullOrEmpty(setAnv.Flota))
@@ -101,9 +107,17 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (!flota.Successful)
                 {
-                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la adaugarea marcii!");
+                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la adaugarea flotei!");
                 }
-                setAnv.FlotaId = flota.Entity.Id;
+                if (flota.Entity != null)
+                {
+                    setAnv.FlotaId = flota.Entity.Id;
+                }
+                else
+                {
+                    setAnv.FlotaId = null;
+                }
+
 
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
@@ -148,7 +162,7 @@ namespace DeltaQrCode.Services.Hotel
                 var flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
                 if (!flota.Successful)
                 {
-                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la gasirea marcii!");
+                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la gasirea flotei!");
                 }
 
                 if (flota.Entity == null && !string.IsNullOrEmpty(setAnv.Flota))
@@ -158,7 +172,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (!flota.Successful)
                 {
-                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la adaugarea marcii!");
+                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la adaugarea flotei!");
                 }
                 setAnv.FlotaId = flota.Entity.Id;
 

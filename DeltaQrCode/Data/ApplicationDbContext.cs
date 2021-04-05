@@ -404,6 +404,13 @@ namespace DeltaQrCode.Data
 
                 entity.Property(e => e.NrBucati).HasColumnType("int(11)");
 
+                entity.Property(e => e.MarcaId)
+                .IsRequired()
+                .HasColumnType("int");
+                
+                entity.Property(e => e.FlotaId)
+                .HasColumnType("int");
+
                 entity.Property(e => e.NumarInmatriculare)
                     .IsRequired()
                     .HasColumnType("varchar(45)");

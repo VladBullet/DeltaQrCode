@@ -138,7 +138,9 @@
             function(event) {
                 event.preventDefault();
                 var data = { searchString: $("#search").val(), page: 1 };
-                $("#tableResult").load("/Hotel/Search", data);
+                $("#tableResult").load("/Hotel/Search", data, function () {
+                    setPagination();
+                });
             });
 
         var setPagination = function() {
