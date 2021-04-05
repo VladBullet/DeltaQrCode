@@ -59,8 +59,8 @@
     </tbody>
 </table>
 
-<input hidden="hidden" id="hasPrev" value="@Model.List.HasPreviousPage" />
-<input hidden="hidden" id="hasNext" value="@Model.List.HasNextPage" />
+<div hidden="hidden" id="hasPrev" data-value="@Model.List.HasPreviousPage.ToString().ToLower()"></div>
+<div hidden="hidden" id="hasNext" data-value="@Model.List.HasNextPage.ToString().ToLower()"></div>
 
 
 <div class="text-center">

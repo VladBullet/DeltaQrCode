@@ -26,7 +26,7 @@
     <br />
 </div>
 <div id="tableResult" class="container">
-    <partial name="_HotelList" model="@Model" />
+    @*<partial name="_HotelList" model="@Model" />*@
 </div>
 
 
@@ -52,56 +52,62 @@
 @section Scripts{
 
     <script type="text/javascript">
-        $(function () {
-            $("#search-addon").on("click",
-                function (event) {
-                    event.preventDefault();
-                    var data = { searchString: $("#search").val(), page: 1 };
-                    $("#tableResult").load("/Hotel/Search", data);
-                    setPagination();
-                    
-                });
+        $(document).ready(function() {
+            var data = { searchString: $("#search").val(), page: 1 };
+            $("#tableResult").load("/Hotel/Search", data, function() {
+                setPagination();
+            });
         });
+        $("#search-addon").on("click",
+            function(event) {
+                event.preventDefault();
+                var data = { searchString: $("#search").val(), page: 1 };
+                $("#tableResult").load("/Hotel/Search", data, function() {
+                    setPagination();
+                });
+            });
 
-        $(document).on("click", ".customPagination",
-            function (event) {
+        $(document).on("click",
+            ".customPagination",
+            function(event) {
                 event.preventDefault();
                 var page = $(this).attr("data-pageNumber");
                 var data = { searchString: $("#search").val(), pageNumber: page };
-                $("#tableResult").load("/Hotel/Search", data);
-                setPagination();
+                $("#tableResult").load("/Hotel/Search", data, function() {
+                    setPagination();
+                });
             });
 
-        var setAnvNewAddModalDialog = function () {
+        var setAnvNewAddModalDialog = function() {
             var url = "/Hotel/AddModalNew"; // the url to the controller
             $.get(url,
-                function (data) {
+                function(data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
                 });
         };
 
-        var setAnvEditModalDialog = function (id, actionType) {
+        var setAnvEditModalDialog = function(id, actionType) {
 
             var url = "/Hotel/EditModal"; // the url to the controller
             $.get(url + '?id=' + id + '&actionType=' + actionType,
-                function (data) {
+                function(data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
                 });
         };
-        var deleteSetAnvModalDialog = function (id) {
+        var deleteSetAnvModalDialog = function(id) {
 
             var url = "/Hotel/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
-                function (data) {
+                function(data) {
                     $('#partialInfoDelete').html(data);
                     $('#myHotelDeleteModal').modal('show');
                 });
         };
 
         $('#AddSetAnv').on('click',
-            function (event) {
+            function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 setAnvNewAddModalDialog();
@@ -109,7 +115,7 @@
 
         $(document).on('click',
             '.actionButton',
-            function (event) {
+            function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
@@ -120,52 +126,60 @@
 
         $(document).on('click',
             '.deleteButton',
-            function (event) {
+            function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
                 deleteSetAnvModalDialog(id);
             });
 
-        $(document).on("change", "#hotelListState",
-            function (event) {
+        $(document).on("change",
+            "#hotelListState",
+            function(event) {
                 event.preventDefault();
                 var data = { searchString: $("#search").val(), page: 1 };
                 $("#tableResult").load("/Hotel/Search", data);
             });
 
+        var setPagination = function() {
+            var hasPrev = $("#hasPrev").attr("data-value");
+            var hasNext = $("#hasNext").attr("data-value");
 
-        $(document).ready(function () {
-            setPagination();
-        });
-
-        var setPagination = function () {
-            var hasPrev = $("#hasPrev").val();
-            var hasNext = $("#hasNext").val();
-            if (hasPrev) {
+            if (hasPrev == "true") {
                 enablePrevious();
-            } else {
+            } else if (hasPrev == "false") {
                 disablePrevious();
             }
-            if (hasNext) {
+
+            if (hasNext == "true") {
                 enableNext();
-            } else {
+            } else if (hasNext == "false") {
                 disableNext();
             }
         };
 
-        var enablePrevious = function () {
-            $("#buttonPrev").removeAttr("disabled");
+        var enablePrevious = function() {
+            $(document).find("#buttonPrev").removeAttr("disabled");
+            //$(document).find("#buttonPrev").removeClass("disabled");
+            console.log("Enable Previons");
         };
-        var disablePrevious = function () {
-            $("#buttonPrev").attr("disabled","true");
+        var disablePrevious = function() {
+              $(document).find("#buttonPrev").attr("disabled", "disabled");
+            //$(document).find("#buttonPrev").addClass("disabled");
+            console.log("Disable Previons");
 
         };
-        var enableNext = function () {
-            $("#buttonNext").removeAttr("disabled");
+        var enableNext = function() {
+            $(document).find("#buttonNext").removeAttr("disabled");
+            //$(document).find("#buttonNext").removeClass("disabled");
+            console.log("Enable Next");
+
         };
-        var disableNext = function () {
-            $("#buttonNext").attr("disabled", "true");
+        var disableNext = function() {
+            $(document).find("#buttonNext").attr("disabled", "disabled");
+            //$(document).find("#buttonNext").addClass("disabled");
+            console.log("Disable Next");
+
         };
 
 

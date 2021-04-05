@@ -27,7 +27,7 @@ namespace DeltaQrCode.Controllers
     {
         private readonly IHotelService _hotelService;
         private readonly IMapper _mapper;
-        private const int PageSize = 2;
+        private const int PageSize = 20;
 
 
         public HotelController(IHotelService hotelService, IMapper mapper)
@@ -46,8 +46,6 @@ namespace DeltaQrCode.Controllers
 
         public async Task<IActionResult> Search(string searchString,int pageNumber = 1)
         {
-
-
             var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString,pageNumber, PageSize);
             var anvelope = anvelopeResult.Entity;
 
@@ -56,20 +54,6 @@ namespace DeltaQrCode.Controllers
             var model = new HotelListViewModel(paginatedModel);
             return PartialView("_HotelList", model);
         }
-
-        //public async Task<IActionResult> Search(string sortOrder,string currentFilter,string searchString,int? pageNumber)
-        //{
-        //    var result = await _hotelService.SearchAnvelopeAsync(searchString, page, 20);
-        //    int count = 0;
-        //    if (result.Successful)
-        //    {
-        //        count = (int)Math.Ceiling((decimal)result.Entity.Count / (decimal)20);
-        //    }
-
-        //    var model = new HotelListViewModel(result.Entity, count, page);
-
-        //    return PartialView("_HotelList", model);
-        //}
 
         [HttpGet]
         public async Task<IActionResult> EditModal(int id, string actionType)
