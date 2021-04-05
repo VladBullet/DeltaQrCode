@@ -21,6 +21,7 @@ namespace DeltaQrCode.Repositories
             _db = db;
         }
 
+
         public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id)
         {
             try
@@ -31,6 +32,20 @@ namespace DeltaQrCode.Repositories
             catch (Exception er)
             {
                 return Result<CaSetAnvelope>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
+            }
+        }
+
+        public async Task<Result<List<CaSetAnvelope>>> GetAllSetAnvelopeAsync()
+        {
+            try
+            {
+                var list = await _db.CaSetAnvelope.Where(x => !x.Deleted).OrderBy(s => s.NumarInmatriculare).ThenBy(x => x.DataUltimaModificare).ToListAsync();
+                return Result<List<CaSetAnvelope>>.ResultOk(list);
+            }
+            catch (Exception e)
+            {
+                return Result<List<CaSetAnvelope>>.ResultError(null, e, "Ceva nu a mers bine la gasirea anvelopelor!");
+
             }
         }
 
@@ -103,7 +118,6 @@ namespace DeltaQrCode.Repositories
                 {
                     list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower())).ToList();
                 }
-                list = list.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
                 return Result<List<CaSetAnvelope>>.ResultOk(list);
             }
             catch (Exception e)

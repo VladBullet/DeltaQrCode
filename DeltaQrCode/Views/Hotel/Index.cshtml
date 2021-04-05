@@ -1,4 +1,5 @@
-﻿@model DeltaQrCode.ViewModels.HotelListViewModel
+﻿
+@model DeltaQrCode.ViewModels.HotelListViewModel
 
 @{
     ViewBag.Title = "HotelAnvelope";
@@ -8,6 +9,7 @@
     <link href="~/css/SchedulerIndexStyle.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
 </head>
+
 
 <div id="HeaderAlert" class="alert" role="alert">
 </div>
@@ -27,6 +29,7 @@
     <partial name="_HotelList" model="@Model" />
 </div>
 
+
 <div id="myHotelModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -43,62 +46,62 @@
     </div>
 </div>
 
+
 <div id="GetModalCode"></div>
 
 @section Scripts{
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $("#search-addon").on("click",
-                function(event) {
+                function (event) {
                     event.preventDefault();
                     var data = { searchString: $("#search").val(), page: 1 };
                     $("#tableResult").load("/Hotel/Search", data);
+                    setPagination();
+                    
                 });
         });
 
-        $(function() {
-            $(".CustomPagination").on("click",
-                function() {
-                    var page = $(this).attr("data-value");
-                    var searchString = $("#search").val();
-                    var data = {
-                        searchString: searchString,
-                        page: page
-                    };
-                    $("#tableResult").load("/Hotel/Search", data);
-                });
-        });
-        var setAnvNewAddModalDialog = function() {
+        $(document).on("click", ".customPagination",
+            function (event) {
+                event.preventDefault();
+                var page = $(this).attr("data-pageNumber");
+                var data = { searchString: $("#search").val(), pageNumber: page };
+                $("#tableResult").load("/Hotel/Search", data);
+                setPagination();
+            });
+
+        var setAnvNewAddModalDialog = function () {
             var url = "/Hotel/AddModalNew"; // the url to the controller
             $.get(url,
-                function(data) {
+                function (data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
                 });
         };
 
-        var setAnvEditModalDialog = function(id, actionType) {
+        var setAnvEditModalDialog = function (id, actionType) {
 
             var url = "/Hotel/EditModal"; // the url to the controller
             $.get(url + '?id=' + id + '&actionType=' + actionType,
-                function(data) {
+                function (data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
                 });
         };
-        var deleteSetAnvModalDialog = function(id) {
+        var deleteSetAnvModalDialog = function (id) {
 
             var url = "/Hotel/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
-                function(data) {
+                function (data) {
                     $('#partialInfoDelete').html(data);
                     $('#myHotelDeleteModal').modal('show');
                 });
         };
 
         $('#AddSetAnv').on('click',
-            function(event) {
+            function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 setAnvNewAddModalDialog();
@@ -106,7 +109,7 @@
 
         $(document).on('click',
             '.actionButton',
-            function(event) {
+            function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
@@ -117,7 +120,7 @@
 
         $(document).on('click',
             '.deleteButton',
-            function(event) {
+            function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
@@ -125,11 +128,47 @@
             });
 
         $(document).on("change", "#hotelListState",
-            function() {
+            function (event) {
                 event.preventDefault();
                 var data = { searchString: $("#search").val(), page: 1 };
                 $("#tableResult").load("/Hotel/Search", data);
             });
+
+
+        $(document).ready(function () {
+            setPagination();
+        });
+
+        var setPagination = function () {
+            var hasPrev = $("#hasPrev").val();
+            var hasNext = $("#hasNext").val();
+            if (hasPrev) {
+                enablePrevious();
+            } else {
+                disablePrevious();
+            }
+            if (hasNext) {
+                enableNext();
+            } else {
+                disableNext();
+            }
+        };
+
+        var enablePrevious = function () {
+            $("#buttonPrev").removeAttr("disabled");
+        };
+        var disablePrevious = function () {
+            $("#buttonPrev").attr("disabled","true");
+
+        };
+        var enableNext = function () {
+            $("#buttonNext").removeAttr("disabled");
+        };
+        var disableNext = function () {
+            $("#buttonNext").attr("disabled", "true");
+        };
+
+
     </script>
 
 

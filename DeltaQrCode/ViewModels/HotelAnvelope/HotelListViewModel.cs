@@ -9,20 +9,23 @@ namespace DeltaQrCode.ViewModels
 
     public class HotelListViewModel
     {
+
         public HotelListViewModel()
         {
 
         }
-        public HotelListViewModel(List<SetAnvelopeDto> list, int totalPagesNR, int currentPage)
+
+        public HotelListViewModel(PaginatedList<SetAnvelopeDto> paginatedModel)
         {
-            List = list;
-            TotalPages = totalPagesNR;
-            CurrentPage = currentPage;
+            List = paginatedModel;
         }
 
-        public List<SetAnvelopeDto> List { get; set; }
-        public int TotalPages { get; set; }
-        public int CurrentPage { get; set; }
+        public HotelListViewModel(List<SetAnvelopeDto> list, int pageIndex, int pageSize)
+        {
+            List = PaginatedList<SetAnvelopeDto>.Create(list, pageIndex, pageSize);
+        }
+
+        public PaginatedList<SetAnvelopeDto> List { get; set; }
 
     }
 }

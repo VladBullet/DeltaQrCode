@@ -46,7 +46,23 @@ namespace DeltaQrCode.Services.Hotel
                 return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
             }
         }
-        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv)
+        public async Task<Result<List<SetAnvelopeDto>>> GetAllSetAnvelopeAsync()
+        {
+            try
+            {
+                var list = await _hotelRepository.GetAllSetAnvelopeAsync();
+                var model = new List<SetAnvelopeDto>();
+                model = _mapper.Map<List<SetAnvelopeDto>>(list.Entity);
+
+                return Result<List<SetAnvelopeDto>>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                return Result<List<SetAnvelopeDto>>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
+            }
+        }
+
+            public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv)
         {
             try
             {
@@ -143,8 +159,6 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
-
-
                 var result = await _hotelRepository.SearchAnvelopeAsync(searchString, page, itemsPerPage);
                 var model = new List<SetAnvelopeDto>();
                 if (result.Successful)

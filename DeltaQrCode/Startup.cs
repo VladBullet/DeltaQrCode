@@ -27,6 +27,7 @@ namespace DeltaQrCode
     using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
     using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+    using ReflectionIT.Mvc.Paging;
 
     public class Startup
     {

@@ -2,7 +2,9 @@
 @using DeltaQrCode.HelpersAndExtensions
 @model DeltaQrCode.ViewModels.HotelListViewModel
 
-<table class="table table-bordered table-responsive-sm table-responsive-md table-responsive" style="width:100%;border:1px solid black;">
+
+
+<table class="table">
     <thead>
         <tr class="text-center">
             <th style="min-width:130px;" scope="col">Actiune</th>
@@ -18,7 +20,6 @@
             <th scope="col">Poz</th>
             <th scope="col">Status Curent</th>
         </tr>
-
     </thead>
     <tbody>
         @foreach (var item in Model.List)
@@ -57,12 +58,21 @@
         }
     </tbody>
 </table>
-<input id="currentPage" type="hidden" value="@Model.CurrentPage" hidden />
-<div class="justify-content-center text-center">
-    <ul class="pagination text-center justify-content-center ">
-        @for (int i = 0; i < Model.TotalPages; i++)
-        {
-            <li class="button page-item CustomPagination @(Model.CurrentPage == @i + 1 ? " active " : string.Empty )" data-value="@(i + 1)"><div class="page-link">@(i + 1)</div></li>
-        }
-    </ul>
+
+<input hidden="hidden" id="hasPrev" value="@Model.List.HasPreviousPage" />
+<input hidden="hidden" id="hasNext" value="@Model.List.HasNextPage" />
+
+
+<div class="text-center">
+    <button id="buttonPrev" data-pageNumber="@(Model.List.PageIndex - 1)"
+            class=" customPagination btn btn-default">
+        Previous
+    </button>
+    <button id="buttonNext" data-pageNumber="@(Model.List.PageIndex + 1)"
+            class=" customPagination btn btn-default">
+        Next
+    </button>
 </div>
+
+
+

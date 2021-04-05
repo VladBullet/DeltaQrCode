@@ -9,7 +9,6 @@ using DeltaQrCode.ViewModels;
 namespace DeltaQrCode.Controllers
 {
     using DeltaQrCode.ModelsDto;
-    using System.Text;
 
     using AutoMapper;
 
@@ -22,14 +21,13 @@ namespace DeltaQrCode.Controllers
     using Newtonsoft.Json;
     using System.Diagnostics;
 
-    using DeltaQrCode.Models;
 
     [Authorize]
     public class HotelController : Controller
     {
         private readonly IHotelService _hotelService;
         private readonly IMapper _mapper;
-        private const int PageSize = 20;
+        private const int PageSize = 2;
 
 
         public HotelController(IHotelService hotelService, IMapper mapper)
@@ -37,35 +35,41 @@ namespace DeltaQrCode.Controllers
             _hotelService = hotelService;
             _mapper = mapper;
         }
+        
         public async Task<IActionResult> Index()
         {
             //var list = SetAnvelopeVM.fakelist();
-            var result = await _hotelService.SearchAnvelopeAsync(string.Empty, 1, 20);
-            var list = new List<SetAnvelopeDto>();
-            int count = 0;
-            if (result.Successful)
-            {
-                count = (int)Math.Ceiling((decimal)result.Entity.Count / (decimal)20);
-                list = result.Entity.Skip(0).Take(PageSize).ToList();
-            }
-
-            var model = new HotelListViewModel(list, count, 1);
+            var result = await _hotelService.GetAllSetAnvelopeAsync();
+            var model = new HotelListViewModel(result.Entity,1, PageSize);
             return View(model);
         }
 
-        public async Task<IActionResult> Search(string searchString = null, int page = 1)
+        public async Task<IActionResult> Search(string searchString,int pageNumber = 1)
         {
-            var result = await _hotelService.SearchAnvelopeAsync(searchString, page, 20);
-            int count = 0;
-            if (result.Successful)
-            {
-                count = (int)Math.Ceiling((decimal)result.Entity.Count / (decimal)20);
-            }
 
-            var model = new HotelListViewModel(result.Entity, count, page);
 
+            var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString,pageNumber, PageSize);
+            var anvelope = anvelopeResult.Entity;
+
+
+            var paginatedModel = PaginatedList<SetAnvelopeDto>.Create(anvelope, pageNumber, PageSize);
+            var model = new HotelListViewModel(paginatedModel);
             return PartialView("_HotelList", model);
         }
+
+        //public async Task<IActionResult> Search(string sortOrder,string currentFilter,string searchString,int? pageNumber)
+        //{
+        //    var result = await _hotelService.SearchAnvelopeAsync(searchString, page, 20);
+        //    int count = 0;
+        //    if (result.Successful)
+        //    {
+        //        count = (int)Math.Ceiling((decimal)result.Entity.Count / (decimal)20);
+        //    }
+
+        //    var model = new HotelListViewModel(result.Entity, count, page);
+
+        //    return PartialView("_HotelList", model);
+        //}
 
         [HttpGet]
         public async Task<IActionResult> EditModal(int id, string actionType)
