@@ -11,25 +11,25 @@ namespace DeltaQrCode.ViewModels.Appointments
 
     using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class AppointmentModalVm
+    public class AppointmentModalVm 
     {
 
         public DateTime ActiveDate { get; set; }
 
         public ActionType CreateOrEdit { get; set; }
 
-        public AppointmentForProUiDto Appointment { get; set; }
+        public AppointmentVM Appointment { get; set; } // TODO:change with apptVM
 
         public AppointmentModalVm()
         {
-            Appointment = new AppointmentForProUiDto();
+            Appointment = new AppointmentVM(); // TODO: change with apptVM
         }
         public AppointmentModalVm(ActionType createOrEdit)
         {
-            Appointment = new AppointmentForProUiDto();
+            Appointment = new AppointmentVM();
             CreateOrEdit = createOrEdit;
         }
-        public AppointmentModalVm(string userId, AppointmentForProUiDto appointment, ActionType? creteOrEdit = null)
+        public AppointmentModalVm(string userId, AppointmentVM appointment, ActionType? creteOrEdit = null) // TODO: change with apptVM
         {
             Appointment = appointment;
             CreateOrEdit = ActionType.Add;

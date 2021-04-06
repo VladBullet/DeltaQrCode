@@ -36,7 +36,7 @@ namespace DeltaQrCode.HelpersAndExtensions
                 .ForMember(d => d.Interval, m => m.MapFrom(s => s.Position.Interval));
 
 
-            CreateMap<CaAppointments, AppointmentVM>().ReverseMap();
+
 
             CreateMap<AddEditSetAnvelopeVM, SetAnvelopeDto>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
@@ -56,11 +56,10 @@ namespace DeltaQrCode.HelpersAndExtensions
                 .ForMember(d => d.StangaSpate, m => m.MapFrom(s => s.Uzura.StS))
                 .ForMember(d => d.DreaptaSpate, m => m.MapFrom(s => s.Uzura.DrS))
 
-                .ForMember(d => d.PozitieInRaft, m => m.MapFrom(s => s.Position.PositionString))
-
-
-                ;
-
+                .ForMember(d => d.PozitieInRaft, m => m.MapFrom(s => s.Position.PositionString));
+                
+            CreateMap<AppointmentDto, CaAppointments>().ReverseMap();
+            CreateMap<AppointmentDto, AppointmentVM>().ReverseMap();
 
         }
     }

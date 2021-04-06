@@ -114,5 +114,18 @@ namespace DeltaQrCode.Services
             }
         }
 
+        public async Task<Result<List<CaServicetypes>>> GetServiceTypes()
+        {
+            try
+            {
+                var result = await _appointmentsRepository.GetServiceTypesAsync();
+                return Result<List<CaServicetypes>>.ResultOk(result.Entity);
+            }
+            catch (Exception e)
+            {
+                return Result<List<CaServicetypes>>.ResultError(e);
+            }
+        }
+
     }
 }

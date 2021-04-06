@@ -110,5 +110,33 @@ namespace DeltaQrCode.Repositories
                 return Result<List<CaAppointments>>.ResultError(null, er, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
             }
         }
+
+        public async Task<Result<CaServicetypes>> GetServiceTypeByIdAsync(uint id)
+        {
+            try
+            {
+                var value = await _db.CaServicetypes.FirstAsync(x => x.Id == id);
+                return Result<CaServicetypes>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaServicetypes>.ResultError(null, er, "Ceva nu a mers bine la gasirea tipului de serviciu!");
+            }
+
+        }
+
+        public async Task<Result<List<CaServicetypes>>> GetServiceTypesAsync()
+        {
+            try
+            {
+                var value = await _db.CaServicetypes.ToListAsync();
+                return Result<List<CaServicetypes>>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<List<CaServicetypes>>.ResultError(null, er, "Ceva nu a mers bine gasirea tipurilor de servicii!");
+            }
+
+        }
     }
 }

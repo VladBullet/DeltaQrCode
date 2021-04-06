@@ -236,11 +236,25 @@ namespace DeltaQrCode.Data
 
                 entity.Property(e => e.DataAppointment).HasColumnType("datetime");
 
-                entity.Property(e => e.DataIntroducere)
-                    .IsRequired()
-                    .HasColumnType("varchar(45)");
+                entity.Property(e => e.DataIntroducere).HasColumnType("datetime");
 
                 entity.Property(e => e.Deleted).HasColumnType("bit(1)");
+
+                entity.Property(e => e.EmailClient).HasColumnType("varchar(100)");
+
+                entity.Property(e => e.LastModified).HasColumnType("datetime");
+
+                entity.Property(e => e.RampId)
+                    .IsRequired()
+                    .HasColumnType("int");
+                
+                entity.Property(e => e.DurataInMinute)
+                    .IsRequired()
+                    .HasColumnType("int");
+                
+                entity.Property(e => e.ServiciuId)
+                    .IsRequired()
+                    .HasColumnType("int");
 
                 entity.Property(e => e.NumarInmatriculare)
                     .IsRequired()

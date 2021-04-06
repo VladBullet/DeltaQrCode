@@ -16,7 +16,7 @@ namespace DeltaQrCode
         public static readonly int PozMax = 3; // TODO : --- VLAD --- : MAKE SURE WHAT THE MAX LIMITS ARE AND SET THEM RIGHT
 
     }
-    public enum AppointmentType
+    public enum ServiceType
     {
         Vulcanizare = 1,
         Mecanica = 2

@@ -53,28 +53,28 @@
 
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.DurationInMinutes, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                @Html.LabelFor(model => model.Appointment.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    <input type="number" class="form-control" asp-for="Appointment.DurationInMinutes" />
-                    @Html.ValidationMessageFor(model => model.Appointment.DurationInMinutes, "", new { @class = "text-danger" })
+                    <input type="number" class="form-control" asp-for="Appointment.DurataInMinute" />
+                    @Html.ValidationMessageFor(model => model.Appointment.DurataInMinute, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.AppointmentType, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                @Html.LabelFor(model => model.Appointment.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    <select asp-for="Appointment.AppointmentType" asp-items="Html.GetEnumSelectList(typeof (AppointmentType))"></select>
+                    <select asp-for="Appointment.Serviciu" asp-items="Html.GetEnumSelectList(typeof (ServiceType))"></select>
 
-                    @Html.ValidationMessageFor(model => model.Appointment.AppointmentType, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Appointment.Serviciu, "", new { @class = "text-danger" })
                 </div>
             </div>
 
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.NrMasina, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                @Html.LabelFor(model => model.Appointment.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Appointment.NrMasina, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.Appointment.NrMasina, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Appointment.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                    @Html.ValidationMessageFor(model => model.Appointment.NumarInmatriculare, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -88,35 +88,35 @@
 
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                @Html.LabelFor(model => model.Appointment.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Appointment.PhoneNumber, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.Appointment.PhoneNumber, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Appointment.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                    @Html.ValidationMessageFor(model => model.Appointment.NumarTelefon, "", new { @class = "text-danger" })
                 </div>
             </div>
 
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.EmailAddress, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.Appointment.EmailClient, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Appointment.EmailAddress, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.Appointment.EmailAddress, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Appointment.EmailClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                    @Html.ValidationMessageFor(model => model.Appointment.EmailClient, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.ProfessionalNotes, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.Appointment.Observatii, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.TextAreaFor(model => model.Appointment.ProfessionalNotes, 3, 40, new { htmlAttributes = new { @class = "form-control half-margin-bottom width100pc" } })
-                    @Html.ValidationMessageFor(model => model.Appointment.ProfessionalNotes, "", new { @class = "text-danger" })
+                    @Html.TextAreaFor(model => model.Appointment.Observatii, 3, 40, new { htmlAttributes = new { @class = "form-control half-margin-bottom width100pc" } })
+                    @Html.ValidationMessageFor(model => model.Appointment.Observatii, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.IsCancelled, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.Appointment.Confirmed, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.CheckBoxFor(model => model.Appointment.IsCancelled, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.Appointment.IsCancelled, "", new { @class = "text-danger" })
+                    @Html.CheckBoxFor(model => model.Appointment.Confirmed, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                    @Html.ValidationMessageFor(model => model.Appointment.Confirmed, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -141,7 +141,7 @@
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("EditModal", "Scheduler")",
+            url: "@Url.Action("EditModal", "Appointments")",
             data: $('#apptform').serialize(),
             success: function (result) {
                 if (result == "success") {
