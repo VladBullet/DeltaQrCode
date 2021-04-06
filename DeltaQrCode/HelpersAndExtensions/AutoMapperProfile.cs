@@ -36,7 +36,7 @@ namespace DeltaQrCode.HelpersAndExtensions
                 .ForMember(d => d.Interval, m => m.MapFrom(s => s.Position.Interval));
 
 
-            CreateMap<CaAppointment, AppointmentVM>().ReverseMap();
+            CreateMap<CaAppointments, AppointmentVM>().ReverseMap();
 
             CreateMap<AddEditSetAnvelopeVM, SetAnvelopeDto>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))

@@ -40,7 +40,8 @@ namespace DeltaQrCode.Services
         {
             try
             {
-                var app = _mapper.Map<CaAppointment>(appointment);
+                var app = _mapper.Map<CaAppointments>(appointment);
+                app.Deleted = false;
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentVM>(value);
                 return Result<AppointmentVM>.ResultOk(model);
@@ -56,7 +57,7 @@ namespace DeltaQrCode.Services
         {
             try
             {
-                var app = _mapper.Map<CaAppointment>(setAnv);
+                var app = _mapper.Map<CaAppointments>(setAnv);
                 var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentVM>(value);
                 return Result<AppointmentVM>.ResultOk(model);
@@ -68,11 +69,11 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<AppointmentVM>> CancelAppointmentAsync(int id)
+        public async Task<Result<AppointmentVM>> DeleteAppointmentAsync(int id)
         {
             try
             {
-                var value = await _appointmentsRepository.CancelAppointmentAsync(id);
+                var value = await _appointmentsRepository.DeleteAppointmentAsync(id);
                 var model = _mapper.Map<AppointmentVM>(value);
 
                 return Result<AppointmentVM>.ResultOk(model);

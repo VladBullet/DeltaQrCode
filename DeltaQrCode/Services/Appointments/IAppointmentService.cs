@@ -12,7 +12,7 @@ namespace DeltaQrCode.Services
         Task<Result<AppointmentVM>> GetAppointmentByIdAsync(int id);
         Task<Result<AppointmentVM>> AddAppointmentAsync(AppointmentVM appointment);
         Task<Result<AppointmentVM>> UpdateAppointmentAsync(AppointmentVM appointment);
-        Task<Result<AppointmentVM>> CancelAppointmentAsync(int id);
+        Task<Result<AppointmentVM>> DeleteAppointmentAsync(int id);
         Task<Result<AppointmentVM>> ConfirmAppointmentAsync(int id);
         Task<Result<List<AppointmentVM>>> GetAppointmentsAsync(DateTime date);
     }

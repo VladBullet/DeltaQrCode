@@ -8,9 +8,10 @@ namespace DeltaQrCode.Controllers
 {
     using System.Net;
     using System.Text;
-
+    using AutoMapper;
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.ModelsDto;
+    using DeltaQrCode.Services;
     using DeltaQrCode.ViewModels.Appointments;
 
     using Microsoft.AspNetCore.Authorization;
@@ -19,8 +20,18 @@ namespace DeltaQrCode.Controllers
 
     [Authorize]
     public class AppointmentsController : Controller
+
     {
-        // GET: Appointments
+        private readonly IAppointmentService _appointmentService;
+        private readonly IMapper _mapper;
+
+        public AppointmentsController(IAppointmentService appointmentService, IMapper mapper)
+        {
+            _appointmentService = appointmentService;
+            _mapper = mapper;
+        }
+
+        //GET: Appointments
         public ActionResult Index(string startDateString, string activeDateString, string professionalIdString)
         {
 
@@ -43,6 +54,7 @@ namespace DeltaQrCode.Controllers
 
             return View(calendarVm);
         }
+
 
 
 
@@ -138,6 +150,8 @@ namespace DeltaQrCode.Controllers
             }
 
         }
+
+
 
 
 

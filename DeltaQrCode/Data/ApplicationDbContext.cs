@@ -16,7 +16,7 @@ namespace DeltaQrCode.Data
         {
         }
 
-        public virtual DbSet<CaAppointment> CaAppointments { get; set; }
+        public virtual DbSet<CaAppointments> CaAppointments { get; set; }
         public virtual DbSet<CaClient> CaClient { get; set; }
         public virtual DbSet<CaLogOperatiune> CaLogOperatiune { get; set; }
         public virtual DbSet<CaMarca> CaMarca { get; set; }
@@ -215,7 +215,8 @@ namespace DeltaQrCode.Data
                 entity.Property(e => e.ZileExpirareAbonament).HasColumnName("zile_expirare_abonament");
             });
 
-            modelBuilder.Entity<CaAppointment>(entity =>
+
+            modelBuilder.Entity<CaAppointments>(entity =>
             {
                 entity.ToTable("ca_appointments");
 
@@ -225,74 +226,39 @@ namespace DeltaQrCode.Data
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ApptIndex)
-                    .HasColumnName("appt_index")
-                    .HasColumnType("int(10)");
+                entity.Property(e => e.Confirmed).HasColumnType("bit(1)");
 
-                entity.Property(e => e.Canceled)
-                    .HasColumnName("canceled")
-                    .HasColumnType("bit(1)");
+                entity.Property(e => e.ConfirmedCode)
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
 
-                entity.Property(e => e.CanceledDate)
-                    .HasColumnName("canceled_date")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.ConfirmedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Confirmed)
-                    .HasColumnName("confirmed")
-                    .HasColumnType("bit(1)");
-
-                entity.Property(e => e.ConfirmedDate)
-                    .HasColumnName("confirmed_date")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.DataAppointment)
-                    .HasColumnName("data_appointment")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.DataAppointment).HasColumnType("datetime");
 
                 entity.Property(e => e.DataIntroducere)
                     .IsRequired()
-                    .HasColumnName("data_introducere")
                     .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.DurationInMinutes)
-                    .HasColumnName("durationInMinutes")
-                    .HasColumnType("int(10)");
+                entity.Property(e => e.Deleted).HasColumnType("bit(1)");
 
-                entity.Property(e => e.EmailClient)
-                    .HasColumnName("email_client")
-                    .HasColumnType("varchar(45)");
-
-                entity.Property(e => e.Notes)
-                    .HasColumnName("notes")
-                    .HasColumnType("varchar(256)");
-
-                entity.Property(e => e.NrMasina)
+                entity.Property(e => e.NumarInmatriculare)
                     .IsRequired()
-                    .HasColumnName("nr_masina")
                     .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.NrTelefon)
+                entity.Property(e => e.NumarTelefon)
                     .IsRequired()
-                    .HasColumnName("nr_telefon")
                     .HasColumnType("varchar(45)");
 
                 entity.Property(e => e.NumeClient)
                     .IsRequired()
-                    .HasColumnName("nume_client")
                     .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.OraInceput)
-                    .HasColumnName("ora_inceput")
-                    .HasColumnType("time");
-
-                entity.Property(e => e.RampId)
-                    .HasColumnName("rampId")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Serviciu)
+                entity.Property(e => e.Observatii)
                     .IsRequired()
-                    .HasColumnName("serviciu")
-                    .HasColumnType("varchar(45)");
+                    .HasColumnType("varchar(256)");
+
+                entity.Property(e => e.OraInceput).HasColumnType("time");
             });
 
 
