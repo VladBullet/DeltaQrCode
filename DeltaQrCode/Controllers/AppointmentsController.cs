@@ -68,7 +68,7 @@ namespace DeltaQrCode.Controllers
             //List<AppointmentForProUiDto> appointmentsList = _appointmentQueries.GetUiDto_AppointmentsForProfessionalOrEmployee(User.Identity.GetUserId(), professionalId, dt.Date, dt.Date.AddDays(1));
 
             var appointmentsList = await _appointmentService.GetAppointmentsAsync(dt);
-            if(appointmentsList.Entity == null)
+            if (appointmentsList.Entity == null)
             {
                 return new JsonResult(new List<AppointmentsIndexVm>());
             }
@@ -77,7 +77,8 @@ namespace DeltaQrCode.Controllers
             foreach (var item in rampIds)
             {
                 var list = appointmentsList.Entity.Where(x => x.RampId == item).ToList();
-                var aux = new AppointmentsIndexVm(item, list);
+                var mappedList = _mapper.Map<List<AppointmentVM>>(list);
+                var aux = new AppointmentsIndexVm(item, mappedList);
                 result.Add(aux);
             }
 
@@ -104,9 +105,10 @@ namespace DeltaQrCode.Controllers
 
             DateTime startDate = DateTime.Parse(startDateStr);
             var appt = await _appointmentService.GetAppointmentByIdAsync(id);
+            var apptModel = _mapper.Map<AppointmentVM>(appt.Entity);
             var appointment = new AppointmentModalVm
             {
-                Appointment = appt.Entity, // AppointmentDto.FakeList(startDate).FirstOrDefault(x => x.AppointmentId == id),
+                Appointment = apptModel, // AppointmentDto.FakeList(startDate).FirstOrDefault(x => x.AppointmentId == id),
                 ActiveDate = startDate,
                 CreateOrEdit = ActionType.Edit
             };

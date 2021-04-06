@@ -16,13 +16,6 @@ namespace DeltaQrCode.ViewModels.Appointments
         public AppointmentVM(DateTime appointmentStart)
         {
             DataAppointment = appointmentStart;
-            FillAdditionalUiProperties();
-        }
-
-        public void FillAdditionalUiProperties()
-        {
-            this.StartTime_Hour = DataAppointment.Hour;
-            this.StartTime_Minutes = DataAppointment.Minute;
         }
 
         public int Id { get; set; }
@@ -42,8 +35,10 @@ namespace DeltaQrCode.ViewModels.Appointments
         public bool Confirmed { get; set; }
         public DateTime? ConfirmedDate { get; set; }
         public string Observatii { get; set; }
-        public int StartTime_Hour { get; set; }
-        public int StartTime_Minutes { get; set; }
+
+        public int StartTime_Hour => OraInceput.Hours;
+
+        public int StartTime_Minutes => OraInceput.Minutes;
 
     }
-} 
+}

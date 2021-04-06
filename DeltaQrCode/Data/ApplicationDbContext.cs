@@ -269,7 +269,6 @@ namespace DeltaQrCode.Data
                     .HasColumnType("varchar(45)");
 
                 entity.Property(e => e.Observatii)
-                    .IsRequired()
                     .HasColumnType("varchar(256)");
 
                 entity.Property(e => e.OraInceput).HasColumnType("time");

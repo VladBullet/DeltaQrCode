@@ -130,32 +130,32 @@
                                         var stringToAppend = '<div id="appt' +
                                             row.appointmentId +
                                             '" class="appt-no-height">' +
-                                            row.nrMasina +
+                                            row.numarInmatriculare +
                                             ' | ' +
                                             row.numeClient +
                                             ' | ' +
-                                            row.phoneNumber +
+                                            row.numarTelefon +
                                             ' | ' +
-                                            row.appointmentTypeAsDisplay +
+                                            row.serviciu +
                                             ' </div>';
 
                                         apptRow.append(stringToAppend);
 
-                                        var objHeight = (row.durationInMinutes * oneMinutePxHeight) + 'px';
+                                        var objHeight = (row.durataInMinute * oneMinutePxHeight) + 'px';
                                         var marginTop = (row.startTime_Minutes * oneMinutePxHeight) + 'px';
                                         var marginLeft = ((apptRow.children().length - 1) * marginLeftPerItem) + 'px';
 
-                                        var thisAppt = $("#appt" + row.appointmentId);
+                                        var thisAppt = $("#appt" + row.Id);
                                         thisAppt.css("height", objHeight);
                                         thisAppt.css("margin-top", marginTop);
                                         thisAppt.css("margin-left", marginLeft);
 
                                         //default color is silver on appt-no-height.
-                                        switch (row.appointmentType) {
-                                        case 2:
+                                        switch (row.serviciuId) {
+                                        case 1:
                                             thisAppt.css("background-color", 'lightblue');
                                             break;
-                                        case 1024:
+                                        case 2:
                                             thisAppt.css("background-color", 'lightgreen');
                                             break;
                                         default:

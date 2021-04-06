@@ -36,6 +36,8 @@ namespace DeltaQrCode.ModelsDto
         public bool Confirmed { get; set; }
         public DateTime? ConfirmedDate { get; set; }
         public string Observatii { get; set; }
+        public string ConfirmedCode { get; set; }
+
 
     }
 }

@@ -104,6 +104,12 @@ namespace DeltaQrCode.HelpersAndExtensions
     }
     public static class GuidHelper
     {
+        public static string RandomGuid()
+        {
+            var guid = Guid.NewGuid();
+            return guid.ToString();
+        }
+
         public static Guid GetGuid(string guidString)
         {
             Guid returnValue;
