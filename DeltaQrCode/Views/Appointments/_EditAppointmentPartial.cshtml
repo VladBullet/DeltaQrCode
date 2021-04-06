@@ -16,6 +16,8 @@
     }
 </style>
 
+<input id="defaultServiciu" hidden="hidden" data-value="@Model.Appointment.Serviciu" />
+
 <div class="modal-header">
     <h3 id="myModalLabel">@(Model.CreateOrEdit == ActionType.Add ? "Create Appointment" : "Edit Appointment")</h3>
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
@@ -25,7 +27,7 @@
     {
 
         @Html.AntiForgeryToken()
-        <div class="modal-body modal-min-height">
+    <div class="modal-body modal-min-height" id="apptModalBody">
 
             <div class="form-group">
             </div>
@@ -61,9 +63,9 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                @Html.LabelFor(model => model.Appointment.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field", @id = "serviciuLabel", @name = "serviciuLabel" })
                 <div class="col-md-9">
-                    <select asp-for="Appointment.Serviciu" asp-items="Html.GetEnumSelectList(typeof (ServiceType))"></select>
+                    <select id="serviciu" asp-for="Appointment.Serviciu" data-placeholder="@Model.Appointment.Serviciu" value="@Model.Appointment.Serviciu"></select>
 
                     @Html.ValidationMessageFor(model => model.Appointment.Serviciu, "", new { @class = "text-danger" })
                 </div>
@@ -158,6 +160,41 @@
             }
         });
     });
+
+
+            // Select2 for Serviciu
+            $("#serviciu").select2({
+                tags: true,
+                dropdownParent: "#apptModalBody",
+                theme: "bootstrap4",
+                minimumResultsForSearch: Infinity,
+                ajax: {
+                    url: '/Appointments/GetTipServiciu',
+                    dataType: 'json',
+                    processResults: function (result) {
+                        return {
+                            results: $.map(result, function (item) {
+                                return {
+                                    id: item,
+                                    text: item
+                                };
+                            }),
+                        };
+                    }
+                }
+            });
+
+            // select2 initial value for Serviciu
+            var serviciuObj = $('#serviciu');
+            var serviciuValue = $("#defaultServiciu").attr("data-value");
+            if (serviciuValue != NaN && serviciuValue != '') {
+                var optionserviciu = new Option(serviciuValue, serviciuValue, true, true);
+                serviciuObj.append(optionserviciu);
+                serviciuObj.val(serviciuValue).trigger('change'); // Notify any JS components that the value changed
+            }
+
+
+
 
 
 

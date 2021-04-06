@@ -20,10 +20,10 @@ namespace DeltaQrCode.Controllers
 
     [Authorize]
     public class AppointmentsController : Controller
-
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
+
 
         public AppointmentsController(IAppointmentService appointmentService, IMapper mapper)
         {
@@ -68,6 +68,10 @@ namespace DeltaQrCode.Controllers
             //List<AppointmentForProUiDto> appointmentsList = _appointmentQueries.GetUiDto_AppointmentsForProfessionalOrEmployee(User.Identity.GetUserId(), professionalId, dt.Date, dt.Date.AddDays(1));
 
             var appointmentsList = await _appointmentService.GetAppointmentsAsync(dt);
+            if(appointmentsList.Entity == null)
+            {
+                return new JsonResult(new List<AppointmentsIndexVm>());
+            }
             var rampIds = appointmentsList.Entity.Select(x => x.RampId).Distinct();
             var result = new List<AppointmentsIndexVm>();
             foreach (var item in rampIds)
@@ -134,6 +138,16 @@ namespace DeltaQrCode.Controllers
                 return Content(sbError.ToString());
             }
 
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetTipServiciu()
+        {
+            var list = new List<string>();
+            list.Add(ServiceType.Mecanica.ToDisplayString());
+            list.Add(ServiceType.Vulcanizare.ToDisplayString());
+            return new JsonResult(list);
         }
     }
 }
