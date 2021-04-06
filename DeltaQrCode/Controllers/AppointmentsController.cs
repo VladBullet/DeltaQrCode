@@ -98,7 +98,7 @@ namespace DeltaQrCode.Controllers
             return PartialView("_EditAppointmentPartial", appointmentVm);
         }
 
-
+        [HttpGet]
         public async Task<ActionResult> EditModal(int id, string startDateStr)
         {
 
@@ -116,13 +116,15 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditModal([Bind(include: "ProfessionalId, AppointmentId,AppointmentIndex,AppointmentType,NrMasina,NumeClient,EmailAddress,PhoneNumber,TelephoneMobile,DurationInMinutes,IsCancelled,ProfessionalNotes,StartTime_Date,StartTime_Hour,StartTime_Minutes")] AppointmentDto appointment)
+        public async Task<ActionResult> EditModal(AppointmentModalVm appt)
         {
             if (ModelState.IsValid)
             {
+                var model = _mapper.Map<AppointmentDto>(appt);
+                var result = await _appointmentService.AddAppointmentAsync(model);
                 //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
 
-                return Content("success");
+                return Ok("success");
             }
             else
             {
@@ -149,5 +151,13 @@ namespace DeltaQrCode.Controllers
             list.Add(ServiceType.Vulcanizare.ToDisplayString());
             return new JsonResult(list);
         }
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetTimeDictionary()
+        {
+            return new JsonResult(ConstantsAndEnums.TimeDictionary);
+
+        }
+
     }
 }

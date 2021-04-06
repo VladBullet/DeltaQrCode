@@ -17,9 +17,10 @@
 </style>
 
 <input id="defaultServiciu" hidden="hidden" data-value="@Model.Appointment.Serviciu" />
+<input id="defaultDurata" hidden="hidden" data-value="@Model.Appointment.DurataInMinute" />
 
 <div class="modal-header">
-    <h3 id="myModalLabel">@(Model.CreateOrEdit == ActionType.Add ? "Create Appointment" : "Edit Appointment")</h3>
+    <h3 id="myModalLabel">@(Model.CreateOrEdit == ActionType.Add ? "Creeaza programare" : "Editeaza programarea")</h3>
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
@@ -33,7 +34,8 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-9">
+                <h6 style="margin-left:20px;">Data programare</h6>
+                <div class="col-md-6">
                     <input id="datepickerModal" type="text" class="form-control" placeholder="Selecteaza data" />
                 </div>
             </div>
@@ -57,7 +59,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Appointment.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    <input type="number" class="form-control" asp-for="Appointment.DurataInMinute" />
+                    <select class="form-control" id="Durata" asp-for="Appointment.DurataInMinute" data-placeholder="@Model.Appointment.DurataInMinute" value="@Model.Appointment.DurataInMinute"></select>
                     @Html.ValidationMessageFor(model => model.Appointment.DurataInMinute, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -129,6 +131,7 @@
         </div>
 
         <div class="modal-footer">
+            <button type="button" class="btn btn-danger" style="margin-right:230px;">Delete</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             <a class="btn btn-success btn-ok" id="apptsSubmitButton">Submit</a>
         </div>
@@ -138,27 +141,38 @@
 
 
 <script type="text/javascript">
-
     $("#apptsSubmitButton").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("EditModal", "Appointments")",
+                data: $('#apptform').serialize(),
+                dataType:"json",
+                success: function (response) {
+                    CloseModalById('myApptModal');
+                    ShowHeaderAlert(response, "success", 5000);
+/*                    $('#ApptState').change();*/
+                },
+                error: function (error) {
+                    CloseModalById('myApptModal');
+                    ShowHeaderAlert(error.responseJSON.Message, "error",5000);
 
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("EditModal", "Appointments")",
-            data: $('#apptform').serialize(),
-            success: function (result) {
-                if (result == "success") {
-                    $('#myApptModal').modal('hide');
-                    //location.reload();
-                    var proIdModal = $('#ddlProfessionalModal').find(":selected").val();
-                    var dateToView = $('#tbStartTimeDate').val();
-
-                    location.href = location.protocol + '//' + location.host + location.pathname + '?startDateString=""&activeDateString=' + dateToView + '&professionalIdString=' + proIdModal;
-
-                } else {
-                    $('#serverErrorMsg').html(result);
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("ErrorModal","Error")",
+                        dataType: "json",
+                        traditional: true,
+                        contentType: 'application/json',
+                        success: function (response) {
+                            $("#GetModalCode").html(response);
+                            $("#ErrorModal").modal('show');
+                        },
+                        error: function (error) {
+                            alert(error);
+                        }
+                    });
                 }
-            }
-        });
+            });
+        //}
     });
 
 
@@ -191,7 +205,47 @@
                 var optionserviciu = new Option(serviciuValue, serviciuValue, true, true);
                 serviciuObj.append(optionserviciu);
                 serviciuObj.val(serviciuValue).trigger('change'); // Notify any JS components that the value changed
+    }
+
+
+    // Select2 for Durata
+    $("#Durata").select2({
+        tags: true,
+        dropdownParent: "#apptModalBody",
+        theme: "bootstrap4",
+        allowClear: true,
+        ajax: {
+            url: '/Appointments/GetTimeDictionary',
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term
+                }
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (time,item) {
+                        return {
+                            id: item,
+                            text: time
+                        };
+                    }),
+                };
             }
+        }
+    });
+
+    // select2 initial value for Durata
+    var durataObj = $('#Durata');
+    var durataVal = $("#defaultDurata").attr("data-value");
+    if (durataVal != NaN && durataVal != '') {
+        var optionDurata = new Option(durataVal, durataVal, true, true);
+        durataObj.append(optionDurata);
+        durataObj.val(durataVal);
+        durataObj.trigger('change'); // Notify any JS components that the value changed
+    }
+
 
 
 
