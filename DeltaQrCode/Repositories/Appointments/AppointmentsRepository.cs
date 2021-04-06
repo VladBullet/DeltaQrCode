@@ -19,68 +19,69 @@ namespace DeltaQrCode.Repositories
             _db = db;
         }
 
-        public async Task<Result<CaAppointment>> GetAppointmentByIdAsync(int id)
+        public async Task<Result<CaAppointments>> GetAppointmentByIdAsync(int id)
         {
             try
             {
-                var result = await _db.CaAppointments.FirstAsync(x => x.Id == id && !x.Canceled);
-                return Result<CaAppointment>.ResultOk(result);
+                var result = await _db.CaAppointments.FirstAsync(x => x.Id == id && !x.Deleted);
+                return Result<CaAppointments>.ResultOk(result);
             }
             catch (Exception e)
             {
-                return Result<CaAppointment>.ResultError(e, "Ceva nu a mers bine la gasirea programarii!");
+                return Result<CaAppointments>.ResultError(e, "Ceva nu a mers bine la gasirea programarii!");
             }
         }
 
-        public async Task<Result<CaAppointment>> AddAppointmentAsync(CaAppointment appointment)
+        public async Task<Result<CaAppointments>> AddAppointmentAsync(CaAppointments appointment)
         {
             try
             {
                 var value = await _db.CaAppointments.AddAsync(appointment);
                 await _db.SaveChangesAsync();
-                return Result<CaAppointment>.ResultOk(value.Entity);
+                return Result<CaAppointments>.ResultOk(value.Entity);
             }
             catch (Exception er)
             {
-                return Result<CaAppointment>.ResultError(er, "Ceva nu a mers bine la adaugarea programarii!");
+                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la adaugarea programarii!");
             }
 
         }
 
         /// <inheritdoc />
-        public async Task<Result<CaAppointment>> UpdateAppointmentAsync(CaAppointment appointment)
+        public async Task<Result<CaAppointments>> UpdateAppointmentAsync(CaAppointments appointment)
         {
             try
             {
                 var value = _db.CaAppointments.Update(appointment);
                 await _db.SaveChangesAsync();
 
-                return Result<CaAppointment>.ResultOk(value.Entity);
+                return Result<CaAppointments>.ResultOk(value.Entity);
 
             }
             catch (Exception er)
             {
-                return Result<CaAppointment>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
+                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
             }
         }
 
-        public async Task<Result<CaAppointment>> CancelAppointmentAsync(int id)
+        public async Task<Result<CaAppointments>> DeleteAppointmentAsync(int id)
         {
             try
             {
-                var result = await _db.CaAppointments.FindAsync(id);
-                result.Canceled = true;
-                result.CanceledDate = DateTime.Now;
+                var result = await _db.CaAppointments.FirstAsync(x => x.Id == id);
+                result.Deleted = true;
+                var value = _db.CaAppointments.Update(result);
                 await _db.SaveChangesAsync();
-                return Result<CaAppointment>.ResultOk(result);
+
+                return Result<CaAppointments>.ResultOk(value.Entity);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<CaAppointment>.ResultError(e, "Ceva nu a mers bine la anularea programarii!");
+                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la anularea programarii!");
             }
         }
 
-        public async Task<Result<CaAppointment>> ConfirmAppointmentAsync(int id)
+        public async Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id)
         {
             try
             {
@@ -88,26 +89,54 @@ namespace DeltaQrCode.Repositories
                 result.Confirmed = true;
                 result.ConfirmedDate = DateTime.Now;
                 await _db.SaveChangesAsync();
-                return Result<CaAppointment>.ResultOk(result);
+                return Result<CaAppointments>.ResultOk(result);
             }
             catch (Exception e)
             {
-                return Result<CaAppointment>.ResultError(e, "Ceva nu a mers bine la confirmarea programarii!");
+                return Result<CaAppointments>.ResultError(e, "Ceva nu a mers bine la confirmarea programarii!");
             }
         }
 
-        public async Task<Result<List<CaAppointment>>> GetAppointmentsAsync(DateTime date)
+        public async Task<Result<List<CaAppointments>>> GetAppointmentsAsync(DateTime date)
         {
             try
             {
-                var result = await _db.CaAppointments.Where(x => x.DataAppointment == date && !x.Canceled).ToListAsync();
+                var result = await _db.CaAppointments.Where(x => x.DataAppointment.ToShortDateString() == date.ToShortDateString() && !x.Deleted).ToListAsync();
 
-                return Result<List<CaAppointment>>.ResultOk(result);
+                return Result<List<CaAppointments>>.ResultOk(result);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<List<CaAppointment>>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+                return Result<List<CaAppointments>>.ResultError(null, er, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
             }
+        }
+
+        public async Task<Result<CaServicetypes>> GetServiceTypeByIdAsync(uint id)
+        {
+            try
+            {
+                var value = await _db.CaServicetypes.FirstAsync(x => x.Id == id);
+                return Result<CaServicetypes>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaServicetypes>.ResultError(null, er, "Ceva nu a mers bine la gasirea tipului de serviciu!");
+            }
+
+        }
+
+        public async Task<Result<List<CaServicetypes>>> GetServiceTypesAsync()
+        {
+            try
+            {
+                var value = await _db.CaServicetypes.ToListAsync();
+                return Result<List<CaServicetypes>>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<List<CaServicetypes>>.ResultError(null, er, "Ceva nu a mers bine gasirea tipurilor de servicii!");
+            }
+
         }
     }
 }

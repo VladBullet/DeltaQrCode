@@ -8,6 +8,7 @@ namespace DeltaQrCode.Services
     using AutoMapper;
 
     using DeltaQrCode.Models;
+    using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.ViewModels;
     using DeltaQrCode.ViewModels.Appointments;
@@ -36,13 +37,14 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<AppointmentVM>> AddAppointmentAsync(AppointmentVM appointment)
+        public async Task<Result<AppointmentVM>> AddAppointmentAsync(AppointmentDto appointment)
         {
             try
             {
-                var app = _mapper.Map<CaAppointment>(appointment);
+                var app = _mapper.Map<CaAppointments>(appointment);
+                app.Deleted = false;
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
-                var model = _mapper.Map<AppointmentVM>(value);
+                var model = _mapper.Map<AppointmentVM>(value.Entity);
                 return Result<AppointmentVM>.ResultOk(model);
 
             }
@@ -52,13 +54,13 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<AppointmentVM>> UpdateAppointmentAsync(AppointmentVM setAnv)
+        public async Task<Result<AppointmentVM>> UpdateAppointmentAsync(AppointmentDto appt)
         {
             try
             {
-                var app = _mapper.Map<CaAppointment>(setAnv);
+                var app = _mapper.Map<CaAppointments>(appt);
                 var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
-                var model = _mapper.Map<AppointmentVM>(value);
+                var model = _mapper.Map<AppointmentVM>(value.Entity);
                 return Result<AppointmentVM>.ResultOk(model);
 
             }
@@ -68,12 +70,12 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<AppointmentVM>> CancelAppointmentAsync(int id)
+        public async Task<Result<AppointmentVM>> DeleteAppointmentAsync(int id)
         {
             try
             {
-                var value = await _appointmentsRepository.CancelAppointmentAsync(id);
-                var model = _mapper.Map<AppointmentVM>(value);
+                var value = await _appointmentsRepository.DeleteAppointmentAsync(id);
+                var model = _mapper.Map<AppointmentVM>(value.Entity);
 
                 return Result<AppointmentVM>.ResultOk(model);
             }
@@ -88,7 +90,7 @@ namespace DeltaQrCode.Services
             try
             {
                 var value = await _appointmentsRepository.ConfirmAppointmentAsync(id);
-                var model = _mapper.Map<AppointmentVM>(value);
+                var model = _mapper.Map<AppointmentVM>(value.Entity);
 
                 return Result<AppointmentVM>.ResultOk(model);
             }
@@ -103,13 +105,26 @@ namespace DeltaQrCode.Services
             try
             {
                 var value = await _appointmentsRepository.GetAppointmentsAsync(date);
-                var model = _mapper.Map<List<AppointmentVM>>(value);
+                var model = _mapper.Map<List<AppointmentVM>>(value.Entity);
 
                 return Result<List<AppointmentVM>>.ResultOk(model);
             }
             catch (Exception e)
             {
                 return Result<List<AppointmentVM>>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+            }
+        }
+
+        public async Task<Result<List<CaServicetypes>>> GetServiceTypes()
+        {
+            try
+            {
+                var result = await _appointmentsRepository.GetServiceTypesAsync();
+                return Result<List<CaServicetypes>>.ResultOk(result.Entity);
+            }
+            catch (Exception e)
+            {
+                return Result<List<CaServicetypes>>.ResultError(e);
             }
         }
 

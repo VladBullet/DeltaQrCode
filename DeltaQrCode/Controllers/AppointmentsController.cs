@@ -8,9 +8,10 @@ namespace DeltaQrCode.Controllers
 {
     using System.Net;
     using System.Text;
-
+    using AutoMapper;
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.ModelsDto;
+    using DeltaQrCode.Services;
     using DeltaQrCode.ViewModels.Appointments;
 
     using Microsoft.AspNetCore.Authorization;
@@ -20,7 +21,17 @@ namespace DeltaQrCode.Controllers
     [Authorize]
     public class AppointmentsController : Controller
     {
-        // GET: Appointments
+        private readonly IAppointmentService _appointmentService;
+        private readonly IMapper _mapper;
+
+
+        public AppointmentsController(IAppointmentService appointmentService, IMapper mapper)
+        {
+            _appointmentService = appointmentService;
+            _mapper = mapper;
+        }
+
+        //GET: Appointments
         public ActionResult Index(string startDateString, string activeDateString, string professionalIdString)
         {
 
@@ -46,7 +57,8 @@ namespace DeltaQrCode.Controllers
 
 
 
-        public JsonResult GetAppointmentsForDate(string apptDate)
+
+        public async Task<JsonResult> GetAppointmentsForDate(string apptDate)
         {
             DateTime dt;
             DateTime.TryParse(apptDate, out dt);
@@ -54,12 +66,17 @@ namespace DeltaQrCode.Controllers
                 dt = DateTime.Now.Date;
 
             //List<AppointmentForProUiDto> appointmentsList = _appointmentQueries.GetUiDto_AppointmentsForProfessionalOrEmployee(User.Identity.GetUserId(), professionalId, dt.Date, dt.Date.AddDays(1));
-            List<AppointmentForProUiDto> appointmentsList = AppointmentForProUiDto.FakeList(dt);
-            var rampIds = appointmentsList.Select(x => x.RampId).Distinct();
+
+            var appointmentsList = await _appointmentService.GetAppointmentsAsync(dt);
+            if(appointmentsList.Entity == null)
+            {
+                return new JsonResult(new List<AppointmentsIndexVm>());
+            }
+            var rampIds = appointmentsList.Entity.Select(x => x.RampId).Distinct();
             var result = new List<AppointmentsIndexVm>();
             foreach (var item in rampIds)
             {
-                var list = appointmentsList.Where(x => x.RampId == item).ToList();
+                var list = appointmentsList.Entity.Where(x => x.RampId == item).ToList();
                 var aux = new AppointmentsIndexVm(item, list);
                 result.Add(aux);
             }
@@ -74,40 +91,24 @@ namespace DeltaQrCode.Controllers
             var s = startHour.Split('_');
             DateTime appointmentStart = startDate.AddHours(int.Parse(s[0])).AddMinutes(int.Parse(s[1]));
 
-            var appointment = new AppointmentForProUiDto(appointmentStart);
-            appointment.DurationInMinutes = 60;
-            appointment.NrMasina = "";
-            appointment.NumeClient = "";
-            appointment.PhoneNumber = "";
+            var appointment = new AppointmentVM(appointmentStart);
 
             AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, appointment, ActionType.Add);
 
             return PartialView("_EditAppointmentPartial", appointmentVm);
         }
 
-
-        public ActionResult EditModal(Guid? id, string startDateStr)
+        [HttpGet]
+        public async Task<ActionResult> EditModal(int id, string startDateStr)
         {
-            if (id == null)
-            {
-                return new BadRequestResult();
-            }
 
-            // Get the appointment for the professional.
-            //AppointmentForProUiDto appointment = _appointmentQueries.GetUiDto_AppointmentByIdForProfessionalOrEmployee(User.Identity.GetUserId(), professionalId, (Guid)id);
-
-            //if (appointment == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-
-            //AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, professionalId, appointment);
             DateTime startDate = DateTime.Parse(startDateStr);
+            var appt = await _appointmentService.GetAppointmentByIdAsync(id);
             var appointment = new AppointmentModalVm
             {
-                Appointment = AppointmentForProUiDto.FakeList(startDate).FirstOrDefault(x => x.AppointmentId == id),
-                CreateOrEdit = ActionType.Edit,
-                ActiveDate = startDate
+                Appointment = appt.Entity, // AppointmentDto.FakeList(startDate).FirstOrDefault(x => x.AppointmentId == id),
+                ActiveDate = startDate,
+                CreateOrEdit = ActionType.Edit
             };
             return PartialView("_EditAppointmentPartial", appointment /*,appointmentVm*/);
         }
@@ -115,13 +116,15 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditModal([Bind(include: "ProfessionalId, AppointmentId,AppointmentIndex,AppointmentType,NrMasina,NumeClient,EmailAddress,PhoneNumber,TelephoneMobile,DurationInMinutes,IsCancelled,ProfessionalNotes,StartTime_Date,StartTime_Hour,StartTime_Minutes")] AppointmentForProUiDto appointment)
+        public async Task<ActionResult> EditModal(AppointmentModalVm appt)
         {
             if (ModelState.IsValid)
             {
+                var model = _mapper.Map<AppointmentDto>(appt);
+                var result = await _appointmentService.AddAppointmentAsync(model);
                 //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
 
-                return Content("success");
+                return Ok("success");
             }
             else
             {
@@ -139,10 +142,22 @@ namespace DeltaQrCode.Controllers
 
         }
 
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetTipServiciu()
+        {
+            var list = new List<string>();
+            list.Add(ServiceType.Mecanica.ToDisplayString());
+            list.Add(ServiceType.Vulcanizare.ToDisplayString());
+            return new JsonResult(list);
+        }
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetTimeDictionary()
+        {
+            return new JsonResult(ConstantsAndEnums.TimeDictionary);
 
-
-     
-
+        }
 
     }
 }

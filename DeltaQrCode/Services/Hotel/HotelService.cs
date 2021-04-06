@@ -39,6 +39,11 @@ namespace DeltaQrCode.Services.Hotel
                     var marca = await _hotelRepository.GetMarcaByIdAsync(value.Entity.MarcaId.Value);
                     model.Marca = marca.Entity.Label;
                 }
+                if (value.Entity.FlotaId != null)
+                {
+                    var flota = await _hotelRepository.GetFlotaByIdAsync(value.Entity.FlotaId.Value);
+                    model.Flota = flota.Entity.Label;
+                }
                 return Result<SetAnvelopeDto>.ResultOk(model);
             }
             catch (Exception er)
@@ -62,7 +67,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-            public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv)
+        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv)
         {
             try
             {
@@ -82,6 +87,37 @@ namespace DeltaQrCode.Services.Hotel
                     return Result<SetAnvelopeDto>.ResultError(marca.Error, "Problema la adaugarea marcii!");
                 }
                 setAnv.MarcaId = marca.Entity.Id;
+
+                var flota = Result<CaFlota>.ResultOk(null);
+
+                if ( !string.IsNullOrEmpty(setAnv.Flota))
+                {
+                    flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
+                }
+
+                if (!flota.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la gasirea flotei!");
+                }
+
+                if (flota.Entity == null && !string.IsNullOrEmpty(setAnv.Flota))
+                {
+                    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = setAnv.Flota });
+                }
+
+                if (!flota.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la adaugarea flotei!");
+                }
+                if (flota.Entity != null)
+                {
+                    setAnv.FlotaId = flota.Entity.Id;
+                }
+                else
+                {
+                    setAnv.FlotaId = null;
+                }
+
 
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
@@ -123,6 +159,23 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 setAnv.MarcaId = marca.Entity.Id;
 
+                var flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
+                if (!flota.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la gasirea flotei!");
+                }
+
+                if (flota.Entity == null && !string.IsNullOrEmpty(setAnv.Flota))
+                {
+                    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = setAnv.Flota });
+                }
+
+                if (!flota.Successful)
+                {
+                    return Result<SetAnvelopeDto>.ResultError(flota.Error, "Problema la adaugarea flotei!");
+                }
+                setAnv.FlotaId = flota.Entity.Id;
+
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
@@ -142,19 +195,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<List<Position>>> GetAvailablePositionsAsync()
-        {
-            try
-            {
-                var positions = await _hotelRepository.GetAvailablePositionsAsync();
 
-                return positions;
-            }
-            catch (Exception er)
-            {
-                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
-            }
-        }
         public async Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
         {
             try
@@ -173,6 +214,11 @@ namespace DeltaQrCode.Services.Hotel
                         {
                             var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
                             item.Marca = marca.Entity.Label;
+                        }
+                        if (item.FlotaId != null)
+                        {
+                            var flota = await _hotelRepository.GetFlotaByIdAsync(item.FlotaId.Value);
+                            item.Flota = flota.Entity.Label;
                         }
 
                     }
@@ -202,6 +248,20 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
+        public async Task<Result<List<Position>>> GetAvailablePositionsAsync()
+        {
+            try
+            {
+                var positions = await _hotelRepository.GetAvailablePositionsAsync();
+
+                return positions;
+            }
+            catch (Exception er)
+            {
+                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
+            }
+        }
+
         public async Task<Result<List<CaMarca>>> GetMarci()
         {
             try
@@ -215,5 +275,17 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
+        public async Task<Result<List<CaFlota>>> GetFlote()
+        {
+            try
+            {
+                var result = await _hotelRepository.GetFlotaAsync();
+                return Result<List<CaFlota>>.ResultOk(result.Entity);
+            }
+            catch (Exception e)
+            {
+                return Result<List<CaFlota>>.ResultError(e);
+            }
+        }
     }
 }

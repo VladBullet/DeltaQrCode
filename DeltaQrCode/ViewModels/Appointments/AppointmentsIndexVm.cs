@@ -9,12 +9,12 @@ namespace DeltaQrCode.ViewModels.Appointments
 
     public class AppointmentsIndexVm
     {
-        public AppointmentsIndexVm(int rampId, List<AppointmentForProUiDto> appointments)
+        public AppointmentsIndexVm(int rampId, List<AppointmentVM> appointments) // TODO: change with apptVM
         {
             RampId = rampId;
             Appointments = appointments;
         }
         public int RampId { get; set; }
-        public List<AppointmentForProUiDto> Appointments { get; set; }
+        public List<AppointmentVM> Appointments { get; set; } // TODO: change with apptVM
     }
 }

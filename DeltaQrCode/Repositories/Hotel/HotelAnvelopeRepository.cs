@@ -80,43 +80,17 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
-        {
-            try
-            {
-                var occupiedPositions = await _db.CaSetAnvelope.Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
-                var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
-                //var availablePositions = allCombinations.Except(occupiedPositions).ToList();
-                var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
 
-                //var generated = randuri.Where(x => x != null)
-                //    .SelectMany(g => pozitii.Where(c => c != null)
-                //        .Select(c => new Position(g, c))
-                //    ).ToList();
-
-                if (!string.IsNullOrEmpty(searchString))
-                {
-                    availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
-                }
-                // 
-                return Result<List<Position>>.ResultOk(availablePositions);
-            }
-            catch (Exception er)
-            {
-                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
-            }
-
-
-        }
 
         public async Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page = 1, int itemsPerPage = 20)
         {
             try
             {
+                var flote = _db.CaFlota.Where(x => x.Label.ToLower().Contains(searchString.ToLower()));
                 var list = await _db.CaSetAnvelope.Where(x => !x.Deleted).ToListAsync();
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower())).ToList();
+                    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || flote.Any(y => y.Id == x.FlotaId)  || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower())).ToList();
                 }
                 return Result<List<CaSetAnvelope>>.ResultOk(list);
             }
@@ -125,8 +99,6 @@ namespace DeltaQrCode.Repositories
                 return Result<List<CaSetAnvelope>>.ResultError(null, e, "Ceva nu a mers bine la gasirea anvelopelor!");
 
             }
-            // should return first ItemsPerPage for page 1 if everything is null. I mean if search string is null or empty, should still return data.
-            // make sure you also filter them to have Deleted == FALSE
         }
 
         public async Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(int id)
@@ -146,6 +118,30 @@ namespace DeltaQrCode.Repositories
                 return Result<CaSetAnvelope>.ResultError(null, er, "Ceva nu a mers bine la stergerea setului de anvelope!");
             }
         }
+
+        public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
+        {
+            try
+            {
+                var occupiedPositions = await _db.CaSetAnvelope.Where(x=> !x.Deleted).Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
+                var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
+                var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
+
+
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
+                }
+                return Result<List<Position>>.ResultOk(availablePositions);
+            }
+            catch (Exception er)
+            {
+                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
+            }
+        }
+
+
 
         public async Task<Result<CaMarca>> GetMarcaByIdAsync(uint id)
         {
@@ -200,6 +196,67 @@ namespace DeltaQrCode.Repositories
             catch (Exception er)
             {
                 return Result<CaMarca>.ResultError(null, er, "Ceva nu a mers bine gasirea marcilor!");
+            }
+
+        }
+
+
+
+
+        public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
+        {
+            try
+            {
+                var value = await _db.CaFlota.FirstAsync(x => x.Id == id);
+                return Result<CaFlota>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaFlota>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
+            }
+
+        }
+
+        public async Task<Result<List<CaFlota>>> GetFlotaAsync()
+        {
+            try
+            {
+                var value = await _db.CaFlota.ToListAsync();
+                return Result<List<CaFlota>>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<List<CaFlota>>.ResultError(null, er, "Ceva nu a mers bine gasirea flotelor!");
+            }
+
+        }
+
+        public async Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota)
+        {
+            try
+            {
+                var value = await _db.CaFlota.AddAsync(flota);
+                await _db.SaveChangesAsync();
+                return Result<CaFlota>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                return Result<CaFlota>.ResultError(null, er, "Ceva nu a mers bine la adaugarea flotei!");
+            }
+        }
+
+        public async Task<Result<CaFlota>> GetFlotaByLableAsync(string label)
+        {
+            try
+            {
+                label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
+                var value = await _db.CaFlota.FirstOrDefaultAsync(x => x.Label.ToLower().Contains(label.ToLower()));
+                return Result<CaFlota>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaFlota>.ResultError(null, er, "Ceva nu a mers bine gasirea flotelor!");
             }
 
         }

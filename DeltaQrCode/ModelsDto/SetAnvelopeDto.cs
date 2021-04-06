@@ -16,8 +16,9 @@ namespace DeltaQrCode.ModelsDto
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
         public uint? MarcaId { get; set; }
+        public uint? FlotaId { get; set; }
+        public string Flota { get; set; }
         public string Marca { get; set; }
-        public string NumeSet { get; set; }
         public int NrBucati { get; set; }
 
         public Dimensiuni Dimensiuni { get; set; }

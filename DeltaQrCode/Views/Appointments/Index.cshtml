@@ -9,6 +9,8 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
 </head>
 
+@*<input type="text" id="ApptState" value="0" hidden="hidden" />*@
+
 <div class="container">
     <div class="form-row">
         <div class="form-group col-md-4">
@@ -77,7 +79,8 @@
 
                         var dateFromPage = $("#datepicker").val();
                         var datePage = new Date(dateFromPage);
-                        $("#datepickerModal").datepicker({format:"yy-mm-dd"}).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
+                        $("#datepickerModal").datepicker({ format: "yy-mm-dd" }).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
+                        //enableselect2forServiciu();
                     });
             };
 
@@ -91,7 +94,8 @@
 
                         var dateFromPage = $("#datepicker").val();
                         var datePage = new Date(dateFromPage);
-                        $("#datepickerModal").datepicker({format:"yy-mm-dd"}).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
+                        $("#datepickerModal").datepicker({ format: "yy-mm-dd" }).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
+                        //enableselect2forServiciu();
 
                     });
             };
@@ -241,6 +245,17 @@
                 });
             /*end page load*/
         });
+
+        //$(document).on("change",
+        //    "#apptState",
+        //    function (event) {
+        //        event.preventDefault();
+        //        var data = { searchString: $("#search").val(), page: 1 };
+        //        $("#tableResult").load("/Hotel/Search", data, function () {
+        //            setPagination();
+        //        });
+        //    });
+
     </script>
 
 }

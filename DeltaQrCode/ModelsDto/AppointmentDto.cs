@@ -2,29 +2,23 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using DeltaQrCode.HelpersAndExtensions;
 
-namespace DeltaQrCode.ViewModels.Appointments
+namespace DeltaQrCode.ModelsDto
 {
-    public class AppointmentVM
+    using DeltaQrCode.HelpersAndExtensions;
+
+    public class AppointmentDto
     {
-        public AppointmentVM()
+        public AppointmentDto()
         {
 
         }
-        public AppointmentVM(DateTime appointmentStart)
+        public AppointmentDto(DateTime startTime)
         {
-            DataAppointment = appointmentStart;
-            FillAdditionalUiProperties();
+            this.DataAppointment = startTime;
         }
-
-        public void FillAdditionalUiProperties()
-        {
-            this.StartTime_Hour = DataAppointment.Hour;
-            this.StartTime_Minutes = DataAppointment.Minute;
-        }
-
         public int Id { get; set; }
         public int? ApptIndex { get; set; }
         public int ServiciuId { get; set; }
@@ -42,8 +36,6 @@ namespace DeltaQrCode.ViewModels.Appointments
         public bool Confirmed { get; set; }
         public DateTime? ConfirmedDate { get; set; }
         public string Observatii { get; set; }
-        public int StartTime_Hour { get; set; }
-        public int StartTime_Minutes { get; set; }
 
     }
-} 
+}
