@@ -127,12 +127,11 @@ namespace DeltaQrCode.Repositories
                 var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
                 var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
 
-
-
                 if (!string.IsNullOrEmpty(searchString))
                 {
                     availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
                 }
+                availablePositions.Add(new Position("","",""));
                 return Result<List<Position>>.ResultOk(availablePositions);
             }
             catch (Exception er)

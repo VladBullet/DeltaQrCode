@@ -147,11 +147,11 @@ namespace DeltaQrCode.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> GetAvailablePositions(string term)
         {
-            var marci = await _hotelService.GetAvailablePositionsAsync();
-            var list = marci.Entity.Select(x => x.PositionString).ToList();
+            var positions = await _hotelService.GetAvailablePositionsAsync();
+            var list = positions.Entity.Select(x => x.PositionString).ToList();
             if (!string.IsNullOrEmpty(term))
             {
-                list = marci.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
+                list = positions.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
             }
             return new JsonResult(list);
         }
