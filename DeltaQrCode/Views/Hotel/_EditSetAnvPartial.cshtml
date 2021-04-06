@@ -175,15 +175,6 @@
                         @Html.ValidationMessageFor(model => model.TipSezon, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
-
-                <div class="form-group col-md-6 col-sm-3">
-                    @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "pozitieInRaftLabel", @name = "pozitieInRaftLabel" })
-                    <div class="col-md-9">
-                        <select id="selPoz" class="form-control" asp-for="PozitieInRaft" data-placeholder="@Model.PozitieInRaft" value="@Model.PozitieInRaft"></select>
-                        @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger error_span" })
-                    </div>
-                </div>
-
                 <div class="form-group col-md-3 col-sm-3">
                     @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusAnvLabel", @name = "statusAnvLabel" })
                     <div class="col-md-9">
@@ -193,6 +184,13 @@
                     </div>
                 </div>
 
+                <div class="form-group col-md-6 col-sm-3">
+                    @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "pozitieInRaftLabel", @name = "pozitieInRaftLabel" })
+                    <div class="col-md-9">
+                        <select id="selPoz" class="form-control" asp-for="PozitieInRaft" data-placeholder="@Model.PozitieInRaft" value="@Model.PozitieInRaft"></select>
+                        @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger error_span" })
+                    </div>
+                </div>
             </div>
 
             <div class="form-row col-md-12 col-sm-12">
@@ -272,10 +270,10 @@
                                 text: item
                             };
                         }),
-                    };
-                }
+                };
             }
-        });
+        }
+    });
 
     // Select2 for Flota
     $("#Flota").select2({
@@ -304,7 +302,7 @@
             }
         }
     });
-          // Select2 for TipSezon
+    // Select2 for TipSezon
     $("#tipSezon").select2({
         tags: true,
         dropdownParent: "#hotelModalBody",
@@ -369,23 +367,23 @@
         marcaObj.trigger('change'); // Notify any JS components that the value changed
     }
 
-        // select2 initial value for flota
-        var flotaObj = $('#Flota');
-        var flotaVal = $("#defaultFlota").attr("data-value");
-        if (flotaVal != NaN && flotaVal != '') {
-             var optionFlota = new Option(flotaVal, flotaVal, true, true);
-             flotaObj.append(optionFlota);
-             flotaObj.val(flotaVal);
-             flotaObj.trigger('change'); // Notify any JS components that the value changed
-         }
+    // select2 initial value for flota
+    var flotaObj = $('#Flota');
+    var flotaVal = $("#defaultFlota").attr("data-value");
+    if (flotaVal != NaN && flotaVal != '') {
+        var optionFlota = new Option(flotaVal, flotaVal, true, true);
+        flotaObj.append(optionFlota);
+        flotaObj.val(flotaVal);
+        flotaObj.trigger('change'); // Notify any JS components that the value changed
+    }
 
-        // select2 initial value for tipSezon
-        var tipSezonObj = $('#tipSezon');
-        var tipSezonValue = $("#defaultTipSezon").attr("data-value");
-        if (tipSezonValue != NaN && tipSezonValue != '') {
-            var optionTipSezon = new Option(tipSezonValue, tipSezonValue, true, true);
-            tipSezonObj.append(optionTipSezon);
-            tipSezonObj.val(tipSezonValue).trigger('change'); // Notify any JS components that the value changed
+    // select2 initial value for tipSezon
+    var tipSezonObj = $('#tipSezon');
+    var tipSezonValue = $("#defaultTipSezon").attr("data-value");
+    if (tipSezonValue != NaN && tipSezonValue != '') {
+        var optionTipSezon = new Option(tipSezonValue, tipSezonValue, true, true);
+        tipSezonObj.append(optionTipSezon);
+        tipSezonObj.val(tipSezonValue).trigger('change'); // Notify any JS components that the value changed
     }
 
     // select2 initial value for StatusAnvelope
@@ -398,7 +396,19 @@
     }
 
     $(document).ready(function () {
-
+        $(document).on("change", "#statusAnv", function () {
+            $("#selPoz").trigger("updatedStatus");
+        });
+        $("#selPoz").on("updatedStatus", function () {
+            var pos = $("#selPoz");
+            pos.removeAttr("disabled");
+            pos.removeClass("disabled");
+            var statusVal = $("#statusAnv").val();
+            if (statusVal != "InRaft") {
+                pos.attr("disabled", "disabled");
+                pos.addClass("disabled");
+            }
+        });
     });
 
     // when nrBucati changes we need to disable some fields and / or activate the validations

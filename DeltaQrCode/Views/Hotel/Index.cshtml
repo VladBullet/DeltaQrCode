@@ -90,6 +90,14 @@
                 function (data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
+                    var pos = $("#selPoz");
+                    pos.removeAttr("disabled");
+                    pos.removeClass("disabled");
+                    var statusVal = $("#statusAnv").val();
+                    if (statusVal != "InRaft") {
+                        pos.attr("disabled", "disabled");
+                        pos.addClass("disabled");
+                    }
                 });
         };
 
@@ -100,6 +108,15 @@
                 function (data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
+
+                    var pos = $("#selPoz");
+                    pos.removeAttr("disabled");
+                    pos.removeClass("disabled");
+                    var statusVal = $("#statusAnv").val();
+                    if (statusVal != "InRaft") {
+                        pos.attr("disabled", "disabled");
+                        pos.addClass("disabled");
+                    }
                 });
         };
         var deleteSetAnvModalDialog = function (id) {
