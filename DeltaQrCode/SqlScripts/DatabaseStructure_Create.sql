@@ -1,17 +1,25 @@
-CREATE TABLE `ca_appointments` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `appt_index` int DEFAULT NULL,
-  `serviciu` varchar(45) DEFAULT NULL,
-  `nr_masina` varchar(45) NOT NULL,
-  `nume_client` varchar(45) NOT NULL,
-  `nr_telefon` varchar(45) NOT NULL,
-  `data_appointment` datetime NOT NULL,
-  `data_introducere` varchar(45) NOT NULL,
-  `ora_inceput` time NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+CREATE TABLE ca_appointments (
+  id int unsigned NOT NULL AUTO_INCREMENT,
+  ApptIndex int DEFAULT NULL,
+  ServiciuId int NOT NULL,
+  NumarInmatriculare varchar(45) NOT NULL,
+  NumeClient varchar(45) NOT NULL,
+  NumarTelefon varchar(45) NOT NULL,
+  DataAppointment datetime NOT NULL,
+  DataIntroducere datetime NOT NULL,
+  OraInceput time NOT NULL,
+  Deleted bit(1) NOT NULL,
+  Observatii varchar(256) NOT NULL,
+  Confirmed bit(1) NOT NULL,
+  ConfirmedDate datetime DEFAULT NULL,
+  ConfirmedCode varchar(100) NOT NULL,
+  LastModified datetime NOT NULL,
+  RampId int NOT NULL,
+  EmailClient varchar(100) DEFAULT NULL,
+  DurataInMinute int NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `ca_client` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -91,6 +99,20 @@ CREATE TABLE `ca_operatiune_schimb_anvelope` (
   UNIQUE KEY `Id_UNIQUE` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `ca_flota` (
+  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `Label` varchar(50) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `id_UNIQUE` (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `ca_marca` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Label` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE `ca_servicetypes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `label` varchar(45) NOT NULL,
@@ -99,26 +121,28 @@ CREATE TABLE `ca_servicetypes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `ca_set_anvelope` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `NumeClient` varchar(50) NOT NULL,
   `NumarTelefon` varchar(45) NOT NULL,
   `NumarInmatriculare` varchar(45) NOT NULL,
   `Rand` varchar(45) NOT NULL,
   `Pozitie` varchar(45) NOT NULL,
   `Interval` varchar(45) NOT NULL,
-  `MarcaId` int DEFAULT NULL,
-  `NumeSet` varchar(45) NOT NULL,
-  `NrBucati` int NOT NULL,
+  `MarcaId` int(11) unsigned DEFAULT NULL,
+  `NrBucati` int(11) NOT NULL,
   `Dimensiuni` varchar(100) NOT NULL,
   `Uzura` varchar(100) NOT NULL,
   `TipSezon` varchar(45) NOT NULL,
-  `Evaluare` varchar(100) NOT NULL,
+  `Observatii` varchar(100) DEFAULT NULL,
   `StatusCurent` varchar(45) NOT NULL,
   `DataUltimaModificare` datetime NOT NULL,
   `Deleted` bit(1) NOT NULL,
+  `FlotaId` int(11) unsigned DEFAULT NULL,
+  `ca_set_anvelopecol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `ca_users` (
   `id` int NOT NULL AUTO_INCREMENT,
