@@ -4,10 +4,10 @@
 
 
 
-<table class="table">
+<table class="table table-responsive table-responsive-md table-responsive-sm">
     <thead>
         <tr class="text-center">
-            <th style="min-width:130px;" scope="col">Actiune</th>
+            <th style="" scope="col">Actiune</th>
             <th scope="col">Nr. Auto</th>
             <th scope="col">Client</th>
             <th scope="col">Nr. Telefon</th>
@@ -27,12 +27,18 @@
         @foreach (var item in Model.List)
         {
             <tr class="text-center">
-                <td>
-                    <div class="btn btn-outline-info btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle"></i></div>
-                    <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="edit"><i class="far fa-edit"></i></div>
-                    <div class="btn btn-outline-danger btn-sm deleteButton" type="button" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
+                <td class="row">
+                    <div class="col-md-12">
+                        <div class="btn btn-outline-info btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle"></i></div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="edit"><i class="far fa-edit"></i></div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="btn btn-outline-danger btn-sm deleteButton" type="button" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
+                    </div>
                 </td>
-                <td >@item.NumarInmatriculare</td>
+                <td>@item.NumarInmatriculare</td>
                 <td>@item.NumeClient</td>
                 <td>@item.NumarTelefon</td>
                 <td>@item.Flota</td>
@@ -52,7 +58,8 @@
                     else if (item.StatusCurent == StatusAnvelope.Montate.ToDisplayString())
                     {
                         color = "yellow";
-                    }else if(item.StatusCurent == StatusAnvelope.Predate.ToDisplayString())
+                    }
+                    else if (item.StatusCurent == StatusAnvelope.Predate.ToDisplayString())
                     {
                         color = "tomato";
                     }
