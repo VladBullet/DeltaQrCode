@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DeltaQrCode.Controllers
 {
+    using System.Diagnostics;
     using System.Net;
     using System.Text;
     using AutoMapper;
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Services;
+    using DeltaQrCode.ViewModels;
     using DeltaQrCode.ViewModels.Appointments;
 
     using Microsoft.AspNetCore.Authorization;
@@ -99,6 +101,21 @@ namespace DeltaQrCode.Controllers
             return PartialView("_EditAppointmentPartial", appointmentVm);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditXModal(AppointmentVM appt)
+        {
+            var dto = _mapper.Map<AppointmentDto>(appt);
+            var result = await _appointmentService.UpdateAppointmentAsync(dto);
+
+            if (result.Successful)
+            {
+                return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
+            }
+
+            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+        }
+
         [HttpGet]
         public async Task<ActionResult> EditModal(int id, string startDateStr)
         {
@@ -118,7 +135,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal(AppointmentModalVm appt)
+        public async Task<ActionResult> EditModal(AppointmentModalVm appt) //ADDMODAL
         {
             if (ModelState.IsValid)
             {
@@ -142,6 +159,26 @@ namespace DeltaQrCode.Controllers
                 return Content(sbError.ToString());
             }
 
+        }
+
+        [HttpGet]
+        public IActionResult DeleteModal(int id)
+        {
+            return PartialView("_DeleteApptPartial", id); // TODO: Create Delete Partial for Appointments
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ConfirmDelete(int id)
+        {
+
+            var result = await _appointmentService.DeleteAppointmentAsync(id);
+
+            if (result.Successful)
+            {
+                return Ok(JsonConvert.SerializeObject("Programarea a fost stearsa!"));
+            }
+
+            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
 
         [HttpGet]
