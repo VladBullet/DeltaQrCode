@@ -56,28 +56,69 @@
         message: "Va rugam introduceti inaltimea anvelopei!"
     }
 ];
-var uzuraRules = [
+
+//var uzuraRules = [
+//    {
+//        ruleName: "stangaFataRange",
+//        ruleForElementId: "#StangaFata",
+//        check: "range",
+//        comparerValue: [1, 8],
+//        message: "Va rugam introduceti o valoare cuprinsa intre 1 si 8!"
+//    },
+//    {
+//        ruleName: "dreaptaFataRange",
+//        ruleForElementId: "#DreaptaFata",
+//        check: "range",
+//        comparerValue: [1, 8],
+//        message: "Va rugam introduceti o valoare cuprinsa intre 1 si 8!"
+//    },
+//    {
+//        ruleName: "stangaSpateRange",
+//        ruleForElementId: "#StangaSpate",
+//        check: "range",
+//        comparerValue: [1, 8],
+//        message: "Va rugam introduceti o valoare cuprinsa intre 1 si 8!"
+//    },
+//    {
+//        ruleName: "dreaptaSpateRange",
+//        ruleForElementId: "#DreaptaSpate",
+//        check: "range",
+//        comparerValue: [1, 8],
+//        message: "Va rugam introduceti o valoare cuprinsa intre 1 si 8!"
+//    }
+//];
+
+var uzuraStFRules = [
     {
         ruleName: "stangaFataRange",
         ruleForElementId: "#StangaFata",
         check: "range",
         comparerValue: [1, 8],
         message: "Va rugam introduceti o valoare cuprinsa intre 1 si 8!"
-    },
+    }
+];
+
+var uzuraDrFRules = [
     {
         ruleName: "dreaptaFataRange",
         ruleForElementId: "#DreaptaFata",
         check: "range",
         comparerValue: [1, 8],
         message: "Va rugam introduceti o valoare cuprinsa intre 1 si 8!"
-    },
+    }
+];
+
+var uzuraStSRules = [
     {
         ruleName: "stangaSpateRange",
         ruleForElementId: "#StangaSpate",
         check: "range",
         comparerValue: [1, 8],
         message: "Va rugam introduceti o valoare cuprinsa intre 1 si 8!"
-    },
+    }
+];
+
+var uzuraDrSRules = [
     {
         ruleName: "dreaptaSpateRange",
         ruleForElementId: "#DreaptaSpate",

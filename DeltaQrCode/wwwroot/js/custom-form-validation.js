@@ -135,3 +135,12 @@
         return model;
     };
 };
+
+var updateUi = function (validationErrors, parrentClass, spanErrorClass) {
+    $(document).find("." + spanErrorClass).text("").addClass("hide");
+    // result.validationResult is an array containing all rules that failed
+    $.each(validationErrors, function (index, item) {
+        var span = $(document).find(item.elementId).closest('.' + parrentClass).find('.' + spanErrorClass);
+        span.text(item.message).removeClass("hide").addClass("text-danger");
+    });
+};
