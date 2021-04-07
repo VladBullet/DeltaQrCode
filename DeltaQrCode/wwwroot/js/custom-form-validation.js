@@ -6,30 +6,7 @@
         this.Rules = rules;
     }
 
-    //this.CheckTypes = {};
-    //Object.defineProperty(CheckTypes, "required", {
-    //    value: "required",
-    //    writable: false,
-    //    enumerable: true,
-    //    configurable: true
-    //}).defineProperty(CheckTypes, "regex", {
-    //    value: "regex",
-    //    writable: false,
-    //    enumerable: true,
-    //    configurable: true
-    //}).defineProperty(CheckTypes, "range", {
-    //    value: "range",
-    //    writable: false,
-    //    enumerable: true,
-    //    configurable: true
-    //}).defineProperty(CheckTypes, "equals", {
-    //    value: "equals",
-    //    writable: false,
-    //    enumerable: true,
-    //    configurable: true
-    //});
-
-    this.Checks = {
+   this.Checks = {
 
         required: function (elementId, comparer) {
             if (!comparer) {
@@ -128,16 +105,16 @@
         } catch (e) {
             console.log(e);
         }
-        //or use this
+    };
 
-        //var foundRule = Rules.find(x => x.ruleName == ruleName);
-        //if (foundRule) {
-        //    var searchedIndex = $.inArray(foundRule, Rules);
-        //    if (searchedIndex >= 0) {
-        //        Rules = Rules.slice(searchedIndex, 1);
-        //        return;
-        //    }
-        //}
+    this.removeCustomValidationRules = function(rules) {
+        try {
+            $.each(rules, function (index, rule) {
+                self.removeCustomValidationRule(rule.ruleName);
+            });
+        } catch (e) {
+            console.log(e);
+        } 
     };
 
     this.validate = function (validator) {
@@ -154,13 +131,6 @@
         if (results.length > 0) {
             formIsValid = false;
         }
-        // OLD CODE - DON'T DELETE YET
-        //for (var i = 0; i < results.length; i++) {
-        //    if (!results[i].isValid) {
-        //        formIsValid = false;
-        //        break;
-        //    }
-        //}
         var model = { formIsValid: formIsValid, validationResults: results };
         return model;
     };
