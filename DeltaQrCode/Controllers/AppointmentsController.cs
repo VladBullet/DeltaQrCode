@@ -164,7 +164,7 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public IActionResult DeleteModal(int id)
         {
-            return PartialView("_DeleteApptPartial", id); // TODO: Create Delete Partial for Appointments
+            return PartialView("_DeleteAppointmentPartial", id); // TODO: Create Delete Partial for Appointments
         }
 
         [HttpPost]

@@ -36,6 +36,13 @@
         </div>
     </div>
 </div>
+<div id="myApptDeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myDeleteApptModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="partialInfoDelete"></div>
+        </div>
+    </div>
+</div>
 
 
 @section Scripts{
@@ -255,6 +262,25 @@
         //            setPagination();
         //        });
         //    });
+
+        var deleteSetAnvModalDialog = function (id) {
+
+            var url = "/Appointments/DeleteModal"; // the url to the controller
+            $.get(url + '?id=' + id,
+                function (data) {
+                    $('#partialInfoDelete').html(data);
+                    $('#myApptDeleteModal').modal('show');
+                });
+        };
+
+        $(document).on('click',
+            '.deleteButton',
+            function (event) {
+                // dont allow the event to propagate
+                event.stopPropagation();
+                var id = $(this).attr("data-value");
+                deleteSetAnvModalDialog(id);
+            });
 
     </script>
 

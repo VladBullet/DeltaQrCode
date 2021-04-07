@@ -1,0 +1,63 @@
+﻿@using DeltaQrCode.ModelsDto
+@using Microsoft.AspNetCore.Razor.TagHelpers
+@model int
+
+
+
+
+<div class="modal-header">
+
+    <h3 id="myDeleteApptModalLabel"> Mesaj de confirmare  </h3>
+
+</div>
+
+<div class="modal-body">
+    <h5> Esti sigur ca doresti sa stergi aceasta programare?</h5>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-outline-success " data-dismiss="modal">Cancel</button>
+    <a class="btn btn-outline-danger btn-ok" id="confirmDelete" data-value="@Model">Delete</a>
+</div>
+
+
+<script type="text/javascript">
+
+    $("#confirmDelete").click(function () {
+
+        var model = { id: $("#confirmDelete").attr("data-value") };
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ConfirmDelete", "Appointments")",
+            data: model,
+            dataType:"json",
+            success: function (response) {
+                CloseModalById('myApptDeleteModal');
+                CloseModalById('myApptModal');
+                ShowHeaderAlert(response, "success", 5000);
+/*                $('#hotelListState').change();*/
+            },
+            error: function (error) {
+                CloseModalById('myApptDeleteModal');
+                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ErrorModal","Error")",
+                    dataType: "json",
+                    traditional: true,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $("#GetModalCode").html(response);
+                        $("#ErrorModal").modal('show');
+                    },
+                    error: function (error) {
+                        alert(error);
+                    }
+                });
+            }
+        });
+    });
+
+</script>
