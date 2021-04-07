@@ -441,9 +441,7 @@
         }
         else {
             var allSpans = $(document).find(".error_span").text("").addClass("hide");;
-            //$.each(allSpans, function (index, span) {
-            //    span.text(" ").addClass("hide");
-            //});
+         
             $.each(result.validationResults, function (index, item) {
                 var span = $(document).find(item.elementId).closest('.form-group').find('.error_span');
                 span.text(item.message).removeClass("hide").addClass("text-danger");
