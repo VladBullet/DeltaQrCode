@@ -17,7 +17,7 @@
         ruleName: "numarInmatriculareRegex",
         ruleForElementId: "#NumarInmatriculare",
         check: "regex",
-        comparerValue: /^([A-Za-z]{1,2}?)(\d{2,3})([A-Za-z]{3}?)$/,
+        comparerValue: /^(\d|\w){6,15}$/,
         message: "Numarul de inmatriculare nu este valid. Introduceti un numar de inmatriculare valid!"
     },
     {
@@ -31,7 +31,7 @@
         ruleName: "numarTelefonRegex",
         ruleForElementId: "#NumarTelefon",
         check: "regex",
-        comparerValue: /(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?/g,
+        comparerValue: /^((\+|)\d{1,3}( |-)?)?((\(\d {3}\))|\d{3})[- .]?\d{3}[- .]?\d{4}$|^((\+|)\d{1,3}( )?)?(\d{3}[ ]?){2}\d{3}$|^(\+\d{1,3}( )?)?(\d{3}[ ]?)(\d{2}[ ]?){2}\d{2}$|^(\(?\d{1,3}\)?)(( *)-|\/| )(\d{1,3}(-*)(\d{1,5}))$|^(\+?)((\d{2,})(-)( *)){1,4}(\d{1,5})$/g,
         message: "Numarul introdus nu este valid. Introduceti un numar de telefon valid!"
     },
     {
