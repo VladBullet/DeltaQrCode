@@ -366,10 +366,10 @@
             },
             processResults: function (result) {
                 return {
-                    results: $.map(result, function (item) {
+                    results: $.map(result, function (time,item) {
                         return {
                             id: item,
-                            text: item
+                            text: time
                         };
                     }),
                 };
