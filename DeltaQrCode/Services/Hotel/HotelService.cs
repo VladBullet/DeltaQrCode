@@ -79,7 +79,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (marca.Entity == null && !string.IsNullOrEmpty(setAnv.Marca))
                 {
-                    marca = await _hotelRepository.AddMarcaAsync(new CaMarca() { Label = setAnv.Marca });
+                    marca = await _hotelRepository.AddMarcaAsync(new CaMarca() { Label = setAnv.Marca.ToUpper() });
                 }
 
                 if (!marca.Successful)
@@ -90,7 +90,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 var flota = Result<CaFlota>.ResultOk(null);
 
-                if ( !string.IsNullOrEmpty(setAnv.Flota))
+                if (!string.IsNullOrEmpty(setAnv.Flota))
                 {
                     flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
                 }
@@ -102,7 +102,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (flota.Entity == null && !string.IsNullOrEmpty(setAnv.Flota))
                 {
-                    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = setAnv.Flota });
+                    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = setAnv.Flota.ToUpper() });
                 }
 
                 if (!flota.Successful)
@@ -125,7 +125,8 @@ namespace DeltaQrCode.Services.Hotel
 
                 modelForDatabase.Deleted = false;
 
-
+                modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
+                modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
                 // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
                 var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
@@ -150,7 +151,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (marca.Entity == null && !string.IsNullOrEmpty(setAnv.Marca))
                 {
-                    marca = await _hotelRepository.AddMarcaAsync(new CaMarca() { Label = setAnv.Marca });
+                    marca = await _hotelRepository.AddMarcaAsync(new CaMarca() { Label = setAnv.Marca.ToUpper() });
                 }
 
                 if (!marca.Successful)
@@ -167,7 +168,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (flota.Entity == null && !string.IsNullOrEmpty(setAnv.Flota))
                 {
-                    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = setAnv.Flota });
+                    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = setAnv.Flota.ToUpper() });
                 }
 
                 if (!flota.Successful)
@@ -177,6 +178,8 @@ namespace DeltaQrCode.Services.Hotel
                 setAnv.FlotaId = flota.Entity.Id;
 
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
+                modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
+                modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
