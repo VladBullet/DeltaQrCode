@@ -18,6 +18,9 @@
 
 
 <input id="defaultPosition" hidden="hidden" data-value="@Model.PozitieInRaft" />
+<input id="defaultDiametru" hidden="hidden" data-value="@Model.Diametru" />
+<input id="defaultLatime" hidden="hidden" data-value="@Model.Latime" />
+<input id="defaultInaltime" hidden="hidden" data-value="@Model.Inaltime" />
 <input id="defaultMarca" hidden="hidden" data-value="@Model.Marca" />
 <input id="defaultFlota" hidden="hidden" data-value="@Model.Flota" />
 <input id="defaultTipSezon" hidden="hidden" data-value="@Model.TipSezon" />
@@ -43,7 +46,7 @@
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.NumeClient, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                            @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
                             @Html.ValidationMessageFor(model => model.NumeClient, "", new { @class = "text-danger error_span" })
                         </div>
                     </div>
@@ -52,7 +55,7 @@
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                            @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
                             @Html.ValidationMessageFor(model => model.NumarInmatriculare, "", new { @class = "text-danger error_span" })
                         </div>
                     </div>
@@ -60,7 +63,7 @@
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                            @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
                             @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger error_span" })
                         </div>
                     </div>
@@ -75,7 +78,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.StangaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.StangaFata, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @type = "text" } })
+                                    @Html.EditorFor(model => model.StangaFata, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom uzura", @type = "text" } })
                                     @Html.ValidationMessageFor(model => model.StangaFata, "", new { @class = "text-danger error_span" })
                                 </div>
                             </div>
@@ -83,7 +86,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.StangaSpate, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.StangaSpate, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @type = "text" } })
+                                    @Html.EditorFor(model => model.StangaSpate, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom uzura", @type = "text" } })
                                     @Html.ValidationMessageFor(model => model.StangaSpate, "", new { @class = "text-danger error_span" })
                                 </div>
                             </div>
@@ -94,7 +97,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.DreaptaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.DreaptaFata, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @type = "text" } })
+                                    @Html.EditorFor(model => model.DreaptaFata, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom uzura", @type = "text" } })
                                     @Html.ValidationMessageFor(model => model.DreaptaFata, "", new { @class = "text-danger error_span" })
                                 </div>
                             </div>
@@ -102,7 +105,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.DreaptaSpate, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.DreaptaSpate, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom", @type = "text" } })
+                                    @Html.EditorFor(model => model.DreaptaSpate, new { htmlAttributes = new { @class = "form-control col-md-6 half-margin-bottom uzura", @type = "text" } })
                                     @Html.ValidationMessageFor(model => model.DreaptaSpate, "", new { @class = "text-danger error_span" })
                                 </div>
                             </div>
@@ -133,7 +136,7 @@
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.NrBucati, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9 ">
-                        @Html.EditorFor(model => model.NrBucati, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @type = "text" } })
+                        @Html.EditorFor(model => model.NrBucati, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @type = "text", @readonly = "readonly" } })
                         @Html.ValidationMessageFor(model => model.NrBucati, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
@@ -146,7 +149,7 @@
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Diametru, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
-                    @Html.EditorFor(model => model.Diametru, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @type = "text" } })
+                    <select class="form-control" id="Diametru" asp-for="Diametru" data-placeholder="@Model.Diametru" value="@Model.Diametru"></select>
                     @Html.ValidationMessageFor(model => model.Diametru, "", new { @class = "text-danger error_span" })
 
                 </div>
@@ -154,14 +157,14 @@
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Latime, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
-                    @Html.EditorFor(model => model.Latime, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @type = "text" } })
+                    <select class="form-control" id="Latime" asp-for="Latime" data-placeholder="@Model.Latime" value="@Model.Latime"></select>
                     @Html.ValidationMessageFor(model => model.Latime, "", new { @class = "text-danger error_span" })
                 </div>
 
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Inaltime, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
-                    @Html.EditorFor(model => model.Inaltime, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @type = "text" } })
+                    <select class="form-control" id="Inaltime" asp-for="Inaltime" data-placeholder="@Model.Inaltime" value="@Model.Inaltime"></select>
                     @Html.ValidationMessageFor(model => model.Inaltime, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
@@ -169,7 +172,7 @@
             <div class="form-row" style="margin-top: 30px;">
 
                 <div class="form-group col-md-3 col-sm-3">
-                    @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "tipSezonLabel", @name = "tipSezonLabel" })
+                    @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })
                     <div class="col-md-9">
                         <select class="form-control" id="tipSezon" asp-for="TipSezon"></select>
 
@@ -177,7 +180,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-3 col-sm-3">
-                    @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusAnvLabel", @name = "statusAnvLabel" })
+                    @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })
                     <div class="col-md-9">
                         <select class="form-control" id="statusAnv" asp-for="StatusCurent" data-placeholder="@Model.StatusCurent" value="@Model.StatusCurent"></select>
 
@@ -185,7 +188,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6 col-sm-3">
-                    @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "pozitieInRaftLabel", @name = "pozitieInRaftLabel" })
+                    @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
                     <div class="col-md-9">
                         <select id="selPoz" class="form-control" asp-for="PozitieInRaft" data-placeholder="@Model.PozitieInRaft" value="@Model.PozitieInRaft"></select>
                         @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger error_span" })
@@ -210,257 +213,12 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary btn-default" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-outline-success btn-ok" id="apptsAddSubmitButton">Save</a>
+        <a class="btn btn-outline-success btn-ok" id="apptsAddSubmitButton">Adauga</a>
     </div>
 
 </div>
 
-<script src="~/js/form-validations.js"></script>
-<script src="~/js/validationRules.js"></script>
+<script src="~/js/editAddSetAnvPartial.js"></script>
 <script type="text/javascript">
-
-    // Initialize select2
-    //Select2 for Position
-    $("#selPoz").select2({
-        dropdownParent: "#hotelModalBody",
-        theme: "bootstrap4",
-        allowClear: true,
-        ajax: {
-            url: '/Hotel/GetAvailablePositions',
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                var query = {
-                    term: params.term
-                }
-                return query;
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item,
-                            text: item
-                        };
-                    }),
-                };
-            }
-        }
-    });
-
-    // Select2 for Marca
-    $("#Marca").select2({
-        tags: true,
-        dropdownParent: "#hotelModalBody",
-        theme: "bootstrap4",
-        allowClear: true,
-        ajax: {
-            url: '/Hotel/GetMarci',
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                var query = {
-                    term: params.term
-                }
-                return query;
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item,
-                            text: item
-                        };
-                    }),
-                };
-            }
-        }
-    });
-
-    // Select2 for Flota
-    $("#Flota").select2({
-        tags: true,
-        dropdownParent: "#hotelModalBody",
-        theme: "bootstrap4",
-        allowClear: true,
-        ajax: {
-            url: '/Hotel/GetFlote',
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                var query = {
-                    term: params.term
-                }
-                return query;
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item,
-                            text: item
-                        };
-                    }),
-                };
-            }
-        }
-    });
-
-    // Select2 for TipSezon
-    $("#tipSezon").select2({
-        dropdownParent: "#hotelModalBody",
-        theme: "bootstrap4",
-        minimumResultsForSearch: Infinity,
-        ajax: {
-            url: '/Hotel/GetTireTypes',
-            dataType: 'json',
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item,
-                            text: item
-                        };
-                    }),
-                };
-            }
-        }
-    });
-
-    // Select2 for StatusAnvelope
-    $("#statusAnv").select2({
-        tags: true,
-        dropdownParent: "#hotelModalBody",
-        theme: "bootstrap4",
-        minimumResultsForSearch: Infinity,
-        ajax: {
-            url: '/Hotel/GetStatusAnvelope',
-            dataType: 'json',
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item,
-                            text: item
-                        };
-                    }),
-                };
-            }
-        }
-    });
-
-
-    // select2 initial value for position
-    var selPozObj = $('#selPoz');
-    var selPozVal = $("#defaultPosition").attr("data-value");
-    if (selPozVal != NaN && selPozVal != '') {
-        var optionPoz = new Option(selPozVal, selPozVal, true, true);
-        selPozObj.append(optionPoz);
-        selPozObj.val(selPozVal);
-        selPozObj.trigger('change'); // Notify any JS components that the value changed
-    }
-
-    // select2 initial value for marca
-    var marcaObj = $('#Marca');
-    var marcaVal = $("#defaultMarca").attr("data-value");
-    if (marcaVal != NaN && marcaVal != '') {
-        var optionMarca = new Option(marcaVal, marcaVal, true, true);
-        marcaObj.append(optionMarca);
-        marcaObj.val(marcaVal);
-        marcaObj.trigger('change'); // Notify any JS components that the value changed
-    }
-
-    // select2 initial value for flota
-    var flotaObj = $('#Flota');
-    var flotaVal = $("#defaultFlota").attr("data-value");
-    if (flotaVal != NaN && flotaVal != '') {
-        var optionFlota = new Option(flotaVal, flotaVal, true, true);
-        flotaObj.append(optionFlota);
-        flotaObj.val(flotaVal);
-        flotaObj.trigger('change'); // Notify any JS components that the value changed
-    }
-
-    // select2 initial value for tipSezon
-    var tipSezonObj = $('#tipSezon');
-    var tipSezonValue = $("#defaultTipSezon").attr("data-value");
-    if (tipSezonValue != NaN && tipSezonValue != '') {
-        tipSezonObj.val(tipSezonValue).trigger('change'); // Notify any JS components that the value changed
-    }
-
-    // select2 initial value for StatusAnvelope
-    var statusAnvObj = $('#statusAnv');
-    var statusAnvValue = $("#defaultStatusAnv").attr("data-value");
-    if (statusAnvValue != NaN && statusAnvValue != '') {
-        statusAnvObj.val(statusAnvValue).trigger('change'); // Notify any JS components that the value changed
-    }
-
-
-    $(document).ready(function () {
-        $(document).on("change", "#statusAnv", function () {
-            $("#selPoz").trigger("updatedStatus");
-        });
-        $("#selPoz").on("updatedStatus", function () {
-            var pos = $("#selPoz");
-            pos.removeAttr("disabled");
-            pos.removeClass("disabled");
-            var statusVal = $("#statusAnv").val();
-            if (statusVal != "InRaft") {
-                pos.attr("disabled", "disabled");
-                pos.addClass("disabled");
-            }
-        });
-    });
-    // when nrBucati changes we need to disable some fields and / or activate the validations
-    //$("#nrBucati").on("change", function() {
-    //    validateUzura($(this).val());
-    //    console.log("validate uzura triggered");
-    //});
-
-    // SAVE BTN CLICK EVENT
-
-    $("#apptsAddSubmitButton").click(function () {
-        var validator = new CustomValidation(anvelopeFormValidationRules);
-        validator.addcustomValidationRules(uzuraRules);
-        var result = validator.validate(validator);
-        if (result.formIsValid) {
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("AddModal", "Hotel")",
-                data: $('#apptform').serialize(),
-                dataType: "json",
-                success: function(response) {
-                    CloseModalById('myHotelModal');
-                    ShowHeaderAlert(response, "success", 5000);
-                    $('#hotelListState').change();
-                },
-                error: function(error) {
-                    CloseModalById('myHotelModal');
-                    ShowHeaderAlert(error.responseJSON.Message, "error", 5000);
-
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("ErrorModal","Error")",
-                        dataType: "json",
-                        traditional: true,
-                        contentType: 'application/json',
-                        success: function(response) {
-                            $("#GetModalCode").html(response);
-                            $("#ErrorModal").modal('show');
-                        },
-                        error: function(error) {
-                            alert(error);
-                        }
-                    });
-                }
-            });
-        }
-        else {
-            var allSpans = $(document).find(".error_span").text("").addClass("hide");;
-            //$.each(allSpans, function (index, span) {
-            //    span.text(" ").addClass("hide");
-            //});
-            $.each(result.validationResults, function (index, item) {
-                var span = $(document).find(item.elementId).closest('.form-group').find('.error_span');
-                span.text(item.message).removeClass("hide").addClass("text-danger");
-            });
-        }
-    });
 
 </script>

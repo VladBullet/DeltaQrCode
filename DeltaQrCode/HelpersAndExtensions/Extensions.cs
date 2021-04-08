@@ -64,7 +64,7 @@ namespace DeltaQrCode.HelpersAndExtensions
         {
             if (uz != null)
             {
-                return string.Format("StF:{0}, DrF:{1}, StS:{2}, DrS:{3}", uz.StF, uz.DrF, uz.StS, uz.DrS);
+                return string.Format("StF:{0}, DrF:{1}, StS:{2}, DrS:{3}", uz.StF, uz.DrF.HasValue ? uz.DrF.Value.ToString() : "null", uz.StS.HasValue ? uz.StS.Value.ToString() : "null", uz.DrS.HasValue ? uz.DrS.Value.ToString() : "null");
             }
 
             return string.Empty;

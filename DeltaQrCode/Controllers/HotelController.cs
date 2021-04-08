@@ -202,5 +202,23 @@ namespace DeltaQrCode.Controllers
             list.Add(StatusAnvelope.Predate.ToDisplayString());
             return new JsonResult(list);
         }
+
+        public IActionResult GetDiametru()
+        {
+            return new JsonResult(ConstantsAndEnums.DiametruDictionary);
+
+        }
+
+        public IActionResult GetLatime()
+        {
+            return new JsonResult(ConstantsAndEnums.Latime);
+
+        }
+
+        public IActionResult GetInaltime()
+        {
+            return new JsonResult(ConstantsAndEnums.Inaltime);
+
+        }
     }
 }
