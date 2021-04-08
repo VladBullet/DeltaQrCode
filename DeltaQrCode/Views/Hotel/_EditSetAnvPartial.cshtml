@@ -17,6 +17,9 @@
 
 
 <input id="defaultPosition" hidden="hidden" data-value="@Model.PozitieInRaft" />
+<input id="defaultDiametru" hidden="hidden" data-value="@Model.Diametru" />
+<input id="defaultLatime" hidden="hidden" data-value="@Model.Latime" />
+<input id="defaultInaltime" hidden="hidden" data-value="@Model.Inaltime" />
 <input id="defaultMarca" hidden="hidden" data-value="@Model.Marca" />
 <input id="defaultFlota" hidden="hidden" data-value="@Model.Flota" />
 <input id="defaultTipSezon" hidden="hidden" data-value="@Model.TipSezon" />
@@ -145,20 +148,20 @@
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Diametru, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
-                    @Html.EditorFor(model => model.Diametru, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate", @type = "text" } })
+                    <select class="form-control" id="Diametru" asp-for="Diametru" data-placeholder="@Model.Diametru" value="@Model.Diametru"></select>
                     @Html.ValidationMessageFor(model => model.Diametru, "", new { @class = "text-danger error_span" })
 
                 </div>
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Latime, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
-                    @Html.EditorFor(model => model.Latime, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate", @type = "text" } })
+                    <select class="form-control" id="Latime" asp-for="Latime" data-placeholder="@Model.Latime" value="@Model.Latime"></select>
                     @Html.ValidationMessageFor(model => model.Latime, "", new { @class = "text-danger error_span" })
                 </div>
 
                 <div class="form-group col-md-4 col-sm-4">
                     @Html.LabelFor(model => model.Inaltime, htmlAttributes: new { @class = "control-label col-md-4 required-field" })
-                    @Html.EditorFor(model => model.Inaltime, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate", @type = "text" } })
+                    <select class="form-control" id="Inaltime" asp-for="Inaltime" data-placeholder="@Model.Inaltime" value="@Model.Inaltime"></select>
                     @Html.ValidationMessageFor(model => model.Inaltime, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
@@ -347,6 +350,90 @@
         }
     });
 
+    // Select2 for Diametru
+    $("#Diametru").select2({
+        tags: true,
+        dropdownParent: "#hotelModalBody",
+        theme: "bootstrap4",
+        allowClear: true,
+        ajax: {
+            url: '/Hotel/GetDiametru',
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term
+                }
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
+                };
+            }
+        }
+    });
+
+    // Select2 for Latime
+    $("#Latime").select2({
+        tags: true,
+        dropdownParent: "#hotelModalBody",
+        theme: "bootstrap4",
+        allowClear: true,
+        ajax: {
+            url: '/Hotel/GetLatime',
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term
+                }
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
+                };
+            }
+        }
+    });
+
+    // Select2 for Inaltime
+    $("#Inaltime").select2({
+        tags: true,
+        dropdownParent: "#hotelModalBody",
+        theme: "bootstrap4",
+        allowClear: true,
+        ajax: {
+            url: '/Hotel/GetInaltime',
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term
+                }
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
+                };
+            }
+        }
+    });
+
     // select2 initial value for position
     var selPozObj = $('#selPoz');
     var selPozVal = $("#defaultPosition").attr("data-value");
@@ -393,6 +480,36 @@
         var optionstatusAnv = new Option(statusAnvValue, statusAnvValue, true, true);
         statusAnvObj.append(optionstatusAnv);
         statusAnvObj.val(statusAnvValue).trigger('change'); // Notify any JS components that the value changed
+    }
+
+    // select2 initial value for Diametru
+    var diametruObj = $('#Diametru');
+    var diametruVal = $("#defaultDiametru").attr("data-value");
+    if (diametruVal != NaN && diametruVal != '') {
+        var optionDiametru = new Option(diametruVal, diametruVal, true, true);
+        diametruObj.append(optionDiametru);
+        diametruObj.val(diametruVal);
+        diametruObj.trigger('change'); // Notify any JS components that the value changed
+    }
+
+    // select2 initial value for Latime
+    var latimeObj = $('#Latime');
+    var latimeVal = $("#defaultLatime").attr("data-value");
+    if (latimeVal != NaN && latimeVal != '') {
+        var optionLatime = new Option(latimeVal, latimeVal, true, true);
+        latimeObj.append(optionLatime);
+        latimeObj.val(latimeVal);
+        latimeObj.trigger('change'); // Notify any JS components that the value changed
+    }
+
+    // select2 initial value for Inaltime
+    var inaltimeObj = $('#Inaltime');
+    var inaltimeVal = $("#defaultInaltime").attr("data-value");
+    if (inaltimeVal != NaN && inaltimeVal != '') {
+        var optionInaltime = new Option(inaltimeVal, inaltimeVal, true, true);
+        inaltimeObj.append(optionInaltime);
+        inaltimeObj.val(inaltimeVal);
+        inaltimeObj.trigger('change'); // Notify any JS components that the value changed
     }
 
     $(document).ready(function () {
