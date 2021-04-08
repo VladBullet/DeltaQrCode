@@ -143,7 +143,7 @@ namespace DeltaQrCode.Controllers
                 var result = await _appointmentService.AddAppointmentAsync(model);
                 //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
 
-                return Ok("success");
+                return Ok(JsonConvert.SerializeObject("Programarea a fost editata cu succes!"));
             }
             else
             {
