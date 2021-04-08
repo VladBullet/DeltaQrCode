@@ -416,6 +416,9 @@
     // when loading stF and drF inputs are enabled - validation rule just for dr
     var validator = new CustomValidation(anvelopeFormValidationRules);
     validator.addcustomValidationRules(uzuraStFRules);
+    validator.addcustomValidationRules(uzuraDrFRules);
+    validator.addcustomValidationRules(uzuraStSRules);
+    validator.addcustomValidationRules(uzuraDrSRules);
 
     // SAVE BTN CLICK EVENT
     $(document).on("click",

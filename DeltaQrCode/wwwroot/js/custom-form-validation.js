@@ -1,12 +1,12 @@
 ﻿var CustomValidation = function (rules) {
-     var self = this;
+    var self = this;
     this.Rules = [];
 
     if (rules.length > 0) {
         this.Rules = rules;
     }
 
-   this.Checks = {
+    this.Checks = {
 
         required: function (elementId, comparer) {
             if (!comparer) {
@@ -45,9 +45,12 @@
             var maxRange = range[1];
             var element = $(document).find(elementId);
             var elementValue = element.val();
-            var nrValue = parseInt(elementValue);
+            if (elementValue.length > maxRange.length) {
+                return false;
+            }
+            //var nrValue = parseInt(elementValue);
             if (element.length != 0) {
-                if (elementValue != NaN && elementValue.length != 0 && nrValue != NaN && minRange <= nrValue && nrValue <= maxRange) {
+                if (elementValue != NaN && elementValue.length != 0 && elementValue != NaN && minRange <= elementValue && elementValue <= maxRange) {
                     isValid = true;
                 }
             }
@@ -88,7 +91,7 @@
     };
     this.addcustomValidationRules = function (rules) {
         try {
-            $.each(rules, function (index,rule) {
+            $.each(rules, function (index, rule) {
                 self.addCustomValidationRule(rule);
             });
         } catch (e) {
@@ -107,19 +110,19 @@
         }
     };
 
-    this.removeCustomValidationRules = function(rules) {
+    this.removeCustomValidationRules = function (rules) {
         try {
             $.each(rules, function (index, rule) {
                 self.removeCustomValidationRule(rule.ruleName);
             });
         } catch (e) {
             console.log(e);
-        } 
+        }
     };
 
     this.validate = function (validator) {
         var results = [];
-        $.each(validator.Rules, function (index,rule) {
+        $.each(validator.Rules, function (index, rule) {
             var method = validator.Checks[rule.check];
             var isValid = method.call($(this), rule.ruleForElementId, rule.comparerValue);
             if (!isValid) {
