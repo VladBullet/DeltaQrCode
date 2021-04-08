@@ -43,11 +43,11 @@ BEGIN
                         NEW.Pozitie, '; ');
 	END IF;
       # ------- Interval -------
-    IF NEW.Interval <> OLD.Interval THEN
+    IF NEW.[Interval] <> OLD.`Interval` THEN
     SET changes = CONCAT(changes, 'Interval: ',
-                        OLD.Interval,
+                        OLD.`Interval`,
                         ' => ',
-                        NEW.Interval, '; ');
+                        NEW.`Interval`, '; ');
 	END IF;
       # ------- Marca -------
     IF NEW.MarcaId <> OLD.MarcaId THEN
@@ -62,12 +62,18 @@ BEGIN
                         marcaNoua, '; ');
 	END;
 	END IF;
-     # ------- NumeSet -------
-    IF NEW.NumeSet <> OLD.NumeSet THEN
-    SET changes = CONCAT(changes, 'NumeSet: ',
-                        OLD.NumeSet,
+       # ------- Flota -------
+    IF NEW.FlotaId <> OLD.FlotaId THEN
+    BEGIN
+	DECLARE flotaVeche VARCHAR(50);
+	DECLARE flotaNoua VARCHAR(50);
+    SELECT Label INTO flotaVeche from ca_flota where Id = OLD.FlotaId order by Id LIMIT 1;
+    SELECT Label INTO flotaNoua from ca_flota where Id = NEW.FlotaId order by Id LIMIT 1;
+    SET changes = CONCAT(changes, 'Flota : ',
+                        flotaVeche,
                         ' => ',
-                        NEW.NumeSet, '; ');
+                        flotaNoua, '; ');
+	END;
 	END IF;
      # ------- NrBucati -------
     IF NEW.NrBucati <> OLD.NrBucati THEN
@@ -97,12 +103,12 @@ BEGIN
                         ' => ',
                         NEW.TipSezon, '; ');
 	END IF;
-       # ------- Evaluare -------
-    IF NEW.Evaluare <> OLD.Evaluare THEN
-    SET changes = CONCAT(changes, 'Evaluare: ',
-                        OLD.Evaluare,
+       # ------- Observatii -------
+    IF NEW.Observatii <> OLD.Observatii THEN
+    SET changes = CONCAT(changes, 'Observatii: ',
+                        OLD.Observatii,
                         ' => ',
-                        NEW.Evaluare, '; ');
+                        NEW.Observatii, '; ');
 	END IF;
         # ------- StatusCurent -------
     IF NEW.StatusCurent <> OLD.StatusCurent THEN
@@ -121,9 +127,9 @@ BEGIN
         # ------- Deleted -------
     IF NEW.Deleted <> OLD.Deleted THEN
     SET changes = CONCAT(changes, 'Deleted: ',
-                        CAST(OLD.Deleted as char),
+                        OLD.Deleted,
                         ' => ',
-                        CAST(NEW.Deleted as char), '; ');
+                        NEW.Deleted, '; ');
 	END IF;
    
     SELECT NOW() into nowDate;
