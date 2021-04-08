@@ -214,6 +214,92 @@ $("#Inaltime").select2({
     }
 });
 
+// Select2 for Diametru
+$("#Diametru").select2({
+    tags: true,
+    dropdownParent: "#hotelModalBody",
+    theme: "bootstrap4",
+    allowClear: true,
+    ajax: {
+        url: '/Hotel/GetDiametru',
+        contentType: "application/json; charset=utf-8",
+        data: function (params) {
+            var query = {
+                term: params.term
+            }
+            return query;
+        },
+        processResults: function (result) {
+            return {
+                results: $.map(result, function (time, item) {
+                    return {
+                        id: item,
+                        text: time
+                    };
+                }),
+            };
+        }
+    }
+});
+
+// Select2 for Latime
+$("#Latime").select2({
+    tags: true,
+    dropdownParent: "#hotelModalBody",
+    theme: "bootstrap4",
+    allowClear: true,
+    ajax: {
+        url: '/Hotel/GetLatime',
+        contentType: "application/json; charset=utf-8",
+        data: function (params) {
+            var query = {
+                term: params.term
+            }
+            return query;
+        },
+        processResults: function (result) {
+            return {
+                results: $.map(result, function (item) {
+                    return {
+                        id: item,
+                        text: item
+                    };
+                }),
+            };
+        }
+    }
+});
+
+// Select2 for Inaltime
+$("#Inaltime").select2({
+    tags: true,
+    dropdownParent: "#hotelModalBody",
+    theme: "bootstrap4",
+    allowClear: true,
+    ajax: {
+        url: '/Hotel/GetInaltime',
+        contentType: "application/json; charset=utf-8",
+        data: function (params) {
+            var query = {
+                term: params.term
+            }
+            return query;
+        },
+        processResults: function (result) {
+            return {
+                results: $.map(result, function (item) {
+                    return {
+                        id: item,
+                        text: item
+                    };
+                }),
+            };
+        }
+    }
+});
+
+
+
 // select2 initial value for position
 var selPozObj = $('#selPoz');
 var selPozVal = $("#defaultPosition").attr("data-value");
@@ -291,25 +377,54 @@ if (inaltimeVal != NaN && inaltimeVal != '') {
     inaltimeObj.val(inaltimeVal);
     inaltimeObj.trigger('change'); // Notify any JS components that the value changed
 }
+// select2 initial value for Diametru
+var diametruObj = $('#Diametru');
+var diametruVal = $("#defaultDiametru").attr("data-value");
+if (diametruVal != NaN && diametruVal != '') {
+    var optionDiametru = new Option(diametruVal, diametruVal, true, true);
+    diametruObj.append(optionDiametru);
+    diametruObj.val(diametruVal);
+    diametruObj.trigger('change'); // Notify any JS components that the value changed
+}
 
-$(document).ready(function () {
-    $(document).on("change",
-        "#statusAnv",
-        function () {
-            $("#selPoz").trigger("updatedStatus");
-        });
-    $("#selPoz").on("updatedStatus",
-        function () {
-            var pos = $("#selPoz");
-            pos.removeAttr("disabled");
-            pos.removeClass("disabled");
-            var statusVal = $("#statusAnv").val();
-            if (statusVal != "InRaft") {
-                pos.attr("disabled", "disabled");
-                pos.addClass("disabled");
-            }
-        });
-});
+// select2 initial value for Latime
+var latimeObj = $('#Latime');
+var latimeVal = $("#defaultLatime").attr("data-value");
+if (latimeVal != NaN && latimeVal != '') {
+    var optionLatime = new Option(latimeVal, latimeVal, true, true);
+    latimeObj.append(optionLatime);
+    latimeObj.val(latimeVal);
+    latimeObj.trigger('change'); // Notify any JS components that the value changed
+}
+
+// select2 initial value for Inaltime
+var inaltimeObj = $('#Inaltime');
+var inaltimeVal = $("#defaultInaltime").attr("data-value");
+if (inaltimeVal != NaN && inaltimeVal != '') {
+    var optionInaltime = new Option(inaltimeVal, inaltimeVal, true, true);
+    inaltimeObj.append(optionInaltime);
+    inaltimeObj.val(inaltimeVal);
+    inaltimeObj.trigger('change'); // Notify any JS components that the value changed
+}
+
+$(document).on("change",
+    "#statusAnv",
+    function () {
+        $("#selPoz").trigger("updatedStatus");
+    });
+
+$("#selPoz").on("updatedStatus",
+    function () {
+        var pos = $("#selPoz");
+        pos.removeAttr("disabled");
+        pos.removeClass("disabled");
+        var statusVal = $("#statusAnv").val();
+        if (statusVal != "InRaft") {
+            pos.attr("disabled", "disabled");
+            pos.addClass("disabled");
+        }
+    });
+
 // when loading validate all inputs
 var validator = new CustomValidation(anvelopeFormValidationRules);
 validator.addcustomValidationRules(uzuraStFRules);
@@ -327,7 +442,7 @@ $(document).ready(function () {
     updateAndValidateUzura(false);
 });
 // SAVE BTN CLICK EVENT
-$(document).on("click", "apptsEditSubmitButton", function () {
+$(document).on("click", "#apptsEditSubmitButton", function () {
     var result = validator.validate(validator);
     if (result.formIsValid) {
         $.ajax({

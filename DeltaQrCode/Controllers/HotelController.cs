@@ -205,7 +205,7 @@ namespace DeltaQrCode.Controllers
 
         public IActionResult GetDiametru()
         {
-            return new JsonResult(ConstantsAndEnums.Diametru);
+            return new JsonResult(ConstantsAndEnums.DiametruDictionary);
 
         }
 

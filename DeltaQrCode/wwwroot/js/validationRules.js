@@ -33,27 +33,6 @@
         check: "regex",
         comparerValue: /^((\+|)\d{1,3}( |-)?)?((\(\d {3}\))|\d{3})[- .]?\d{3}[- .]?\d{4}$|^((\+|)\d{1,3}( )?)?(\d{3}[ ]?){2}\d{3}$|^(\+\d{1,3}( )?)?(\d{3}[ ]?)(\d{2}[ ]?){2}\d{2}$|^(\(?\d{1,3}\)?)(( *)-|\/| )(\d{1,3}(-*)(\d{1,5}))$|^(\+?)((\d{2,})(-)( *)){1,4}(\d{1,5})$/g,
         message: "Numarul introdus nu este valid. Introduceti un numar de telefon valid!"
-    },
-    {
-        ruleName: "diametruRequired",
-        ruleForElementId: "#Diametru",
-        check: "required",
-        comparerValue: true,
-        message: "Va rugam introduceti diametrul anvelopei!"
-    },
-    {
-        ruleName: "latimeRequired",
-        ruleForElementId: "#Latime",
-        check: "required",
-        comparerValue: true,
-        message: "Va rugam introduceti latimea anvelopei!"
-    },
-    {
-        ruleName: "inaltimeRequired",
-        ruleForElementId: "#Inaltime",
-        check: "required",
-        comparerValue: true,
-        message: "Va rugam introduceti inaltimea anvelopei!"
     }
 ];
 

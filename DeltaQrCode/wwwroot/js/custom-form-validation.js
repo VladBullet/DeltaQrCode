@@ -48,7 +48,6 @@
             if (elementValue.length > maxRange.length) {
                 return false;
             }
-            //var nrValue = parseInt(elementValue);
             if (element.length != 0) {
                 if (elementValue != NaN && elementValue.length != 0 && elementValue != NaN && minRange <= elementValue && elementValue <= maxRange) {
                     isValid = true;
@@ -68,13 +67,6 @@
             return isValid;
         }
     };
-    // ------------------- HOW TO USE Checks   ---------------
-    // ------------------- --------------- IDEA  - MAKE IT USE "NAME" INSTEAD OF ELEMENT_ID
-
-    //var equals = Checks.equals;
-    //var id = "#test";
-    //var value = "t";
-    //var result = equals.call($(this), id, value);
 
     this.addCustomValidationRule = function (addRule) {
         try {
