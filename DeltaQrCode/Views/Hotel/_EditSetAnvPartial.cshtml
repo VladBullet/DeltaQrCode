@@ -193,7 +193,7 @@
             </div>
 
             <div class="form-row col-md-12 col-sm-12">
-                @Html.LabelFor(model => model.Observatii, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "observatiiLabel", @name = "observatiiLabel" })
+                @Html.LabelFor(model => model.Observatii, htmlAttributes: new { @class = "control-label col-md-3 " })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Observatii, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @id = "observatii", @name = "observatii" } })
                     @Html.ValidationMessageFor(model => model.Observatii, "", new { @class = "text-danger error_span" })
@@ -413,13 +413,16 @@
                 }
             });
     });
-    // when loading stF and drF inputs are enabled - validation rule just for dr
+    // when loading validate all inputs
     var validator = new CustomValidation(anvelopeFormValidationRules);
     validator.addcustomValidationRules(uzuraStFRules);
     validator.addcustomValidationRules(uzuraDrFRules);
     validator.addcustomValidationRules(uzuraStSRules);
     validator.addcustomValidationRules(uzuraDrSRules);
-
+    $(document).ready(function () {
+        var result = validator.validate(validator);
+        updateUi(result.validationResults, "form-group", "error_span");
+    });
     // SAVE BTN CLICK EVENT
     $(document).on("click",
         "#apptsEditSubmitButton",
@@ -449,13 +452,6 @@
     $(document).on("keyup",
         ".validate",
         function () {
-            var element = $(this);
-            var elementId = element.attr("id");
-            if (elementId == "DreaptaFata") {
-                if (element.val() == "") {
-
-                }
-            }
             var result = validator.validate(validator);
             updateUi(result.validationResults, "form-group", "error_span");
         });
