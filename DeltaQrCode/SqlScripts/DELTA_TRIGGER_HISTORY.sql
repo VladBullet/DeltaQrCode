@@ -43,8 +43,8 @@ BEGIN
                         NEW.Pozitie, '; ');
 	END IF;
       # ------- Interval -------
-    IF NEW.[Interval] <> OLD.`Interval` THEN
-    SET changes = CONCAT(changes, 'Interval: ',
+    IF NEW.`Interval` <> OLD.`Interval` THEN
+    SET changes = CONCAT(changes, "Interval: ",
                         OLD.`Interval`,
                         ' => ',
                         NEW.`Interval`, '; ');
