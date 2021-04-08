@@ -35,18 +35,15 @@ namespace DeltaQrCode.Controllers
             _hotelService = hotelService;
             _mapper = mapper;
         }
-        
+
         public async Task<IActionResult> Index()
         {
-            //var list = SetAnvelopeVM.fakelist();
-            var result = await _hotelService.GetAllSetAnvelopeAsync();
-            var model = new HotelListViewModel(result.Entity,1, PageSize);
-            return View(model);
+            return View();
         }
 
-        public async Task<IActionResult> Search(string searchString,int pageNumber = 1)
+        public async Task<IActionResult> Search(string searchString, int pageNumber = 1)
         {
-            var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString,pageNumber, PageSize);
+            var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
             var anvelope = anvelopeResult.Entity;
 
 

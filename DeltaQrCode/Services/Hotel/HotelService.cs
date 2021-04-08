@@ -37,12 +37,12 @@ namespace DeltaQrCode.Services.Hotel
                 if (value.Entity.MarcaId != null)
                 {
                     var marca = await _hotelRepository.GetMarcaByIdAsync(value.Entity.MarcaId.Value);
-                    model.Marca = marca.Entity.Label;
+                    model.Marca = marca.Successful ? marca.Entity.Label : string.Empty;
                 }
                 if (value.Entity.FlotaId != null)
                 {
                     var flota = await _hotelRepository.GetFlotaByIdAsync(value.Entity.FlotaId.Value);
-                    model.Flota = flota.Entity.Label;
+                    model.Flota = flota.Successful ? flota.Entity.Label : string.Empty;
                 }
                 return Result<SetAnvelopeDto>.ResultOk(model);
             }
@@ -216,12 +216,12 @@ namespace DeltaQrCode.Services.Hotel
                         if (item.MarcaId != null)
                         {
                             var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
-                            item.Marca = marca.Entity.Label;
+                            item.Marca = marca.Successful ? marca.Entity.Label : string.Empty;
                         }
                         if (item.FlotaId != null)
                         {
                             var flota = await _hotelRepository.GetFlotaByIdAsync(item.FlotaId.Value);
-                            item.Flota = flota.Entity.Label;
+                            item.Flota = flota.Successful ? flota.Entity.Label : string.Empty;
                         }
 
                     }
