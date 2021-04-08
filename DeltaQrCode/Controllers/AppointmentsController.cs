@@ -110,7 +110,7 @@ namespace DeltaQrCode.Controllers
 
             if (result.Successful)
             {
-                return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
+                return Ok(JsonConvert.SerializeObject("Programarea a fost adaugata cu succes!"));
             }
 
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
@@ -125,11 +125,11 @@ namespace DeltaQrCode.Controllers
             var apptModel = _mapper.Map<AppointmentVM>(appt.Entity);
             var appointment = new AppointmentModalVm
             {
-                Appointment = apptModel, // AppointmentDto.FakeList(startDate).FirstOrDefault(x => x.AppointmentId == id),
+                Appointment = apptModel,
                 ActiveDate = startDate,
                 CreateOrEdit = ActionType.Edit
             };
-            return PartialView("_EditAppointmentPartial", appointment /*,appointmentVm*/);
+            return PartialView("_EditAppointmentPartial", appointment);
         }
 
 
@@ -137,35 +137,45 @@ namespace DeltaQrCode.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditModal(AppointmentModalVm appt) //ADDMODAL
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 var model = _mapper.Map<AppointmentDto>(appt);
                 var result = await _appointmentService.AddAppointmentAsync(model);
-                //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
+            //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
 
-                return Ok("success");
-            }
-            else
+            if (result.Successful)
             {
-                // List the errors.
-                StringBuilder sbError = new StringBuilder();
-                foreach (var row in ModelState.Values)
-                {
-                    foreach (var err in row.Errors)
-                    {
-                        sbError.AppendLine(err.ErrorMessage);
-                    }
-                }
-                return Content(sbError.ToString());
+                return Ok(JsonConvert.SerializeObject("Programarea a fost modificata!"));
+
             }
+
+            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+            //}
+            //else
+            //{
+            //    // List the errors.
+            //    StringBuilder sbError = new StringBuilder();
+            //    foreach (var row in ModelState.Values)
+            //    {
+            //        foreach (var err in row.Errors)
+            //        {
+            //            sbError.AppendLine(err.ErrorMessage);
+            //        }
+            //    }
+            //    return Content(sbError.ToString());
+            //}
 
         }
+
+        // DELETE
 
         [HttpGet]
         public IActionResult DeleteModal(int id)
         {
-            return PartialView("_DeleteAppointmentPartial", id); // TODO: Create Delete Partial for Appointments
+            return PartialView("_DeleteAppointmentPartial", id);
         }
+
+
 
         [HttpPost]
         public async Task<ActionResult> ConfirmDelete(int id)
@@ -180,6 +190,8 @@ namespace DeltaQrCode.Controllers
 
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
+
+
 
         [HttpGet]
         [Produces("application/json")]
