@@ -4,23 +4,21 @@
     <div> Rampa @(Model)</div>
     <div class="date-control-container">
 
-        <div class="hour-container ramp" value="@(Model)">
-            <div>
-                @for (int i = 8; i < 18; i++)
-                {
-                    <div class="hour@(i)_00 hour">
-                        <div class="hourText">@i:00</div>
-                    </div>
-                    string breaktime = i == 12 ? "hour-red" : "";
-                    <div class="hour@(i)_30 hour @breaktime">
-                        <div class="hourText">@i:30</div>
-                    </div>
-                }
-                <div class="hour18_00 hour">
-                    <div class="hourText">18:00</div>
+        <div class="hour-container ramp" value="@Model" data-value="@Model">
+            @for (int i = 8; i < 18; i++)
+            {
+                <div class="hour@(i)_00 hour">
+                    <div class="hourText">@i:00</div>
                 </div>
-                <div style="height: auto; width: auto; background-color: lightgray;"></div>
+                string breaktime = i == 12 ? "hour-red" : "";
+                <div class="hour@(i)_30 hour @breaktime">
+                    <div class="hourText">@i:30</div>
+                </div>
+            }
+            <div class="hour18_00 hour">
+                <div class="hourText">18:00</div>
             </div>
+            <div style="height: auto; width: auto; background-color: lightgray;"></div>
         </div>
     </div>
 </div>

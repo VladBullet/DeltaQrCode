@@ -52,22 +52,12 @@
 
     <script type="text/javascript">
 
-
+        var dateToday = new Date();
         $(function() {
-            var dateToday = new Date();
-            $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).datepicker({ minDate:0 }).datepicker("setDate", dateToday);
-        });
-        $(function() {
+            $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).datepicker({ minDate: 0 }).datepicker("setDate", dateToday);
 
-        });
-
-        $(function() {
             // Clear the existing appts.
             $('.appt-no-height').remove();
-
-            var scrollToWorkingHours = function() {
-                $('.hour-container').animate({ scrollTop: '125px' }, 'slow');
-            };
 
             /* Enables scrolling to a set position  scrollToId('.hour-container', '#hour4');*/
             var scrollToId = function(scrollContainer, aid) {
@@ -75,155 +65,11 @@
                 $(scrollContainer).animate({ scrollTop: aTag.offset().top }, 'slow');
             };
 
-            var clearAppointments = function() {
-                // Clear the existing appts.
-                $('.appt-no-height').remove();
-            };
-
-            var apptNewModalDialog = function(startDate, startHour, rampNr) {
-                var url = "/Appointments/EditModalNew"; // the url to the controller
-                $.get(url + '?startDateStr=' + startDate + '&startHour=' + startHour + '&rampNr=' + rampNr,
-                    function(data) {
-                        $('#partialInfo').html(data);
-                        $('#myApptModal').modal('show');
-
-                        var dateFromPage = $("#datepicker").val();
-                        var datePage = new Date(dateFromPage);
-                        $("#datepickerModal").datepicker({ format: "yy-mm-dd" }).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
-                        //enableselect2forServiciu();
-                    });
-            };
-
-            var apptEditModalDialog = function(id, startHour) { // TODO --- VLAD --- : REMOVE startHour param after link with db. Now it is used for fakeList creation
-
-                var url = "/Appointments/EditModal"; // the url to the controller
-                $.get(url + '?id=' + id + '&startDateStr=' + startHour  ,
-                    function(data) {
-                        $('#partialInfo').html(data);
-                        $('#myApptModal').modal('show');
-
-                        var dateFromPage = $("#datepicker").val();
-                        var datePage = new Date(dateFromPage);
-                        $("#datepickerModal").datepicker({ format: "yy-mm-dd" }).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
-                        //enableselect2forServiciu();
-
-                    });
-            };
-
-            var showAppointmentsForDate = function(calendarDate) {
-
-
-                $.get('@Url.Action("GetAppointmentsForDate", "Appointments")',
-                    { apptDate: calendarDate },
-                    function(response) {
-
-                        clearAppointments();
-
-                        // Settings
-                        var marginLeftPerItem = 20;
-                        var oneHourPxHeight = 60;
-
-                        var oneMinutePxHeight = oneHourPxHeight / 60;
-                        if (response != "") {
-
-                            //var obj = $.parseJSON(response);
-                            $.each(response,
-                                function(key, data) {
-                                    var rampId = "#Ramp" + data.rampId;
-                                    // Add appts in the right position
-                                    for (var i = 0; i < data.appointments.length; i++) {
-                                        var row = data.appointments[i];
-                                        var minutesText = row.startTime_Minutes === 0 ? '00' : row.startTime_Minutes;
-                                        var apptRow = $(rampId + " " + ".hour" + row.startTime_Hour + "_"+ minutesText);
-
-
-                                        var stringToAppend = '<div id="appt' +
-                                            row.appointmentId +
-                                            '" class="appt-no-height">' +
-                                            row.numarInmatriculare +
-                                            ' | ' +
-                                            row.numeClient +
-                                            ' | ' +
-                                            row.numarTelefon +
-                                            ' | ' +
-                                            row.serviciu +
-                                            ' </div>';
-
-                                        apptRow.append(stringToAppend);
-
-                                        var objHeight = (row.durataInMinute * oneMinutePxHeight) + 'px';
-                                        var marginTop = (row.startTime_Minutes * oneMinutePxHeight) + 'px';
-                                        var marginLeft = ((apptRow.children().length - 1) * marginLeftPerItem) + 'px';
-
-                                        var thisAppt = $("#appt" + row.Id);
-                                        thisAppt.css("height", objHeight);
-                                        thisAppt.css("margin-top", marginTop);
-                                        thisAppt.css("margin-left", marginLeft);
-
-                                        //default color is silver on appt-no-height.
-                                        switch (row.serviciuId) {
-                                        case 1:
-                                            thisAppt.css("background-color", 'lightblue');
-                                            break;
-                                        case 2:
-                                            thisAppt.css("background-color", 'lightgreen');
-                                            break;
-                                        default:
-                                            // do nothing.
-                                            break;
-                                        }
-                                    }
-                                });
-                        };
-
-                        /* click event for editing an appt*/
-                        $('.appt-no-height').on('click',
-                            function(event) {
-                                // dont allow the event to propagate to hour click.
-                                event.stopPropagation();
-
-                                var fullId = this.id.replace('appt', '');
-                                var selectedDateDiv = $('#datepicker');
-                                apptEditModalDialog(fullId, selectedDateDiv.val());
-                            });
-
-                        /* scroll to a better position */
-                        scrollToWorkingHours();
-                    });
-            };
-
-
-
-            /* click event on the hour */
-            $('.hour').on('dblclick',
-                function (elm) {
-
-                    var startHourOnly = $(this).attr("class").replace('hour-red', '');
-                    startHourOnly  = startHourOnly.replaceAll("hour", "");
-
-                    var selectedDateDiv = $('#datepicker');
-                    var rampNr = $(this).closest(".ramp").val();
-                    // Make the modal here!
-                    apptNewModalDialog(selectedDateDiv.val(), startHourOnly,rampNr);
-                });
-
-
-            /* Get the appointments for whatever date is selected */
-            var getAppointmentsForSelectedDate = function() {
-                var selectedDateDiv = $('#datepicker');
-                var parts = selectedDateDiv.val();
-                showAppointmentsForDate(parts);
-            }
-
-
             // initial data load.
             window.setTimeout(function() {
                     getAppointmentsForSelectedDate();
                 },
                 1000);
-
-
-
 
             /* Dates ensure clicked, not dragged! */
             var $dateControl = $('.date');
@@ -244,23 +90,165 @@
                         });
                 });
 
-
             /* on load, scroll to a sensible hour */
             scrollToWorkingHours();
-
-            $("#datepicker").on("change",
-                function () {
-                    clearAppointments();
-                    getAppointmentsForSelectedDate();
-                });
             /*end page load*/
         });
 
-        var deleteSetAnvModalDialog = function (id) {
+        var scrollToWorkingHours = function() {
+            $('.hour-container').animate({ scrollTop: '125px' }, 'slow');
+        };
+
+        var clearAppointments = function() {
+            // Clear the existing appts.
+            $('.appt-no-height').remove();
+        };
+
+        var apptNewModalDialog = function(startDate, startHour, rampId) {
+            var url = "@Url.Action("ModalAdd", "Appointments")";
+            $.get(url, { startDateStr:startDate, startHour:startHour, rampId :rampId },
+                function(data) {
+                    $('#partialInfo').html(data);
+                    $('#myApptModal').modal('show');
+
+                    var dateFromPage = $("#datepicker").val();
+                    var datePage = new Date(dateFromPage);
+                    $("#datepickerModal").datepicker({ format: "yy-mm-dd" }).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
+                    //enableselect2forServiciu();
+                });
+        };
+        var apptEditModalDialog = function(id, startHour) { // TODO --- VLAD --- : REMOVE startHour param after link with db. Now it is used for fakeList creation
+
+            var url = "/Appointments/ModalEdit"; // the url to the controller
+            $.get(url + '?id=' + id + '&startDateStr=' + startHour,
+                function(data) {
+                    $('#partialInfo').html(data);
+                    $('#myApptModal').modal('show');
+
+                    var dateFromPage = $("#datepicker").val();
+                    var datePage = new Date(dateFromPage);
+                    $("#datepickerModal").datepicker({ format: "yy-mm-dd" }).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
+                    //enableselect2forServiciu();
+
+                });
+        };
+        var showAppointmentsForDate = function(calendarDate) {
+
+
+            $.get('@Url.Action("GetAppointmentsForDate", "Appointments")',
+                { apptDate: calendarDate },
+                function(response) {
+
+                    clearAppointments();
+
+                    // Settings
+                    var marginLeftPerItem = 20;
+                    var oneHourPxHeight = 60;
+
+                    var oneMinutePxHeight = oneHourPxHeight / 60;
+                    if (response != "") {
+
+                        //var obj = $.parseJSON(response);
+                        $.each(response,
+                            function(key, data) {
+                                var rampId = "#Ramp" + data.rampId;
+                                // Add appts in the right position
+                                for (var i = 0; i < data.appointments.length; i++) {
+                                    var row = data.appointments[i];
+                                    var minutesText = row.startTime_Minutes === 0 ? '00' : row.startTime_Minutes;
+                                    var apptRow = $(rampId + " " + ".hour" + row.startTime_Hour + "_" + minutesText);
+
+
+                                    var stringToAppend = '<div id="appt' +
+                                        row.id +
+                                        '" class="appt-no-height">' +
+                                        row.numarInmatriculare +
+                                        ' | ' +
+                                        row.numeClient +
+                                        ' | ' +
+                                        row.numarTelefon +
+                                        ' | ' +
+                                        row.serviciu +
+                                        ' </div>';
+
+                                    apptRow.append(stringToAppend);
+
+                                    var objHeight = (row.durataInMinute * oneMinutePxHeight) + 'px';
+                                    var marginTop = (row.startTime_Minutes * oneMinutePxHeight) + 'px';
+                                    var marginLeft = ((apptRow.children().length - 1) * marginLeftPerItem) + 'px';
+
+                                    var thisAppt = $("#appt" + row.Id);
+                                    thisAppt.css("height", objHeight);
+                                    thisAppt.css("margin-top", marginTop);
+                                    thisAppt.css("margin-left", marginLeft);
+
+                                    //default color is silver on appt-no-height.
+                                    switch (row.serviciuId) {
+                                    case 1:
+                                        thisAppt.css("background-color", 'lightblue');
+                                        break;
+                                    case 2:
+                                        thisAppt.css("background-color", 'lightgreen');
+                                        break;
+                                    default:
+                                        // do nothing.
+                                        break;
+                                    }
+                                }
+                            });
+                    };
+
+                    /* click event for editing an appt*/
+                    $('.appt-no-height').on('click',
+                        function(event) {
+                            // dont allow the event to propagate to hour click.
+                            event.stopPropagation();
+                            console.log($(this));
+                            var fullId = $(this).attr("id").replace('appt', '');
+                            var selectedDateDiv = $('#datepicker');
+                            apptEditModalDialog(fullId, selectedDateDiv.val());
+                        });
+
+                    /* scroll to a better position */
+                    scrollToWorkingHours();
+                });
+        };
+
+
+        /* click event on the hour */
+        $('.hour').on('click', function (event) {
+            event.stopPropagation();
+            var self = $(this);
+            console.log(self);
+
+            var startHourOnly = $(this).attr("class").replace('hour-red', '');
+            startHourOnly = startHourOnly.replaceAll("hour", "");
+
+            var selectedDateDiv = $('#datepicker');
+            var rampNr = self.closest(".ramp").attr("data-value");
+            console.log("closest: ", self.closest(".ramp"));
+            console.log(rampNr);
+            // Make the modal here!
+            apptNewModalDialog(selectedDateDiv.val(), startHourOnly, rampNr);
+        });
+
+
+        /* Get the appointments for whatever date is selected */
+        var getAppointmentsForSelectedDate = function() {
+            var selectedDateDiv = $('#datepicker');
+            var parts = selectedDateDiv.val();
+            showAppointmentsForDate(parts);
+        };
+        $("#datepicker").on("change",
+            function() {
+                clearAppointments();
+                getAppointmentsForSelectedDate();
+            });
+        var deleteSetAnvModalDialog = function(id) {
 
             var url = "/Appointments/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
-                function (data) {
+                function(data) {
                     $('#partialInfoDelete').html(data);
                     $('#myApptDeleteModal').modal('show');
                 });
@@ -268,7 +256,7 @@
 
         $(document).on('click',
             '.deleteButton',
-            function (event) {
+            function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");

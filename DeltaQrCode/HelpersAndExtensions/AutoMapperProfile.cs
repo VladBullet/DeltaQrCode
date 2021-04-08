@@ -60,10 +60,10 @@ namespace DeltaQrCode.HelpersAndExtensions
                 
             CreateMap<AppointmentDto, CaAppointments>().ReverseMap();
             CreateMap<AppointmentDto, AppointmentVM>().ReverseMap();
-            CreateMap<AppointmentDto, AppointmentModalVm>()
-                .ForMember(d => d.Appointment, m => m.MapFrom(s => s))
-                .ForMember(d => d.ActiveDate, m => m.Ignore())
-                .ForMember(d => d.CreateOrEdit, m => m.Ignore()).ReverseMap();
+            //CreateMap<AppointmentDto, AppointmentModalVm>()
+            //    .ForMember(d => d.Appointment, m => m.MapFrom(s => s))
+            //    .ForMember(d => d.ActiveDate, m => m.Ignore())
+            //    .ForMember(d => d.CreateOrEdit, m => m.Ignore()).ReverseMap();
 
 
 

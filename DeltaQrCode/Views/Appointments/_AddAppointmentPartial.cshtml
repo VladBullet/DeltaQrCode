@@ -19,12 +19,11 @@
 <input id="defaultServiciu" hidden="hidden" data-value="@Model.Serviciu" />
 <input id="defaultDurata" hidden="hidden" data-value="@Model.DurataInMinute" />
 <div class="modal-header">
-    <h3 id="myModalLabel">Editeaza programarea</h3>
+    <h3 id="myModalLabel">Adauga programare</h3>
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
     <form id="apptform" method="post">
-
         @Html.AntiForgeryToken()
         <div class="modal-body modal-min-height" id="apptModalBody">
 
@@ -129,9 +128,8 @@
         </div>
 
         <div class="modal-footer">
-            <div class="btn btn-danger deleteButton" type="button" data-value="@Model.Id" style="margin-right:230px;">Delete</div>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-success btn-ok" id="apptsEditButton">Salveaza</a>
+            <a class="btn btn-success btn-ok" id="apptsAddButton">Adauga</a>
         </div>
     </form>
 
@@ -139,8 +137,8 @@
 
 
 <script type="text/javascript">
-    $("#apptsEditButton").click(function () {
-        var url = "@Url.Action("EditAppt", "Appointments")";
+    $("#apptsAddButton").click(function () {
+           var url = "@Url.Action("AddAppt", "Appointments")";
         $.ajax({
                 type: "POST",
                 url:url,

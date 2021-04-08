@@ -88,22 +88,19 @@ namespace DeltaQrCode.Controllers
         }
 
 
-        public ActionResult EditModalNew(string startDateStr, string startHour, string rampNr)
+        [HttpGet]
+        public async Task<ActionResult> ModalEdit(int id, string startDateStr)
         {
+
             DateTime startDate = DateTime.Parse(startDateStr);
-            var s = startHour.Split('_');
-            DateTime appointmentStart = startDate.AddHours(int.Parse(s[0])).AddMinutes(int.Parse(s[1]));
+            var appt = await _appointmentService.GetAppointmentByIdAsync(id);
+            var appointment = _mapper.Map<AppointmentVM>(appt.Entity);
 
-            var appointment = new AppointmentVM(appointmentStart);
-
-            AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, appointment, ActionType.Add);
-
-            return PartialView("_EditAppointmentPartial", appointmentVm);
+            return PartialView("_EditAppointmentPartial", appointment);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditXModal(AppointmentVM appt)
+        public async Task<ActionResult> EditAppt(AppointmentVM appt)
         {
             var dto = _mapper.Map<AppointmentDto>(appt);
             var result = await _appointmentService.UpdateAppointmentAsync(dto);
@@ -117,30 +114,27 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> EditModal(int id, string startDateStr)
+        public ActionResult ModalAdd(string startDateStr, string startHour, string rampId)
         {
-
             DateTime startDate = DateTime.Parse(startDateStr);
-            var appt = await _appointmentService.GetAppointmentByIdAsync(id);
-            var apptModel = _mapper.Map<AppointmentVM>(appt.Entity);
-            var appointment = new AppointmentModalVm
-            {
-                Appointment = apptModel,
-                ActiveDate = startDate,
-                CreateOrEdit = ActionType.Edit
-            };
+            var s = startHour.Split('_');
+            DateTime appointmentStart = startDate.AddHours(int.Parse(s[0])).AddMinutes(int.Parse(s[1]));
+
+            var appointment = new AppointmentVM(appointmentStart);
+            appointment.RampId = int.Parse(rampId);
+
+
             return PartialView("_EditAppointmentPartial", appointment);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal(AppointmentModalVm appt) //ADDMODAL
+        public async Task<ActionResult> AddAppt(AppointmentVM appt) //ADDMODAL
         {
             //if (ModelState.IsValid)
             //{
-                var model = _mapper.Map<AppointmentDto>(appt);
-                var result = await _appointmentService.AddAppointmentAsync(model);
+            var model = _mapper.Map<AppointmentDto>(appt);
+            var result = await _appointmentService.AddAppointmentAsync(model);
             //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
 
             if (result.Successful)
