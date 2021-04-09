@@ -188,5 +188,29 @@ namespace DeltaQrCode.Services
             }
         }
 
+        public async Task<Result<AppointmentDto>> DateAndHourIsAvailable(DateTime selectedDate, TimeSpan selectedOraInceput, int selectedDurata, int selectedRampId)
+        {
+            try
+            {
+                var result = await _appointmentsRepository.GetAppointmentsAsync(selectedDate);
+                var apptsList = result.Entity.Where(x => x.RampId == selectedRampId); // lista cu appt pt data si rampa
+
+                var list = new List<AppointmentDto>();
+                var model = _mapper.Map<List<AppointmentDto>>(list);
+                for (int i = 1; i < 22; i++)
+                {
+                    list.Where(x => x.Id == i) =
+                }
+
+
+
+            }
+
+            catch (Exception e)
+            {
+                return Result<AppointmentDto>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+            }
+
+
+        }
     }
-}
