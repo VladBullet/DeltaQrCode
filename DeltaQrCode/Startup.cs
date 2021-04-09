@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DeltaQrCode.Data;
@@ -24,11 +17,6 @@ namespace DeltaQrCode
     using DeltaQrCode.Services.Hotel;
 
     using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.DataProtection;
-    using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
-    using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
-    using ReflectionIT.Mvc.Paging;
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -68,14 +56,6 @@ namespace DeltaQrCode
             services.AddDbContext<AuthDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("AuthConnection")));
 
-            //services.AddDefaultIdentity<IdentityUser>()
-            //    .AddDefaultUI(UIFramework.Bootstrap4)
-            //    .AddEntityFrameworkStores<AuthDbContext>();
-            services.AddDataProtection().UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration()
-            {
-                EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
-                ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
-            });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

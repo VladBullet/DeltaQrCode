@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaQrCode", "DeltaQrCode.csproj", "{585C83C0-D89A-431D-AB72-28B7DF40CE10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaQrCode.Tests", "..\DeltaQrCode.Tests\DeltaQrCode.Tests.csproj", "{30838A09-D528-4574-A4F9-F5A6E7C7CB4E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{585C83C0-D89A-431D-AB72-28B7DF40CE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{585C83C0-D89A-431D-AB72-28B7DF40CE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{585C83C0-D89A-431D-AB72-28B7DF40CE10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{30838A09-D528-4574-A4F9-F5A6E7C7CB4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30838A09-D528-4574-A4F9-F5A6E7C7CB4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30838A09-D528-4574-A4F9-F5A6E7C7CB4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30838A09-D528-4574-A4F9-F5A6E7C7CB4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
