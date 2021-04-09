@@ -29,7 +29,14 @@ namespace DeltaQrCode.Services
             try
             {
                 var value = await _appointmentsRepository.GetAppointmentByIdAsync(id);
-                var model = _mapper.Map<AppointmentDto>(value);
+                var model = _mapper.Map<AppointmentDto>(value.Entity);
+
+                if (value.Entity.ServiciuId != null)
+                {
+                    var serviciu = await _appointmentsRepository.GetServiceTypeByIdAsync(value.Entity.ServiciuId.Value);
+                    model.Serviciu = serviciu.Successful ? serviciu.Entity.Label : string.Empty;
+                }
+
                 return Result<AppointmentDto>.ResultOk(model);
             }
             catch (Exception er)
@@ -42,25 +49,27 @@ namespace DeltaQrCode.Services
         {
             try
             {
+
+                var serviciu = await _appointmentsRepository.GetServiceTypeByLableAsync(appointment.Serviciu);
+                if (!serviciu.Successful)
+                {
+                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la gasirea tipului de serviciu!");
+                }
+
+                if (serviciu.Entity == null && !string.IsNullOrEmpty(appointment.Serviciu))
+                {
+                    serviciu = await _appointmentsRepository.AddServiceTypeAsync(new CaServicetypes() { Label = appointment.Serviciu });
+                }
+
+                if (!serviciu.Successful)
+                {
+                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugarea marcii!");
+                }
+                appointment.ServiciuId = serviciu.Entity.Id;
+
                 var app = _mapper.Map<CaAppointments>(appointment);
                 app.Deleted = false;
                 app.ConfirmedCode = GuidHelper.RandomGuid();
-                //var marca = await _appointmentsRepository.GetMarcaByLableAsync(setAnv.Marca);
-                //if (!marca.Successful)
-                //{
-                //    return Result<SetAnvelopeDto>.ResultError(marca.Error, "Problema la gasirea marcii!");
-                //}
-
-                //if (marca.Entity == null && !string.IsNullOrEmpty(setAnv.Marca))
-                //{
-                //    marca = await _appointmentsRepository.AddMarcaAsync(new CaMarca() { Label = setAnv.Marca });
-                //}
-
-                //if (!marca.Successful)
-                //{
-                //    return Result<SetAnvelopeDto>.ResultError(marca.Error, "Problema la adaugarea marcii!");
-                //}
-                //setAnv.MarcaId = marca.Entity.Id;
 
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
@@ -77,6 +86,24 @@ namespace DeltaQrCode.Services
         {
             try
             {
+                var serviciu = await _appointmentsRepository.GetServiceTypeByLableAsync(appt.Serviciu);
+                if (!serviciu.Successful)
+                {
+                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la gasirea tipului de serviciu!");
+                }
+
+                if (serviciu.Entity == null && !string.IsNullOrEmpty(appt.Serviciu))
+                {
+                    serviciu = await _appointmentsRepository.AddServiceTypeAsync(new CaServicetypes() { Label = appt.Serviciu });
+                }
+
+                if (!serviciu.Successful)
+                {
+                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugarea marcii!");
+                }
+                appt.ServiciuId = serviciu.Entity.Id;
+
+
                 var app = _mapper.Map<CaAppointments>(appt);
                 var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
@@ -123,9 +150,22 @@ namespace DeltaQrCode.Services
         {
             try
             {
-                var value = await _appointmentsRepository.GetAppointmentsAsync(date);
+                var result = await _appointmentsRepository.GetAppointmentsAsync(date);
                 var model = new List<AppointmentDto>();
-                model = _mapper.Map<List<AppointmentDto>>(value.Entity);
+                if(result.Successful)
+                {
+                    model = _mapper.Map<List<AppointmentDto>>(result.Entity);
+
+                    foreach(var item in model)
+                    {
+                        if (item.ServiciuId != null)
+                        {
+                            var marca = await _appointmentsRepository.GetServiceTypeByIdAsync(item.ServiciuId.Value);
+                            item.Serviciu = marca.Successful ? marca.Entity.Label : string.Empty;
+                        }
+                    }
+
+                }
 
                 return Result<List<AppointmentDto>>.ResultOk(model);
             }

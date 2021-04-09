@@ -17,6 +17,8 @@ namespace DeltaQrCode.Repositories
         Task<Result<List<CaAppointments>>> GetAppointmentsAsync(DateTime date);
         Task<Result<CaServicetypes>> GetServiceTypeByIdAsync(uint id);
         Task<Result<List<CaServicetypes>>> GetServiceTypesAsync();
+        Task<Result<CaServicetypes>> AddServiceTypeAsync(CaServicetypes serviciu);
+        Task<Result<CaServicetypes>> GetServiceTypeByLableAsync(string label);
 
     }
 }

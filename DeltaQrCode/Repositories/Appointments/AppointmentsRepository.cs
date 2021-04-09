@@ -138,5 +138,35 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
+        public async Task<Result<CaServicetypes>> AddServiceTypeAsync(CaServicetypes serviciu)
+        {
+            try
+            {
+                var value = await _db.CaServicetypes.AddAsync(serviciu);
+                await _db.SaveChangesAsync();
+                return Result<CaServicetypes>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                return Result<CaServicetypes>.ResultError(null, er, "Ceva nu a mers bine la adaugarea marcii!");
+            }
+        }
+
+        public async Task<Result<CaServicetypes>> GetServiceTypeByLableAsync(string label)
+        {
+            try
+            {
+                label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
+                var value = await _db.CaServicetypes.FirstOrDefaultAsync(x => x.Label.ToLower().Contains(label.ToLower()));
+                return Result<CaServicetypes>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                return Result<CaServicetypes>.ResultError(null, er, "Ceva nu a mers bine gasirea marcilor!");
+            }
+
+        }
     }
 }

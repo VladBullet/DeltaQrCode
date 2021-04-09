@@ -16,6 +16,7 @@ namespace DeltaQrCode.ViewModels.Appointments
         public AppointmentVM(DateTime appointmentStart)
         {
             DataAppointment = appointmentStart;
+            OraInceput = DataAppointment.TimeOfDay;
         }
 
         public int Id { get; set; }

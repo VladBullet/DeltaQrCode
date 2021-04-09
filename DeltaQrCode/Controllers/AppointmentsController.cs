@@ -124,7 +124,7 @@ namespace DeltaQrCode.Controllers
             appointment.RampId = int.Parse(rampId);
 
 
-            return PartialView("_EditAppointmentPartial", appointment);
+            return PartialView("_AddAppointmentPartial", appointment);
         }
 
         [HttpPost]
