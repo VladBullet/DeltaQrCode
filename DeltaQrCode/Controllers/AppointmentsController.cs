@@ -133,6 +133,7 @@ namespace DeltaQrCode.Controllers
         {
             //if (ModelState.IsValid)
             //{
+            appt.OraInceput = new TimeSpan(appt.StartTime_Hour, appt.StartTime_Minutes, 0);
             var model = _mapper.Map<AppointmentDto>(appt);
             var result = await _appointmentService.AddAppointmentAsync(model);
             //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
