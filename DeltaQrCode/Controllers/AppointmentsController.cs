@@ -74,6 +74,7 @@ namespace DeltaQrCode.Controllers
             {
                 return new JsonResult(new List<AppointmentsIndexVm>());
             }
+
             var rampIds = appointmentsList.Entity.Select(x => x.RampId).Distinct();
             var result = new List<AppointmentsIndexVm>();
             foreach (var item in rampIds)
@@ -101,6 +102,9 @@ namespace DeltaQrCode.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAppt(AppointmentVM appt)
         {
+            appt.OraInceput = TimeSpan.FromMinutes(appt.StartTime_Hour * 60 + appt.StartTime_Minutes);
+            appt.DataAppointment.AddHours(appt.StartTime_Hour).AddMinutes(appt.StartTime_Minutes);
+
             var dto = _mapper.Map<AppointmentDto>(appt);
             var result = await _appointmentService.UpdateAppointmentAsync(dto);
 
@@ -139,7 +143,7 @@ namespace DeltaQrCode.Controllers
 
             if (result.Successful)
             {
-                return Ok(JsonConvert.SerializeObject("Programarea a fost modificata!"));
+                return Ok(JsonConvert.SerializeObject("Programarea a fost adaugata!"));
 
             }
 
@@ -197,7 +201,7 @@ namespace DeltaQrCode.Controllers
                 var result = await _appointmentService.DateAndHourIsAvailable(selectedDate, selectedOraInceput, int.Parse(duration), int.Parse(rampId));
                 if (result.Successful)
                 {
-                    return new JsonResult(result);
+                    return new JsonResult(result.Entity);
                 }
 
                 return BadRequest("Ceva nu a mers bine la gasirea intervalului orar!");

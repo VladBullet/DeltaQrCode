@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Services
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Runtime.InteropServices.ComTypes;
+    using System.Security.Cryptography.X509Certificates;
+
     using AutoMapper;
 
     using DeltaQrCode.HelpersAndExtensions;
@@ -73,6 +77,7 @@ namespace DeltaQrCode.Services
                 var app = _mapper.Map<CaAppointments>(appointment);
                 app.Deleted = false;
                 app.ConfirmedCode = GuidHelper.RandomGuid();
+                app.DataIntroducere = DateTime.Now;
 
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
@@ -107,6 +112,14 @@ namespace DeltaQrCode.Services
 
                 appt.ServiciuId = serviciu.Entity.Id;
 
+                var selfFromDb = await _appointmentsRepository.GetAppointmentByIdAsync(appt.Id);
+                appt.ConfirmedCode = selfFromDb.Entity.ConfirmedCode;
+                appt.ConfirmedDate = selfFromDb.Entity.ConfirmedDate;
+                if (appt.ConfirmedDate == null && appt.Confirmed)
+                {
+                    appt.ConfirmedDate = DateTime.Now;
+                }
+                appt.LastModified = DateTime.Now;
 
                 var app = _mapper.Map<CaAppointments>(appt);
                 var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
@@ -116,7 +129,8 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                return Result<AppointmentDto>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
+                throw new Exception("Ceva nu a mers bine la modificarea programarii!", er);
+                //return Result<AppointmentDto>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
             }
         }
 
@@ -158,7 +172,7 @@ namespace DeltaQrCode.Services
                 var model = new List<AppointmentDto>();
                 if (result.Successful)
                 {
-                    model = _mapper.Map<List<AppointmentDto>>(result.Entity);
+                    model = _mapper.Map<List<AppointmentDto>>(result.Entity.OrderBy(x => x.OraInceput.TotalMinutes));
 
                     foreach (var item in model)
                     {
@@ -198,8 +212,12 @@ namespace DeltaQrCode.Services
             {
                 var dbList = await _appointmentsRepository.GetAppointmentsAsync(selectedDate);
                 var apptsList = dbList.Entity.Where(x => x.RampId == selectedRampId); // lista cu appt pt data si rampa
-                var apptsDto = _mapper.Map<List<AppointmentDto>>(apptsList);
 
+                if (!apptsList.Any())
+                {
+                    return Result<AvailableIntervalDto>.ResultOk(new AvailableIntervalDto(true, new List<TimeSpan>()));
+                }
+                var apptsDto = _mapper.Map<List<AppointmentDto>>(apptsList);
                 var occupied = new List<Tuple<TimeSpan, TimeSpan>>();
                 var free = new List<TimeSpan>();
                 occupied.Add(new Tuple<TimeSpan, TimeSpan>(new TimeSpan(7, 30, 0), new TimeSpan(8, 0, 0)));
@@ -210,12 +228,27 @@ namespace DeltaQrCode.Services
 
                 occupied.Add(new Tuple<TimeSpan, TimeSpan>(new TimeSpan(18, 0, 0), new TimeSpan(18, 30, 0)));
 
+                occupied.OrderBy(x => x.Item1.TotalMinutes);
+
                 for (int i = 0; i < occupied.Count - 1; i++)
                 {
                     var window = occupied[i + 1].Item1 - occupied[i].Item2;
-                    if (window.TotalMinutes > (double)selectedDurata)
+                    if (window.TotalMinutes >= selectedDurata)
                     {
-                        free.Add(occupied[i].Item2);
+                        var totalMinutes = window.TotalMinutes - selectedDurata;
+                        var step = selectedDurata + occupied[i].Item2.TotalMinutes;
+                        while (step <= occupied[i + 1].Item1.TotalMinutes)
+                        {
+
+                            var freeTime = TimeSpan.FromMinutes(step - selectedDurata);
+                            free.Add(freeTime);
+                            step += 30;
+                            //totalMinutes -= 30;
+                            //var freeapptMinutes = occupied[i].Item2.TotalMinutes + count * selectedDurata;
+                            //var freeTimeSpan = TimeSpan.FromMinutes(freeapptMinutes);
+                            //free.Add(freeTimeSpan);
+                            //count += 1;
+                        }
                     }
                 }
 

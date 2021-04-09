@@ -35,6 +35,7 @@ namespace DeltaQrCode.ModelsDto
         public DateTime DataIntroducere { get; set; }
         public bool Confirmed { get; set; }
         public DateTime? ConfirmedDate { get; set; }
+        public DateTime LastModified { get; set; }
         public string Observatii { get; set; }
         public string ConfirmedCode { get; set; }
 

@@ -27,7 +27,7 @@
     <div class="row">
         @for (int rampNr = 1; rampNr < 5; rampNr++)
         {
-        <partial model="@rampNr" name="_RampPartial" />
+            <partial model="@rampNr" name="_RampPartial" />
         }
     </div>
 </div>
@@ -148,7 +148,7 @@
 
                     var oneMinutePxHeight = oneHourPxHeight / 60;
                     if (response != "") {
-
+                        console.log(response);
                         //var obj = $.parseJSON(response);
                         $.each(response,
                             function(key, data) {
@@ -173,28 +173,30 @@
                                         ' </div>';
 
                                     apptRow.append(stringToAppend);
-
                                     var objHeight = (row.durataInMinute * oneMinutePxHeight) + 'px';
                                     var marginTop = (row.startTime_Minutes * oneMinutePxHeight) + 'px';
                                     var marginLeft = ((apptRow.children().length - 1) * marginLeftPerItem) + 'px';
 
-                                    var thisAppt = $("#appt" + row.Id);
+                                    var thisAppt = $("#appt" + row.id);
                                     thisAppt.css("height", objHeight);
                                     thisAppt.css("margin-top", marginTop);
                                     thisAppt.css("margin-left", marginLeft);
 
-                                    //default color is silver on appt-no-height.
-                                    switch (row.serviciuId) {
-                                    case 1:
-                                        thisAppt.css("background-color", 'lightblue');
-                                        break;
-                                    case 2:
+                                    if (row.confirmed) {
                                         thisAppt.css("background-color", 'lightgreen');
-                                        break;
-                                    default:
-                                        // do nothing.
-                                        break;
                                     }
+                                    //default color is silver on appt-no-height.
+                                    //switch (row.serviciuId) {
+                                    //case 1:
+                                    //    thisAppt.css("background-color", 'lightblue');
+                                    //    break;
+                                    //case 2:
+                                    //    thisAppt.css("background-color", 'lightgreen');
+                                    //    break;
+                                    //default:
+                                    //    // do nothing.
+                                    //    break;
+                                    //}
                                 }
                             });
                     };
@@ -258,7 +260,7 @@
         };
 
         $(document).on('click',
-            '.deleteButton',
+            '#deleteButton',
             function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
@@ -266,39 +268,56 @@
                 deleteSetAnvModalDialog(id);
             });
 
-        $(document).on("change", "#datepickerModal #StartTime_Hour #StartTime_Minutes #Durata", function() {
+        $(document).on("change", ".changeable", function () {
             checkDateAndTimeAvailable();
         });
+
+        $(document).on('select2:select', "#Durata", function (e) {
+            var data = e.params.data;
+            var durataval = $(document).find("#durataValue");
+            durataval.attr("data-value", data.id);
+            durataval.trigger("change");
+        });
+
 
         var checkDateAndTimeAvailable = function() {
             var datepickerVal = $(document).find("#datepickerModal").val();
             var hour = $(document).find("#StartTime_Hour").val();
             var min = $(document).find("#StartTime_Minutes").val();
             var time = hour + "_" + min;
-            console.log(time);
 
-            var durata = $(document).find("#Durata").val();
+            var durata = $(document).find("#durataValue").attr("data-value");
             var rampId = $(document).find("#RampId").val();
-            console.log(rampId);
             var span = $(document).find("#availableHourSpan");
 
             var url = "/Appointments/GetAvailableSpans"; // the url to the controller
             $.get(url + '?startDateStr=' + datepickerVal + '&startHour=' + time + '&duration=' + durata + '&rampId=' + rampId,
-                function(data) {
+                function (data) {
+                    console.log(data);
+                    console.log(data.selectedIsAvailable);
+                    console.log(data.availableSpans);
                     span.text("").removeClass("text-danger").removeClass("text-success");
                     span.addClass("hide");
+
                     if (data.selectedIsAvailable) {
-                        span.text("Selectia este buna!").removeClass("text-danger").addClass("text-success");
+                        console.log("aici");
+                        span.text("Selectia de data si ora este buna! Nu se suprapune cu alta programare!").removeClass("text-danger").addClass("text-success");
                         span.removeClass("hide");
-                    } else {
+                        console.log("aici2");
+                    }
+                    else {
+                        console.log("nu aici");
                         var message = "Selectia nu este buna!";
                         if (data.availableSpans.length > 0) {
+                            console.log("nu aici2");
                             message += " Pentru durata selectata, urmatoarele ore sunt disponibile:";
                             $.each(data.availableSpans,
-                                function(index, value) {
+                                function (index, value) {
+                                    console.log("nu aici3");
                                     message = message + " " + value;
                                 });
                         }
+                        console.log("nu aici4");
                         span.text(message).addClass("text-danger").removeClass("text-success");
                         span.removeClass("hide");
                     }

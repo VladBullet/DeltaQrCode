@@ -30,22 +30,22 @@
             <div class="form-group">
                 <input id="RampId" hidden="hidden" asp-for="RampId" />
             </div>
+            <span id="availableHourSpan"> </span>
 
             <div class="form-group">
                 <h6 style="margin-left:20px;">Data programare</h6>
                 <div class="col-md-6">
-                    <input id="datepickerModal" asp-for="DataAppointment" type="text" class="form-control" placeholder="Selecteaza data" />
+                    <input id="datepickerModal" asp-for="DataAppointment" type="text" class="form-control changeable" placeholder="Selecteaza data" />
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3 required-field">Time</label>
+            <div class="form-group form-inline">
+                <label class="form-check-label col-md-3 required-field">Time</label>
                 <div class="col-md-9">
-                    <div class="inline-block">
-                        <input id="StartTime_Hour" type="number" class="form-control" asp-for="StartTime_Hour" />
+                    <div class="form-group">
+                        <input id="StartTime_Hour" type="number" class="form-control changeable" asp-for="StartTime_Hour" />
                     </div>
-                    <div class="inline-block width100">
-                        <input id="StartTime_Minutes" type="number" class="form-control" asp-for="StartTime_Minutes" />
+                    <div class="form-group">
+                        <input id="StartTime_Minutes" type="number" class="form-control changeable" asp-for="StartTime_Minutes" />
                     </div>
 
                     @Html.ValidationMessageFor(model => model.StartTime_Hour, "", new { @class = "text-danger" })
@@ -57,6 +57,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
+                    <input id="durataValue" class="changeable" hidden="hidden" data-value="30" />
                     <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
                     @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
                 </div>
@@ -153,6 +154,7 @@
             success: function (response) {
                 CloseModalById('myApptModal');
                 ShowHeaderAlert(response, "success", 5000);
+                showAppointmentsForDate();
 /*                    $('#ApptState').change();*/
             },
             error: function (error) {
