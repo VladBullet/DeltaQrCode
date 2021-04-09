@@ -27,7 +27,9 @@
 
         @Html.AntiForgeryToken()
         <div class="modal-body modal-min-height" id="apptModalBody">
-
+            <div class="form-group">
+                <input id="RampId" hidden="hidden" asp-for="RampId" />
+            </div>
             <div class="form-group">
             </div>
 
@@ -37,15 +39,15 @@
                     <input id="datepickerModal" asp-for="DataAppointment" type="text" class="form-control" placeholder="Selecteaza data" />
                 </div>
             </div>
-
+            <span id="availableHourSpan"> </span>
             <div class="form-group">
                 <label class="control-label col-md-3 required-field">Time</label>
                 <div class="col-md-9">
                     <div class="inline-block width100 half-margin-bottom">
-                        <input type="number" class="form-control" asp-for="StartTime_Hour" />
+                        <input id="StartTime_Hour" type="number" class="form-control" asp-for="StartTime_Hour" />
                     </div>
                     <div class="inline-block width100">
-                        <input type="number" class="form-control" asp-for="StartTime_Minutes" />
+                        <input id="StartTime_Minutes" type="number" class="form-control" asp-for="StartTime_Minutes" />
                     </div>
 
                     @Html.ValidationMessageFor(model => model.StartTime_Hour, "", new { @class = "text-danger" })

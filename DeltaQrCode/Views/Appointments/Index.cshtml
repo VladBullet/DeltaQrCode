@@ -106,7 +106,8 @@
 
         var apptNewModalDialog = function(startDate, startHour, rampId) {
             var url = "@Url.Action("ModalAdd", "Appointments")";
-            $.get(url, { startDateStr:startDate, startHour:startHour, rampId :rampId },
+            $.get(url,
+                { startDateStr: startDate, startHour: startHour, rampId: rampId },
                 function(data) {
                     $('#partialInfo').html(data);
                     $('#myApptModal').modal('show');
@@ -216,21 +217,22 @@
 
 
         /* click event on the hour */
-        $('.hour').on('click', function (event) {
-            event.stopPropagation();
-            var self = $(this);
-            console.log(self);
+        $('.hour').on('click',
+            function(event) {
+                event.stopPropagation();
+                var self = $(this);
+                console.log(self);
 
-            var startHourOnly = $(this).attr("class").replace('hour-red', '');
-            startHourOnly = startHourOnly.replaceAll("hour", "");
+                var startHourOnly = $(this).attr("class").replace('hour-red', '');
+                startHourOnly = startHourOnly.replaceAll("hour", "");
 
-            var selectedDateDiv = $('#datepicker');
-            var rampNr = self.closest(".ramp").attr("data-value");
-            console.log("closest: ", self.closest(".ramp"));
-            console.log(rampNr);
-            // Make the modal here!
-            apptNewModalDialog(selectedDateDiv.val(), startHourOnly, rampNr);
-        });
+                var selectedDateDiv = $('#datepicker');
+                var rampNr = self.closest(".ramp").attr("data-value");
+                console.log("closest: ", self.closest(".ramp"));
+                console.log(rampNr);
+                // Make the modal here!
+                apptNewModalDialog(selectedDateDiv.val(), startHourOnly, rampNr);
+            });
 
 
         /* Get the appointments for whatever date is selected */
@@ -265,6 +267,39 @@
                 deleteSetAnvModalDialog(id);
             });
 
+
+        var checkDateAndTimeAvailable = function() {
+            var datepickerVal = $(document).find("#datepickerModal").val();
+            var date = new Date(datepickerVal);
+            var hour = $(document).find("#StartTime_Hour").val();
+            var min = $(document).find("#StartTime_Minutes").val();
+            var time = hour + "_" + min;
+            var durata = $(document).find("#Durata").val();
+            var rampId = $(document).find("#RampId").val();
+            var span = $(document).find("#availableHourSpan");
+
+            var url = "/Appointments/GetAvailableSpans"; // the url to the controller
+            $.get(url + '?startDateStr=' + date + '?startHour=' + time + '?duration=' + durata + '?rampId=' + rampId,
+                function(data) {
+                    span.text("").removeClass("text-danger").removeClass("text-success");
+                    span.addClass("hide");
+                    if (data.selectedIsAvailable) {
+                        span.text("Selectia este buna!").removeClass("text-danger").addClass("text-success");
+                        span.removeClass("hide");
+                    } else {
+                        var message = "Selectia nu este buna!";
+                        if (data.availableSpans.length > 0) {
+                            message += " Pentru durata selectata, urmatoarele ore sunt disponibile:";
+                            $.each(data.availableSpans,
+                                function(index, value) {
+                                    message = message + " " + value;
+                                });
+                        }
+                        span.text(message).addClass("text-danger").removeClass("text-success");
+                        span.removeClass("hide");
+                    }
+                });
+        }
     </script>
 
 }

@@ -17,7 +17,9 @@ namespace DeltaQrCode.Services
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentsRepository _appointmentsRepository;
+
         private readonly IMapper _mapper;
+
         public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper)
         {
             _appointmentsRepository = appointmentsRepository;
@@ -65,6 +67,7 @@ namespace DeltaQrCode.Services
                 {
                     return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugarea marcii!");
                 }
+
                 appointment.ServiciuId = serviciu.Entity.Id;
 
                 var app = _mapper.Map<CaAppointments>(appointment);
@@ -101,6 +104,7 @@ namespace DeltaQrCode.Services
                 {
                     return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugarea marcii!");
                 }
+
                 appt.ServiciuId = serviciu.Entity.Id;
 
 
@@ -152,11 +156,11 @@ namespace DeltaQrCode.Services
             {
                 var result = await _appointmentsRepository.GetAppointmentsAsync(date);
                 var model = new List<AppointmentDto>();
-                if(result.Successful)
+                if (result.Successful)
                 {
                     model = _mapper.Map<List<AppointmentDto>>(result.Entity);
 
-                    foreach(var item in model)
+                    foreach (var item in model)
                     {
                         if (item.ServiciuId != null)
                         {
@@ -188,29 +192,50 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<AppointmentDto>> DateAndHourIsAvailable(DateTime selectedDate, TimeSpan selectedOraInceput, int selectedDurata, int selectedRampId)
+        public async Task<Result<AvailableIntervalDto>> DateAndHourIsAvailable(DateTime selectedDate, TimeSpan selectedOraInceput, int selectedDurata, int selectedRampId)
         {
             try
             {
-                var result = await _appointmentsRepository.GetAppointmentsAsync(selectedDate);
-                var apptsList = result.Entity.Where(x => x.RampId == selectedRampId); // lista cu appt pt data si rampa
+                var dbList = await _appointmentsRepository.GetAppointmentsAsync(selectedDate);
+                var apptsList = dbList.Entity.Where(x => x.RampId == selectedRampId); // lista cu appt pt data si rampa
+                var apptsDto = _mapper.Map<List<AppointmentDto>>(apptsList);
 
-                var list = new List<AppointmentDto>();
-                var model = _mapper.Map<List<AppointmentDto>>(list);
-                for (int i = 1; i < 22; i++)
+                var occupied = new List<Tuple<TimeSpan, TimeSpan>>();
+                var free = new List<TimeSpan>();
+                occupied.Add(new Tuple<TimeSpan, TimeSpan>(new TimeSpan(7, 30, 0), new TimeSpan(8, 0, 0)));
+                foreach (var item in apptsDto)
                 {
-                    list.Where(x => x.Id == i) =
+                    occupied.Add(new Tuple<TimeSpan, TimeSpan>(item.OraInceput, item.OraSfarsit));
                 }
 
+                occupied.Add(new Tuple<TimeSpan, TimeSpan>(new TimeSpan(18, 0, 0), new TimeSpan(18, 30, 0)));
 
+                for (int i = 0; i < occupied.Count - 2; i++)
+                {
+                    var window = occupied[i + 1].Item1 - occupied[i].Item2;
+                    if (window.TotalMinutes > (double)selectedDurata)
+                    {
+                        free.Add(occupied[i].Item2);
+                    }
+                }
 
+                var result = new AvailableIntervalDto(false, free);
+
+                if (free.Contains(selectedOraInceput))
+                {
+                    result.SelectedIsAvailable = true;
+                    return Result<AvailableIntervalDto>.ResultOk(result);
+                }
+
+                return Result<AvailableIntervalDto>.ResultOk(result);
             }
 
             catch (Exception e)
             {
-                return Result<AppointmentDto>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+                return Result<AvailableIntervalDto>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
             }
 
 
         }
     }
+}

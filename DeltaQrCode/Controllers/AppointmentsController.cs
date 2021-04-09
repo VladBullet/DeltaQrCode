@@ -34,7 +34,7 @@ namespace DeltaQrCode.Controllers
         }
 
         //GET: Appointments
-        public ActionResult Index(string startDateString, string activeDateString, string professionalIdString)
+        public ActionResult Index(string startDateString, string activeDateString)
         {
 
 
@@ -145,20 +145,6 @@ namespace DeltaQrCode.Controllers
             }
 
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
-            //}
-            //else
-            //{
-            //    // List the errors.
-            //    StringBuilder sbError = new StringBuilder();
-            //    foreach (var row in ModelState.Values)
-            //    {
-            //        foreach (var err in row.Errors)
-            //        {
-            //            sbError.AppendLine(err.ErrorMessage);
-            //        }
-            //    }
-            //    return Content(sbError.ToString());
-            //}
 
         }
 
@@ -170,12 +156,9 @@ namespace DeltaQrCode.Controllers
             return PartialView("_DeleteAppointmentPartial", id);
         }
 
-
-
         [HttpPost]
         public async Task<ActionResult> ConfirmDelete(int id)
         {
-
             var result = await _appointmentService.DeleteAppointmentAsync(id);
 
             if (result.Successful)
@@ -186,8 +169,6 @@ namespace DeltaQrCode.Controllers
             return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
 
-
-
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetTipServiciu()
@@ -197,13 +178,28 @@ namespace DeltaQrCode.Controllers
             list.Add(ServiceType.Vulcanizare.ToDisplayString());
             return new JsonResult(list);
         }
+
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetTimeDictionary()
         {
             return new JsonResult(ConstantsAndEnums.TimeDictionary);
-
         }
 
+        [HttpGet]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetAvailableSpans(string startDateStr, string startHour, int duration, int rampId)
+        {
+            DateTime selectedDate = DateTime.Parse(startDateStr);
+            var str = startHour.Split('_');
+            TimeSpan selectedOraInceput = new TimeSpan(int.Parse(str[0]), int.Parse(str[1]), 0);
+            var result = await _appointmentService.DateAndHourIsAvailable(selectedDate, selectedOraInceput, duration, rampId);
+            if (result.Successful)
+            {
+                return new JsonResult(result);
+            }
+
+            return BadRequest("Ceva nu a mers bine la gasirea intervalului orar!");
+        }
     }
 }
