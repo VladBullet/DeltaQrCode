@@ -210,7 +210,7 @@ namespace DeltaQrCode.Services
 
                 occupied.Add(new Tuple<TimeSpan, TimeSpan>(new TimeSpan(18, 0, 0), new TimeSpan(18, 30, 0)));
 
-                for (int i = 0; i < occupied.Count - 2; i++)
+                for (int i = 0; i < occupied.Count - 1; i++)
                 {
                     var window = occupied[i + 1].Item1 - occupied[i].Item2;
                     if (window.TotalMinutes > (double)selectedDurata)

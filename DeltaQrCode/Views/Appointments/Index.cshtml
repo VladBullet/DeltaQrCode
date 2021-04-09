@@ -27,7 +27,7 @@
     <div class="row">
         @for (int rampNr = 1; rampNr < 5; rampNr++)
         {
-            <partial model="@rampNr" name="_RampPartial" />
+        <partial model="@rampNr" name="_RampPartial" />
         }
     </div>
 </div>
@@ -118,10 +118,10 @@
                     //enableselect2forServiciu();
                 });
         };
-        var apptEditModalDialog = function(id, startHour) { // TODO --- VLAD --- : REMOVE startHour param after link with db. Now it is used for fakeList creation
+        var apptEditModalDialog = function(id) {
 
             var url = "/Appointments/ModalEdit"; // the url to the controller
-            $.get(url + '?id=' + id + '&startDateStr=' + startHour,
+            $.get(url + '?id=' + id ,
                 function(data) {
                     $('#partialInfo').html(data);
                     $('#myApptModal').modal('show');
@@ -206,8 +206,7 @@
                             event.stopPropagation();
                             console.log($(this));
                             var fullId = $(this).attr("id").replace('appt', '');
-                            var selectedDateDiv = $('#datepicker');
-                            apptEditModalDialog(fullId, selectedDateDiv.val());
+                            apptEditModalDialog(fullId );
                         });
 
                     /* scroll to a better position */
@@ -267,19 +266,24 @@
                 deleteSetAnvModalDialog(id);
             });
 
+        $(document).on("change", "#datepickerModal #StartTime_Hour #StartTime_Minutes #Durata", function() {
+            checkDateAndTimeAvailable();
+        });
 
         var checkDateAndTimeAvailable = function() {
             var datepickerVal = $(document).find("#datepickerModal").val();
-            var date = new Date(datepickerVal);
             var hour = $(document).find("#StartTime_Hour").val();
             var min = $(document).find("#StartTime_Minutes").val();
             var time = hour + "_" + min;
+            console.log(time);
+
             var durata = $(document).find("#Durata").val();
             var rampId = $(document).find("#RampId").val();
+            console.log(rampId);
             var span = $(document).find("#availableHourSpan");
 
             var url = "/Appointments/GetAvailableSpans"; // the url to the controller
-            $.get(url + '?startDateStr=' + date + '?startHour=' + time + '?duration=' + durata + '?rampId=' + rampId,
+            $.get(url + '?startDateStr=' + datepickerVal + '&startHour=' + time + '&duration=' + durata + '&rampId=' + rampId,
                 function(data) {
                     span.text("").removeClass("text-danger").removeClass("text-success");
                     span.addClass("hide");
@@ -300,6 +304,7 @@
                     }
                 });
         }
+
     </script>
 
 }

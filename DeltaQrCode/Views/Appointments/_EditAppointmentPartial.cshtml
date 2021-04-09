@@ -144,68 +144,68 @@
     $("#apptsEditButton").click(function () {
         var url = "@Url.Action("EditAppt", "Appointments")";
         $.ajax({
-                type: "POST",
-                url:url,
-                data: $('#apptform').serialize(),
-                dataType:"json",
-                success: function (response) {
-                    CloseModalById('myApptModal');
-                    ShowHeaderAlert(response, "success", 5000);
+            type: "POST",
+            url:url,
+            data: $('#apptform').serialize(),
+            dataType:"json",
+            success: function (response) {
+                CloseModalById('myApptModal');
+                ShowHeaderAlert(response, "success", 5000);
 /*                    $('#ApptState').change();*/
-                },
-                error: function (error) {
-                    CloseModalById('myApptModal');
-                    ShowHeaderAlert(error.responseJSON.Message, "error",5000);
+            },
+            error: function (error) {
+                CloseModalById('myApptModal');
+                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
 
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("ErrorModal","Error")",
-                        dataType: "json",
-                        traditional: true,
-                        contentType: 'application/json',
-                        success: function (response) {
-                            $("#GetModalCode").html(response);
-                            $("#ErrorModal").modal('show');
-                        },
-                        error: function (error) {
-                            alert(error);
-                        }
-                    });
-                }
-            });
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ErrorModal","Error")",
+                    dataType: "json",
+                    traditional: true,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $("#GetModalCode").html(response);
+                        $("#ErrorModal").modal('show');
+                    },
+                    error: function (error) {
+                        alert(error);
+                    }
+                });
+            }
+        });
         //}
     });
 
 
-            // Select2 for Serviciu
-            $("#serviciu").select2({
-                tags: true,
-                dropdownParent: "#apptModalBody",
-                theme: "bootstrap4",
-                minimumResultsForSearch: Infinity,
-                ajax: {
-                    url: '/Appointments/GetTipServiciu',
-                    dataType: 'json',
-                    processResults: function (result) {
+    // Select2 for Serviciu
+    $("#serviciu").select2({
+        tags: true,
+        dropdownParent: "#apptModalBody",
+        theme: "bootstrap4",
+        minimumResultsForSearch: Infinity,
+        ajax: {
+            url: '/Appointments/GetTipServiciu',
+            dataType: 'json',
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
                         return {
-                            results: $.map(result, function (item) {
-                                return {
-                                    id: item,
-                                    text: item
-                                };
-                            }),
+                            id: item,
+                            text: item
                         };
-                    }
-                }
-            });
+                    }),
+                };
+            }
+        }
+    });
 
-            // select2 initial value for Serviciu
-            var serviciuObj = $('#serviciu');
-            var serviciuValue = $("#defaultServiciu").attr("data-value");
-            if (serviciuValue != NaN && serviciuValue != '') {
-                var optionserviciu = new Option(serviciuValue, serviciuValue, true, true);
-                serviciuObj.append(optionserviciu);
-                serviciuObj.val(serviciuValue).trigger('change'); // Notify any JS components that the value changed
+    // select2 initial value for Serviciu
+    var serviciuObj = $('#serviciu');
+    var serviciuValue = $("#defaultServiciu").attr("data-value");
+    if (serviciuValue != NaN && serviciuValue != '') {
+        var optionserviciu = new Option(serviciuValue, serviciuValue, true, true);
+        serviciuObj.append(optionserviciu);
+        serviciuObj.val(serviciuValue).trigger('change'); // Notify any JS components that the value changed
     }
 
 
@@ -246,11 +246,6 @@
         durataObj.val(durataVal);
         durataObj.trigger('change'); // Notify any JS components that the value changed
     }
-
-
-
-
-
 
 
 </script>

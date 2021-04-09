@@ -17,7 +17,7 @@
 </style>
 
 <input id="defaultServiciu" hidden="hidden" data-value="@Model.Serviciu" />
-<input id="defaultDurata" hidden="hidden" data-value="@Model.DurataInMinute" />
+<input id="defaultDurata" hidden="hidden" data-value="30" />
 <div class="modal-header">
     <h3 id="myModalLabel">Adauga programare</h3>
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
@@ -41,11 +41,11 @@
             <div class="form-group">
                 <label class="control-label col-md-3 required-field">Time</label>
                 <div class="col-md-9">
-                    <div class="inline-block width100 half-margin-bottom">
-                        <input type="number" class="form-control" asp-for="StartTime_Hour" />
+                    <div class="inline-block">
+                        <input id="StartTime_Hour" type="number" class="form-control" asp-for="StartTime_Hour" />
                     </div>
                     <div class="inline-block width100">
-                        <input type="number" class="form-control" asp-for="StartTime_Minutes" />
+                        <input id="StartTime_Minutes" type="number" class="form-control" asp-for="StartTime_Minutes" />
                     </div>
 
                     @Html.ValidationMessageFor(model => model.StartTime_Hour, "", new { @class = "text-danger" })
@@ -138,77 +138,82 @@
 
 
 <script type="text/javascript">
-    $("#apptsAddButton").click(function () {
-           var url = "@Url.Action("AddAppt", "Appointments")";
-        $.ajax({
-                type: "POST",
-                url:url,
-                data: $('#apptform').serialize(),
-                dataType:"json",
-                success: function (response) {
-                    CloseModalById('myApptModal');
-                    ShowHeaderAlert(response, "success", 5000);
-/*                    $('#ApptState').change();*/
-                },
-                error: function (error) {
-                    CloseModalById('myApptModal');
-                    ShowHeaderAlert(error.responseJSON.Message, "error",5000);
 
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("ErrorModal","Error")",
-                        dataType: "json",
-                        traditional: true,
-                        contentType: 'application/json',
-                        success: function (response) {
-                            $("#GetModalCode").html(response);
-                            $("#ErrorModal").modal('show');
-                        },
-                        error: function (error) {
-                            alert(error);
-                        }
-                    });
-                }
-            });
+    $(document).ready(function() {
+        checkDateAndTimeAvailable();
+    });
+
+    $("#apptsAddButton").click(function () {
+        var url = "@Url.Action("AddAppt", "Appointments")";
+        $.ajax({
+            type: "POST",
+            url:url,
+            data: $('#apptform').serialize(),
+            dataType:"json",
+            success: function (response) {
+                CloseModalById('myApptModal');
+                ShowHeaderAlert(response, "success", 5000);
+/*                    $('#ApptState').change();*/
+            },
+            error: function (error) {
+                CloseModalById('myApptModal');
+                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ErrorModal","Error")",
+                    dataType: "json",
+                    traditional: true,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $("#GetModalCode").html(response);
+                        $("#ErrorModal").modal('show');
+                    },
+                    error: function (error) {
+                        alert(error);
+                    }
+                });
+            }
+        });
         //}
     });
 
 
-            // Select2 for Serviciu
-            $("#serviciu").select2({
-                tags: true,
-                dropdownParent: "#apptModalBody",
-                theme: "bootstrap4",
-                minimumResultsForSearch: Infinity,
-                ajax: {
-                    url: '/Appointments/GetTipServiciu',
-                    dataType: 'json',
-                    processResults: function (result) {
+    // Select2 for Serviciu
+    $("#serviciu").select2({
+        tags: true,
+        dropdownParent: "#apptModalBody",
+        theme: "bootstrap4",
+        minimumResultsForSearch: Infinity,
+        ajax: {
+            url: '/Appointments/GetTipServiciu',
+            dataType: 'json',
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
                         return {
-                            results: $.map(result, function (item) {
-                                return {
-                                    id: item,
-                                    text: item
-                                };
-                            }),
+                            id: item,
+                            text: item
                         };
-                    }
-                }
-            });
+                    }),
+                };
+            }
+        }
+    });
 
-            // select2 initial value for Serviciu
-            var serviciuObj = $('#serviciu');
-            var serviciuValue = $("#defaultServiciu").attr("data-value");
-            if (serviciuValue != NaN && serviciuValue != '') {
-                var optionserviciu = new Option(serviciuValue, serviciuValue, true, true);
-                serviciuObj.append(optionserviciu);
-                serviciuObj.val(serviciuValue).trigger('change'); // Notify any JS components that the value changed
+    // select2 initial value for Serviciu
+    var serviciuObj = $('#serviciu');
+    var serviciuValue = $("#defaultServiciu").attr("data-value");
+    if (serviciuValue != NaN && serviciuValue != '') {
+        var optionserviciu = new Option(serviciuValue, serviciuValue, true, true);
+        serviciuObj.append(optionserviciu);
+        serviciuObj.val(serviciuValue).trigger('change'); // Notify any JS components that the value changed
     }
 
 
     // Select2 for Durata
     $("#Durata").select2({
-        tags: true,
+        tags: false,
         dropdownParent: "#apptModalBody",
         theme: "bootstrap4",
         allowClear: true,
@@ -243,11 +248,6 @@
         durataObj.val(durataVal);
         durataObj.trigger('change'); // Notify any JS components that the value changed
     }
-
-
-
-
-
 
 
 </script>

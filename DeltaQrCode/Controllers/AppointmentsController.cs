@@ -89,10 +89,9 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> ModalEdit(int id, string startDateStr)
+        public async Task<ActionResult> ModalEdit(int id)
         {
 
-            DateTime startDate = DateTime.Parse(startDateStr);
             var appt = await _appointmentService.GetAppointmentByIdAsync(id);
             var appointment = _mapper.Map<AppointmentVM>(appt.Entity);
 
@@ -188,18 +187,26 @@ namespace DeltaQrCode.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAvailableSpans(string startDateStr, string startHour, int duration, int rampId)
+        public async Task<IActionResult> GetAvailableSpans(string startDateStr, string startHour, string rampId, string duration = "30")
         {
-            DateTime selectedDate = DateTime.Parse(startDateStr);
-            var str = startHour.Split('_');
-            TimeSpan selectedOraInceput = new TimeSpan(int.Parse(str[0]), int.Parse(str[1]), 0);
-            var result = await _appointmentService.DateAndHourIsAvailable(selectedDate, selectedOraInceput, duration, rampId);
-            if (result.Successful)
+            try
             {
-                return new JsonResult(result);
-            }
+                DateTime selectedDate = DateTime.Parse(startDateStr);
+                var str = startHour.Split('_');
+                TimeSpan selectedOraInceput = new TimeSpan(int.Parse(str[0]), int.Parse(str[1]), 0);
+                var result = await _appointmentService.DateAndHourIsAvailable(selectedDate, selectedOraInceput, int.Parse(duration), int.Parse(rampId));
+                if (result.Successful)
+                {
+                    return new JsonResult(result);
+                }
 
-            return BadRequest("Ceva nu a mers bine la gasirea intervalului orar!");
+                return BadRequest("Ceva nu a mers bine la gasirea intervalului orar!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest("Ceva nu a mers bine la gasirea intervalului orar!");
+            }
         }
     }
 }
