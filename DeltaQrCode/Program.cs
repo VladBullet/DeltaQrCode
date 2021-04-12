@@ -19,6 +19,12 @@ namespace DeltaQrCode
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging((hostingContext, logging) =>
+                    {
+                        logging.ClearProviders();
+                        logging.AddConsole(options => options.IncludeScopes = true);
+                        logging.AddDebug();
+                    })
                 .UseStartup<Startup>();
     }
 }

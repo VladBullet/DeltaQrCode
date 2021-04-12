@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Repositories
 {
+    using System.Security.Policy;
+
     using DeltaQrCode.Data;
     using DeltaQrCode.Models;
 
@@ -81,12 +83,12 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id)
+        public async Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id, bool confirm)
         {
             try
             {
-                var result = await _db.CaAppointments.FirstAsync(x => x.Id == id);
-                result.Confirmed = true;
+                var result = await _db.CaAppointments.FirstOrDefaultAsync(x => x.Id == id);
+                result.Confirmed = confirm;
                 result.ConfirmedDate = DateTime.Now;
                 await _db.SaveChangesAsync();
                 return Result<CaAppointments>.ResultOk(result);

@@ -112,13 +112,9 @@ namespace DeltaQrCode.Services
 
                 appt.ServiciuId = serviciu.Entity.Id;
 
-                var selfFromDb = await _appointmentsRepository.GetAppointmentByIdAsync(appt.Id);
-                appt.ConfirmedCode = selfFromDb.Entity.ConfirmedCode;
-                appt.ConfirmedDate = selfFromDb.Entity.ConfirmedDate;
-                if (appt.ConfirmedDate == null && appt.Confirmed)
-                {
-                    appt.ConfirmedDate = DateTime.Now;
-                }
+
+                var confirmed = await ConfirmAppointmentAsync(appt.Id, appt.Confirmed);
+
                 appt.LastModified = DateTime.Now;
 
                 var app = _mapper.Map<CaAppointments>(appt);
@@ -149,11 +145,11 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<AppointmentDto>> ConfirmAppointmentAsync(int id)
+        public async Task<Result<AppointmentDto>> ConfirmAppointmentAsync(int id, bool confirm)
         {
             try
             {
-                var value = await _appointmentsRepository.ConfirmAppointmentAsync(id);
+                var value = await _appointmentsRepository.ConfirmAppointmentAsync(id, confirm);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
 
                 return Result<AppointmentDto>.ResultOk(model);

@@ -17,6 +17,7 @@ namespace DeltaQrCode.Controllers
     using DeltaQrCode.ViewModels.Appointments;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Extensions.Logging;
 
     using Newtonsoft.Json;
 
@@ -25,12 +26,13 @@ namespace DeltaQrCode.Controllers
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-
-        public AppointmentsController(IAppointmentService appointmentService, IMapper mapper)
+        public AppointmentsController(IAppointmentService appointmentService, IMapper mapper, ILogger logger)
         {
             _appointmentService = appointmentService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         //GET: Appointments
@@ -208,8 +210,8 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                return BadRequest("Ceva nu a mers bine la gasirea intervalului orar!");
+                _logger.LogError(e, "Ceva nu a mers bine la gasirea intervalului orar in controller!");
+                return RedirectToAction("ErrorModal", "Error");
             }
         }
     }

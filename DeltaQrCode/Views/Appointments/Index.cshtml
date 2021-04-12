@@ -253,7 +253,8 @@
 
             var url = "/Appointments/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
-                function(data) {
+                function (data) {
+                    CloseModalById('myApptModal');
                     $('#partialInfoDelete').html(data);
                     $('#myApptDeleteModal').modal('show');
                 });
