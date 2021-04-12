@@ -193,6 +193,34 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpGet]
+        public IActionResult ConfirmModal(int id)
+        {
+            return PartialView("_ConfirmAppointmentPartial", id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ConfirmAppt(int id,bool confirm)
+        {
+            try
+            {
+                var result = await _appointmentService.ConfirmAppointmentAsync(id,confirm);
+
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Programarea a fost confirmata!"));
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la confirmarea programarii in controller!");
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la confirmarea programarii in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la confirmarea programarii in controller!");
+            }
+
+        }
+
+        [HttpGet]
         [Produces("application/json")]
         public IActionResult GetTipServiciu()
         {

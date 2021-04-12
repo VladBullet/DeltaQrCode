@@ -46,6 +46,13 @@
         </div>
     </div>
 </div>
+<div id="myApptConfirmModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myConfirmApptModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="partialInfoConfirm"></div>
+        </div>
+    </div>
+</div>
 
 
 @section Scripts{
@@ -269,9 +276,31 @@
                 deleteSetAnvModalDialog(id);
             });
 
+        var confirmSetAnvModalDialog = function (id) {
+
+            var url = "/Appointments/ConfirmModal"; // the url to the controller
+            $.get(url + '?id=' + id,
+                function (data) {
+                    CloseModalById('myApptModal');
+                    $('#partialInfoConfirm').html(data);
+                    $('#myApptConfirmModal').modal('show');
+                });
+        };
+
+        $(document).on('click',
+            '#confirmButton',
+            function(event) {
+                // dont allow the event to propagate
+                event.stopPropagation();
+                var id = $(this).attr("data-value");
+                confirmSetAnvModalDialog(id);
+            });
+
         $(document).on("change", ".changeable", function () {
             checkDateAndTimeAvailable();
         });
+
+
 
         $(document).on('select2:select', "#Durata", function (e) {
             var data = e.params.data;
