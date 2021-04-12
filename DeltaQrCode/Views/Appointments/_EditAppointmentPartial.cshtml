@@ -116,11 +116,25 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 @Html.LabelFor(model => model.Confirmed, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.CheckBoxFor(model => model.Confirmed, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly",@disabled = "disabled" } })
-                    @Html.ValidationMessageFor(model => model.Confirmed, "", new { @class = "text-danger" })
+                <div class="col-md-9 form-inline">
+                    <input type="checkbox" id="Confirmed" checked="@Model.Confirmed" class="form-check-input" hidden />
+                    <div class="">
+                        @{if (Model.Confirmed)
+                            {
+
+
+                                <i class="text-success far fa-check-circle fa-2x"></i>
+                            }
+                            else
+                            {
+                                <i class="text-danger far fa-times-circle fa-2x"></i>
+                            }
+                        }
+                    </div>
+                    @* @Html.CheckBoxFor(model => model.Confirmed, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly",@disabled = "disabled" } })*@
+                    @*@Html.ValidationMessageFor(model => model.Confirmed, "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
@@ -132,8 +146,8 @@
 
 
         <div class="modal-footer">
-            <div class="btn btn-primary" id="confirmButton" type="button" data-value="@Model.Id" style="">Confirm</div>
-            <div class="btn btn-danger" id="deleteButton" type="button" data-value="@Model.Id" style="margin-right: 130px;">Delete</div>
+            <div class="btn btn-primary" id="confirmButton" type="button" data-value="@Model.Id" style="">@(Model.Confirmed?"Unconfirm" : "Confirm")</div>
+            <div class="btn btn-danger" id="deleteButton" type="button" data-value="@Model.Id" style="margin-right: 110px;">Delete</div>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             <a class="btn btn-success btn-ok" id="apptsEditButton">Salveaza</a>
         </div>
@@ -153,8 +167,8 @@
             success: function (response) {
                 CloseModalById('myApptModal');
                 ShowHeaderAlert(response, "success", 5000);
-                showAppointmentsForDate();
-/*                    $('#ApptState').change();*/
+                clearAppointments();
+                getAppointmentsForSelectedDate();
             },
             error: function (error) {
                 CloseModalById('myApptModal');

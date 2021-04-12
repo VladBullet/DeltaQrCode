@@ -193,9 +193,9 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpGet]
-        public IActionResult ConfirmModal(int id)
+        public IActionResult ConfirmModal(int id, bool confirm)
         {
-            return PartialView("_ConfirmAppointmentPartial", id);
+            return PartialView("_ConfirmAppointmentPartial", new ConfirmVM(id,!confirm));
         }
 
         [HttpPost]

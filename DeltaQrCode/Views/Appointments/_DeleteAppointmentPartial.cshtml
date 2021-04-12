@@ -34,9 +34,9 @@
             dataType:"json",
             success: function (response) {
                 CloseModalById('myApptDeleteModal');
-                CloseModalById('myApptModal');
                 ShowHeaderAlert(response, "success", 5000);
-/*                $('#hotelListState').change();*/
+                clearAppointments();
+                getAppointmentsForSelectedDate();
             },
             error: function (error) {
                 CloseModalById('myApptDeleteModal');

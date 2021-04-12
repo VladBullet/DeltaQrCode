@@ -154,8 +154,8 @@
             success: function (response) {
                 CloseModalById('myApptModal');
                 ShowHeaderAlert(response, "success", 5000);
-                showAppointmentsForDate();
-/*                    $('#ApptState').change();*/
+                clearAppointments();
+                getAppointmentsForSelectedDate();
             },
             error: function (error) {
                 CloseModalById('myApptModal');
