@@ -18,19 +18,18 @@ namespace DeltaQrCode.Services
     using DeltaQrCode.ViewModels;
     using DeltaQrCode.ViewModels.Appointments;
     using Microsoft.Extensions.Logging;
+    using Serilog;
 
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentsRepository _appointmentsRepository;
 
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
 
-        public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper, ILogger logger)
+        public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper)
         {
             _appointmentsRepository = appointmentsRepository;
             _mapper = mapper;
-            _logger = logger;
         }
 
         public async Task<Result<AppointmentDto>> GetAppointmentByIdAsync(int id)
@@ -50,7 +49,7 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la gasirea programarii in functie de id in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de id in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in servicii!", er);
             }
         }
@@ -93,7 +92,7 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la adaugarea programarii in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la adaugarea programarii in servicii!");
                 throw new Exception("Ceva nu a mers bine la adaugarea programarii in servicii!", er);
             }
         }
@@ -137,7 +136,7 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la editarea programarii in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la editarea programarii in servicii!");
                 throw new Exception("Ceva nu a mers bine la editarea programarii in servicii!", er);
             }
         }
@@ -153,7 +152,7 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la stergerea programarii in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la stergerea programarii in servicii!");
                 throw new Exception("Ceva nu a mers bine la stergerea programarii in servicii!", er);
             }
         }
@@ -169,7 +168,7 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la confirmarea programarii in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la confirmarea programarii in servicii!");
                 throw new Exception("Ceva nu a mers bine la confirmarea programarii in servicii!", er);
             }
         }
@@ -199,7 +198,7 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la gasirea programarii in functie de data in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de data in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de data in servicii!", er);
             }
         }
@@ -213,7 +212,7 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la gasirea tipului de serviciu in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea tipului de serviciu in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in servicii!", er);
             }
         }
@@ -277,7 +276,7 @@ namespace DeltaQrCode.Services
 
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la extragerea orelor disponibile pentru programari in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la extragerea orelor disponibile pentru programari in servicii!");
                 throw new Exception("Ceva nu a mers bine la extragerea orelor disponibile pentru programari in servicii!", er);
             }
 

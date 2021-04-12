@@ -20,19 +20,18 @@ namespace DeltaQrCode.Controllers
     using Microsoft.Extensions.Logging;
 
     using Newtonsoft.Json;
+    using Serilog;
 
     [Authorize]
     public class AppointmentsController : Controller
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
 
-        public AppointmentsController(IAppointmentService appointmentService, IMapper mapper, ILogger logger)
+        public AppointmentsController(IAppointmentService appointmentService, IMapper mapper)
         {
             _appointmentService = appointmentService;
             _mapper = mapper;
-            _logger = logger;
         }
 
         //GET: Appointments
@@ -119,7 +118,7 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Ceva nu a mers bine la editarea programarii in controller!");
+                Log.Error(e, "Ceva nu a mers bine la editarea programarii in controller!");
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la editarea programarii in controller!");
             }
         }
@@ -158,7 +157,7 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Ceva nu a mers bine la adaugarea programarii in controller!");
+                Log.Error(e, "Ceva nu a mers bine la adaugarea programarii in controller!");
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea programarii in controller!");
             }
         }
@@ -187,7 +186,7 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Ceva nu a mers bine la stergerea programarii in controller!");
+                Log.Error(e, "Ceva nu a mers bine la stergerea programarii in controller!");
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea programarii in controller!");
             }
 
@@ -229,7 +228,7 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Ceva nu a mers bine la gasirea intervalului orar in controller!");
+                Log.Error(e, "Ceva nu a mers bine la gasirea intervalului orar in controller!");
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea intervalului orar in controller!");
             }
         }

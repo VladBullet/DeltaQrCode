@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace DeltaQrCode
 {
@@ -19,12 +20,9 @@ namespace DeltaQrCode
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostingContext, logging) =>
-                    {
-                        logging.ClearProviders();
-                        logging.AddConsole(options => options.IncludeScopes = true);
-                        logging.AddDebug();
-                    })
-                .UseStartup<Startup>();
+        .UseStartup<Startup>()
+        // Add the following lines
+        .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+                .ReadFrom.Configuration(hostingContext.Configuration));
     }
 }

@@ -21,21 +21,20 @@ namespace DeltaQrCode.Controllers
     using Newtonsoft.Json;
     using System.Diagnostics;
     using Microsoft.Extensions.Logging;
+    using Serilog;
 
     [Authorize]
     public class HotelController : Controller
     {
         private readonly IHotelService _hotelService;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
         private const int PageSize = 20;
 
 
-        public HotelController(IHotelService hotelService, IMapper mapper, ILogger logger)
+        public HotelController(IHotelService hotelService, IMapper mapper)
         {
             _hotelService = hotelService;
             _mapper = mapper;
-            _logger = logger;
         }
 
         public IActionResult Index()
@@ -93,7 +92,7 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
+                Log.Error(e, "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
             }
         }
@@ -123,7 +122,7 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
+                Log.Error(e, "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
             }
         }
@@ -158,7 +157,7 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+                Log.Error(e, "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
             }
         }
@@ -179,7 +178,7 @@ namespace DeltaQrCode.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
+                Log.Error(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
             }
 

@@ -16,18 +16,17 @@ namespace DeltaQrCode.Services.Hotel
     using DeltaQrCode.ViewModels;
     using Microsoft.Extensions.Logging;
     using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+    using Serilog;
 
     public class HotelService : IHotelService
     {
         private readonly IHotelAnvelopeRepository _hotelRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
 
-        public HotelService(IHotelAnvelopeRepository hotelRepository, IMapper mapper, ILogger logger)
+        public HotelService(IHotelAnvelopeRepository hotelRepository, IMapper mapper)
         {
             _hotelRepository = hotelRepository;
             _mapper = mapper;
-            _logger = logger;
         }
 
         public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id)
@@ -50,7 +49,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!", er);
             }
         }
@@ -66,7 +65,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la gasirea tuturor seturilor de anvelope in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea tuturor seturilor de anvelope in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea tuturor seturilor de anvelope in servicii!", er);
             }
         }
@@ -139,7 +138,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la adaugarea setului de anvelope in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la adaugarea setului de anvelope in servicii!");
                 throw new Exception("Ceva nu a mers bine la adaugarea setului de anvelope in servicii!", er);
             }
         }
@@ -199,7 +198,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la editarea setului de anvelope in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la editarea setului de anvelope in servicii!");
                 throw new Exception("Ceva nu a mers bine la editarea setului de anvelope in servicii!", er);
             }
         }
@@ -237,7 +236,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la cautarea setului de anvelope in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la cautarea setului de anvelope in servicii!");
                 throw new Exception("Ceva nu a mers bine la cautarea setului de anvelope in servicii!", er);
             }
         }
@@ -253,7 +252,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la stergerea setului de anvelope in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la stergerea setului de anvelope in servicii!");
                 throw new Exception("Ceva nu a mers bine la stergerea setului de anvelope in servicii!", er);
             }
         }
@@ -268,7 +267,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!", er);
             }
         }
@@ -282,7 +281,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la gasirea marcii in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea marcii in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea marcii in servicii!", er);
             }
         }
@@ -296,7 +295,7 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                _logger.LogError(er, "Ceva nu a mers bine la gasirea flotei in servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea flotei in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea flotei in servicii!", er);
             }
         }
