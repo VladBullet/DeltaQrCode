@@ -57,13 +57,12 @@ namespace DeltaQrCode.HelpersAndExtensions
                 .ForMember(d => d.DreaptaSpate, m => m.MapFrom(s => s.Uzura.DrS))
 
                 .ForMember(d => d.PozitieInRaft, m => m.MapFrom(s => s.Position.PositionString));
-                
+
             CreateMap<AppointmentDto, CaAppointments>().ReverseMap();
-            CreateMap<AppointmentDto, AppointmentVM>().ReverseMap();
-            CreateMap<AppointmentDto, AppointmentModalVm>()
-                .ForMember(d => d.Appointment, m => m.MapFrom(s => s))
-                .ForMember(d => d.ActiveDate, m => m.Ignore())
-                .ForMember(d => d.CreateOrEdit, m => m.Ignore()).ReverseMap();
+            CreateMap<AppointmentVM, AppointmentDto>();
+            CreateMap<AppointmentDto, AppointmentVM>().ForMember(d => d.StartTime_Hour, m => m.MapFrom(s => s.OraInceput.Hours))
+                .ForMember(d => d.StartTime_Minutes, m => m.MapFrom(s => s.OraInceput.Minutes));
+
 
 
 

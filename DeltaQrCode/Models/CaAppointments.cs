@@ -7,7 +7,7 @@ namespace DeltaQrCode.Models
     {
         public uint Id { get; set; }
         public int? ApptIndex { get; set; }
-        public int ServiciuId { get; set; }
+        public uint? ServiciuId { get; set; }
         public string NumarInmatriculare { get; set; }
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }

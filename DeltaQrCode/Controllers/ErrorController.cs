@@ -13,5 +13,10 @@ namespace DeltaQrCode.Controllers
         {
             return PartialView("~/Views/Shared/_ErrorModal.cshtml", contact);
         }
+
+        public IActionResult ErrorResult(string message)
+        {
+            return PartialView("~/Views/Shared/_ErrorResult.cshtml", message);
+        }
     }
 }

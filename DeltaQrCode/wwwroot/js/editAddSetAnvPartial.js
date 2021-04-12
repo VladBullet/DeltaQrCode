@@ -428,19 +428,13 @@ $("#selPoz").on("updatedStatus",
 // when loading validate all inputs
 var validator = new CustomValidation(anvelopeFormValidationRules);
 validator.addcustomValidationRules(uzuraStFRules);
-//var initialBuc = $(document).find("#NrBucati").val();
-//if (initialBuc >= 2) {
-//    validator.addcustomValidationRules(uzuraDrFRules);
-//    if (initialBuc >= 3) {
-//        validator.addcustomValidationRules(uzuraStSRules);
-//        if (initialBuc >= 4) {
-//            validator.addcustomValidationRules(uzuraDrSRules);
-//        }
-//    }
-//}
+
+
 $(document).ready(function () {
     updateAndValidateUzura(false);
 });
+
+
 // SAVE BTN CLICK EVENT
 $(document).on("click", "#apptsEditSubmitButton", function () {
     var result = validator.validate(validator);

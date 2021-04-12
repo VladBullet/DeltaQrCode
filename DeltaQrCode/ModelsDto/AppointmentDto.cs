@@ -21,7 +21,7 @@ namespace DeltaQrCode.ModelsDto
         }
         public int Id { get; set; }
         public int? ApptIndex { get; set; }
-        public int ServiciuId { get; set; }
+        public uint? ServiciuId { get; set; }
         public string Serviciu { get; set; }
         public int RampId { get; set; }
         public string NumarInmatriculare { get; set; }
@@ -35,6 +35,7 @@ namespace DeltaQrCode.ModelsDto
         public DateTime DataIntroducere { get; set; }
         public bool Confirmed { get; set; }
         public DateTime? ConfirmedDate { get; set; }
+        public DateTime LastModified { get; set; }
         public string Observatii { get; set; }
         public string ConfirmedCode { get; set; }
 

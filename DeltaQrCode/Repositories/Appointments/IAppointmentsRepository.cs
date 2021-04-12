@@ -13,10 +13,12 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaAppointments>> AddAppointmentAsync(CaAppointments appointment);
         Task<Result<CaAppointments>> UpdateAppointmentAsync(CaAppointments appointment);
         Task<Result<CaAppointments>> DeleteAppointmentAsync(int id);
-        Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id);
+        Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id, bool confirm);
         Task<Result<List<CaAppointments>>> GetAppointmentsAsync(DateTime date);
         Task<Result<CaServicetypes>> GetServiceTypeByIdAsync(uint id);
         Task<Result<List<CaServicetypes>>> GetServiceTypesAsync();
+        Task<Result<CaServicetypes>> AddServiceTypeAsync(CaServicetypes serviciu);
+        Task<Result<CaServicetypes>> GetServiceTypeByLableAsync(string label);
 
     }
 }

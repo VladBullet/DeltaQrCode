@@ -16,11 +16,10 @@
     }
 </style>
 
-<input id="apptIdForGetSpans" hidden="hidden" data-value="@Model.Id" />
 <input id="defaultServiciu" hidden="hidden" data-value="@Model.Serviciu" />
-<input id="defaultDurata" hidden="hidden" data-value="@Model.DurataInMinute" />
+<input id="defaultDurata" hidden="hidden" data-value="30" />
 <div class="modal-header">
-    <h3 id="myModalLabel">Editeaza programarea</h3>
+    <h3 id="myModalLabel">Adauga programare</h3>
     <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div>
@@ -30,7 +29,6 @@
 
             <div class="form-group">
                 <input id="RampId" hidden="hidden" asp-for="RampId" />
-                <input id="AppointmentId" hidden="hidden" asp-for="Id" />
             </div>
             <span id="availableHourSpan"> </span>
 
@@ -59,7 +57,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    <input id="durataValue" class="changeable" hidden="hidden" data-value="@Model.DurataInMinute" />
+                    <input id="durataValue" class="changeable" hidden="hidden" data-value="30" />
                     <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
                     @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
                 </div>
@@ -117,25 +115,11 @@
                 </div>
             </div>
 
-            <div class="form-group form-inline">
+            <div class="form-group">
                 @Html.LabelFor(model => model.Confirmed, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9 form-inline">
-                    <input type="checkbox" id="Confirmed" checked="@Model.Confirmed" class="form-check-input" hidden />
-                    <div class="">
-                        @{if (Model.Confirmed)
-                            {
-
-
-                                <i class="text-success far fa-check-circle fa-2x"></i>
-                            }
-                            else
-                            {
-                                <i class="text-danger far fa-times-circle fa-2x"></i>
-                            }
-                        }
-                    </div>
-                    @* @Html.CheckBoxFor(model => model.Confirmed, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly",@disabled = "disabled" } })*@
-                    @*@Html.ValidationMessageFor(model => model.Confirmed, "", new { @class = "text-danger" })*@
+                <div class="col-md-9">
+                    @Html.CheckBoxFor(model => model.Confirmed, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
+                    @Html.ValidationMessageFor(model => model.Confirmed, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -145,12 +129,9 @@
             <p id="serverErrorMsg" style="color:red; padding: 5px;"></p>
         </div>
 
-
         <div class="modal-footer">
-            <div class="btn btn-primary" id="confirmButton" type="button" data-value="@Model.Id" style="">@(Model.Confirmed?"Unconfirm" : "Confirm")</div>
-            <div class="btn btn-danger" id="deleteButton" type="button" data-value="@Model.Id" style="margin-right: 110px;">Delete</div>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-success btn-ok" id="apptsEditButton">Salveaza</a>
+            <a class="btn btn-success btn-ok" id="apptsAddButton">Adauga</a>
         </div>
     </form>
 
@@ -158,8 +139,13 @@
 
 
 <script type="text/javascript">
-    $("#apptsEditButton").click(function () {
-        var url = "@Url.Action("EditAppt", "Appointments")";
+
+    $(document).ready(function() {
+        checkDateAndTimeAvailable();
+    });
+
+    $("#apptsAddButton").click(function () {
+        var url = "@Url.Action("AddAppt", "Appointments")";
         $.ajax({
             type: "POST",
             url:url,
@@ -229,7 +215,7 @@
 
     // Select2 for Durata
     $("#Durata").select2({
-        tags: true,
+        tags: false,
         dropdownParent: "#apptModalBody",
         theme: "bootstrap4",
         allowClear: true,

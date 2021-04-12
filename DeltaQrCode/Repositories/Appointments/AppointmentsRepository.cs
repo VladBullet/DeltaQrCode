@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Repositories
 {
+    using System.Security.Policy;
+
     using DeltaQrCode.Data;
     using DeltaQrCode.Models;
 
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+    using Serilog;
 
     public class AppointmentsRepository : IAppointmentsRepository
     {
@@ -26,9 +30,10 @@ namespace DeltaQrCode.Repositories
                 var result = await _db.CaAppointments.FirstAsync(x => x.Id == id && !x.Deleted);
                 return Result<CaAppointments>.ResultOk(result);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(e, "Ceva nu a mers bine la gasirea programarii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in repository!", er);
             }
         }
 
@@ -42,7 +47,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la adaugarea programarii!");
+                Log.Error(er, "Ceva nu a mers bine la adaugarea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea programarii in repository!", er);
             }
 
         }
@@ -60,7 +66,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
+                Log.Error(er, "Ceva nu a mers bine la editarea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la editarea programarii in repository!", er);
             }
         }
 
@@ -77,23 +84,25 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la anularea programarii!");
+                Log.Error(er, "Ceva nu a mers bine la stergerea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la stergerea programarii in repository!", er);
             }
         }
 
-        public async Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id)
+        public async Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id, bool confirm)
         {
             try
             {
-                var result = await _db.CaAppointments.FirstAsync(x => x.Id == id);
-                result.Confirmed = true;
+                var result = await _db.CaAppointments.FirstOrDefaultAsync(x => x.Id == id);
+                result.Confirmed = confirm;
                 result.ConfirmedDate = DateTime.Now;
                 await _db.SaveChangesAsync();
                 return Result<CaAppointments>.ResultOk(result);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(e, "Ceva nu a mers bine la confirmarea programarii!");
+                Log.Error(er, "Ceva nu a mers bine la confirmarea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la confirmarea programarii in repository!", er);
             }
         }
 
@@ -107,7 +116,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<List<CaAppointments>>.ResultError(null, er, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de data in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de data in repository!", er);
             }
         }
 
@@ -120,7 +130,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaServicetypes>.ResultError(null, er, "Ceva nu a mers bine la gasirea tipului de serviciu!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea tipului de serviciu in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in functie de id in repository!", er);
             }
 
         }
@@ -134,7 +145,40 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<List<CaServicetypes>>.ResultError(null, er, "Ceva nu a mers bine gasirea tipurilor de servicii!");
+                Log.Error(er, "Ceva nu a mers bine la gasirea tipului de serviciu in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in repository!", er);
+            }
+
+        }
+
+        public async Task<Result<CaServicetypes>> AddServiceTypeAsync(CaServicetypes serviciu)
+        {
+            try
+            {
+                var value = await _db.CaServicetypes.AddAsync(serviciu);
+                await _db.SaveChangesAsync();
+                return Result<CaServicetypes>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea tipului de serviciu in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaServicetypes>> GetServiceTypeByLableAsync(string label)
+        {
+            try
+            {
+                label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
+                var value = await _db.CaServicetypes.FirstOrDefaultAsync(x => x.Label.ToLower().Contains(label.ToLower()));
+                return Result<CaServicetypes>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea tipului de serviciu in functie de label in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in functie de label in repository!", er);
             }
 
         }

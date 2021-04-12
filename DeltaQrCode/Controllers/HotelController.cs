@@ -20,7 +20,8 @@ namespace DeltaQrCode.Controllers
 
     using Newtonsoft.Json;
     using System.Diagnostics;
-
+    using Microsoft.Extensions.Logging;
+    using Serilog;
 
     [Authorize]
     public class HotelController : Controller
@@ -35,18 +36,15 @@ namespace DeltaQrCode.Controllers
             _hotelService = hotelService;
             _mapper = mapper;
         }
-        
-        public async Task<IActionResult> Index()
+
+        public IActionResult Index()
         {
-            //var list = SetAnvelopeVM.fakelist();
-            var result = await _hotelService.GetAllSetAnvelopeAsync();
-            var model = new HotelListViewModel(result.Entity,1, PageSize);
-            return View(model);
+            return View();
         }
 
-        public async Task<IActionResult> Search(string searchString,int pageNumber = 1)
+        public async Task<IActionResult> Search(string searchString, int pageNumber = 1)
         {
-            var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString,pageNumber, PageSize);
+            var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
             var anvelope = anvelopeResult.Entity;
 
 
@@ -81,15 +79,22 @@ namespace DeltaQrCode.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditModal(AddEditSetAnvelopeVM setAnvelope)
         {
-            var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
-            var result = await _hotelService.UpdateSetAnvelopeAsync(dto);
-            if (result.Successful)
+            try
             {
-                return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
-            }
+                var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
+                var result = await _hotelService.UpdateSetAnvelopeAsync(dto);
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
+                }
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
 
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
-            //return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = "Eroare" }));
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
+            }
         }
 
         //ADD
@@ -98,21 +103,28 @@ namespace DeltaQrCode.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddModal(AddEditSetAnvelopeVM setAnvelope)
         {
-
-            var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
-            dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
-            dto.UzuraString = dto.Uzura.ToCustomString();
-
-            dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime);
-            dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
-
-            var result = await _hotelService.AddSetAnvelopeAsync(dto);
-            if (result.Successful)
+            try
             {
-                return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
-            }
+                var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
+                dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
+                dto.UzuraString = dto.Uzura.ToCustomString();
 
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+                dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime);
+                dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
+
+                var result = await _hotelService.AddSetAnvelopeAsync(dto);
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
+            }
         }
         [HttpGet]
         public IActionResult AddModalNew()
@@ -132,28 +144,44 @@ namespace DeltaQrCode.Controllers
         [HttpPost]
         public async Task<ActionResult> ConfirmDelete(int id)
         {
-
-            var result = await _hotelService.DeleteSetAnvelopeAsync(id);
-
-            if (result.Successful)
+            try
             {
-                return Ok(JsonConvert.SerializeObject("Setul de anvelope a fost sters!"));
-            }
+                var result = await _hotelService.DeleteSetAnvelopeAsync(id);
 
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Setul de anvelope a fost sters!"));
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+            }
         }
 
         [HttpGet]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAvailablePositions(string term)
+        public async Task<IActionResult> GetAvailablePositions(string term) // TODO: Vlad
         {
-            var positions = await _hotelService.GetAvailablePositionsAsync();
-            var list = positions.Entity.Select(x => x.PositionString).ToList();
-            if (!string.IsNullOrEmpty(term))
+            try
             {
-                list = positions.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
+                var positions = await _hotelService.GetAvailablePositionsAsync();
+                var list = positions.Entity.Select(x => x.PositionString).ToList();
+                if (!string.IsNullOrEmpty(term))
+                {
+                    list = positions.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
+                }
+                return new JsonResult(list);
             }
-            return new JsonResult(list);
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
+            }
+
         }
 
         [Produces("application/json")]

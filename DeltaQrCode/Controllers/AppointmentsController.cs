@@ -17,15 +17,16 @@ namespace DeltaQrCode.Controllers
     using DeltaQrCode.ViewModels.Appointments;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Extensions.Logging;
 
     using Newtonsoft.Json;
+    using Serilog;
 
     [Authorize]
     public class AppointmentsController : Controller
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
-
 
         public AppointmentsController(IAppointmentService appointmentService, IMapper mapper)
         {
@@ -34,7 +35,7 @@ namespace DeltaQrCode.Controllers
         }
 
         //GET: Appointments
-        public ActionResult Index(string startDateString, string activeDateString, string professionalIdString)
+        public ActionResult Index(string startDateString, string activeDateString) // TODO: De vazut VLAD
         {
 
 
@@ -60,20 +61,18 @@ namespace DeltaQrCode.Controllers
 
 
 
-        public async Task<JsonResult> GetAppointmentsForDate(string apptDate)
+        public async Task<JsonResult> GetAppointmentsForDate(string apptDate) // TODO: De vazut VLAD
         {
             DateTime dt;
             DateTime.TryParse(apptDate, out dt);
             if (dt == new DateTime())
                 dt = DateTime.Now.Date;
-
-            //List<AppointmentForProUiDto> appointmentsList = _appointmentQueries.GetUiDto_AppointmentsForProfessionalOrEmployee(User.Identity.GetUserId(), professionalId, dt.Date, dt.Date.AddDays(1));
-
             var appointmentsList = await _appointmentService.GetAppointmentsAsync(dt);
             if (appointmentsList.Entity == null)
             {
                 return new JsonResult(new List<AppointmentsIndexVm>());
             }
+
             var rampIds = appointmentsList.Entity.Select(x => x.RampId).Distinct();
             var result = new List<AppointmentsIndexVm>();
             foreach (var item in rampIds)
@@ -88,83 +87,79 @@ namespace DeltaQrCode.Controllers
         }
 
 
-        public ActionResult EditModalNew(string startDateStr, string startHour, string rampNr)
+        [HttpGet]
+        public async Task<ActionResult> ModalEdit(int id)
+        {
+
+            var appt = await _appointmentService.GetAppointmentByIdAsync(id);
+            var appointment = _mapper.Map<AppointmentVM>(appt.Entity);
+
+            return PartialView("_EditAppointmentPartial", appointment);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditAppt(AppointmentVM appt)
+        {
+            try
+            {
+                appt.OraInceput = TimeSpan.FromMinutes(appt.StartTime_Hour * 60 + appt.StartTime_Minutes);
+                appt.DataAppointment.AddHours(appt.StartTime_Hour).AddMinutes(appt.StartTime_Minutes);
+
+                var dto = _mapper.Map<AppointmentDto>(appt);
+                var result = await _appointmentService.UpdateAppointmentAsync(dto);
+
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Programarea a fost editata cu succes!"));
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la editarea programarii in controller!");
+
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la editarea programarii in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la editarea programarii in controller!");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ModalAdd(string startDateStr, string startHour, string rampId)
         {
             DateTime startDate = DateTime.Parse(startDateStr);
             var s = startHour.Split('_');
             DateTime appointmentStart = startDate.AddHours(int.Parse(s[0])).AddMinutes(int.Parse(s[1]));
 
             var appointment = new AppointmentVM(appointmentStart);
+            appointment.RampId = int.Parse(rampId);
 
-            AppointmentModalVm appointmentVm = new AppointmentModalVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value, appointment, ActionType.Add);
 
-            return PartialView("_EditAppointmentPartial", appointmentVm);
+            return PartialView("_AddAppointmentPartial", appointment);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditXModal(AppointmentVM appt)
+        public async Task<ActionResult> AddAppt(AppointmentVM appt) //ADDMODAL
         {
-            var dto = _mapper.Map<AppointmentDto>(appt);
-            var result = await _appointmentService.UpdateAppointmentAsync(dto);
-
-            if (result.Successful)
+            try
             {
-                return Ok(JsonConvert.SerializeObject("Programarea a fost adaugata cu succes!"));
-            }
-
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> EditModal(int id, string startDateStr)
-        {
-
-            DateTime startDate = DateTime.Parse(startDateStr);
-            var appt = await _appointmentService.GetAppointmentByIdAsync(id);
-            var apptModel = _mapper.Map<AppointmentVM>(appt.Entity);
-            var appointment = new AppointmentModalVm
-            {
-                Appointment = apptModel,
-                ActiveDate = startDate,
-                CreateOrEdit = ActionType.Edit
-            };
-            return PartialView("_EditAppointmentPartial", appointment);
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal(AppointmentModalVm appt) //ADDMODAL
-        {
-            //if (ModelState.IsValid)
-            //{
+                appt.OraInceput = new TimeSpan(appt.StartTime_Hour, appt.StartTime_Minutes, 0);
                 var model = _mapper.Map<AppointmentDto>(appt);
                 var result = await _appointmentService.AddAppointmentAsync(model);
-            //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
 
-            if (result.Successful)
-            {
-                return Ok(JsonConvert.SerializeObject("Programarea a fost modificata!"));
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Programarea a fost adaugata!"));
 
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea programarii in controller!");
             }
-
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
-            //}
-            //else
-            //{
-            //    // List the errors.
-            //    StringBuilder sbError = new StringBuilder();
-            //    foreach (var row in ModelState.Values)
-            //    {
-            //        foreach (var err in row.Errors)
-            //        {
-            //            sbError.AppendLine(err.ErrorMessage);
-            //        }
-            //    }
-            //    return Content(sbError.ToString());
-            //}
-
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la adaugarea programarii in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea programarii in controller!");
+            }
         }
 
         // DELETE
@@ -175,23 +170,55 @@ namespace DeltaQrCode.Controllers
             return PartialView("_DeleteAppointmentPartial", id);
         }
 
-
-
         [HttpPost]
         public async Task<ActionResult> ConfirmDelete(int id)
         {
-
-            var result = await _appointmentService.DeleteAppointmentAsync(id);
-
-            if (result.Successful)
+            try
             {
-                return Ok(JsonConvert.SerializeObject("Programarea a fost stearsa!"));
+                var result = await _appointmentService.DeleteAppointmentAsync(id);
+
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Programarea a fost stearsa!"));
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea programarii in controller!");
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la stergerea programarii in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea programarii in controller!");
             }
 
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
 
+        [HttpGet]
+        public IActionResult ConfirmModal(int id, bool confirm)
+        {
+            return PartialView("_ConfirmAppointmentPartial", new ConfirmVM(id, !confirm));
+        }
 
+        [HttpPost]
+        public async Task<ActionResult> ConfirmAppt(int id, bool confirm)
+        {
+            try
+            {
+                var result = await _appointmentService.ConfirmAppointmentAsync(id, confirm);
+
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Programarea a fost confirmata!"));
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la confirmarea programarii in controller!");
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la confirmarea programarii in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la confirmarea programarii in controller!");
+            }
+
+        }
 
         [HttpGet]
         [Produces("application/json")]
@@ -202,13 +229,36 @@ namespace DeltaQrCode.Controllers
             list.Add(ServiceType.Vulcanizare.ToDisplayString());
             return new JsonResult(list);
         }
+
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetTimeDictionary()
         {
             return new JsonResult(ConstantsAndEnums.TimeDictionary);
-
         }
 
+        [HttpGet]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetAvailableSpans(string startDateStr, string startHour, string rampId, string duration = "30", int? apptId = null)
+        {
+            try
+            {
+                DateTime selectedDate = DateTime.Parse(startDateStr);
+                var str = startHour.Split('_');
+                TimeSpan selectedOraInceput = new TimeSpan(int.Parse(str[0]), int.Parse(str[1]), 0);
+                var result = await _appointmentService.DateAndHourIsAvailable(selectedDate, selectedOraInceput, int.Parse(duration), int.Parse(rampId), apptId);
+                if (result.Successful)
+                {
+                    return new JsonResult(result.Entity);
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea intervalului orar in controller!");
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la gasirea intervalului orar in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea intervalului orar in controller!");
+            }
+        }
     }
 }

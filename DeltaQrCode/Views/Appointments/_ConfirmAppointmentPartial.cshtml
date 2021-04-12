@@ -1,45 +1,47 @@
 ﻿@using DeltaQrCode.ModelsDto
 @using Microsoft.AspNetCore.Razor.TagHelpers
-@model int
+@model DeltaQrCode.ViewModels.Appointments.ConfirmVM
+
 
 
 
 
 <div class="modal-header">
 
-    <h3 id="myDeleteApptModalLabel"> Mesaj de confirmare  </h3>
+    <h3 id="myConfirmApptModalLabel"> Mesaj de confirmare  </h3>
 
 </div>
 
 <div class="modal-body">
-    <h5> Esti sigur ca doresti sa stergi aceasta programare?</h5>
+    <input type="hidden" data-value="@Model.Confirm" id="confirmBool" />
+    <h5>@(!Model.Confirm? "Esti sigur ca doresti sa anulezi confirmarea?" : "Esti sigur ca doresti sa confirmi aceasta programare?")</h5>
 </div>
 
 <div class="modal-footer">
     <button type="button" class="btn btn-default btn-outline-success " data-dismiss="modal">Cancel</button>
-    <a class="btn btn-outline-danger btn-ok" id="confirmDelete" data-value="@Model">Delete</a>
+    <a class="btn btn-outline-primary btn-ok" id="actionConfirm" data-value="@Model.Id">@(!Model.Confirm?"Anuleaza confirmarea" : "Confirm")</a>
 </div>
 
 
 <script type="text/javascript">
 
-    $("#confirmDelete").click(function () {
+    $("#actionConfirm").click(function () {
 
-        var model = { id: $("#confirmDelete").attr("data-value") };
+        var model = { id: $("#actionConfirm").attr("data-value"), confirm: $("#confirmBool").attr("data-value") };
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("ConfirmDelete", "Appointments")",
+            url: "@Url.Action("ConfirmAppt", "Appointments")",
             data: model,
             dataType:"json",
             success: function (response) {
-                CloseModalById('myApptDeleteModal');
+                CloseModalById('myApptConfirmModal');
                 ShowHeaderAlert(response, "success", 5000);
                 clearAppointments();
                 getAppointmentsForSelectedDate();
             },
             error: function (error) {
-                CloseModalById('myApptDeleteModal');
+                CloseModalById('myApptConfirmModal');
                 ShowHeaderAlert(error.responseJSON.Message, "error",5000);
 
                 $.ajax({
