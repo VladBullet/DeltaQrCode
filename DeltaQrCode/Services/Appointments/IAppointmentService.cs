@@ -18,6 +18,6 @@ namespace DeltaQrCode.Services
         Task<Result<List<AppointmentDto>>> GetAppointmentsAsync(DateTime date);
         Task<Result<List<CaServicetypes>>> GetServiceTypes();
 
-        Task<Result<AvailableIntervalDto>> DateAndHourIsAvailable(DateTime selectedDate, TimeSpan selectedOraInceput, int selectedDurata, int selectedRampId);
+        Task<Result<AvailableIntervalDto>> DateAndHourIsAvailable(DateTime selectedDate, TimeSpan selectedOraInceput, int selectedDurata, int selectedRampId, int? apptId = null);
     }
 }

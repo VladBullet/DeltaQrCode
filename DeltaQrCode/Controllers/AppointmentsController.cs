@@ -195,15 +195,15 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public IActionResult ConfirmModal(int id, bool confirm)
         {
-            return PartialView("_ConfirmAppointmentPartial", new ConfirmVM(id,!confirm));
+            return PartialView("_ConfirmAppointmentPartial", new ConfirmVM(id, !confirm));
         }
 
         [HttpPost]
-        public async Task<ActionResult> ConfirmAppt(int id,bool confirm)
+        public async Task<ActionResult> ConfirmAppt(int id, bool confirm)
         {
             try
             {
-                var result = await _appointmentService.ConfirmAppointmentAsync(id,confirm);
+                var result = await _appointmentService.ConfirmAppointmentAsync(id, confirm);
 
                 if (result.Successful)
                 {
@@ -239,14 +239,14 @@ namespace DeltaQrCode.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAvailableSpans(string startDateStr, string startHour, string rampId, string duration = "30")
+        public async Task<IActionResult> GetAvailableSpans(string startDateStr, string startHour, string rampId, string duration = "30", int? apptId = null)
         {
             try
             {
                 DateTime selectedDate = DateTime.Parse(startDateStr);
                 var str = startHour.Split('_');
                 TimeSpan selectedOraInceput = new TimeSpan(int.Parse(str[0]), int.Parse(str[1]), 0);
-                var result = await _appointmentService.DateAndHourIsAvailable(selectedDate, selectedOraInceput, int.Parse(duration), int.Parse(rampId));
+                var result = await _appointmentService.DateAndHourIsAvailable(selectedDate, selectedOraInceput, int.Parse(duration), int.Parse(rampId), apptId);
                 if (result.Successful)
                 {
                     return new JsonResult(result.Entity);

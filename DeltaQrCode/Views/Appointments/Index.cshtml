@@ -186,24 +186,12 @@
 
                                     var thisAppt = $("#appt" + row.id);
                                     thisAppt.css("height", objHeight);
-                                    thisAppt.css("margin-top", marginTop);
+                                    //thisAppt.css("margin-top", marginTop);
                                     thisAppt.css("margin-left", marginLeft);
 
                                     if (row.confirmed) {
                                         thisAppt.css("background-color", 'lightgreen');
                                     }
-                                    //default color is silver on appt-no-height.
-                                    //switch (row.serviciuId) {
-                                    //case 1:
-                                    //    thisAppt.css("background-color", 'lightblue');
-                                    //    break;
-                                    //case 2:
-                                    //    thisAppt.css("background-color", 'lightgreen');
-                                    //    break;
-                                    //default:
-                                    //    // do nothing.
-                                    //    break;
-                                    //}
                                 }
                             });
                     };
@@ -315,13 +303,17 @@
             var hour = $(document).find("#StartTime_Hour").val();
             var min = $(document).find("#StartTime_Minutes").val();
             var time = hour + "_" + min;
-
+            var appt = $(document).find("#apptIdForGetSpans");
+            var apptId = null;
+            if (appt != undefined) {
+                apptId = $(appt).attr("data-value");
+            }
             var durata = $(document).find("#durataValue").attr("data-value");
             var rampId = $(document).find("#RampId").val();
             var span = $(document).find("#availableHourSpan");
 
             var url = "/Appointments/GetAvailableSpans"; // the url to the controller
-            $.get(url + '?startDateStr=' + datepickerVal + '&startHour=' + time + '&duration=' + durata + '&rampId=' + rampId,
+            $.get(url + '?startDateStr=' + datepickerVal + '&startHour=' + time + '&duration=' + durata + '&rampId=' + rampId + "&apptId=" + apptId,
                 function (data) {
                     console.log(data);
                     console.log(data.selectedIsAvailable);

@@ -16,6 +16,7 @@
     }
 </style>
 
+<input id="apptIdForGetSpans" hidden="hidden" data-value="@Model.Id" />
 <input id="defaultServiciu" hidden="hidden" data-value="@Model.Serviciu" />
 <input id="defaultDurata" hidden="hidden" data-value="@Model.DurataInMinute" />
 <div class="modal-header">
@@ -58,7 +59,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    <input id="durataValue" class="changeable" hidden="hidden" data-value="30" />
+                    <input id="durataValue" class="changeable" hidden="hidden" data-value="@Model.DurataInMinute" />
                     <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
                     @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
                 </div>
