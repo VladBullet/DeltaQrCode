@@ -11,14 +11,17 @@ namespace DeltaQrCode.Repositories
     using DeltaQrCode.Models;
 
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     public class AppointmentsRepository : IAppointmentsRepository
     {
         private readonly ApplicationDbContext _db;
+        private readonly ILogger _logger;
 
-        public AppointmentsRepository(ApplicationDbContext db)
+        public AppointmentsRepository(ApplicationDbContext db, ILogger logger)
         {
             _db = db;
+            _logger = logger;
         }
 
         public async Task<Result<CaAppointments>> GetAppointmentByIdAsync(int id)
@@ -28,9 +31,10 @@ namespace DeltaQrCode.Repositories
                 var result = await _db.CaAppointments.FirstAsync(x => x.Id == id && !x.Deleted);
                 return Result<CaAppointments>.ResultOk(result);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(e, "Ceva nu a mers bine la gasirea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea programarii in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in repository!", er);
             }
         }
 
@@ -44,7 +48,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la adaugarea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la adaugarea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea programarii in repository!", er);
             }
 
         }
@@ -62,7 +67,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la editarea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la editarea programarii in repository!", er);
             }
         }
 
@@ -79,7 +85,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(null, er, "Ceva nu a mers bine la anularea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la stergerea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la stergerea programarii in repository!", er);
             }
         }
 
@@ -93,9 +100,10 @@ namespace DeltaQrCode.Repositories
                 await _db.SaveChangesAsync();
                 return Result<CaAppointments>.ResultOk(result);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<CaAppointments>.ResultError(e, "Ceva nu a mers bine la confirmarea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la confirmarea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la confirmarea programarii in repository!", er);
             }
         }
 
@@ -109,7 +117,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<List<CaAppointments>>.ResultError(null, er, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea programarii in functie de data in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de data in repository!", er);
             }
         }
 
@@ -122,7 +131,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaServicetypes>.ResultError(null, er, "Ceva nu a mers bine la gasirea tipului de serviciu!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea tipului de serviciu in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in functie de id in repository!", er);
             }
 
         }
@@ -136,7 +146,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<List<CaServicetypes>>.ResultError(null, er, "Ceva nu a mers bine gasirea tipurilor de servicii!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea tipului de serviciu in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in repository!", er);
             }
 
         }
@@ -152,7 +163,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaServicetypes>.ResultError(null, er, "Ceva nu a mers bine la adaugarea marcii!");
+                _logger.LogError(er, "Ceva nu a mers bine la adaugarea tipului de serviciu in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in repository!", er);
             }
         }
 
@@ -166,7 +178,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                return Result<CaServicetypes>.ResultError(null, er, "Ceva nu a mers bine gasirea marcilor!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea tipului de serviciu in functie de label in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in functie de label in repository!", er);
             }
 
         }

@@ -17,17 +17,20 @@ namespace DeltaQrCode.Services
     using DeltaQrCode.Repositories;
     using DeltaQrCode.ViewModels;
     using DeltaQrCode.ViewModels.Appointments;
+    using Microsoft.Extensions.Logging;
 
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentsRepository _appointmentsRepository;
 
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper)
+        public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper, ILogger logger)
         {
             _appointmentsRepository = appointmentsRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<Result<AppointmentDto>> GetAppointmentByIdAsync(int id)
@@ -47,7 +50,8 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                return Result<AppointmentDto>.ResultError(null, er, "Ceva nu a mers bine la gasirea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea programarii in functie de id in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in servicii!", er);
             }
         }
 
@@ -59,6 +63,8 @@ namespace DeltaQrCode.Services
                 var serviciu = await _appointmentsRepository.GetServiceTypeByLableAsync(appointment.Serviciu);
                 if (!serviciu.Successful)
                 {
+                    //_logger.LogError("Ceva nu a mers bine la gasirea tipului de serviciu in metoda de adaugare programare(services)!");
+                    //throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in metoda de adaugare programare(services)!");
                     return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la gasirea tipului de serviciu!");
                 }
 
@@ -69,7 +75,9 @@ namespace DeltaQrCode.Services
 
                 if (!serviciu.Successful)
                 {
-                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugarea marcii!");
+                    //_logger.LogError("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
+                    //throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
+                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugareatipului de serviciu!");
                 }
 
                 appointment.ServiciuId = serviciu.Entity.Id;
@@ -82,11 +90,11 @@ namespace DeltaQrCode.Services
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
                 return Result<AppointmentDto>.ResultOk(model);
-
             }
             catch (Exception er)
             {
-                return Result<AppointmentDto>.ResultError(null, er, "Ceva nu a mers bine la adaugarea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la adaugarea programarii in servicii!");
+                throw new Exception("Ceva nu a mers bine la adaugarea programarii in servicii!", er);
             }
         }
 
@@ -97,6 +105,8 @@ namespace DeltaQrCode.Services
                 var serviciu = await _appointmentsRepository.GetServiceTypeByLableAsync(appt.Serviciu);
                 if (!serviciu.Successful)
                 {
+                    //_logger.LogError("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
+                    //throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
                     return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la gasirea tipului de serviciu!");
                 }
 
@@ -107,6 +117,8 @@ namespace DeltaQrCode.Services
 
                 if (!serviciu.Successful)
                 {
+                    //_logger.LogError("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
+                    //throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
                     return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugarea marcii!");
                 }
 
@@ -125,8 +137,8 @@ namespace DeltaQrCode.Services
             }
             catch (Exception er)
             {
-                throw new Exception("Ceva nu a mers bine la modificarea programarii!", er);
-                //return Result<AppointmentDto>.ResultError(null, er, "Ceva nu a mers bine la modificarea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la editarea programarii in servicii!");
+                throw new Exception("Ceva nu a mers bine la editarea programarii in servicii!", er);
             }
         }
 
@@ -139,9 +151,10 @@ namespace DeltaQrCode.Services
 
                 return Result<AppointmentDto>.ResultOk(model);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<AppointmentDto>.ResultError(e, "Ceva nu a mers bine la anularea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la stergerea programarii in servicii!");
+                throw new Exception("Ceva nu a mers bine la stergerea programarii in servicii!", er);
             }
         }
 
@@ -154,9 +167,10 @@ namespace DeltaQrCode.Services
 
                 return Result<AppointmentDto>.ResultOk(model);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<AppointmentDto>.ResultError(e, "Ceva nu a mers bine la confirmarea programarii!");
+                _logger.LogError(er, "Ceva nu a mers bine la confirmarea programarii in servicii!");
+                throw new Exception("Ceva nu a mers bine la confirmarea programarii in servicii!", er);
             }
         }
 
@@ -183,9 +197,10 @@ namespace DeltaQrCode.Services
 
                 return Result<List<AppointmentDto>>.ResultOk(model);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<List<AppointmentDto>>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea programarii in functie de data in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de data in servicii!", er);
             }
         }
 
@@ -196,9 +211,10 @@ namespace DeltaQrCode.Services
                 var result = await _appointmentsRepository.GetServiceTypesAsync();
                 return Result<List<CaServicetypes>>.ResultOk(result.Entity);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<List<CaServicetypes>>.ResultError(e);
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea tipului de serviciu in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in servicii!", er);
             }
         }
 
@@ -259,9 +275,10 @@ namespace DeltaQrCode.Services
                 return Result<AvailableIntervalDto>.ResultOk(result);
             }
 
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<AvailableIntervalDto>.ResultError(e, "Ceva nu a mers bine la gasirea programarilor pentru data ceruta!");
+                _logger.LogError(er, "Ceva nu a mers bine la extragerea orelor disponibile pentru programari in servicii!");
+                throw new Exception("Ceva nu a mers bine la extragerea orelor disponibile pentru programari in servicii!", er);
             }
 
 
