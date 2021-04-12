@@ -36,7 +36,7 @@ namespace DeltaQrCode.Controllers
         }
 
         //GET: Appointments
-        public ActionResult Index(string startDateString, string activeDateString)
+        public ActionResult Index(string startDateString, string activeDateString) // TODO: De vazut VLAD
         {
 
 
@@ -62,15 +62,12 @@ namespace DeltaQrCode.Controllers
 
 
 
-        public async Task<JsonResult> GetAppointmentsForDate(string apptDate)
+        public async Task<JsonResult> GetAppointmentsForDate(string apptDate) // TODO: De vazut VLAD
         {
             DateTime dt;
             DateTime.TryParse(apptDate, out dt);
             if (dt == new DateTime())
                 dt = DateTime.Now.Date;
-
-            //List<AppointmentForProUiDto> appointmentsList = _appointmentQueries.GetUiDto_AppointmentsForProfessionalOrEmployee(User.Identity.GetUserId(), professionalId, dt.Date, dt.Date.AddDays(1));
-
             var appointmentsList = await _appointmentService.GetAppointmentsAsync(dt);
             if (appointmentsList.Entity == null)
             {
@@ -104,18 +101,27 @@ namespace DeltaQrCode.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAppt(AppointmentVM appt)
         {
-            appt.OraInceput = TimeSpan.FromMinutes(appt.StartTime_Hour * 60 + appt.StartTime_Minutes);
-            appt.DataAppointment.AddHours(appt.StartTime_Hour).AddMinutes(appt.StartTime_Minutes);
-
-            var dto = _mapper.Map<AppointmentDto>(appt);
-            var result = await _appointmentService.UpdateAppointmentAsync(dto);
-
-            if (result.Successful)
+            try
             {
-                return Ok(JsonConvert.SerializeObject("Programarea a fost adaugata cu succes!"));
-            }
+                appt.OraInceput = TimeSpan.FromMinutes(appt.StartTime_Hour * 60 + appt.StartTime_Minutes);
+                appt.DataAppointment.AddHours(appt.StartTime_Hour).AddMinutes(appt.StartTime_Minutes);
 
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
+                var dto = _mapper.Map<AppointmentDto>(appt);
+                var result = await _appointmentService.UpdateAppointmentAsync(dto);
+
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Programarea a fost editata cu succes!"));
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la editarea programarii in controller!");
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ceva nu a mers bine la editarea programarii in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la editarea programarii in controller!");
+            }
         }
 
         [HttpGet]
@@ -136,21 +142,25 @@ namespace DeltaQrCode.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddAppt(AppointmentVM appt) //ADDMODAL
         {
-            //if (ModelState.IsValid)
-            //{
-            appt.OraInceput = new TimeSpan(appt.StartTime_Hour, appt.StartTime_Minutes, 0);
-            var model = _mapper.Map<AppointmentDto>(appt);
-            var result = await _appointmentService.AddAppointmentAsync(model);
-            //_appointmentQueries.AddOrUpdateAppointmentFromDto(User.Identity.GetUserId(), appointment.ProfessionalId.ToString(), appointment);
-
-            if (result.Successful)
+            try
             {
-                return Ok(JsonConvert.SerializeObject("Programarea a fost adaugata!"));
+                appt.OraInceput = new TimeSpan(appt.StartTime_Hour, appt.StartTime_Minutes, 0);
+                var model = _mapper.Map<AppointmentDto>(appt);
+                var result = await _appointmentService.AddAppointmentAsync(model);
 
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Programarea a fost adaugata!"));
+
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea programarii in controller!");
             }
-
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
-
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ceva nu a mers bine la adaugarea programarii in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea programarii in controller!");
+            }
         }
 
         // DELETE
@@ -164,14 +174,23 @@ namespace DeltaQrCode.Controllers
         [HttpPost]
         public async Task<ActionResult> ConfirmDelete(int id)
         {
-            var result = await _appointmentService.DeleteAppointmentAsync(id);
-
-            if (result.Successful)
+            try
             {
-                return Ok(JsonConvert.SerializeObject("Programarea a fost stearsa!"));
+                var result = await _appointmentService.DeleteAppointmentAsync(id);
+
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Programarea a fost stearsa!"));
+                }
+
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea programarii in controller!");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ceva nu a mers bine la stergerea programarii in controller!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea programarii in controller!");
             }
 
-            return BadRequest(JsonConvert.SerializeObject(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = result.Error.Message }));
         }
 
         [HttpGet]
@@ -206,12 +225,12 @@ namespace DeltaQrCode.Controllers
                     return new JsonResult(result.Entity);
                 }
 
-                return BadRequest("Ceva nu a mers bine la gasirea intervalului orar!");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea intervalului orar in controller!");
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Ceva nu a mers bine la gasirea intervalului orar in controller!");
-                return RedirectToAction("ErrorModal", "Error");
+                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea intervalului orar in controller!");
             }
         }
     }
