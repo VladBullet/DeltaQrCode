@@ -14,18 +14,20 @@ namespace DeltaQrCode.Services.Hotel
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.ViewModels;
-
+    using Microsoft.Extensions.Logging;
     using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
     public class HotelService : IHotelService
     {
         private readonly IHotelAnvelopeRepository _hotelRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public HotelService(IHotelAnvelopeRepository hotelRepository, IMapper mapper)
+        public HotelService(IHotelAnvelopeRepository hotelRepository, IMapper mapper, ILogger logger)
         {
             _hotelRepository = hotelRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id)
@@ -48,7 +50,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!", er);
             }
         }
         public async Task<Result<List<SetAnvelopeDto>>> GetAllSetAnvelopeAsync()
@@ -63,11 +66,12 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                return Result<List<SetAnvelopeDto>>.ResultError(null, er, "Ceva nu a mers bine la gasirea setului de anvelope!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea tuturor seturilor de anvelope in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea tuturor seturilor de anvelope in servicii!", er);
             }
         }
 
-        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv)
+        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv) // TODO: Vlad
         {
             try
             {
@@ -135,7 +139,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la adaugarea setului de anvelope!");
+                _logger.LogError(er, "Ceva nu a mers bine la adaugarea setului de anvelope in servicii!");
+                throw new Exception("Ceva nu a mers bine la adaugarea setului de anvelope in servicii!", er);
             }
         }
 
@@ -194,7 +199,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la modificarea setului de anvelope!");
+                _logger.LogError(er, "Ceva nu a mers bine la editarea setului de anvelope in servicii!");
+                throw new Exception("Ceva nu a mers bine la editarea setului de anvelope in servicii!", er);
             }
         }
 
@@ -231,8 +237,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                return Result<List<SetAnvelopeDto>>.ResultError(null, er, "Eroare la citirea din serviciu!");
-
+                _logger.LogError(er, "Ceva nu a mers bine la cautarea setului de anvelope in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea setului de anvelope in servicii!", er);
             }
         }
         public async Task<Result<SetAnvelopeDto>> DeleteSetAnvelopeAsync(int id)
@@ -247,7 +253,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                return Result<SetAnvelopeDto>.ResultError(null, er, "Ceva nu a mers bine la stergerea setului de anvelope!");
+                _logger.LogError(er, "Ceva nu a mers bine la stergerea setului de anvelope in servicii!");
+                throw new Exception("Ceva nu a mers bine la stergerea setului de anvelope in servicii!", er);
             }
         }
 
@@ -261,7 +268,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                return Result<List<Position>>.ResultError(null, er, "Ceva nu a mers bine la gasirea pozitiilor libere in raft!");
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!", er);
             }
         }
 
@@ -272,9 +280,10 @@ namespace DeltaQrCode.Services.Hotel
                 var result = await _hotelRepository.GetMarciAsync();
                 return Result<List<CaMarca>>.ResultOk(result.Entity);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<List<CaMarca>>.ResultError(e);
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea marcii in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea marcii in servicii!", er);
             }
         }
 
@@ -285,9 +294,10 @@ namespace DeltaQrCode.Services.Hotel
                 var result = await _hotelRepository.GetFlotaAsync();
                 return Result<List<CaFlota>>.ResultOk(result.Entity);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
-                return Result<List<CaFlota>>.ResultError(e);
+                _logger.LogError(er, "Ceva nu a mers bine la gasirea flotei in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea flotei in servicii!", er);
             }
         }
     }
