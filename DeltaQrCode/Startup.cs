@@ -96,10 +96,6 @@ namespace DeltaQrCode
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
             app.UseCookiePolicy(new CookiePolicyOptions()
             {
                 MinimumSameSitePolicy = SameSiteMode.Strict

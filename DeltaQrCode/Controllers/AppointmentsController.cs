@@ -208,7 +208,12 @@ namespace DeltaQrCode.Controllers
 
                 if (result.Successful)
                 {
-                    return Ok(JsonConvert.SerializeObject("Programarea a fost confirmata!"));
+                    var message = "Programarea a fost confirmata!";
+                    if (!result.Entity.Confirmed)
+                    {
+                        message = "A fost anulata confirmarea programarii!";
+                    }
+                    return Ok(JsonConvert.SerializeObject(message));
                 }
 
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la confirmarea programarii in controller!");

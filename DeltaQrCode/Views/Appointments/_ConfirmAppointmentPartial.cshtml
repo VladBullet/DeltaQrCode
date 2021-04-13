@@ -14,12 +14,12 @@
 
 <div class="modal-body">
     <input type="hidden" data-value="@Model.Confirm" id="confirmBool" />
-    <h5>@(Model.Confirm? "Esti sigur ca doresti sa anulezi confirmarea?" : "Esti sigur ca doresti sa confirmi aceasta programare?")</h5>
+    <h5>@(!Model.Confirm? "Esti sigur ca doresti sa anulezi confirmarea?" : "Esti sigur ca doresti sa confirmi aceasta programare?")</h5>
 </div>
 
 <div class="modal-footer">
     <button type="button" class="btn btn-default btn-outline-success " data-dismiss="modal">Cancel</button>
-    <a class="btn btn-outline-primary btn-ok" id="actionConfirm" data-value="@Model.Id">@(Model.Confirm?"Anuleaza confirmarea" : "Confirm")</a>
+    <a class="btn btn-outline-primary btn-ok" id="actionConfirm" data-value="@Model.Id">@(!Model.Confirm?"Anuleaza confirmarea" : "Confirm")</a>
 </div>
 
 

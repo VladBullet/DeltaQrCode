@@ -124,7 +124,9 @@
                 { startDateStr: startDate, startHour: startHour, rampId: rampId },
                 function(data) {
                     $('#partialInfo').html(data);
+                    preOpenModal();
                     $('#myApptModal').modal('show');
+                    makeModalScrollable("myApptModal");
 
                     var dateFromPage = $("#datepicker").val();
                     var datePage = new Date(dateFromPage);
@@ -135,11 +137,13 @@
         var apptEditModalDialog = function(id) {
 
             var url = "/Appointments/ModalEdit"; // the url to the controller
-            $.get(url + '?id=' + id ,
-                function (data) {
+            $.get(url + '?id=' + id,
+                function(data) {
                     CloseModalById('myApptMenuModal');
                     $('#partialInfo').html(data);
+                    preOpenModal();
                     $('#myApptModal').modal('show');
+                    makeModalScrollable("myApptModal");
 
 
                     var dateFromPage = $("#datepicker").val();
@@ -150,13 +154,15 @@
                 });
         };
 
-        var apptMenuModalDialog = function (id,confirm) {
+        var apptMenuModalDialog = function(id, confirm) {
 
             var url = "/Appointments/MenuModal"; // the url to the controller
             $.get(url + '?id=' + id + '&confirm=' + confirm,
-                function (data) {
+                function(data) {
                     $('#partialInfoMenu').html(data);
+                    preOpenModal();
                     $('#myApptMenuModal').modal('show');
+                    makeModalScrollable("myApptMenuModal");
                 });
         };
 
@@ -187,7 +193,9 @@
                                     var apptRow = $(rampId + " " + ".hour" + row.startTime_Hour + "_" + minutesText);
 
 
-                                    var stringToAppend = '<div data-confirm="' + row.confirmed + '" id="appt' +
+                                    var stringToAppend = '<div data-confirm="' +
+                                        row.confirmed +
+                                        '" id="appt' +
                                         row.id +
                                         '" class="appt-no-height">' +
                                         row.numarInmatriculare +
@@ -221,10 +229,10 @@
                         function(event) {
                             // dont allow the event to propagate to hour click.
                             event.stopPropagation();
-                            console.log($(this));
                             var confirm = $(this).attr("data-confirm");
+                            console.log("22222 :",confirm);
                             var fullId = $(this).attr("id").replace('appt', '');
-                            apptMenuModalDialog(fullId,confirm );
+                            apptMenuModalDialog(fullId, confirm);
                         });
 
                     /* scroll to a better position */
@@ -233,20 +241,18 @@
         };
 
 
+
         /* click event on the hour */
         $('.hour').on('click',
             function(event) {
                 event.stopPropagation();
                 var self = $(this);
-                console.log(self);
 
                 var startHourOnly = $(this).attr("class").replace('hour-red', '');
                 startHourOnly = startHourOnly.replaceAll("hour", "");
 
                 var selectedDateDiv = $('#datepicker');
                 var rampNr = self.closest(".ramp").attr("data-value");
-                console.log("closest: ", self.closest(".ramp"));
-                console.log(rampNr);
                 // Make the modal here!
                 apptNewModalDialog(selectedDateDiv.val(), startHourOnly, rampNr);
             });
@@ -269,10 +275,12 @@
 
             var url = "/Appointments/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
-                function (data) {
+                function(data) {
                     CloseModalById('myApptMenuModal');
                     $('#partialInfoDelete').html(data);
+                    preOpenModal();
                     $('#myApptDeleteModal').modal('show');
+                    makeModalScrollable("myApptDeleteModal");
                 });
         };
 
@@ -285,47 +293,55 @@
                 deleteApptModalDialog(id);
             });
 
-        var confirmApptModalDialog = function (id) {
+        var confirmApptModalDialog = function(id, confirm) {
 
             var url = "/Appointments/ConfirmModal"; // the url to the controller
-            $.get(url + '?id=' + id + '&confirm=' + $(document).find("#Confirmed").prop("checked"),
-                function (data) {
+            console.log("confirmed is: " + confirm);
+            $.get(url + '?id=' + id + '&confirm=' + confirm,
+                function(data) {
                     CloseModalById('myApptMenuModal');
                     $('#partialInfoConfirm').html(data);
+                    preOpenModal();
                     $('#myApptConfirmModal').modal('show');
+                    makeModalScrollable("myApptConfirmModal");
                 });
         };
 
         $(document).on('click',
             '#confirmButton',
-            function(event) {
+            function (event) {
+
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
-                confirmApptModalDialog(id);
+                var confirm = $(this).attr("data-confirm");
+                confirmApptModalDialog(id,confirm);
             });
 
         $(document).on('click',
             '#editButton',
-            function (event) {
+            function(event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
                 apptEditModalDialog(id);
             });
 
-        $(document).on("change", ".changeable", function () {
-            checkDateAndTimeAvailable();
-        });
+        $(document).on("change",
+            ".changeable",
+            function() {
+                checkDateAndTimeAvailable();
+            });
 
 
-
-        $(document).on('select2:select', "#Durata", function (e) {
-            var data = e.params.data;
-            var durataval = $(document).find("#durataValue");
-            durataval.attr("data-value", data.id);
-            durataval.trigger("change");
-        });
+        $(document).on('select2:select',
+            "#Durata",
+            function(e) {
+                var data = e.params.data;
+                var durataval = $(document).find("#durataValue");
+                durataval.attr("data-value", data.id);
+                durataval.trigger("change");
+            });
 
 
         var checkDateAndTimeAvailable = function() {
@@ -344,7 +360,7 @@
 
             var url = "/Appointments/GetAvailableSpans"; // the url to the controller
             $.get(url + '?startDateStr=' + datepickerVal + '&startHour=' + time + '&duration=' + durata + '&rampId=' + rampId + "&apptId=" + apptId,
-                function (data) {
+                function(data) {
                     console.log(data);
                     console.log(data.selectedIsAvailable);
                     console.log(data.availableSpans);
@@ -356,15 +372,14 @@
                         span.text("Selectia de data si ora este buna! Nu se suprapune cu alta programare!").removeClass("text-danger").addClass("text-success");
                         span.removeClass("hide");
                         console.log("aici2");
-                    }
-                    else {
+                    } else {
                         console.log("nu aici");
                         var message = "Selectia nu este buna!";
                         if (data.availableSpans.length > 0) {
                             console.log("nu aici2");
                             message += " Pentru durata selectata, urmatoarele ore sunt disponibile:";
                             $.each(data.availableSpans,
-                                function (index, value) {
+                                function(index, value) {
                                     console.log("nu aici3");
                                     message = message + " " + value;
                                 });
@@ -375,8 +390,6 @@
                     }
                 });
         }
-
-
 
     </script>
 

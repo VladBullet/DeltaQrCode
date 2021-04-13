@@ -2,7 +2,26 @@
 function CloseModalById(id) {
     var stringid = '#' + id;
     $(stringid).modal('toggle');
+    afterModalClose();
 };
+
+var preOpenModal = function () {
+    var $body = $(document.body);
+    var oldWidth = $body.innerWidth();
+    $body.css("overflow", "hidden");
+    $body.width(oldWidth);
+};
+
+var afterModalClose = function () {
+    var $body = $(document.body);
+    $body.css("overflow", "auto");
+    $body.width("auto");
+};
+
+var makeModalScrollable = function (id) {
+    var modal = $(document).find("#" + id);
+    $(modal).css("overflow", "auto");
+}
 
 function Uzura() {
     var self = this;
