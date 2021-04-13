@@ -63,9 +63,8 @@ namespace DeltaQrCode.Services
                 var serviciu = await _appointmentsRepository.GetServiceTypeByLableAsync(appointment.Serviciu);
                 if (!serviciu.Successful)
                 {
-                    //_logger.LogError("Ceva nu a mers bine la gasirea tipului de serviciu in metoda de adaugare programare(services)!");
-                    //throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in metoda de adaugare programare(services)!");
-                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la gasirea tipului de serviciu!");
+                    Log.Error("Ceva nu a mers bine la gasirea tipului de serviciu in metoda de adaugare programare(services)!");
+                    throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in metoda de adaugare programare(services)!");
                 }
 
                 if (serviciu.Entity == null && !string.IsNullOrEmpty(appointment.Serviciu))
@@ -75,9 +74,8 @@ namespace DeltaQrCode.Services
 
                 if (!serviciu.Successful)
                 {
-                    //_logger.LogError("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
-                    //throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
-                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugareatipului de serviciu!");
+                    Log.Error("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
+                    throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
                 }
 
                 appointment.ServiciuId = serviciu.Entity.Id;
@@ -105,9 +103,8 @@ namespace DeltaQrCode.Services
                 var serviciu = await _appointmentsRepository.GetServiceTypeByLableAsync(appt.Serviciu);
                 if (!serviciu.Successful)
                 {
-                    //_logger.LogError("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
-                    //throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
-                    return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la gasirea tipului de serviciu!");
+                    Log.Error("Ceva nu a mers bine la gasirea tipului de serviciu in metoda de editare programare(services)!");
+                    throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in metoda de editare programare(services)!");
                 }
 
                 if (serviciu.Entity == null && !string.IsNullOrEmpty(appt.Serviciu))
@@ -117,9 +114,8 @@ namespace DeltaQrCode.Services
 
                 if (!serviciu.Successful)
                 {
-                    Log.Error("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
-                    throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
-                    //return Result<AppointmentDto>.ResultError(serviciu.Error, "Problema la adaugarea marcii!");
+                    Log.Error("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de editare programare(services)!");
+                    throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de editare programare(services)!");
                 }
 
                 appt.ServiciuId = serviciu.Entity.Id;
