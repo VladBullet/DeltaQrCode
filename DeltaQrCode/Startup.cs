@@ -32,7 +32,9 @@ namespace DeltaQrCode
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            var EmailSettingsSection =
+                Configuration.GetSection("EmailSettings");
+            services.Configure<EmailSettings>(EmailSettingsSection);
 
             services.Configure<CookiePolicyOptions>(options =>
             {

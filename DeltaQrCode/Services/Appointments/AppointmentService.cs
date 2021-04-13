@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 namespace DeltaQrCode.Services
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Globalization;
     using System.Runtime.InteropServices.ComTypes;
     using System.Security.Cryptography.X509Certificates;
     using System.Security.Policy;
+    using System.Text;
 
     using AutoMapper;
 
@@ -16,9 +18,13 @@ namespace DeltaQrCode.Services
     using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
+    using DeltaQrCode.Services.Mail;
     using DeltaQrCode.ViewModels;
     using DeltaQrCode.ViewModels.Appointments;
     using Microsoft.Extensions.Logging;
+
+    using MimeKit.Text;
+
     using Serilog;
 
     public class AppointmentService : IAppointmentService
@@ -26,11 +32,13 @@ namespace DeltaQrCode.Services
         private readonly IAppointmentsRepository _appointmentsRepository;
 
         private readonly IMapper _mapper;
+        private readonly IMailService _mailService;
 
-        public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper)
+        public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper, IMailService mailService)
         {
             _appointmentsRepository = appointmentsRepository;
             _mapper = mapper;
+            _mailService = mailService;
         }
 
         public async Task<Result<AppointmentDto>> GetAppointmentByIdAsync(int id)
@@ -59,7 +67,6 @@ namespace DeltaQrCode.Services
         {
             try
             {
-
                 var serviciu = await _appointmentsRepository.GetServiceTypeByLableAsync(appointment.Serviciu);
                 if (!serviciu.Successful)
                 {
@@ -87,6 +94,24 @@ namespace DeltaQrCode.Services
 
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
+
+                if (!string.IsNullOrEmpty(model.EmailClient))
+                {
+                    StringBuilder emailMessage = new StringBuilder("<div>")
+                        .Append("Buna ziua!")
+                        .AppendLine()
+                        .Append("Va informam ca ati facut o programare pentru data de: ")
+                        .Append(model.DataAppointment.ToString("d", new CultureInfo("ro-RO")))
+                        .Append(", la ora : " + model.OraInceput.Hours + ":" + (model.OraInceput.Minutes == 0 ? "00" : model.OraInceput.Minutes.ToString()))
+                        .Append(", pentru serviciul de " + appointment.Serviciu + " in incinta firmei Delta.")
+                        .AppendLine()
+                        .Append("Accesati adresa " + "<a href=\"https://goo.gl/maps/eQ3rRpN9bqDmErE58\">aici</a>")
+                        .Append("</div>");
+                        
+
+                    var sent = await _mailService.SendEmail(model.EmailClient, emailMessage.ToString(), "Programarea dvs. la Delta Auto", TextFormat.Html);
+                }
+
                 return Result<AppointmentDto>.ResultOk(model);
             }
             catch (Exception er)
@@ -119,9 +144,6 @@ namespace DeltaQrCode.Services
                 }
 
                 appt.ServiciuId = serviciu.Entity.Id;
-
-
-                var confirmed = await ConfirmAppointmentAsync(appt.Id, appt.Confirmed);
 
                 appt.LastModified = DateTime.Now;
 

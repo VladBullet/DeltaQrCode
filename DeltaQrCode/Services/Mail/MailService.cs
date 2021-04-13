@@ -11,6 +11,8 @@ namespace DeltaQrCode.Services.Mail
     using MailKit.Net.Smtp;
     using MailKit.Security;
 
+    using Microsoft.Extensions.Options;
+
     using MimeKit;
     using MimeKit.Text;
 
@@ -20,12 +22,12 @@ namespace DeltaQrCode.Services.Mail
     {
         private readonly EmailSettings _smtpSettings;
 
-        public MailService(EmailSettings smtpSettings)
+        public MailService(IOptions<EmailSettings> smtpSettings)
         {
-            _smtpSettings = smtpSettings;
+            _smtpSettings = smtpSettings.Value;
         }
 
-        public async Task<Result<MailDto>> SendEmail(string toEmail, string message, string subject, TextFormat emailFormat = TextFormat.Text, string HTMLMessageContent = null)
+        public async Task<Result<MailDto>> SendEmail(string toEmail, string message, string subject, TextFormat emailFormat = TextFormat.Text)
         {
             try
             {
@@ -34,7 +36,7 @@ namespace DeltaQrCode.Services.Mail
                 email.To.Add(MailboxAddress.Parse(toEmail));
                 email.Subject = subject;
                 email.Body = new TextPart(emailFormat) { Text = message };
-
+                
                 // send email
                 var smtp = new SmtpClient();
                 await smtp.ConnectAsync(_smtpSettings.MailServer, _smtpSettings.MailPort, SecureSocketOptions.StartTls);
