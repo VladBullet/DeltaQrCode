@@ -15,6 +15,7 @@ namespace DeltaQrCode.ModelsDto
         public string NumarInmatriculare { get; set; }
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
+        public string SerieSasiu { get; set; }
         public uint? MarcaId { get; set; }
         public uint? FlotaId { get; set; }
         public string Flota { get; set; }

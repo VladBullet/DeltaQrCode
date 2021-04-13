@@ -14,6 +14,13 @@ BEGIN
                         ' => ',
                         NEW.NumeClient, '; ');
 	END IF;
+	# ------- SerieSasiu -------
+    IF NEW.SerieSasiu <> OLD.SerieSasiu THEN
+    SET changes = CONCAT(changes, 'SerieSasiu: ',
+                        OLD.SerieSasiu,
+                        ' => ',
+                        NEW.SerieSasiu, '; ');
+	END IF;
       # ------- NumarTelefon -------
     IF NEW.NumarTelefon <> OLD.NumarTelefon THEN
     SET changes = CONCAT(changes, 'NumarTelefon: ',
@@ -44,7 +51,7 @@ BEGIN
 	END IF;
       # ------- Interval -------
     IF NEW.`Interval` <> OLD.`Interval` THEN
-    SET changes = CONCAT(changes, "Interval: ",
+    SET changes = CONCAT(changes, 'Interval: ',
                         OLD.`Interval`,
                         ' => ',
                         NEW.`Interval`, '; ');

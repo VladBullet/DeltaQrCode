@@ -59,6 +59,14 @@
                     </div>
 
                     <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.SerieSasiu, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.SerieSasiu, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                            @Html.ValidationMessageFor(model => model.SerieSasiu, "", new { @class = "text-danger error_span" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })

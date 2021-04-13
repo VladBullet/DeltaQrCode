@@ -11,6 +11,7 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string NumarInmatriculare { get; set; }
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
+        public string SerieSasiu { get; set; }
         public string PozitieInRaft { get; set; }
         public int? MarcaId { get; set; }
         public int? FlotaId { get; set; }

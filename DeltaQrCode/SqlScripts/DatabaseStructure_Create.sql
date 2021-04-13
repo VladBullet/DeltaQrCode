@@ -132,9 +132,11 @@ CREATE TABLE `ca_set_anvelope` (
   `DataUltimaModificare` datetime NOT NULL,
   `Deleted` bit(1) NOT NULL,
   `FlotaId` int unsigned DEFAULT NULL,
+  `SerieSasiu` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+
 
 
 CREATE TABLE `ca_users` (

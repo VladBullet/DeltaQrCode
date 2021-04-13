@@ -9,6 +9,7 @@ namespace DeltaQrCode.Models
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
         public string NumarInmatriculare { get; set; }
+        public string SerieSasiu { get; set; }
         public string Rand { get; set; }
         public string Pozitie { get; set; }
         public string Interval { get; set; }
