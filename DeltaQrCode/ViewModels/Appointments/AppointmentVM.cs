@@ -35,6 +35,8 @@ namespace DeltaQrCode.ViewModels.Appointments
         public int DurataInMinute { get; set; }
         public TimeSpan OraSfarsit => OraInceput.Add(new TimeSpan(0, 0, DurataInMinute, 0));
         public bool Confirmed { get; set; }
+        public string ConfirmedCode { get; set; }
+        public DateTime? ConfirmedDate { get; set; }
         public string Observatii { get; set; }
 
         public int StartTime_Hour { get; set; }

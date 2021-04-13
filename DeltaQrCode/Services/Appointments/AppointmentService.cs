@@ -7,6 +7,7 @@ namespace DeltaQrCode.Services
 {
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
+    using System.Reflection.PortableExecutable;
     using System.Runtime.InteropServices.ComTypes;
     using System.Security.Cryptography.X509Certificates;
     using System.Security.Policy;
@@ -107,7 +108,7 @@ namespace DeltaQrCode.Services
                         .AppendLine()
                         .Append("Accesati adresa " + "<a href=\"https://goo.gl/maps/eQ3rRpN9bqDmErE58\">aici</a>")
                         .Append("</div>");
-                        
+
 
                     var sent = await _mailService.SendEmail(model.EmailClient, emailMessage.ToString(), "Programarea dvs. la Delta Auto", TextFormat.Html);
                 }
@@ -148,6 +149,7 @@ namespace DeltaQrCode.Services
                 appt.LastModified = DateTime.Now;
 
                 var app = _mapper.Map<CaAppointments>(appt);
+
                 var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
                 return Result<AppointmentDto>.ResultOk(model);

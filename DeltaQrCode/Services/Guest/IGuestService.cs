@@ -10,6 +10,6 @@ namespace DeltaQrCode.Services.Guest
 
     public interface IGuestService
     {
-        Task<Result<EmptyDto>> ConfirmAppointmentAsync(string guid);
+        Task<Result<GuestInfoDto>> ConfirmAppointmentAsync(string guid);
     }
 }
