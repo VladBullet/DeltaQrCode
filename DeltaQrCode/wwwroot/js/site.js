@@ -5,6 +5,10 @@ function CloseModalById(id) {
     afterModalClose();
 };
 
+$('.modal').on('hidden.bs.modal', function (event) {
+    afterModalClose();
+});
+
 var preOpenModal = function () {
     var $body = $(document.body);
     var oldWidth = $body.innerWidth();
