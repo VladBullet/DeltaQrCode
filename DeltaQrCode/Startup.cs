@@ -13,6 +13,7 @@ namespace DeltaQrCode
     using AutoMapper;
 
     using DeltaQrCode.HelpersAndExtensions;
+    using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.Services.Hotel;
     using DeltaQrCode.Services.Mail;
@@ -31,6 +32,8 @@ namespace DeltaQrCode
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
