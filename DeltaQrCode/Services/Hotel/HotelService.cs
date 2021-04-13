@@ -134,6 +134,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
                 modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
+                modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
                 // send model to database
                 var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
                 var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
@@ -192,6 +193,7 @@ namespace DeltaQrCode.Services.Hotel
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
                 modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
                 modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
+                modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
