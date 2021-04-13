@@ -15,6 +15,8 @@ namespace DeltaQrCode
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
+    using DeltaQrCode.Repositories.Guest;
+    using DeltaQrCode.Services.Guest;
     using DeltaQrCode.Services.Hotel;
     using DeltaQrCode.Services.Mail;
 
@@ -49,6 +51,8 @@ namespace DeltaQrCode
             services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IGuestService, GuestService>();
+            services.AddScoped<IGuestRepository, GuestRepository>();
 
             services.AddScoped<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
             services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();

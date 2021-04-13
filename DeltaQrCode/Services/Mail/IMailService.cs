@@ -12,9 +12,9 @@ namespace DeltaQrCode.Services.Mail
 
     public interface IMailService
     {
-        Task<Result<MailDto>> SendEmail(string toEmail, string message, string subject, TextFormat emailFormat = TextFormat.Text);
+        Task<Result<EmptyDto>> SendEmail(string toEmail, string message, string subject, TextFormat emailFormat = TextFormat.Text);
 
-        Task<Result<MailDto>> SendErrorMail(Exception e, string message, TextFormat emailFormat = TextFormat.Text);
+        Task<Result<EmptyDto>> SendErrorMail(Exception e, string message, TextFormat emailFormat = TextFormat.Text);
 
     }
 }

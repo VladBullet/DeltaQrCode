@@ -1,0 +1,21 @@
+﻿
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Swal.fire({
+                title: 'Vesti bune!',
+                html: 'Am modificat programarea dvs. si service-ul a fost anuntat!',
+                footer: 'Acest mesaj se va inchide automat! Si veti fi redirectionat/a pe pagina principala!',
+                icon: 'success',
+                timer: 10000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                willClose: () => {
+                    window.location.href = 'http://www.gpsgps.ro/';
+                }
+            });
+        });
+    </script>
+}

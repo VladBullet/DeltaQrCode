@@ -27,7 +27,7 @@ namespace DeltaQrCode.Services.Mail
             _smtpSettings = smtpSettings.Value;
         }
 
-        public async Task<Result<MailDto>> SendEmail(string toEmail, string message, string subject, TextFormat emailFormat = TextFormat.Text)
+        public async Task<Result<EmptyDto>> SendEmail(string toEmail, string message, string subject, TextFormat emailFormat = TextFormat.Text)
         {
             try
             {
@@ -43,16 +43,16 @@ namespace DeltaQrCode.Services.Mail
                 await smtp.AuthenticateAsync(_smtpSettings.UserName, _smtpSettings.Password);
                 await smtp.SendAsync(email);
                 await smtp.DisconnectAsync(true);
-                return Result<MailDto>.ResultOk(null, "Mail trimis cu success!");
+                return Result<EmptyDto>.ResultOk(null, "Mail trimis cu success!");
             }
             catch (Exception e)
             {
                 Log.Error(e, "Eroare la trimiterea email-ului!");
-                return Result<MailDto>.ResultError(e, "Eroare la trimiterea email-ului!");
+                return Result<EmptyDto>.ResultError(e, "Eroare la trimiterea email-ului!");
             }
         }
 
-        public async Task<Result<MailDto>> SendErrorMail(Exception e, string message, TextFormat emailFormat = TextFormat.Text)
+        public async Task<Result<EmptyDto>> SendErrorMail(Exception e, string message, TextFormat emailFormat = TextFormat.Text)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace DeltaQrCode.Services.Mail
             catch (Exception er)
             {
                 Log.Error(er, "Eroare la trimiterea email-ului de eroare!");
-                return Result<MailDto>.ResultError(er, "Eroare la trimiterea email-ului de eroare!");
+                return Result<EmptyDto>.ResultError(er, "Eroare la trimiterea email-ului de eroare!");
             }
         }
     }

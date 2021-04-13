@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity; 
+﻿@using Microsoft.AspNetCore.Identity;
 
 <!DOCTYPE html>
 <html>
@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="~/lib/jquery-ui-1.12.1/jquery-ui.theme.css" />
     <link rel="stylesheet" href="~/lib/select2/dist/css/select2.css" />
     <link href="~/lib/select2/dist/css/select2-bootstrap4.min.css" rel="stylesheet">
+    <link href="~/lib/sweetAlert/sweetalert.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="/css/all.css" rel="stylesheet">
     <script data-search-pseudo-elements="" defer="" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
@@ -48,8 +49,8 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Hotel" asp-action="Index">HotelAnvelope </a>
                                 </li>
-                                }
                             }
+                        }
                     </ul>
                 </div>
             </div>
@@ -101,7 +102,16 @@
     <script src="~/lib/select2/dist/js/select2.full.js"></script>
     <script src="~/lib/select2/dist/js/select2.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+
+
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/sweetAlert/sweetalert.js"></script>
+    <script src="~/lib/sweetAlert/sweetalert.min.js"></script>
+
     <script type="text/javascript" src="~/lib/Scripts/HeaderAlerts.js"></script>
     <script type="text/javascript" src="~/js/custom-form-validation.js"></script>
     <script type="text/javascript" src="~/js/validationRules.js"></script>

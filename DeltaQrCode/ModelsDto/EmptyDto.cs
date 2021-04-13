@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.ModelsDto
 {
-    public class MailDto
+    public class EmptyDto
     {
     }
 }

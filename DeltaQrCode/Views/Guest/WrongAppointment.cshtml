@@ -1,0 +1,16 @@
+﻿
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Nu am reusit sa modificam programarea dvs.! </br> Va rugam contactati service-ul la nr: +40.745.525.678',
+                footer: '<a href="http://www.gpsgps.ro/">Accesati website-ul companiei.</a>',
+                willClose: () => {
+                    window.location.href = 'http://www.gpsgps.ro/';
+                }
+            });
+        });
+    </script>
+}
