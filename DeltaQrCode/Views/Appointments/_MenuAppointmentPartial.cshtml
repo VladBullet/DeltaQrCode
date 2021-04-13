@@ -1,0 +1,21 @@
+﻿@using DeltaQrCode.ModelsDto
+@using Microsoft.AspNetCore.Razor.TagHelpers
+@model DeltaQrCode.ViewModels.Appointments.ConfirmVM
+
+<div class="modal-body">
+    <div class="btn btn-squared-default-plain btn-primary" style="margin-right:20px;" id="confirmButton" type="button" data-value="@Model.Id" style="">
+        @if (Model.Confirm)
+        {
+            <i class="fas fa-check-circle fa-5x"></i> <br />
+        }
+        else
+        {
+            <i class="fas fa-times-circle fa-5x"></i> <br />
+        }
+
+        @(!Model.Confirm ? "Anuleaza programarea" : "Confirma")
+    </div>
+    <div class="btn btn-squared-default-plain btn-success" style="margin-right:20px;" id="editButton" type="button" data-value="@Model.Id"><i class="fas fa-edit fa-5x"></i> <br />Editeaza</div>
+    <div class="btn btn-squared-default-plain btn-danger" id="deleteButton" type="button" data-value="@Model.Id"> <i class="fas fa-trash-alt fa-5x"></i> <br /> Delete </div>
+
+</div>

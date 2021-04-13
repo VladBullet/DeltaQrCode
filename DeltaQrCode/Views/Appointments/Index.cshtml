@@ -39,6 +39,13 @@
         </div>
     </div>
 </div>
+<div id="myApptMenuModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center" style="min-width:550px;">
+            <div id="partialInfoMenu"></div>
+        </div>
+    </div>
+</div>
 <div id="myApptDeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myDeleteApptModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -129,9 +136,11 @@
 
             var url = "/Appointments/ModalEdit"; // the url to the controller
             $.get(url + '?id=' + id ,
-                function(data) {
+                function (data) {
+                    CloseModalById('myApptMenuModal');
                     $('#partialInfo').html(data);
                     $('#myApptModal').modal('show');
+
 
                     var dateFromPage = $("#datepicker").val();
                     var datePage = new Date(dateFromPage);
@@ -140,6 +149,17 @@
 
                 });
         };
+
+        var apptMenuModalDialog = function (id,confirm) {
+
+            var url = "/Appointments/MenuModal"; // the url to the controller
+            $.get(url + '?id=' + id + '&confirm=' + confirm,
+                function (data) {
+                    $('#partialInfoMenu').html(data);
+                    $('#myApptMenuModal').modal('show');
+                });
+        };
+
         var showAppointmentsForDate = function(calendarDate) {
 
 
@@ -167,7 +187,7 @@
                                     var apptRow = $(rampId + " " + ".hour" + row.startTime_Hour + "_" + minutesText);
 
 
-                                    var stringToAppend = '<div id="appt' +
+                                    var stringToAppend = '<div data-confirm="' + row.confirmed + '" id="appt' +
                                         row.id +
                                         '" class="appt-no-height">' +
                                         row.numarInmatriculare +
@@ -202,8 +222,9 @@
                             // dont allow the event to propagate to hour click.
                             event.stopPropagation();
                             console.log($(this));
+                            var confirm = $(this).attr("data-confirm");
                             var fullId = $(this).attr("id").replace('appt', '');
-                            apptEditModalDialog(fullId );
+                            apptMenuModalDialog(fullId,confirm );
                         });
 
                     /* scroll to a better position */
@@ -244,12 +265,12 @@
             });
 
 
-        var deleteSetAnvModalDialog = function(id) {
+        var deleteApptModalDialog = function(id) {
 
             var url = "/Appointments/DeleteModal"; // the url to the controller
             $.get(url + '?id=' + id,
                 function (data) {
-                    CloseModalById('myApptModal');
+                    CloseModalById('myApptMenuModal');
                     $('#partialInfoDelete').html(data);
                     $('#myApptDeleteModal').modal('show');
                 });
@@ -261,15 +282,15 @@
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
-                deleteSetAnvModalDialog(id);
+                deleteApptModalDialog(id);
             });
 
-        var confirmSetAnvModalDialog = function (id) {
+        var confirmApptModalDialog = function (id) {
 
             var url = "/Appointments/ConfirmModal"; // the url to the controller
             $.get(url + '?id=' + id + '&confirm=' + $(document).find("#Confirmed").prop("checked"),
                 function (data) {
-                    CloseModalById('myApptModal');
+                    CloseModalById('myApptMenuModal');
                     $('#partialInfoConfirm').html(data);
                     $('#myApptConfirmModal').modal('show');
                 });
@@ -281,7 +302,16 @@
                 // dont allow the event to propagate
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
-                confirmSetAnvModalDialog(id);
+                confirmApptModalDialog(id);
+            });
+
+        $(document).on('click',
+            '#editButton',
+            function (event) {
+                // dont allow the event to propagate
+                event.stopPropagation();
+                var id = $(this).attr("data-value");
+                apptEditModalDialog(id);
             });
 
         $(document).on("change", ".changeable", function () {

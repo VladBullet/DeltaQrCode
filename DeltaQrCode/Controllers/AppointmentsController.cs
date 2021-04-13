@@ -170,6 +170,7 @@ namespace DeltaQrCode.Controllers
             return PartialView("_DeleteAppointmentPartial", id);
         }
 
+
         [HttpPost]
         public async Task<ActionResult> ConfirmDelete(int id)
         {
@@ -195,7 +196,7 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public IActionResult ConfirmModal(int id, bool confirm)
         {
-            return PartialView("_ConfirmAppointmentPartial", new ConfirmVM(id, !confirm));
+            return PartialView("_ConfirmAppointmentPartial", new ConfirmVM(id, confirm));
         }
 
         [HttpPost]
@@ -218,6 +219,12 @@ namespace DeltaQrCode.Controllers
                 return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la confirmarea programarii in controller!");
             }
 
+        }
+
+        [HttpGet]
+        public IActionResult MenuModal(int id,bool confirm)
+        {
+            return PartialView("_MenuAppointmentPartial",new ConfirmVM(id, !confirm));
         }
 
         [HttpGet]
