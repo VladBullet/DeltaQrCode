@@ -452,7 +452,7 @@ $(document).one("click", "#apptsEditSubmitButton", function () {
             },
             error: function (error) {
                 CloseModalById('myHotelModal');
-                ShowHeaderAlert(error.responseText, "error", 5000);
+                swalErrorTimer(error.responseText, 7000);
             }
         });
     } else {

@@ -43,7 +43,7 @@
             },
             error: function (error) {
                 CloseModalById('myApptConfirmModal');
-                ShowHeaderAlert(error.responseText, "error",5000);
+                swalErrorTimer(error.responseText, 7000);
 
                 $.ajax({
                     type: "POST",

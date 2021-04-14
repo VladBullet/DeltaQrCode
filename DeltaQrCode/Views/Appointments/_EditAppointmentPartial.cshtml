@@ -179,7 +179,7 @@
                 },
                 error: function (error) {
                     CloseModalById('myApptModal');
-                    ShowHeaderAlert(error.responseText, "error", 5000);
+                    swalErrorTimer(error.responseText, 7000);
                 }
             });
         } else {

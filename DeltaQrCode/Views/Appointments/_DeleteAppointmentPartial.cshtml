@@ -41,7 +41,7 @@
             },
             error: function (error) {
                 CloseModalById('myApptDeleteModal');
-                ShowHeaderAlert(error.responseText, "error",5000);
+                swalErrorTimer(error.responseText, 7000);
 
                 $.ajax({
                     type: "POST",
