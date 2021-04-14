@@ -93,6 +93,9 @@ namespace DeltaQrCode.Services
                 app.ConfirmedCode = GuidHelper.RandomGuid();
                 app.DataIntroducere = DateTime.Now;
 
+                app.NumeClient = app.NumeClient.ToUpper();
+                app.NumarInmatriculare = app.NumarInmatriculare.ToUpper();
+
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
 
@@ -147,6 +150,9 @@ namespace DeltaQrCode.Services
                 appt.ServiciuId = serviciu.Entity.Id;
 
                 appt.LastModified = DateTime.Now;
+
+                appt.NumeClient = appt.NumeClient.ToUpper();
+                appt.NumarInmatriculare = appt.NumarInmatriculare.ToUpper();
 
                 var app = _mapper.Map<CaAppointments>(appt);
 
