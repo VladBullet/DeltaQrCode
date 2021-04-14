@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeltaQrCode.ModelsDto
 {
-    using DeltaQrCode.HelpersAndExtensions;
 
     public class AppointmentDto
     {
@@ -17,7 +11,7 @@ namespace DeltaQrCode.ModelsDto
         }
         public AppointmentDto(DateTime startTime)
         {
-            this.DataAppointment = startTime;
+            DataAppointment = startTime;
         }
         public int Id { get; set; }
         public int? ApptIndex { get; set; }

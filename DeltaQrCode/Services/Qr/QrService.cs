@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 using DeltaQrCode.Data;
 using DeltaQrCode.Models;
 using DeltaQrCode.ViewModels;
 
 namespace DeltaQrCode.Services
 {
-    using DeltaQrCode.ModelsDto;
-
     public class QrService : IQrService
     {
         private ApplicationDbContext dataService;

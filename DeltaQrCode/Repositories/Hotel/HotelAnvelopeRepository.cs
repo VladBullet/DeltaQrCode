@@ -8,10 +8,7 @@ namespace DeltaQrCode.Repositories
     using DeltaQrCode.Data;
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
-    using DeltaQrCode.ModelsDto;
-
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
     using Serilog;
 
     public class HotelAnvelopeRepository : IHotelAnvelopeRepository

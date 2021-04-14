@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DeltaQrCode.ModelsDto;
 
 namespace DeltaQrCode.ModelsDto
 {
-    using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
 
     public class SetAnvelopeDto

@@ -5,13 +5,9 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Repositories
 {
-    using System.Security.Policy;
-
     using DeltaQrCode.Data;
     using DeltaQrCode.Models;
-
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
     using Serilog;
 
     public class AppointmentsRepository : IAppointmentsRepository
@@ -53,7 +49,6 @@ namespace DeltaQrCode.Repositories
 
         }
 
-        /// <inheritdoc />
         public async Task<Result<CaAppointments>> UpdateAppointmentAsync(CaAppointments appointment)
         {
             try

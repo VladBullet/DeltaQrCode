@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DeltaQrCode.ViewModels.Appointments
 {
-    using DeltaQrCode.ModelsDto;
-
     public class AppointmentsIndexVm
     {
-        public AppointmentsIndexVm(int rampId, List<AppointmentVM> appointments) // TODO: change with apptVM
+        public AppointmentsIndexVm(int rampId, List<AppointmentVM> appointments)
         {
             RampId = rampId;
             Appointments = appointments;
         }
         public int RampId { get; set; }
-        public List<AppointmentVM> Appointments { get; set; } // TODO: change with apptVM
+        public List<AppointmentVM> Appointments { get; set; }
     }
 }

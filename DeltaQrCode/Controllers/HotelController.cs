@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DeltaQrCode.Services;
 using DeltaQrCode.ViewModels;
 
 namespace DeltaQrCode.Controllers
@@ -19,8 +18,6 @@ namespace DeltaQrCode.Controllers
     using Microsoft.AspNetCore.Authorization;
 
     using Newtonsoft.Json;
-    using System.Diagnostics;
-    using Microsoft.Extensions.Logging;
     using Serilog;
 
     [Authorize]

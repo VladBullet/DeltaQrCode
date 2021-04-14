@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace DeltaQrCode.Models
 {
     public partial class CaServicetypes

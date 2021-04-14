@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DeltaQrCode.Models;
 using DeltaQrCode.ModelsDto;
-using DeltaQrCode.ViewModels.Appointments;
 
 namespace DeltaQrCode.Services
 {

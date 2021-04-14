@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DeltaQrCode.ModelsDto
 {
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-    using Org.BouncyCastle.Security.Certificates;
-
     public class GuestInfoDto
     {
         public GuestInfoDto()

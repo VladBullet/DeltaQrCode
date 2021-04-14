@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace DeltaQrCode.ViewModels.Appointments
 {
-    using DeltaQrCode.Services;
-
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class CalendarVm
     {

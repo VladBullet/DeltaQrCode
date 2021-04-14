@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DeltaQrCode.Repositories
@@ -15,6 +14,7 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaAppointments>> DeleteAppointmentAsync(int id);
         Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id, bool confirm);
         Task<Result<List<CaAppointments>>> GetAppointmentsAsync(DateTime date);
+
         Task<Result<CaServicetypes>> GetServiceTypeByIdAsync(uint id);
         Task<Result<List<CaServicetypes>>> GetServiceTypesAsync();
         Task<Result<CaServicetypes>> AddServiceTypeAsync(CaServicetypes serviciu);

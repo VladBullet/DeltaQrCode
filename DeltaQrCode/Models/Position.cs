@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace DeltaQrCode.Models
 {
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
     public class Position
     {
         public Position()

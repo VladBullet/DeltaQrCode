@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DeltaQrCode.HelpersAndExtensions
+﻿namespace DeltaQrCode.HelpersAndExtensions
 {
     using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
-
-    using Microsoft.AspNetCore.WebSockets.Internal;
 
     using Newtonsoft.Json;
 

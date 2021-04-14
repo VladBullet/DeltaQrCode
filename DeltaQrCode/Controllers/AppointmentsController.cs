@@ -6,18 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DeltaQrCode.Controllers
 {
-    using System.Diagnostics;
-    using System.Net;
-    using System.Text;
     using AutoMapper;
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Services;
-    using DeltaQrCode.ViewModels;
     using DeltaQrCode.ViewModels.Appointments;
 
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.Extensions.Logging;
 
     using Newtonsoft.Json;
     using Serilog;

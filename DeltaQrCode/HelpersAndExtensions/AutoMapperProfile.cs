@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DeltaQrCode.HelpersAndExtensions
+﻿namespace DeltaQrCode.HelpersAndExtensions
 {
     using AutoMapper;
 
     using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
-    using DeltaQrCode.ViewModels;
     using DeltaQrCode.ViewModels.Appointments;
     using DeltaQrCode.ViewModels.HotelAnvelope;
 

@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DeltaQrCode.Services.Hotel
 {
-    using System.Net.Http.Headers;
-
     using AutoMapper;
-
-    using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
-    using DeltaQrCode.ViewModels;
-    using Microsoft.Extensions.Logging;
-    using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
     using Serilog;
 
     public class HotelService : IHotelService
@@ -70,7 +62,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv) // TODO: Vlad
+        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv) 
         {
             try
             {
@@ -225,7 +217,6 @@ namespace DeltaQrCode.Services.Hotel
 
                     model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
 
-                    // add marca as string
                     foreach (var item in model)
                     {
                         if (item.MarcaId != null)

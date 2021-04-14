@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DeltaQrCode.ModelsDto;
-
+﻿
 namespace DeltaQrCode.ViewModels
 {
-    using DeltaQrCode.Models;
     using DeltaQrCode.ViewModels.HotelAnvelope;
 
     public class HotelModalVM

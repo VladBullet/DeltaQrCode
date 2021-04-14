@@ -5,24 +5,15 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Services
 {
-    using System.ComponentModel.DataAnnotations;
     using System.Globalization;
-    using System.Reflection.PortableExecutable;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Security.Policy;
     using System.Text;
-
     using AutoMapper;
-
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.Services.Mail;
-    using DeltaQrCode.ViewModels;
-    using DeltaQrCode.ViewModels.Appointments;
-    using Microsoft.Extensions.Logging;
+
 
     using MimeKit.Text;
 

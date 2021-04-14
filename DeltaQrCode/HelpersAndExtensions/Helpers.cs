@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DeltaQrCode.HelpersAndExtensions
 {
     using System.Security.Cryptography;
     using System.Text;
-
-    using DeltaQrCode.ModelsDto;
 
     public static class Helpers
     {
