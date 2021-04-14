@@ -167,5 +167,16 @@ CREATE TABLE `history_anvelope` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
+CREATE TABLE `deltatra_client_admin`.`history_appointments` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `AppointmentId` INT NOT NULL,
+  `DataModificare` DATETIME NOT NULL,
+  `Changes` VARCHAR(1000) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+
+
+
+
 
 
