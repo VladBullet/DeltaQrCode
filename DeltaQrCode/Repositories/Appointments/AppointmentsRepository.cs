@@ -101,11 +101,21 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<List<CaAppointments>>> GetAppointmentsAsync(DateTime date)
+        public async Task<Result<List<CaAppointments>>> GetAppointmentsAsync(DateTime date, int? rampId = null)
         {
             try
             {
+                var rampValue = 0;
+                if (rampId != null && rampId != 0)
+                {
+                    rampValue = rampId.Value;
+                }
+
                 var result = await _db.CaAppointments.Where(x => x.DataAppointment.ToShortDateString() == date.ToShortDateString() && !x.Deleted).ToListAsync();
+                if (rampValue!=0)
+                {
+                    result = result.Where(x => x.RampId == rampValue).ToList();
+                }
 
                 return Result<List<CaAppointments>>.ResultOk(result);
             }

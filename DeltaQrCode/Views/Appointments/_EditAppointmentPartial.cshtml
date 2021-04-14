@@ -72,7 +72,7 @@
                 <label class="control-label col-md-3 required-field">Rampa</label>
                 <div class="col-md-9">
                    
-                    <input id="RampId" class="form-control col-md-2 validate" type="text" asp-for="RampId" />
+                    <input id="RampId" class="changeable form-control col-md-2 validate" type="text" asp-for="RampId" />
                     @Html.ValidationMessageFor(model => model.RampId, "", new { @class = "text-danger error_span" })
                 </div>
             </div>

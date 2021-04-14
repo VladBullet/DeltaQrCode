@@ -239,8 +239,8 @@ namespace DeltaQrCode.Services
         {
             try
             {
-                var dbList = await _appointmentsRepository.GetAppointmentsAsync(selectedDate);
-                var apptsList = dbList.Entity.Where(x => x.RampId == selectedRampId); // lista cu appt pt data si rampa
+                var dbList = await _appointmentsRepository.GetAppointmentsAsync(selectedDate,selectedRampId);
+                var apptsList = dbList.Entity;
                 Result<CaAppointments> appt = null;
                 if (apptId != null)
                 {
@@ -264,7 +264,7 @@ namespace DeltaQrCode.Services
                 var occ = new List<Tuple<TimeSpan, TimeSpan, int>>();
                 occ.AddRange(occupied);
 
-                if (appt != null)
+                if (appt != null && appt.Entity.RampId == selectedRampId)
                 {
                     var editedOcc = occupied.FirstOrDefault(x => x.Item3 == apptId);
                     occupied.Remove(editedOcc);
@@ -289,7 +289,7 @@ namespace DeltaQrCode.Services
                     }
                 }
 
-                if (appt != null)
+                if (appt != null && appt.Entity.RampId == selectedRampId)
                 {
                     // get next appt after selected one from db
                     var selectedOccIndex = occ.FindIndex(x => x.Item3 == apptId);
