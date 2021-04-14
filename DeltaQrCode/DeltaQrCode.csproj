@@ -8,6 +8,10 @@
     <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
