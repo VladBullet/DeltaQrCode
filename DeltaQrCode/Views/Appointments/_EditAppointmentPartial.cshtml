@@ -81,16 +81,16 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.NumarInmatriculare, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                    @Html.ValidationMessageFor(model => model.NumarInmatriculare, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.NumeClient, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.NumeClient, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                    @Html.ValidationMessageFor(model => model.NumeClient, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
 
@@ -98,8 +98,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                    @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
 
@@ -107,8 +107,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.EmailClient, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.EmailClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom" } })
-                    @Html.ValidationMessageFor(model => model.EmailClient, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.EmailClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                    @Html.ValidationMessageFor(model => model.EmailClient, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
 
@@ -157,43 +157,42 @@
 
 </div>
 
-
+<script src="~/js/validationRulesAppt.js"></script>
 <script type="text/javascript">
-    $("#apptsEditButton").click(function () {
-        var url = "@Url.Action("EditAppt", "Appointments")";
-        $.ajax({
-            type: "POST",
-            url:url,
-            data: $('#apptform').serialize(),
-            dataType:"json",
-            success: function (response) {
-                CloseModalById('myApptModal');
-                ShowHeaderAlert(response, "success", 5000);
-                clearAppointments();
-                getAppointmentsForSelectedDate();
-            },
-            error: function (error) {
-                CloseModalById('myApptModal');
-                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
 
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("ErrorModal","Error")",
-                    dataType: "json",
-                    traditional: true,
-                    contentType: 'application/json',
-                    success: function (response) {
-                        $("#GetModalCode").html(response);
-                        $("#ErrorModal").modal('show');
-                    },
-                    error: function (error) {
-                        alert(error);
-                    }
-                });
-            }
-        });
-        //}
+    var validator = new CustomValidation(apptFormValidationRules);
+
+    $(document).on("click", "#apptsEditButton", function () {
+        var result = validator.validate(validator);
+        if (result.formIsValid) {
+            $.ajax({
+                type: "POST",
+                url: "/Appointments/EditAppt",
+                data: $('#apptform').serialize(),
+                dataType: "json",
+                success: function (response) {
+                    CloseModalById('myApptModal');
+                    ShowHeaderAlert(response, "success", 5000);
+                    clearAppointments();
+                    getAppointmentsForSelectedDate();
+                },
+                error: function (error) {
+                    CloseModalById('myApptModal');
+                    ShowHeaderAlert(error.responseJSON.Message, "error", 5000);
+                }
+            });
+        } else {
+            updateUi(result.validationResults, "form-group", "error_span");
+        }
     });
+
+
+    $(document).on("keyup",
+        ".validate",
+        function () {
+            var result = validator.validate(validator);
+            updateUi(result.validationResults, "form-group", "error_span");
+        });
 
 
     // Select2 for Serviciu
