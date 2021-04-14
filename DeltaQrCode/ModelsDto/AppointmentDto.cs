@@ -32,7 +32,7 @@ namespace DeltaQrCode.ModelsDto
         public DateTime LastModified { get; set; }
         public string Observatii { get; set; }
         public string ConfirmedCode { get; set; }
-
+        public bool ChangedByClient { get; set; }
 
     }
 }

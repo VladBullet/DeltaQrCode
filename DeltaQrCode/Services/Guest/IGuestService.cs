@@ -8,5 +8,8 @@ namespace DeltaQrCode.Services.Guest
     public interface IGuestService
     {
         Task<Result<GuestInfoDto>> ConfirmAppointmentAsync(string guid);
+        Task<Result<GuestInfoDto>> GetAppointmentInfoByGuid(string guid);
+        Task<Result<EmptyDto>> SendInfoEmailToCompany(string guid);
+
     }
 }

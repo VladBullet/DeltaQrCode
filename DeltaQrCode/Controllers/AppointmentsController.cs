@@ -35,7 +35,7 @@ namespace DeltaQrCode.Controllers
 
 
             // Get the appointments with a list of employees details this user can access
-            CalendarVm calendarVm = new CalendarVm(User.Claims.FirstOrDefault(x => x.Type == "id")?.Value);
+            CalendarVm calendarVm = new CalendarVm(); 
             var startDate = Helpers.GetStartDateFromStringParam(startDateString);
             var activeDate = Helpers.GetStartDateFromStringParam(activeDateString);
 

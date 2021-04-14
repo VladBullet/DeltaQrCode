@@ -14,6 +14,7 @@ namespace DeltaQrCode.Services
     using DeltaQrCode.Repositories;
     using DeltaQrCode.Services.Mail;
 
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     using MimeKit.Text;
 
@@ -26,11 +27,14 @@ namespace DeltaQrCode.Services
         private readonly IMapper _mapper;
         private readonly IMailService _mailService;
 
-        public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper, IMailService mailService)
+        private readonly IHttpHelper _httpHelper;
+
+        public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper, IMailService mailService, IHttpHelper helper)
         {
             _appointmentsRepository = appointmentsRepository;
             _mapper = mapper;
             _mailService = mailService;
+            _httpHelper = helper;
         }
 
         public async Task<Result<AppointmentDto>> GetAppointmentByIdAsync(int id)
@@ -92,19 +96,21 @@ namespace DeltaQrCode.Services
 
                 if (!string.IsNullOrEmpty(model.EmailClient))
                 {
+                    var clientUrl = _httpHelper.GetGuestClientLink(model.ConfirmedCode);
                     StringBuilder emailMessage = new StringBuilder("<div>")
-                        .Append("Buna ziua!")
-                        .AppendLine()
-                        .Append("Va informam ca ati facut o programare pentru data de: ")
+                        .AppendLine("Buna ziua!")
+                        .AppendLine("</br>")
+                        .AppendLine("Va informam ca ati facut o programare pentru data de: ")
                         .Append(model.DataAppointment.ToString("d", new CultureInfo("ro-RO")))
                         .Append(", la ora : " + model.OraInceput.Hours + ":" + (model.OraInceput.Minutes == 0 ? "00" : model.OraInceput.Minutes.ToString()))
                         .Append(", pentru serviciul de " + appointment.Serviciu + " in incinta firmei Delta.")
-                        .AppendLine()
-                        .Append("Accesati adresa " + "<a href=\"https://goo.gl/maps/eQ3rRpN9bqDmErE58\">aici</a>")
+                        .AppendLine("</br>")
+                        .AppendLine("Puteti confirma sau anula programarea dvs. folosind urmatorul link : ").Append("<a href=\"" + clientUrl + "\">Accesati programarea dvs.</a>")
+                        .AppendLine("</br>")
+                        .AppendLine("Accesati adresa service-ului " + "<a href=\"https://goo.gl/maps/eQ3rRpN9bqDmErE58\">aici</a>")
                         .Append("</div>");
 
-
-                    var sent = await _mailService.SendEmail(model.EmailClient, emailMessage.ToString(), "Programarea dvs. la Delta Auto", TextFormat.Html);
+                    var sent = await _mailService.SendEmail(model.EmailClient, emailMessage.ToString(), "Delta Auto - Programarea dvs. la service", TextFormat.Html);
                 }
 
                 return Result<AppointmentDto>.ResultOk(model);
@@ -239,7 +245,7 @@ namespace DeltaQrCode.Services
         {
             try
             {
-                var dbList = await _appointmentsRepository.GetAppointmentsAsync(selectedDate,selectedRampId);
+                var dbList = await _appointmentsRepository.GetAppointmentsAsync(selectedDate, selectedRampId);
                 var apptsList = dbList.Entity;
                 Result<CaAppointments> appt = null;
                 if (apptId != null)

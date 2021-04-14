@@ -21,6 +21,9 @@ namespace DeltaQrCode
     using DeltaQrCode.Services.Mail;
 
     using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Routing;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
 
     public class Startup
     {
@@ -45,7 +48,18 @@ namespace DeltaQrCode
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
             // Register Services for injection
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddScoped<IUrlHelper>(x =>
+            {
+                var actionContext = x.GetRequiredService<IActionContextAccessor>().ActionContext;
+                var factory = x.GetRequiredService<IUrlHelperFactory>();
+                return factory.GetUrlHelper(actionContext);
+            });
+
+            services.AddScoped<IHttpHelper, HttpHelper>();
             services.AddScoped<IQrService, QrService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IHotelService, HotelService>();

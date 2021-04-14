@@ -9,14 +9,6 @@ namespace DeltaQrCode.ViewModels.Appointments
         public List<DateTime> AvailableDates { get; set; }
 
         public DateTime ActiveDate { get; set; }
-
-        public Guid CurrentProfessionalId { get; set; }
-
-        public CalendarVm(string userId)
-        {
-
-        }
-
     }
 
 

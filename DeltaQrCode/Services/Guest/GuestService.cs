@@ -34,7 +34,21 @@ namespace DeltaQrCode.Services.Guest
                 throw new Exception("Ceva nu a mers bine la confirmarea programarii in servicii!", er);
             }
         }
-        private async Task<Result<EmptyDto>> SendInfoEmailTocompany(string guid, bool confirmed)
+        public async Task<Result<GuestInfoDto>> GetAppointmentInfoByGuid(string guid)
+        {
+            try
+            {
+                var result = await _guestRepo.GetAppointmentInfoByGuid(guid);
+                return Result<GuestInfoDto>.ResultOk(result.Entity);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la confirmarea programarii in serviciul guest!");
+                throw new Exception("Ceva nu a mers bine la confirmarea programarii in serviciul guest!", er);
+            }
+        }
+
+        public async Task<Result<EmptyDto>> SendInfoEmailToCompany(string guid)
         {
             try
             {
@@ -48,5 +62,6 @@ namespace DeltaQrCode.Services.Guest
                 throw new Exception("Ceva nu a mers bine la confirmarea programarii in servicii!", er);
             }
         }
+
     }
 }

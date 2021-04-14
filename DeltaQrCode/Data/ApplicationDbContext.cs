@@ -245,11 +245,11 @@ namespace DeltaQrCode.Data
                 entity.Property(e => e.RampId)
                     .IsRequired()
                     .HasColumnType("int");
-                
+
                 entity.Property(e => e.DurataInMinute)
                     .IsRequired()
                     .HasColumnType("int");
-                
+
                 entity.Property(e => e.ServiciuId)
                     .IsRequired()
                     .HasColumnType("int");
@@ -268,8 +268,10 @@ namespace DeltaQrCode.Data
 
                 entity.Property(e => e.Observatii)
                     .HasColumnType("varchar(256)");
-
+                
                 entity.Property(e => e.OraInceput).HasColumnType("time");
+                entity.Property(e => e.ChangedByClient).HasColumnType("bit(1)");
+
             });
 
 
@@ -383,7 +385,7 @@ namespace DeltaQrCode.Data
                 entity.Property(e => e.MarcaId)
                 .IsRequired()
                 .HasColumnType("int");
-                
+
                 entity.Property(e => e.FlotaId)
                 .HasColumnType("int");
 

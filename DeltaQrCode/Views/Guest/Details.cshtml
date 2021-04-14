@@ -1,0 +1,82 @@
+﻿@model DeltaQrCode.ModelsDto.GuestInfoDto
+
+<a id="callBackUrl" href="@Model.CallBackUrl" hidden="hidden"></a>
+<div class="container">
+    <h1>Delta Auto Center - Programarea dumneavoastra la service </h1>
+    <div class="row">
+        <div class="col-md-8">
+            Data Programarii: <span class="bg-info">@Model.DataAppt.ToString("d")</span>
+            <br />
+            Ora: <span class="bg-info">@Model.OraAppt.Hours.ToString():@(Model.OraAppt.Minutes==0 ? "00" : Model.OraAppt.Minutes.ToString())</span>
+            <br />
+            Estimare durata: <span class="bg-info">@Model.Durata minute</span>
+            <br />
+            @if (Model.Expired)
+            {
+                <span class="bg-warning">Programarea dvs a expirat</span><br />
+            }
+            else if (Model.Confirmed)
+            {
+                <p>Anulati programarea aici: </p><div class="btn btn-info guestAction" data-guid="@Model.Guid">Anuleaza</div>
+            }
+            else if (!Model.Confirmed)
+            {
+                <p>Confirmati programarea aici: </p><div class="btn btn-info guestAction" data-guid="@Model.Guid">Confirma</div>
+            }
+            <br />
+            Adresa: Bulevardul Expozitiei 1-3, Bucuresti (vis-a-vis de intrarea C - Romexpo)
+        </div>
+        <div class="col-md-4">
+            <br />
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.031553010774!2d26.06215641587752!3d44.47352597910172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b202398c63c791%3A0x4e83f9e4be4086fd!2sGPSGPS!5e0!3m2!1sro!2sro!4v1618417524108!5m2!1sro!2sro" width="400" height="400" style="border: 0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).one("click",
+            ".guestAction",
+            function () {
+                var guid = $(this).attr("data-guid");
+                $.ajax({
+                    type: "POST",
+                    url: "/Guest/ConfirmAppointment",
+                    dataType: "json",
+                    data: { 'guid': guid },
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Vesti bune!',
+                            html: response,
+                            footer: 'Acest mesaj se va inchide automat! Si veti fi redirectionat/a pe pagina principala!',
+                            icon: 'success',
+                            timer: 10000,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                            willClose: () => {
+                                var callbackUrl = $("#callBackUrl").attr("href");
+                                window.location.href = callbackUrl;
+                                //$("#callBackUrl").trigger("click");
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: 'Nu am reusit sa modificam programarea dvs.! </br> Va rugam contactati service-ul la nr: +40.745.525.678',
+                            willClose: () => {
+                                //$("#callBackUrl").trigger("click");
+                                var callbackUrl = $("#callBackUrl").attr("href");
+                                window.location.href = callbackUrl;
+                            }
+                        });
+                    }
+                });
+            });
+    </script>
+
+}

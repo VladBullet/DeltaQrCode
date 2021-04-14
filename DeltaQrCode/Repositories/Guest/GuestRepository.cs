@@ -28,6 +28,7 @@ namespace DeltaQrCode.Repositories.Guest
                 {
                     result.Confirmed = !result.Confirmed;
                     result.ConfirmedDate = DateTime.Now;
+                    result.ChangedByClient = true;
                     await _db.SaveChangesAsync();
                 }
                 var model = new GuestInfoDto(result.ConfirmedCode, result.Confirmed, result.DataAppointment, result.OraInceput, result.DurataInMinute, !result.Deleted);

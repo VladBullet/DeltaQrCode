@@ -22,5 +22,6 @@ namespace DeltaQrCode.Models
         public int RampId { get; set; }
         public string EmailClient { get; set; }
         public int DurataInMinute { get; set; }
+        public bool ChangedByClient { get; set; }
     }
 }

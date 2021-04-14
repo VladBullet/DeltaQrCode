@@ -68,7 +68,7 @@
 
         var dateToday = new Date();
         $(function() {
-            $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).datepicker({ minDate: 0 }).datepicker("setDate", dateToday);
+            $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).datepicker("setDate", dateToday);
 
             // Clear the existing appts.
             $('.appt-no-height').remove();
@@ -130,7 +130,7 @@
 
                     var dateFromPage = $("#datepicker").val();
                     var datePage = new Date(dateFromPage);
-                    $("#datepickerModal").datepicker({ format: "yy-mm-dd" }).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
+                    $("#datepickerModal").datepicker({ format: "yy-mm-dd", minDate: 0 }).datepicker("setDate", datePage);
                     //enableselect2forServiciu();
                 });
         };
@@ -148,7 +148,7 @@
 
                     var dateFromPage = $("#datepicker").val();
                     var datePage = new Date(dateFromPage);
-                    $("#datepickerModal").datepicker({ format: "yy-mm-dd" }).datepicker({ minDate: datePage }).datepicker("setDate", datePage);
+                    $("#datepickerModal").datepicker({ format: "yy-mm-dd", minDate: 0 }).datepicker("setDate", datePage);
                     //enableselect2forServiciu();
 
                 });
@@ -192,6 +192,13 @@
                                     var minutesText = row.startTime_Minutes === 0 ? '00' : row.startTime_Minutes;
                                     var apptRow = $(rampId + " " + ".hour" + row.startTime_Hour + "_" + minutesText);
 
+                                    var warningSpan = '';
+                                    if (!row.confirmed && row.changedByClient) {
+                                        warningSpan = '<i class="fas fa-exclamation-triangle" style="margin-left:5px"></i>';
+                                    }
+                                    else if (row.confirmed && row.changedByClient) {
+                                        warningSpan = '<i class="fas fa-check-circle" style="margin-left:5px"></i>';
+                                    }
 
                                     var stringToAppend = '<div data-confirm="' +
                                         row.confirmed +
@@ -205,6 +212,7 @@
                                         row.numarTelefon +
                                         ' | ' +
                                         row.serviciu +
+                                        warningSpan +
                                         ' </div>';
 
                                     apptRow.append(stringToAppend);
@@ -219,6 +227,9 @@
 
                                     if (row.confirmed) {
                                         thisAppt.css("background-color", 'lightgreen');
+                                    }
+                                    if (!row.confirmed && row.changedByClient) {
+                                        thisAppt.css("background-color", '#ff7b42');
                                     }
                                 }
                             });

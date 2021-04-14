@@ -23,9 +23,19 @@ namespace DeltaQrCode.ModelsDto
         public bool Confirmed { get; set; }
         public bool AppointmentExists { get; set; }
         public DateTime DataAppt { get; set; }
-        public bool Expired => DataAppt.Add(OraAppt) > DateTime.Now;
+
+        public bool Expired
+        {
+            get
+            {
+                var date = new DateTime(DataAppt.Year, DataAppt.Month, DataAppt.Day, OraAppt.Hours,OraAppt.Minutes, OraAppt.Seconds);
+                return date < DateTime.Now;
+            }
+        }
+
         public TimeSpan OraAppt { get; set; }
         public int Durata { get; set; }
+        public string CallBackUrl { get; set; }
 
     }
 }
