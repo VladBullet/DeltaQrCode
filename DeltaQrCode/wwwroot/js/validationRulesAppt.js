@@ -48,4 +48,11 @@
         comparerValue: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
         message: "Adresa de email nu este valida. Introduceti o adresa de email valida!"
     },
+    {
+        ruleName: "rampIdRange",
+        ruleForElementId: "#RampId",
+        check: "range",
+        comparerValue: [1,4],
+        message: "Va rugam introduceti o rampa existenta[1,2,3,4]!"
+    },
 ];
