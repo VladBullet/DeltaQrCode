@@ -24,10 +24,10 @@ var swalErrorTimer = function (message, footerText, timer, callbackFunctionAfter
         html: message,
         footer: footerText,
         icon: 'error',
+        confirmButtonText: "Inchide",
         timer: timer,
         timerProgressBar: true,
         didOpen: () => {
-            Swal.showLoading();
         },
         willClose: () => {
             if (callbackFunctionAfterClose != null && typeof callbackFunctionAfterClose == 'function') {
@@ -35,4 +35,17 @@ var swalErrorTimer = function (message, footerText, timer, callbackFunctionAfter
             }
         }
     });
-}
+};
+
+var swalError = function (message, callbackFunctionAfterClose = null) {
+    Swal.fire({
+        title: 'Ooops..',
+        html: message,
+        icon: 'error',
+        willClose: () => {
+            if (callbackFunctionAfterClose != null && typeof callbackFunctionAfterClose == 'function') {
+                callbackFunctionAfterClose.call();
+            }
+        }
+    });
+};
