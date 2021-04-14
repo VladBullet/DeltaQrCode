@@ -30,10 +30,10 @@
             <tr class="text-center">
                 <td class="row">
                     <div class="col-md-12">
-                        <div class="btn btn-outline-info btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle"></i></div>
+                        <div class="btn btn-outline-info btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle "></i></div>
                     </div>
                     <div class="col-md-12">
-                        <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="edit"><i class="far fa-edit"></i></div>
+                        <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="edit"><i class="fas fa-pencil-alt"></i></div>
                     </div>
                     <div class="col-md-12">
                         <div class="btn btn-outline-danger btn-sm deleteButton" type="button" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
@@ -52,7 +52,7 @@
                 <td>@item.Observatii</td>
                 <td>@item.Position?.PositionString</td>
                 @{
-                    string color = "red";
+                    string color = "#ff4242";
                     if (item.StatusCurent == StatusAnvelope.InRaft.ToDisplayString())
                     {
                         color = "lightgreen";
@@ -63,7 +63,7 @@
                     }
                     else if (item.StatusCurent == StatusAnvelope.Predate.ToDisplayString())
                     {
-                        color = "tomato";
+                        color = "#ff7b42";
                     }
                     <td style="background-color: @color">
                         @item.StatusCurent
