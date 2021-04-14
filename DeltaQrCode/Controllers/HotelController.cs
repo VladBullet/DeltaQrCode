@@ -84,13 +84,13 @@ namespace DeltaQrCode.Controllers
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
                 }
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la modificarea setului de anvelope in controller!");
 
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la modificarea setului de anvelope in controller!");
             }
         }
 
@@ -115,12 +115,12 @@ namespace DeltaQrCode.Controllers
                     return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
                 }
 
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la adaugarea setului de anvelope in controller!" );
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
             }
         }
         [HttpGet]
@@ -150,12 +150,12 @@ namespace DeltaQrCode.Controllers
                     return Ok(JsonConvert.SerializeObject("Setul de anvelope a fost sters!"));
                 }
 
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la stergerea setului de anvelope in controller!");
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la stergerea setului de anvelope in controller!");
             }
         }
 
@@ -176,7 +176,7 @@ namespace DeltaQrCode.Controllers
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
+                return BadRequest("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
             }
 
         }

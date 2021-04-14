@@ -108,13 +108,13 @@ namespace DeltaQrCode.Controllers
                     return Ok(JsonConvert.SerializeObject("Programarea a fost editata cu succes!"));
                 }
 
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la editarea programarii in controller!");
+                return BadRequest("Ceva nu a mers bine la editarea programarii in controller!");
 
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la editarea programarii in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la editarea programarii in controller!");
+                return BadRequest("Ceva nu a mers bine la editarea programarii in controller!");
             }
         }
 
@@ -148,12 +148,12 @@ namespace DeltaQrCode.Controllers
 
                 }
 
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea programarii in controller!");
+                return BadRequest("Ceva nu a mers bine la adaugarea programarii in controller!" );
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la adaugarea programarii in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la adaugarea programarii in controller!");
+                return BadRequest("Ceva nu a mers bine la adaugarea programarii in controller!" );
             }
         }
 
@@ -178,12 +178,12 @@ namespace DeltaQrCode.Controllers
                     return Ok(JsonConvert.SerializeObject("Programarea a fost stearsa!"));
                 }
 
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea programarii in controller!");
+                return BadRequest("Ceva nu a mers bine la stergerea programarii in controller!");
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la stergerea programarii in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la stergerea programarii in controller!");
+                return BadRequest("Ceva nu a mers bine la stergerea programarii in controller!");
             }
 
         }
@@ -211,12 +211,12 @@ namespace DeltaQrCode.Controllers
                     return Ok(JsonConvert.SerializeObject(message));
                 }
 
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la confirmarea programarii in controller!");
+                return BadRequest("Ceva nu a mers bine la confirmarea programarii in controller!");
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la confirmarea programarii in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la confirmarea programarii in controller!");
+                return BadRequest("Ceva nu a mers bine la confirmarea programarii in controller!");
             }
 
         }
@@ -259,12 +259,12 @@ namespace DeltaQrCode.Controllers
                     return new JsonResult(result.Entity);
                 }
 
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea intervalului orar in controller!");
+                return BadRequest("Ceva nu a mers bine la gasirea intervalului orar in controller!");
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la gasirea intervalului orar in controller!");
-                return RedirectToAction("ErrorModal", "Error", "Ceva nu a mers bine la gasirea intervalului orar in controller!");
+                return BadRequest("Ceva nu a mers bine la gasirea intervalului orar in controller!");
             }
         }
     }
