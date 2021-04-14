@@ -18,11 +18,11 @@ var swalSuccessTimer = function (message, footerText, timer, callbackFunctionAft
     });
 };
 
-var swalErrorTimer = function (message, footerText, timer, callbackFunctionAfterClose = null) {
+var swalErrorTimer = function (message, timer, callbackFunctionAfterClose = null) {
     Swal.fire({
         title: 'Ooops..',
         html: message,
-        footer: footerText,
+        footer: "Acest mesaj se va inchide automat!",
         icon: 'error',
         confirmButtonText: "Inchide",
         timer: timer,

@@ -476,7 +476,7 @@ $("#apptsAddSubmitButton").one("click", function () {
             },
             error: function (error) {
                 CloseModalById('myHotelModal');
-                swalErrorTimer(error.responseText, "Acest mesaj se va inchide automat!", 7000);
+                swalErrorTimer(error.responseText, 7000);
             }
         });
     }
