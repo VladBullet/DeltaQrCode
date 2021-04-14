@@ -3,7 +3,7 @@
 @model DeltaQrCode.ViewModels.Appointments.ConfirmVM
 
 <div class="modal-body">
-    <div class="btn btn-squared-default-plain btn-primary" style="margin-right:20px;" id="confirmButton" type="button" data-value="@Model.Id" data-confirm="@Model.Confirm" style="">
+    <div class="btn btn-squared-default-plain btn-primary" style="margin-right:20px;" id="confirmButton" type="button" data-value="@Model.Id" data-confirm="@Model.Confirm">
         @if (Model.Confirm)
         {
             <i class="fas fa-check-circle fa-5x"></i> <br />

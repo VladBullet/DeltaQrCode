@@ -25,7 +25,8 @@
 
 <script type="text/javascript">
 
-    $("#actionConfirm").click(function () {
+    $("#actionConfirm").one("click",function () {
+        $(this).attr("disabled", "disabled");
 
         var model = { id: $("#actionConfirm").attr("data-value"), confirm: $("#confirmBool").attr("data-value") };
 

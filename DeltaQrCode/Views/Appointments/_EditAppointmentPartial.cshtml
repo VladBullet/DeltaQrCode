@@ -162,7 +162,8 @@
 
     var validator = new CustomValidation(apptFormValidationRules);
 
-    $(document).on("click", "#apptsEditButton", function () {
+    $(document).one("click", "#apptsEditButton", function () {
+        $(this).attr("disabled", "disabled");
         var result = validator.validate(validator);
         if (result.formIsValid) {
             $.ajax({

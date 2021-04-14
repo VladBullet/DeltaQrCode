@@ -436,7 +436,8 @@ $(document).ready(function () {
 
 
 // SAVE BTN CLICK EVENT
-$(document).on("click", "#apptsEditSubmitButton", function () {
+$(document).one("click", "#apptsEditSubmitButton", function () {
+    $(this).attr("disabled", "disabled");
     var result = validator.validate(validator);
     if (result.formIsValid) {
         $.ajax({
@@ -459,7 +460,8 @@ $(document).on("click", "#apptsEditSubmitButton", function () {
     }
 });
 
-$("#apptsAddSubmitButton").click(function () {
+$("#apptsAddSubmitButton").one("click",function () {
+    $(this).attr("disabled", "disabled");
     var result = validator.validate(validator);
     if (result.formIsValid) {
         $.ajax({

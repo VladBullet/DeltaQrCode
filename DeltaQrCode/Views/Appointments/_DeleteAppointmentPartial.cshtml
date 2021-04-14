@@ -23,7 +23,8 @@
 
 <script type="text/javascript">
 
-    $("#confirmDelete").click(function () {
+    $("#confirmDelete").one("click",function () {
+        $(this).attr("disabled", "disabled");
 
         var model = { id: $("#confirmDelete").attr("data-value") };
 

@@ -9,7 +9,7 @@ namespace DeltaQrCode.Controllers
     public class ErrorController : Controller
     {
         [HttpPost]
-        public IActionResult ErrorModal([FromBody] string contact)
+        public IActionResult ErrorModal(string contact)
         {
             return PartialView("~/Views/Shared/_ErrorModal.cshtml", contact);
         }
