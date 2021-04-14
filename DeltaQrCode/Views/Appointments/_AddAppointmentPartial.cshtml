@@ -163,7 +163,7 @@
                 },
                 error: function (error) {
                     CloseModalById('myApptModal');
-                    ShowHeaderAlert(error.responseJSON.Message, "error", 5000);
+                    ShowHeaderAlert(error.responseText, "error", 5000);
                 }
             });
         }

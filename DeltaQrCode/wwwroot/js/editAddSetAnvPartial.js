@@ -452,7 +452,7 @@ $(document).one("click", "#apptsEditSubmitButton", function () {
             },
             error: function (error) {
                 CloseModalById('myHotelModal');
-                ShowHeaderAlert(error.responseJSON.Message, "error", 5000);
+                ShowHeaderAlert(error.responseText, "error", 5000);
             }
         });
     } else {
@@ -476,7 +476,7 @@ $("#apptsAddSubmitButton").one("click", function () {
             },
             error: function (error) {
                 CloseModalById('myHotelModal');
-                ShowHeaderAlert(error.responseJSON.Message, "error", 5000);
+                ShowHeaderAlert(error.responseText, "error", 5000);
                 swalErrorTimer(error.responseText, "Acest mesaj se va inchide automat!", 7000);
             }
         });

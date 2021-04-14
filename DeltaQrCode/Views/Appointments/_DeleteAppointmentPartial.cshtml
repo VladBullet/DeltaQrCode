@@ -41,7 +41,7 @@
             },
             error: function (error) {
                 CloseModalById('myApptDeleteModal');
-                ShowHeaderAlert(error.responseJSON.Message, "error",5000);
+                ShowHeaderAlert(error.responseText, "error",5000);
 
                 $.ajax({
                     type: "POST",
