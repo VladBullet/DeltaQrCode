@@ -460,7 +460,7 @@ $(document).one("click", "#apptsEditSubmitButton", function () {
     }
 });
 
-$("#apptsAddSubmitButton").one("click",function () {
+$("#apptsAddSubmitButton").one("click", function () {
     $(this).attr("disabled", "disabled");
     var result = validator.validate(validator);
     if (result.formIsValid) {
@@ -477,6 +477,7 @@ $("#apptsAddSubmitButton").one("click",function () {
             error: function (error) {
                 CloseModalById('myHotelModal');
                 ShowHeaderAlert(error.responseJSON.Message, "error", 5000);
+                swalErrorTimer(error.responseText, "Acest mesaj se va inchide automat!", 7000);
             }
         });
     }
