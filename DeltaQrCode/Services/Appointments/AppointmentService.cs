@@ -283,11 +283,9 @@ namespace DeltaQrCode.Services
                     var window = occupied[i + 1].Item1 - occupied[i].Item2;
                     if (window.TotalMinutes >= selectedDurata)
                     {
-                        var totalMinutes = window.TotalMinutes - selectedDurata;
                         var step = selectedDurata + occupied[i].Item2.TotalMinutes;
                         while (step <= occupied[i + 1].Item1.TotalMinutes)
                         {
-
                             var freeTime = TimeSpan.FromMinutes(step - selectedDurata);
                             free.Add(freeTime);
                             step += 30;
