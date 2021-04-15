@@ -64,12 +64,11 @@
                     @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
                         <input id="durataValue" class="changeable" hidden="hidden" data-value="@Model.DurataInMinute" />
+                        <input id="selectieBunaElem" hidden="hidden" value="false" />
                         <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
-                        @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
-
-
 
                 <div class="form-group col-md-6 col-sm-4">
                     @Html.LabelFor(model => model.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field", @id = "serviciuLabel", @name = "serviciuLabel" })
@@ -169,14 +168,19 @@
     </form>
 
 </div>
-
+<script type="text/javascript" src="~/js/appointmentsIndex.js"></script>
 <script src="~/js/validationRulesAppt.js"></script>
 <script type="text/javascript">
-
     var validator = new CustomValidation(apptFormValidationRules);
+
+    $(document).ready(function () {
+        checkDateAndTimeAvailable();
+        validator.validate(validator);
+    });
 
     $(document).one("click", "#apptsEditButton", function () {
         $(this).attr("disabled", "disabled");
+
         var result = validator.validate(validator);
         if (result.formIsValid) {
             $.ajax({
@@ -195,7 +199,8 @@
                     swalErrorTimer(error.responseText, 7000);
                 }
             });
-        } else {
+        }
+        else {
             updateUi(result.validationResults, "form-group", "error_span");
         }
     });
@@ -208,6 +213,12 @@
             updateUi(result.validationResults, "form-group", "error_span");
         });
 
+    $(document).on("change",
+        "#selectieBunaElem",
+        function () {
+            var result = validator.validate(validator);
+            updateUi(result.validationResults, "form-group", "error_span");
+        });
 
     // Select2 for Serviciu
     $("#serviciu").select2({
@@ -258,7 +269,7 @@
             },
             processResults: function (result) {
                 return {
-                    results: $.map(result, function (time,item) {
+                    results: $.map(result, function (time, item) {
                         return {
                             id: item,
                             text: time

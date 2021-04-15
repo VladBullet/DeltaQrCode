@@ -54,5 +54,11 @@
         check: "range",
         comparerValue: [1,4],
         message: "Va rugam introduceti o rampa existenta[1,2,3,4]!"
+    },  {
+        ruleName: "selectieDataEquals",
+        ruleForElementId: "#selectieBunaElem",
+        check: "equals",
+        comparerValue: true,
+        message: "Va rugam introduceti selectati un interval liber!"
     },
 ];

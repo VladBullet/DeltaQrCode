@@ -130,14 +130,16 @@
 
 </div>
 
+<script type="text/javascript" src="~/js/appointmentsIndex.js"></script>
 <script src="~/js/validationRulesAppt.js"></script>
 <script type="text/javascript">
+    var validator = new CustomValidation(apptFormValidationRules);
 
     $(document).ready(function () {
         checkDateAndTimeAvailable();
+        validator.validate(validator);
     });
 
-    var validator = new CustomValidation(apptFormValidationRules);
 
     $("#apptsAddButton").one("click", function () {
         $(this).attr("disabled", "disabled");
@@ -171,7 +173,12 @@
             var result = validator.validate(validator);
             updateUi(result.validationResults, "form-group", "error_span");
         });
-
+    $(document).on("change",
+        "#selectieBunaElem",
+        function () {
+            var result = validator.validate(validator);
+            updateUi(result.validationResults, "form-group", "error_span");
+        });
 
     // Select2 for Serviciu
     $("#serviciu").select2({
