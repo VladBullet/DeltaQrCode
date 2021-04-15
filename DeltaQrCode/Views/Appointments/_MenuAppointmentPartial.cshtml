@@ -3,19 +3,35 @@
 @model DeltaQrCode.ViewModels.Appointments.ConfirmVM
 
 <div class="modal-body">
-    <div class="btn btn-squared-default-plain btn-primary" style="margin-right:20px;" id="confirmButton" type="button" data-value="@Model.Id" data-confirm="@Model.Confirm">
-        @if (Model.Confirm)
-        {
-            <br /><i class="fas fa-check-circle fa-4x"></i> <br />
-        }
-        else
-        {
-            <br /><i class="fas fa-times-circle fa-4x"></i> <br />
-        }
+    <div class="row">
 
-        @(!Model.Confirm ? "Anuleaza programarea" : "Confirma")
+        <div class="col-md-3">
+            <div class="btn btn-squared-default-plain btn-secondary" id="infoButton" type="button" data-value="@Model.Id"><br /><i class="fas fa-info-circle fa-4x"></i> <br />  Informatii </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="btn btn-squared-default-plain btn-primary"  id="confirmButton" type="button" data-value="@Model.Id" data-confirm="@Model.Confirm">
+                @if (Model.Confirm)
+                {
+                    <br /><i class="fas fa-check-circle fa-4x"></i> <br />
+                }
+                else
+                {
+                    <br /><i class="fas fa-times-circle fa-4x"></i> <br />
+                }
+
+                @(!Model.Confirm ? "Anuleaza programarea" : "Confirma")
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="btn btn-squared-default-plain btn-warning text-white" id="editButton" type="button" data-value="@Model.Id"><br /><i class="fas fa-pen-square fa-4x "></i> <br />Editeaza</div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="btn btn-squared-default-plain btn-danger" id="deleteButton" type="button" data-value="@Model.Id"><br /><i class="fas fa-trash-alt fa-4x"></i> <br />  Sterge </div>
+        </div>
+
     </div>
-    <div class="btn btn-squared-default-plain btn-warning text-white" style="margin-right:20px;" id="editButton" type="button" data-value="@Model.Id"><br /><i class="fas fa-pen-square fa-4x "></i> <br />Editeaza</div>
-    <div class="btn btn-squared-default-plain btn-danger" id="deleteButton" type="button" data-value="@Model.Id"><br /><i class="fas fa-trash-alt fa-4x"></i> <br />  Sterge </div>
 
 </div>

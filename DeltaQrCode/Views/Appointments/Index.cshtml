@@ -40,8 +40,8 @@
     </div>
 </div>
 <div id="myApptMenuModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myMenuModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center" style="min-width:550px;">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+        <div class="modal-content text-center" style="max-width:800px; min-width:max-content">
             <div id="partialInfoMenu"></div>
         </div>
     </div>
@@ -57,6 +57,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div id="partialInfoConfirm"></div>
+        </div>
+    </div>
+</div>
+<div id="myApptInfoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myInfoApptModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="partialInfoInformatii"></div>
         </div>
     </div>
 </div>
@@ -302,6 +309,28 @@
                 event.stopPropagation();
                 var id = $(this).attr("data-value");
                 deleteApptModalDialog(id);
+            });
+
+        var infoApptModalDialog = function (id) {
+
+            var url = "/Appointments/InfoModal"; // the url to the controller
+            $.get(url + '?id=' + id,
+                function (data) {
+                    CloseModalById('myApptMenuModal');
+                    $('#partialInfoInformatii').html(data);
+                    preOpenModal();
+                    $('#myApptInfoModal').modal('show');
+                    makeModalScrollable("myApptInfoModal");
+                });
+        };
+
+        $(document).on('click',
+            '#infoButton',
+            function (event) {
+                // dont allow the event to propagate
+                event.stopPropagation();
+                var id = $(this).attr("data-value");
+                infoApptModalDialog(id);
             });
 
         var confirmApptModalDialog = function(id, confirm) {

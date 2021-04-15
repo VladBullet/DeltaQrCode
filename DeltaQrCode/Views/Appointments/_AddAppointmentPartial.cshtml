@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="form-group form-inline">
-                <label class="form-check-label col-md-3 required-field">Time</label>
+                <label class="form-check-label col-md-3 required-field">Ora</label>
                 <div class="col-md-9">
                     <div class="form-group">
                         <input id="StartTime_Hour" type="number" class="form-control changeable" asp-for="StartTime_Hour" />
@@ -53,22 +53,23 @@
                 </div>
             </div>
 
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                <div class="col-md-9">
-                    <input id="durataValue" class="changeable" hidden="hidden" data-value="30" />
-                    <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
-                    @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
+            <div class="form-row">
+                <div class="form-group col-md-6 col-sm-4">
+                    @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    <div class="col-md-9">
+                        <input id="durataValue" class="changeable" hidden="hidden" data-value="30" />
+                        <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
+                        @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field", @id = "serviciuLabel", @name = "serviciuLabel" })
-                <div class="col-md-9">
-                    <select id="serviciu" asp-for="Serviciu" data-placeholder="@Model.Serviciu" value="@Model.Serviciu"></select>
+                <div class="form-group col-md-6 col-sm-4">
+                    @Html.LabelFor(model => model.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field", @id = "serviciuLabel", @name = "serviciuLabel" })
+                    <div class="col-md-9">
+                        <select id="serviciu" asp-for="Serviciu" data-placeholder="@Model.Serviciu" value="@Model.Serviciu"></select>
 
-                    @Html.ValidationMessageFor(model => model.Serviciu, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Serviciu, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
 
@@ -132,13 +133,13 @@
 <script src="~/js/validationRulesAppt.js"></script>
 <script type="text/javascript">
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         checkDateAndTimeAvailable();
     });
 
     var validator = new CustomValidation(apptFormValidationRules);
 
-    $("#apptsAddButton").one("click",function () {
+    $("#apptsAddButton").one("click", function () {
         $(this).attr("disabled", "disabled");
         var result = validator.validate(validator);
         if (result.formIsValid) {
@@ -155,7 +156,7 @@
                 },
                 error: function (error) {
                     CloseModalById('myApptModal');
-                    swalErrorTimer(error.responseText,7000);
+                    swalErrorTimer(error.responseText, 7000);
                 }
             });
         }
@@ -221,7 +222,7 @@
             },
             processResults: function (result) {
                 return {
-                    results: $.map(result, function (time,item) {
+                    results: $.map(result, function (time, item) {
                         return {
                             id: item,
                             text: time

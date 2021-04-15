@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="form-group form-inline">
-                <label class="form-check-label col-md-3 required-field">Time</label>
+                <label class="form-check-label col-md-3 required-field">Ora</label>
                 <div class="col-md-9">
                     <div class="form-group">
                         <input id="StartTime_Hour" type="number" class="form-control changeable" asp-for="StartTime_Hour" />
@@ -59,31 +59,34 @@
                 </div>
             </div>
 
+            <div class="form-row">
+                <div class="form-group col-md-6 col-sm-4">
+                    @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    <div class="col-md-9">
+                        <input id="durataValue" class="changeable" hidden="hidden" data-value="@Model.DurataInMinute" />
+                        <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
+                        @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                <div class="col-md-9">
-                    <input id="durataValue" class="changeable" hidden="hidden" data-value="@Model.DurataInMinute" />
-                    <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
-                    @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
+
+
+                <div class="form-group col-md-6 col-sm-4">
+                    @Html.LabelFor(model => model.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field", @id = "serviciuLabel", @name = "serviciuLabel" })
+                    <div class="col-md-9">
+                        <select id="serviciu" asp-for="Serviciu" data-placeholder="@Model.Serviciu" value="@Model.Serviciu"></select>
+
+                        @Html.ValidationMessageFor(model => model.Serviciu, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-md-3 required-field">Rampa</label>
                 <div class="col-md-9">
-                   
+
                     <input id="RampId" class="changeable form-control col-md-2 validate" type="text" asp-for="RampId" />
                     @Html.ValidationMessageFor(model => model.RampId, "", new { @class = "text-danger error_span" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field", @id = "serviciuLabel", @name = "serviciuLabel" })
-                <div class="col-md-9">
-                    <select id="serviciu" asp-for="Serviciu" data-placeholder="@Model.Serviciu" value="@Model.Serviciu"></select>
-
-                    @Html.ValidationMessageFor(model => model.Serviciu, "", new { @class = "text-danger" })
                 </div>
             </div>
 

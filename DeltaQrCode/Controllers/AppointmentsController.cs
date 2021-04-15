@@ -166,6 +166,7 @@ namespace DeltaQrCode.Controllers
         }
 
 
+
         [HttpPost]
         public async Task<ActionResult> ConfirmDelete(int id)
         {
@@ -225,6 +226,15 @@ namespace DeltaQrCode.Controllers
         public IActionResult MenuModal(int id,bool confirm)
         {
             return PartialView("_MenuAppointmentPartial",new ConfirmVM(id, !confirm));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> InfoModal(int id)
+        {
+            var appt = await _appointmentService.GetAppointmentByIdAsync(id);
+            var appointment = _mapper.Map<AppointmentVM>(appt.Entity);
+
+            return PartialView("_InfoAppointmentPartial", appointment);
         }
 
         [HttpGet]

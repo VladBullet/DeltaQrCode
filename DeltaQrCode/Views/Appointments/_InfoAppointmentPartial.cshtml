@@ -1,0 +1,157 @@
+﻿@using DeltaQrCode.ModelsDto
+@using Microsoft.AspNetCore.Razor.TagHelpers
+@model DeltaQrCode.ViewModels.Appointments.AppointmentVM
+
+<style>
+    .modal-min-height {
+        min-height: 450px;
+    }
+
+    .required-field::before {
+        content: "*";
+    }
+
+    .margin150left {
+        margin-left: 150px;
+    }
+
+    .singleTextBox {
+        height: 80px;
+    }
+</style>
+
+<div class="modal-header">
+
+    <h3 id="myModalLabel">Informatii</h3>
+    <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
+
+</div>
+<div>
+    <form id="apptform" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="modal-body modal-min-height" id="apptModalBody">
+
+            <div class="form-group">
+                <input id="RampId" hidden="hidden" asp-for="RampId" />
+            </div>
+
+            <span id="availableHourSpan"> </span>
+
+            <div class="form-group col-md-6 col-sm-4">
+                <h6>Data programare</h6>
+                <div class="col-md-9">
+                    <input type="text" value="@Model.DataAppointment.ToShortDateString()" class="form-control half-margin-bottom" readonly />
+                    @Html.ValidationMessageFor(model => model.DataAppointment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-check-label col-md-3">Ora</label>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <input id="StartTime_Hour" type="number" class="form-control changeable" readonly asp-for="StartTime_Hour" />
+                    </div>
+                    <div class="form-group">
+                        <input id="StartTime_Minutes" type="number" class="form-control changeable" readonly asp-for="StartTime_Minutes" />
+                    </div>
+
+                    @Html.ValidationMessageFor(model => model.StartTime_Hour, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.StartTime_Minutes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6 col-sm-4">
+                    @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.DurataInMinute, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-4">
+                    @Html.LabelFor(model => model.Serviciu, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Serviciu, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Serviciu, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.NumarInmatriculare, "", new { @class = "text-danger " })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NumeClient, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.NumeClient, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 " })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger " })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EmailClient, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.EmailClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.EmailClient, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Observatii, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+
+                    <textarea name="Observatii" asp-for="@Model.Observatii"  cols="40" rows="3" readonly class="form-control half-margin-bottom">
+</textarea>
+                    @*@Html.TextArea(model => model.Observatii, 3, 40, new { htmlAttributes = new { @class = "form-control half-margin-bottom width100pc singleTextBox", @readonly = "readonly" } })*@
+                    @Html.ValidationMessageFor(model => model.Observatii, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group form-inline">
+                @Html.LabelFor(model => model.Confirmed, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9 form-inline">
+                    <input type="checkbox" id="Confirmed" checked="@Model.Confirmed" class="form-check-input" hidden />
+                    <div class="">
+                        @{if (Model.Confirmed)
+                            {
+
+
+                                <i class="text-success far fa-check-circle fa-2x"></i>
+                            }
+                            else
+                            {
+                                <i class="text-danger far fa-times-circle fa-2x"></i>
+                            }
+                        }
+                    </div>
+                    @* @Html.CheckBoxFor(model => model.Confirmed, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly",@disabled = "disabled" } })*@
+                    @*@Html.ValidationMessageFor(model => model.Confirmed, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            <p id="serverErrorMsg" style="color:red; padding: 5px;"></p>
+        </div>
+    </form>
+
+</div>
