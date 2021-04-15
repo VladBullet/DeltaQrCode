@@ -7,17 +7,10 @@
         min-height: 450px;
     }
 
-    .required-field::before {
-        content: "*";
-    }
-
     .margin150left {
         margin-left: 150px;
     }
 
-    .singleTextBox {
-        height: 80px;
-    }
 </style>
 
 <div class="modal-header">
@@ -117,10 +110,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Observatii, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-
-                    <textarea name="Observatii" asp-for="@Model.Observatii"  cols="40" rows="3" readonly class="form-control half-margin-bottom">
-</textarea>
-                    @*@Html.TextArea(model => model.Observatii, 3, 40, new { htmlAttributes = new { @class = "form-control half-margin-bottom width100pc singleTextBox", @readonly = "readonly" } })*@
+                    <textarea name="Observatii" asp-for="@Model.Observatii" cols="40" rows="3" readonly class="form-control half-margin-bottom"></textarea>
                     @Html.ValidationMessageFor(model => model.Observatii, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -142,8 +132,6 @@
                             }
                         }
                     </div>
-                    @* @Html.CheckBoxFor(model => model.Confirmed, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @readonly = "readonly",@disabled = "disabled" } })*@
-                    @*@Html.ValidationMessageFor(model => model.Confirmed, "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
