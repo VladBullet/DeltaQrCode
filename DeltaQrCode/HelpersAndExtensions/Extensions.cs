@@ -40,6 +40,18 @@
 
             return string.Empty;
         }
+
+        public static string ToDisplayString(this Dimensiuni dim)
+        {
+            if (dim != null)
+            {
+                return string.Format("Diam:{0}, Lat:{1}, H:{2}", dim.Diam, dim.Lat, dim.H);
+            }
+
+            return string.Empty;
+        }
+
+
         public static Dimensiuni ToDimensiuniFromJsonString(this string str)
         {
             var result = JsonConvert.DeserializeObject<Dimensiuni>(str);
@@ -64,6 +76,17 @@
 
             return string.Empty;
         }
+
+        public static string ToDisplayString(this Uzura uz)
+        {
+            if (uz != null)
+            {
+                return string.Format("StF:{0}, DrF:{1}", uz.StF, uz.DrF.HasValue ? uz.DrF.Value.ToString() : "null");
+            }
+            return string.Empty;
+        }
+
+
         public static Uzura ToUzuraFromJsonString(this string str)
         {
             var result = JsonConvert.DeserializeObject<Uzura>(str);

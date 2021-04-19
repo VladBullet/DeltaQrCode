@@ -45,8 +45,27 @@
                 <td>@item.Flota</td>
                 <td>@item.Marca</td>
                 <td>@item.NrBucati</td>
-                <td>@item.Dimensiuni.ToCustomString()</td>
-                <td>@item.Uzura.ToCustomString()</td>
+                <td>
+                    @if (item.Dimensiuni.Dot == 0)
+                    {
+                        @item.Dimensiuni.ToDisplayString()
+                    }
+                    else
+                    {
+                        @item.Dimensiuni.ToCustomString()
+                    }
+                </td>
+                <td>
+                    @if (item.Uzura.StS == null && item.Uzura.DrS == null)
+                    {
+                        @item.Uzura.ToDisplayString()
+                    }
+                    else
+                    {
+                        @item.Uzura.ToCustomString()
+                    }
+
+                </td>
                 <td>@item.TipSezon</td>
                 <td>@item.Position?.PositionString</td>
                 @{
