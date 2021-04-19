@@ -4,10 +4,15 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Services.Hotel
 {
+    using System.Data;
+    using System.IO;
+    using System.Linq;
     using AutoMapper;
+    using ClosedXML.Excel;
     using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
+    using Microsoft.AspNetCore.Mvc;
     using Serilog;
 
     public class HotelService : IHotelService
@@ -299,6 +304,68 @@ namespace DeltaQrCode.Services.Hotel
                 Log.Error(er, "Ceva nu a mers bine la gasirea flotei in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea flotei in servicii!", er);
             }
+        }
+
+        public async Task<DataTable> GenerateDataForExcel()
+        {  
+            DataTable dt = new DataTable("Grid");
+            dt.Columns.AddRange(new DataColumn[22] {
+                                            new DataColumn("NumeClient"),
+                                            new DataColumn("NumarInmatriculare"),
+                                            new DataColumn("NumarTelefon"),
+                                            new DataColumn("SerieSasiu"),
+                                            new DataColumn("Rand"),
+                                            new DataColumn("Pozitie"),
+                                            new DataColumn("Interval"),
+                                            new DataColumn("Marca"),
+                                            new DataColumn("Flota"),
+                                            new DataColumn("NrBucati"),
+                                            new DataColumn("Diametru"),
+                                            new DataColumn("Latime"),
+                                            new DataColumn("Inaltime"),
+                                            new DataColumn("DOT"),
+                                            new DataColumn("StangaFata"),
+                                            new DataColumn("StangaSpate"),
+                                            new DataColumn("DreaptaFata"),
+                                            new DataColumn("DreaptaSpate"),
+                                            new DataColumn("TipSezon"),
+                                            new DataColumn("Observatii"),
+                                            new DataColumn("StatusCurent"),
+                                            new DataColumn("DataUltimaModificare") });
+
+            var allAnv = await SearchAnvelopeAsync(string.Empty, 1,int.MaxValue);
+            var model = _mapper.Map<List<SetAnvelopeDto>>(allAnv.Entity);
+
+
+            var setanvelope = from anvelope in model
+                            select anvelope;
+
+            foreach (var anvelope in setanvelope)
+            {
+                dt.Rows.Add(anvelope.NumeClient,
+                    anvelope.NumarInmatriculare,
+                    anvelope.NumarTelefon,
+                    anvelope.SerieSasiu,
+                    anvelope.Position.Rand,
+                    anvelope.Position.Poz,
+                    anvelope.Position.Interval,
+                    anvelope.Marca,
+                    anvelope.Flota,
+                    anvelope.NrBucati,
+                    anvelope.Dimensiuni.Diam,
+                    anvelope.Dimensiuni.Lat,
+                    anvelope.Dimensiuni.H,
+                    anvelope.Dimensiuni.Dot,
+                    anvelope.Uzura.StF,
+                    anvelope.Uzura.StS,
+                    anvelope.Uzura.DrF,
+                    anvelope.Uzura.DrS,
+                    anvelope.TipSezon,
+                    anvelope.Observatii,
+                    anvelope.StatusCurent,
+                    anvelope.DataUltimaModificare);
+            }
+            return dt;
         }
     }
 }

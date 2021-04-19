@@ -4,6 +4,7 @@ using DeltaQrCode.Models;
 
 namespace DeltaQrCode.Services.Hotel
 {
+    using System.Data;
     using DeltaQrCode.ModelsDto;
 
     public interface IHotelService
@@ -18,6 +19,8 @@ namespace DeltaQrCode.Services.Hotel
 
         Task<Result<List<CaMarca>>> GetMarci();
         Task<Result<List<CaFlota>>> GetFlote();
+
+        Task<DataTable> GenerateDataForExcel();
 
     }
 }

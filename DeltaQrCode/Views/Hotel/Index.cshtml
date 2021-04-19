@@ -18,7 +18,8 @@
         <span class=" button input-group-text border-0" id="search-addon">
             <i class="fas fa-search"></i>
         </span>
-        <div style="margin-left:50px;" type="button" id="AddSetAnv" class="btn btn-success">Adauga anvelope</div>
+        <div style="margin-left:30px;" type="button" id="AddSetAnv" class="btn btn-success">Adauga anvelope</div>
+        <a style="margin-left:30px;" type="button" id="DownloadExcel" asp-action="download" asp-controller="Hotel" class="btn btn-warning"><i class="fas fa-file-download"></i></a>
     </div>
     <br />
 </div>
@@ -133,6 +134,7 @@
                 setAnvNewAddModalDialog();
             });
 
+
         $(document).on('click',
             '.actionButton',
             function (event) {
@@ -203,6 +205,8 @@
             console.log("Disable Next");
 
         };
+
+
 
 
     </script>

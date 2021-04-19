@@ -19,6 +19,8 @@ namespace DeltaQrCode.Controllers
 
     using Newtonsoft.Json;
     using Serilog;
+    using ClosedXML.Excel;
+    using System.IO;
 
     [Authorize]
     public class HotelController : Controller
@@ -179,6 +181,24 @@ namespace DeltaQrCode.Controllers
                 return BadRequest("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
             }
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Download()
+        {
+            var net = new System.Net.WebClient();
+            var data = await _hotelService.GenerateDataForExcel();
+            var filename = "RaportHotelAnvelope" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(data);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
+
+                }
+            }
         }
 
         [Produces("application/json")]
