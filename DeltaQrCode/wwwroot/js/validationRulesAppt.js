@@ -59,6 +59,6 @@
         ruleForElementId: "#selectieBunaElem",
         check: "equals",
         comparerValue: true,
-        message: "Va rugam introduceti selectati un interval liber!"
+        message: "Va rugam selectati un interval liber!"
     },
 ];
