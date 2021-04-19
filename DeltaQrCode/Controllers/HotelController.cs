@@ -186,7 +186,7 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public async Task<IActionResult> Download()
         {
-            var net = new System.Net.WebClient();
+
             var data = await _hotelService.GenerateDataForExcel();
             var filename = "RaportHotelAnvelope" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".xlsx";
             using (XLWorkbook wb = new XLWorkbook())
