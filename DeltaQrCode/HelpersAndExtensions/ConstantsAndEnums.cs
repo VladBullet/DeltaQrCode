@@ -17,6 +17,8 @@ namespace DeltaQrCode
 
         public static readonly string[] Intervals = { "A", "B", "C", "D", "E" };
 
+
+
         public static readonly int RandMax = 20; // TODO : --- VLAD --- : MAKE SURE WHAT THE MAX LIMITS ARE AND SET THEM RIGHT
         public static readonly int PozMax = 3; // TODO : --- VLAD --- : MAKE SURE WHAT THE MAX LIMITS ARE AND SET THEM RIGHT
         

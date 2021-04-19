@@ -132,6 +132,19 @@ function Uzura() {
                 break;
         };
     };
-
-
 }
+
+function download(file, img) {
+
+    //creating an invisible element
+    var element = document.createElement('a');
+    element.setAttribute('href', img);
+    element.setAttribute('download', file);
+
+    document.body.appendChild(element);
+
+    //onClick property
+    element.click();
+
+    document.body.removeChild(element);
+};

@@ -19,6 +19,8 @@ namespace DeltaQrCode.Controllers
 
     using Newtonsoft.Json;
     using Serilog;
+    using ClosedXML.Excel;
+    using System.IO;
 
     [Authorize]
     public class HotelController : Controller
@@ -106,7 +108,7 @@ namespace DeltaQrCode.Controllers
                 dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
                 dto.UzuraString = dto.Uzura.ToCustomString();
 
-                dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime);
+                dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime, setAnvelope.DOT);
                 dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
 
                 var result = await _hotelService.AddSetAnvelopeAsync(dto);
@@ -181,6 +183,24 @@ namespace DeltaQrCode.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Download()
+        {
+
+            var data = await _hotelService.GenerateDataForExcel();
+            var filename = "RaportHotelAnvelope" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(data);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
+
+                }
+            }
+        }
+
         [Produces("application/json")]
         public async Task<IActionResult> GetMarci(string term)
         {
@@ -226,6 +246,18 @@ namespace DeltaQrCode.Controllers
             list.Add(StatusAnvelope.Montate.ToDisplayString());
             list.Add(StatusAnvelope.Predate.ToDisplayString());
             return new JsonResult(list);
+        }
+
+        public IActionResult GetDot()
+        {
+            var DOTlist = new List<int>();
+
+            for (int i = 1990; i<= DateTime.Now.Year; i++)
+            {
+                DOTlist.Add(i);
+            }
+
+            return new JsonResult(DOTlist);
         }
 
         public IActionResult GetDiametru()

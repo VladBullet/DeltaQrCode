@@ -35,7 +35,7 @@
         {
             if (dim != null)
             {
-                return string.Format("Diam:{0}, Lat:{1}, H:{2}", dim.Diam, dim.Lat, dim.H);
+                return string.Format("Diam:{0}, Lat:{1}, H:{2}, Dot:{3}", dim.Diam, dim.Lat, dim.H, dim.Dot);
             }
 
             return string.Empty;
@@ -45,7 +45,7 @@
             var result = JsonConvert.DeserializeObject<Dimensiuni>(str);
             if (result == null)
             {
-                result = new Dimensiuni(0, 0, 0);
+                result = new Dimensiuni(0, 0, 0, 0);
             }
             return result;
         }

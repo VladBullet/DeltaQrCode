@@ -11,18 +11,19 @@
 <div id="HeaderAlert" class="alert" role="alert">
 </div>
 <input type="text" id="hotelListState" value="0" hidden="hidden" />
-<div class="container text-center">
+<div class="filicontainer text-center">
     <div class="input-group rounded">
         <input type="text" id="search" class="form-control rounded" placeholder="Search" aria-label="Search"
                aria-describedby="search-addon" />
         <span class=" button input-group-text border-0" id="search-addon">
             <i class="fas fa-search"></i>
         </span>
-        <div style="margin-left:50px;" type="button" id="AddSetAnv" class="btn btn-success">Adauga anvelope</div>
+        <div style="margin-left:30px;" type="button" id="AddSetAnv" class="btn btn-success">Adauga anvelope</div>
+        <a style="margin-left:30px;" type="button" id="DownloadExcel" asp-action="download" asp-controller="Hotel" class="btn btn-secondary"><i class="fas fa-file-download"></i></a>
     </div>
     <br />
 </div>
-<div id="tableResult" class="container">
+<div id="tableResult" class="filicontainer">
     @*<partial name="_HotelList" model="@Model" />*@
 </div>
 
@@ -133,6 +134,7 @@
                 setAnvNewAddModalDialog();
             });
 
+
         $(document).on('click',
             '.actionButton',
             function (event) {
@@ -203,6 +205,8 @@
             console.log("Disable Next");
 
         };
+
+
 
 
     </script>
