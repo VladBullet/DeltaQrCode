@@ -8,18 +8,20 @@ CREATE TABLE `ca_appointments` (
   `DataAppointment` datetime NOT NULL,
   `DataIntroducere` datetime NOT NULL,
   `OraInceput` time NOT NULL,
-  `Deleted` bit(1) NOT NULL,
+  `Deleted` bit(2) NOT NULL,
   `Observatii` varchar(256) DEFAULT NULL,
-  `Confirmed` bit(1) NOT NULL,
+  `Confirmed` bit(2) NOT NULL,
   `ConfirmedDate` datetime DEFAULT NULL,
   `ConfirmedCode` varchar(100) NOT NULL,
   `LastModified` datetime NOT NULL,
   `RampId` int NOT NULL,
   `EmailClient` varchar(100) DEFAULT NULL,
   `DurataInMinute` int NOT NULL,
+  `ChangedByClient` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `ca_client` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -132,11 +134,10 @@ CREATE TABLE `ca_set_anvelope` (
   `DataUltimaModificare` datetime NOT NULL,
   `Deleted` bit(1) NOT NULL,
   `FlotaId` int unsigned DEFAULT NULL,
-  `SerieSasiu` varchar(45) NOT NULL,
+  `SerieSasiu` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
-
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 
 CREATE TABLE `ca_users` (
