@@ -56,7 +56,7 @@ namespace DeltaQrCode.Controllers
 
 
 
-        public async Task<JsonResult> GetAppointmentsForDate(string apptDate) // TODO: De vazut VLAD
+        public async Task<JsonResult> GetAppointmentsForDate(string apptDate)
         {
             DateTime dt;
             DateTime.TryParse(apptDate, out dt);

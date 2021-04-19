@@ -190,7 +190,12 @@ namespace DeltaQrCode.Services.Hotel
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
                 modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
                 modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
-                modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
+
+                if(modelForDatabase.SerieSasiu != null)
+                {
+                    modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
+
+                }
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 

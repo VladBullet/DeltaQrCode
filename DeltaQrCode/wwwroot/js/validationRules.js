@@ -13,13 +13,13 @@
         comparerValue: true,
         message: "Va rugam introduceti numarul de inmatriculare!"
     },
-    {
-        ruleName: "serieSasiuRequired",
-        ruleForElementId: "#SerieSasiu",
-        check: "required",
-        comparerValue: true,
-        message: "Va rugam introduceti seria de sasiu!"
-    },
+    //{
+    //    ruleName: "serieSasiuRequired",
+    //    ruleForElementId: "#SerieSasiu",
+    //    check: "required",
+    //    comparerValue: true,
+    //    message: "Va rugam introduceti seria de sasiu!"
+    //},
     {
         ruleName: "numarInmatriculareRegex",
         ruleForElementId: "#NumarInmatriculare",
@@ -27,13 +27,13 @@
         comparerValue: /^(\d|\w){6,15}$/,
         message: "Numarul de inmatriculare nu este valid. Introduceti un numar de inmatriculare valid!"
     },
-    {
-        ruleName: "serieSasiuRegex",
-        ruleForElementId: "#SerieSasiu",
-        check: "regex",
-        comparerValue: /^(\d|\w){17}$/,
-        message: "Seria de sasiu nu este valida. Introduceti o serie de sasiu valida!"
-    },
+    //{
+    //    ruleName: "serieSasiuRegex",
+    //    ruleForElementId: "#SerieSasiu",
+    //    check: "regex",
+    //    comparerValue: /^(\d|\w){17}$/,
+    //    message: "Seria de sasiu nu este valida. Introduceti o serie de sasiu valida!"
+    //},
     {
         ruleName: "numarTelefonRequired",
         ruleForElementId: "#NumarTelefon",
