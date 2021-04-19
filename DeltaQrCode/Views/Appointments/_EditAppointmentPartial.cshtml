@@ -48,10 +48,12 @@
                 <label class="form-check-label col-md-3 required-field">Ora</label>
                 <div class="col-md-9">
                     <div class="form-group">
-                        <input id="StartTime_Hour" type="number" class="form-control changeable" asp-for="StartTime_Hour" />
+                        @Html.DropDownListFor(model => model.StartTime_Hour, ViewData["hours"] as SelectList, new { @class = "form-control changeable" })
+                        @*<input id="StartTime_Hour" type="number" class="form-control changeable" asp-for="StartTime_Hour" />*@
                     </div>
                     <div class="form-group">
-                        <input id="StartTime_Minutes" type="number" class="form-control changeable" asp-for="StartTime_Minutes" />
+                        @Html.DropDownListFor(model => model.StartTime_Minutes, ViewData["minutes"] as SelectList, new { @class = "form-control changeable" })
+                        @*<input id="StartTime_Minutes" type="number" class="form-control changeable" asp-for="StartTime_Minutes" />*@
                     </div>
 
                     @Html.ValidationMessageFor(model => model.StartTime_Hour, "", new { @class = "text-danger" })

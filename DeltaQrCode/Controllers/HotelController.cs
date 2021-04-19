@@ -252,7 +252,7 @@ namespace DeltaQrCode.Controllers
         {
             var DOTlist = new List<int>();
 
-            for (int i = 1990; i<= DateTime.Now.Year; i++)
+            for (int i = 2000; i<= DateTime.Now.Year; i++)
             {
                 DOTlist.Add(i);
             }

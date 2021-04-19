@@ -103,8 +103,10 @@ body {
     .filicontainer {
         max-width: 1140px;
     }
-    
+}
+
 @media (min-width: 1400px) {
     .filicontainer {
         max-width: 1350px;
     }
+}

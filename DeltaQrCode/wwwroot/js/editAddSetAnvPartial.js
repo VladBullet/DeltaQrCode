@@ -436,6 +436,16 @@ if (inaltimeVal != NaN && inaltimeVal != '') {
     inaltimeObj.trigger('change'); // Notify any JS components that the value changed
 }
 
+// select2 initial value for DOT
+var dotObj = $('#Dot');
+var dotVal = $("#defaultDot").attr("data-value");
+if (dotVal != NaN && dotVal != '') {
+    var optionDot = new Option(dotVal, dotVal, true, true);
+   dotObj.append(optionDot);
+    dotObj.val(dotVal);
+    dotObj.trigger('change'); // Notify any JS components that the value changed
+}
+
 $(document).on("change",
     "#statusAnv",
     function () {

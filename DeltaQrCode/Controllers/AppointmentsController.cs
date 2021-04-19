@@ -13,7 +13,7 @@ namespace DeltaQrCode.Controllers
     using DeltaQrCode.ViewModels.Appointments;
 
     using Microsoft.AspNetCore.Authorization;
-
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Newtonsoft.Json;
     using Serilog;
 
@@ -85,6 +85,19 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public async Task<ActionResult> ModalEdit(int id)
         {
+            var hours = new List<SelectListItem>();
+            for (int i = 8; i <= 17; i++)
+            {
+                hours.Add(new SelectListItem(i.ToString(), i.ToString()));
+            }
+            SelectList s1 = new SelectList(hours, "Value", "Text");
+            ViewBag.hours = s1;
+
+
+            var minutes = new List<SelectListItem>() { new SelectListItem(0.ToString(), 0.ToString()), new SelectListItem(30.ToString(), 30.ToString()) };
+
+            SelectList s2 = new SelectList(minutes, "Value", "Text");
+            ViewBag.minutes = s2;
 
             var appt = await _appointmentService.GetAppointmentByIdAsync(id);
             var appointment = _mapper.Map<AppointmentVM>(appt.Entity);
@@ -121,6 +134,21 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public ActionResult ModalAdd(string startDateStr, string startHour, string rampId)
         {
+
+            var hours = new List<SelectListItem>();
+            for (int i = 8; i <= 17; i++)
+            {
+                hours.Add(new SelectListItem(i.ToString(), i.ToString()));
+            }
+            SelectList s1 = new SelectList(hours, "Value", "Text");
+            ViewBag.hours = s1;
+
+
+            var minutes = new List<SelectListItem>() { new SelectListItem(0.ToString(), 0.ToString()), new SelectListItem(30.ToString(), 30.ToString()) };
+
+            SelectList s2 = new SelectList(minutes, "Value", "Text");
+            ViewBag.minutes = s2;
+
             DateTime startDate = DateTime.Parse(startDateStr);
             var s = startHour.Split('_');
             DateTime appointmentStart = startDate.AddHours(int.Parse(s[0])).AddMinutes(int.Parse(s[1]));
