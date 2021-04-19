@@ -34,7 +34,7 @@
 
             CreateMap<AddEditSetAnvelopeVM, SetAnvelopeDto>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
-                .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => new Dimensiuni(s.Diametru, s.Latime, s.Inaltime)))
+                .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => new Dimensiuni(s.Diametru, s.Latime, s.Inaltime, s.DOT)))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => new Uzura(s.StangaFata, s.StangaSpate, s.DreaptaFata, s.DreaptaSpate)))
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.DimensiuniString))
                 .ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));

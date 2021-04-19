@@ -158,6 +158,7 @@ $("#Diametru").select2({
     }
 });
 
+
 // Select2 for Latime
 $("#Latime").select2({
     tags: true,
@@ -194,6 +195,34 @@ $("#Inaltime").select2({
     allowClear: true,
     ajax: {
         url: '/Hotel/GetInaltime',
+        contentType: "application/json; charset=utf-8",
+        data: function (params) {
+            var query = {
+                term: params.term
+            }
+            return query;
+        },
+        processResults: function (result) {
+            return {
+                results: $.map(result, function (item) {
+                    return {
+                        id: item,
+                        text: item
+                    };
+                }),
+            };
+        }
+    }
+});
+
+// Select2 for DOT
+$("#Dot").select2({
+    tags: true,
+    dropdownParent: "#hotelModalBody",
+    theme: "bootstrap4",
+    allowClear: true,
+    ajax: {
+        url: '/Hotel/GetDot',
         contentType: "application/json; charset=utf-8",
         data: function (params) {
             var query = {
