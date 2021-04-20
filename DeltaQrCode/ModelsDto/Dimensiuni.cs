@@ -15,13 +15,6 @@ namespace DeltaQrCode.ModelsDto
             Dot = dot;
         }
 
-        public Dimensiuni(int diam, int lat, int h)
-        {
-            Diam = diam;
-            Lat = lat;
-            H = h;
-        }
-
 
         public int Diam { get; set; }
         public int Lat { get; set; }

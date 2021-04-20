@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DeltaQrCode.Models;
 
 namespace DeltaQrCode.Repositories.SchimbAnvelope
 {
-    public class ISchimbAnvelopeRepository
+    public interface ISchimbAnvelopeRepository
     {
+        Task<Result<CaOperatiuneSchimbAnvelope>> GetOperatiuneByIdAsync(int id);
+        Task<Result<CaOperatiuneSchimbAnvelope>> AddOperatiuneeAsync(CaOperatiuneSchimbAnvelope schimb);
     }
 }
