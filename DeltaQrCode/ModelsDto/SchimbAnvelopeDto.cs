@@ -18,6 +18,6 @@ namespace DeltaQrCode.ModelsDto
         public TimeSpan OraInceput { get; set; }
         public TimeSpan? OraSfarsit { get; set; }
         public bool OperatiuneFinalizata { get; set; }
-        public int PasCurentOperatiune { get; set; }
+        public int PasCurentOperatiuneId { get; set; }
     }
 }

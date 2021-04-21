@@ -32,7 +32,7 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
             }
         }
 
-        public async Task<Result<CaOperatiuneSchimbAnvelope>> AddSetAnvelopeAsync(CaOperatiuneSchimbAnvelope schimb)
+        public async Task<Result<CaOperatiuneSchimbAnvelope>> FinalizareOperatiuneAsync(CaOperatiuneSchimbAnvelope schimb)
         {
             try
             {

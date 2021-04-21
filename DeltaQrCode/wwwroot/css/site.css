@@ -192,6 +192,18 @@ p {
     margin: 10px 0px 10px 5px;
     float: right
 }
+#msform .action-button-left {
+    width: 100px;
+    background: #008000;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 0px 10px 5px;
+    float: left
+}
 
     #msform .action-button:hover,
     #msform .action-button:focus {
@@ -269,22 +281,23 @@ p {
 
     #progressbar #account:before {
         font-family: FontAwesome;
-        content: "\f13e"
+        content: "1"
     }
 
     #progressbar #personal:before {
         font-family: FontAwesome;
-        content: "\f007"
+        content: "2";
     }
 
     #progressbar #payment:before {
         font-family: FontAwesome;
-        content: "\f030"
+        content: "3"
+            
     }
 
     #progressbar #confirm:before {
         font-family: FontAwesome;
-        content: "\f00c"
+        content: "4"
     }
 
     #progressbar li:before {
