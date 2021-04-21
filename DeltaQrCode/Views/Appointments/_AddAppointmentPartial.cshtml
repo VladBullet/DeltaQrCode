@@ -35,17 +35,19 @@
             <div class="form-group">
                 <h6 style="margin-left:20px;">Data programare</h6>
                 <div class="col-md-6">
-                    <input id="datepickerModal" asp-for="DataAppointment" type="text" class="form-control changeable" placeholder="Selecteaza data" />
+                    <input id="datepickerModal" asp-for="DataAppointment" type="text" class="form-control changeable changeableDateTimeRamp" placeholder="Selecteaza data" />
                 </div>
             </div>
             <div class="form-group form-inline">
                 <label class="form-check-label col-md-3 required-field">Ora</label>
                 <div class="col-md-9">
                     <div class="form-group">
-                        <input id="StartTime_Hour" type="number" class="form-control changeable" asp-for="StartTime_Hour" />
+                        @Html.DropDownListFor(model => model.StartTime_Hour, ViewData["hours"] as SelectList, new { @class = "form-control changeable changeableDateTimeRamp" })
+                        @*<input id="StartTime_Hour" type="number" class="form-control changeable" asp-for="StartTime_Hour" />*@
                     </div>
                     <div class="form-group">
-                        <input id="StartTime_Minutes" type="number" class="form-control changeable" asp-for="StartTime_Minutes" />
+                        @Html.DropDownListFor(model => model.StartTime_Minutes, ViewData["minutes"] as SelectList, new { @class = "form-control changeable changeableDateTimeRamp" })
+                        @*<input id="StartTime_Minutes" type="number" class="form-control changeable" asp-for="StartTime_Minutes" />*@
                     </div>
 
                     @Html.ValidationMessageFor(model => model.StartTime_Hour, "", new { @class = "text-danger" })
@@ -58,6 +60,7 @@
                     @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
                         <input id="durataValue" class="changeable" hidden="hidden" data-value="30" />
+                        <input id="selectieBunaElem" hidden="hidden" value="false" />
                         <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
                         @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
                     </div>
@@ -66,7 +69,7 @@
                 <div class="form-group col-md-6 col-sm-4">
                     @Html.LabelFor(model => model.Serviciu, htmlAttributes: new { @class = "control-label col-md-3 required-field", @id = "serviciuLabel", @name = "serviciuLabel" })
                     <div class="col-md-9">
-                        <select id="serviciu" asp-for="Serviciu" data-placeholder="@Model.Serviciu" value="@Model.Serviciu"></select>
+                        <select id="serviciu" class="changeable" asp-for="Serviciu" data-placeholder="@Model.Serviciu" value="@Model.Serviciu"></select>
 
                         @Html.ValidationMessageFor(model => model.Serviciu, "", new { @class = "text-danger" })
                     </div>
@@ -77,7 +80,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                    @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate changeable" } })
                     @Html.ValidationMessageFor(model => model.NumarInmatriculare, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
@@ -85,7 +88,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.NumeClient, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                    @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate changeable" } })
                     @Html.ValidationMessageFor(model => model.NumeClient, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
@@ -94,7 +97,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                    @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate changeable" } })
                     @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
@@ -103,7 +106,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.EmailClient, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.EmailClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                    @Html.EditorFor(model => model.EmailClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate changeable" } })
                     @Html.ValidationMessageFor(model => model.EmailClient, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
@@ -111,7 +114,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Observatii, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.TextAreaFor(model => model.Observatii, 3, 40, new { htmlAttributes = new { @class = "form-control half-margin-bottom width100pc" } })
+                    @Html.TextAreaFor(model => model.Observatii, 3, 40, new { htmlAttributes = new { @class = "form-control half-margin-bottom changeable" } })
                     @Html.ValidationMessageFor(model => model.Observatii, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -124,7 +127,7 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Inchide</button>
-            <a class="btn btn-outline-success btn-ok" id="apptsAddButton">Adauga</a>
+            <div class="btn btn-outline-success btn-ok" id="apptsAddButton">Adauga</div>
         </div>
     </form>
 
@@ -137,11 +140,14 @@
     $(document).ready(function () {
         checkDateAndTimeAvailable();
         validator.validate(validator);
+        var saveBtn = $("#apptsAddButton");
+        $(saveBtn).prop("disabled", true);
     });
 
 
     $("#apptsAddButton").one("click", function () {
-        $(this).attr("disabled", "disabled");
+        $(this).prop("disabled", true);
+        console.log("durataValue", $("#durataValue").val());
         var result = validator.validate(validator);
         if (result.formIsValid) {
             $.ajax({

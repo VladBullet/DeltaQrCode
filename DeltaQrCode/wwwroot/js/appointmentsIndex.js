@@ -162,7 +162,6 @@ var showAppointmentsForDate = function (calendarDate) {
                     // dont allow the event to propagate to hour click.
                     event.stopPropagation();
                     var confirm = $(this).attr("data-confirm");
-                    console.log("22222 :", confirm);
                     var fullId = $(this).attr("id").replace('appt', '');
                     apptMenuModalDialog(fullId, confirm);
                 });
@@ -282,9 +281,15 @@ $(document).on('click',
     });
 
 $(document).on("change",
-    ".changeable",
+    ".changeableDateTimeRamp",
     function () {
         checkDateAndTimeAvailable();
+    });
+
+$(document).on("change",
+    ".changeable", function () {
+        var saveBtn = $(document).find(".btn-ok");
+        $(saveBtn).attr("disabled", false);
     });
 
 
@@ -315,13 +320,13 @@ var checkDateAndTimeAvailable = function () {
     var url = "/Appointments/GetAvailableSpans"; // the url to the controller
     $.get(url + '?startDateStr=' + datepickerVal + '&startHour=' + time + '&duration=' + durata + '&rampId=' + rampId + "&apptId=" + apptId,
         function (data) {
-            console.log(data);
-            console.log(data.selectedIsAvailable);
-            console.log(data.availableSpans);
             span.text("").removeClass("text-danger").removeClass("text-success");
             span.addClass("hide");
+            var selectieBuna = $(document).find("#selectieBunaElem");
 
-            $(document).find("#selectieBunaElem").val(data.selectedIsAvailable);
+            console.log("selectie before: ", selectieBuna.val());
+            $(selectieBuna).val(data.selectedIsAvailable);
+            console.log("selectie after: ", selectieBuna.val());
 
             if (data.selectedIsAvailable) {
                 span.text("Selectia de data si ora este buna! Nu se suprapune cu alta programare!").removeClass("text-danger").addClass("text-success");

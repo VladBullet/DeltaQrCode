@@ -58,7 +58,7 @@
         ruleName: "selectieDataEquals",
         ruleForElementId: "#selectieBunaElem",
         check: "equals",
-        comparerValue: true,
+        comparerValue: "true",
         message: "Va rugam selectati un interval liber!"
     },
 ];
