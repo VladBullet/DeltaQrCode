@@ -21,7 +21,7 @@
 <input id="defaultDiametru" hidden="hidden" data-value="@Model.Diametru" />
 <input id="defaultLatime" hidden="hidden" data-value="@Model.Latime" />
 <input id="defaultInaltime" hidden="hidden" data-value="@Model.Inaltime" />
-<input id="defaultDot" hidden="hidden" data-value="@Model.DOT" />
+<input id="defaultDot" hidden="hidden" data-value="@Model.Dot" />
 <input id="defaultMarca" hidden="hidden" data-value="@Model.Marca" />
 <input id="defaultFlota" hidden="hidden" data-value="@Model.Flota" />
 <input id="defaultTipSezon" hidden="hidden" data-value="@Model.TipSezon" />
@@ -178,9 +178,9 @@
                 </div>
 
                 <div class="form-group col-md-3 col-sm-2">
-                    @Html.LabelFor(model => model.DOT, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <select class="form-control" id="Dot" asp-for="DOT" data-placeholder="@Model.DOT" value="@Model.DOT"></select>
-                    @Html.ValidationMessageFor(model => model.DOT, "", new { @class = "text-danger error_span" })
+                    @Html.LabelFor(model => model.Dot, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <select class="form-control" id="Dot" asp-for="Dot" data-placeholder="@Model.Dot" value="@Model.Dot"></select>
+                    @Html.ValidationMessageFor(model => model.Dot, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
 

@@ -30,7 +30,7 @@ namespace DeltaQrCode.Controllers
         }
 
         //GET: Appointments
-        public ActionResult Index(string startDateString, string activeDateString) // TODO: De vazut VLAD
+        public ActionResult Index(string startDateString, string activeDateString)
         {
 
 

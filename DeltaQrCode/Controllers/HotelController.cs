@@ -108,7 +108,7 @@ namespace DeltaQrCode.Controllers
                 dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
                 dto.UzuraString = dto.Uzura.ToCustomString();
 
-                dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime, setAnvelope.DOT);
+                dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime, setAnvelope.Dot);
                 dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
 
                 var result = await _hotelService.AddSetAnvelopeAsync(dto);
@@ -163,10 +163,10 @@ namespace DeltaQrCode.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAvailablePositions(string term) // TODO: Vlad
+        public async Task<IActionResult> GetAvailablePositions(string term)
         {
             try
-            {
+           {
                 var positions = await _hotelService.GetAvailablePositionsAsync();
                 var list = positions.Entity.Select(x => x.PositionString).ToList();
                 if (!string.IsNullOrEmpty(term))
@@ -250,14 +250,8 @@ namespace DeltaQrCode.Controllers
 
         public IActionResult GetDot()
         {
-            var DOTlist = new List<int>();
 
-            for (int i = 2000; i<= DateTime.Now.Year; i++)
-            {
-                DOTlist.Add(i);
-            }
-
-            return new JsonResult(DOTlist);
+            return new JsonResult(ConstantsAndEnums.DOTlist());
         }
 
         public IActionResult GetDiametru()
