@@ -7,7 +7,7 @@ namespace DeltaQrCode.ModelsDto
         {
             
         }
-        public Dimensiuni(int diam, int lat, int h, int dot)
+        public Dimensiuni(int diam, int lat, int h, int? dot)
         {
             Diam = diam;
             Lat = lat;
@@ -15,17 +15,9 @@ namespace DeltaQrCode.ModelsDto
             Dot = dot;
         }
 
-        public Dimensiuni(int diam, int lat, int h)
-        {
-            Diam = diam;
-            Lat = lat;
-            H = h;
-        }
-
-
         public int Diam { get; set; }
         public int Lat { get; set; }
         public int H { get; set; }
-        public int Dot { get; set; }
+        public int? Dot { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace DeltaQrCode.HelpersAndExtensions
 {
+    using System;
     using System.Security.Policy;
 
     using DeltaQrCode.Models;
@@ -43,12 +44,12 @@
 
         public static string ToDisplayString(this Dimensiuni dim)
         {
-            if (dim != null)
+            string result = string.Format("Diam:{0}, Lat:{1}, H:{2}", dim.Diam, dim.Lat, dim.H);
+            if (dim.Dot != null)
             {
-                return string.Format("Diam:{0}, Lat:{1}, H:{2}", dim.Diam, dim.Lat, dim.H);
+                result = string.Format(result + ", Dot:{0}", dim.Dot);
             }
-
-            return string.Empty;
+            return result;
         }
 
 
@@ -79,11 +80,30 @@
 
         public static string ToDisplayString(this Uzura uz)
         {
-            if (uz != null)
+            string result = string.Format("StF:{0}", uz.StF);
+            if (uz.DrF != null)
             {
-                return string.Format("StF:{0}, DrF:{1}", uz.StF, uz.DrF.HasValue ? uz.DrF.Value.ToString() : "null");
+                result = String.Format(result + ", DrF:{0}", uz.DrF);
             }
-            return string.Empty;
+            if (uz.StS != null)
+            {
+                result = String.Format(result + ", StS:{0}", uz.StS);
+            }
+            if (uz.DrS != null)
+            {
+                result = String.Format(result + ", DrS:{0}", uz.DrS);
+            }
+            return result;
+        }
+
+        public static string ToDisplayString(this Position pos)
+        {
+            if (string.IsNullOrEmpty(pos.Poz) && string.IsNullOrEmpty(pos.Rand) && string.IsNullOrEmpty(pos.Interval))
+            {
+                return string.Empty;
+            }
+
+            return string.Format("Rand:{0}, Poz:{1}, Int:{2}", pos.Rand, pos.Poz, pos.Interval);
         }
 
 

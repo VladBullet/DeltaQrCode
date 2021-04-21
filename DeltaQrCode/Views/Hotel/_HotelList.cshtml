@@ -45,29 +45,10 @@
                 <td>@item.Flota</td>
                 <td>@item.Marca</td>
                 <td>@item.NrBucati</td>
-                <td>
-                    @if (item.Dimensiuni.Dot == 0)
-                    {
-                        @item.Dimensiuni.ToDisplayString()
-                    }
-                    else
-                    {
-                        @item.Dimensiuni.ToCustomString()
-                    }
-                </td>
-                <td>
-                    @if (item.Uzura.StS == null && item.Uzura.DrS == null)
-                    {
-                        @item.Uzura.ToDisplayString()
-                    }
-                    else
-                    {
-                        @item.Uzura.ToCustomString()
-                    }
-
-                </td>
+                <td>@item.Dimensiuni.ToDisplayString()</td>
+                <td>@item.Uzura.ToDisplayString()</td>
                 <td>@item.TipSezon</td>
-                <td>@item.Position?.PositionString</td>
+                <td>@item.Position?.ToDisplayString()</td>
                 @{
                     string color = "#ff4242";
                     if (item.StatusCurent == StatusAnvelope.InRaft.ToDisplayString())
