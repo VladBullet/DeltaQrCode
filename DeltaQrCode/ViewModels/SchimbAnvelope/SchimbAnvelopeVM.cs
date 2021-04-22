@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DeltaQrCode.Models
+namespace DeltaQrCode.ViewModels.SchimbAnvelope
 {
-    public partial class CaOperatiuneSchimbAnvelope
+    public class SchimbAnvelopeVM
     {
         public int Id { get; set; }
         public string NumarInmatriculare { get; set; }
