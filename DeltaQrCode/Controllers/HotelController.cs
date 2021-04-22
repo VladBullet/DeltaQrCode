@@ -161,27 +161,27 @@ namespace DeltaQrCode.Controllers
             }
         }
 
-        [HttpGet]
-        [Produces("application/json")]
-        public async Task<IActionResult> GetAvailablePositions(string term)
-        {
-            try
-           {
-                var positions = await _hotelService.GetAvailablePositionsAsync();
-                var list = positions.Entity.Select(x => x.PositionString).ToList();
-                if (!string.IsNullOrEmpty(term))
-                {
-                    list = positions.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
-                }
-                return new JsonResult(list);
-            }
-            catch (Exception e)
-            {
-                Log.Error(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
-                return BadRequest("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
-            }
+        //[HttpGet]
+        //[Produces("application/json")]
+        //public async Task<IActionResult> GetAvailablePositions(string term)
+        //{
+        //    try
+        //   {
+        //        var positions = await _hotelService.GetAvailablePositionsAsync();
+        //        var list = positions.Entity.Select(x => x.PositionString).ToList();
+        //        if (!string.IsNullOrEmpty(term))
+        //        {
+        //            list = positions.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
+        //        }
+        //        return new JsonResult(list);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Log.Error(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
+        //        return BadRequest("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
+        //    }
 
-        }
+        //}
 
         [HttpGet]
         public async Task<IActionResult> Download()

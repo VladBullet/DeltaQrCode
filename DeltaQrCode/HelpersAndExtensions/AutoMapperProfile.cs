@@ -18,17 +18,17 @@
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.Dimensiuni))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToUzuraFromJsonString()))
                 .ForMember(d => d.UzuraString, m => m.MapFrom(s => s.Uzura))
-                .ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie, s.Interval)))
+                //.ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie, s.Interval)))
                 ;
             CreateMap<SetAnvelopeDto, CaSetAnvelope>()
 
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => s.Dimensiuni.ToJson()))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToJson()))
-                .ForMember(d => d.Rand, m => m.MapFrom(s => s.Position.Rand))
-                .ForMember(d => d.Pozitie, m => m.MapFrom(s => s.Position.Poz))
-                .ForMember(d => d.Interval, m => m.MapFrom(s => s.Position.Interval));
-
+                //.ForMember(d => d.Rand, m => m.MapFrom(s => s.Position.Rand))
+                //.ForMember(d => d.Pozitie, m => m.MapFrom(s => s.Position.Poz))
+                //.ForMember(d => d.Interval, m => m.MapFrom(s => s.Position.Interval));
+                ;
 
 
 

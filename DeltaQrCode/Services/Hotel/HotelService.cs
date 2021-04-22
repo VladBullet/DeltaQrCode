@@ -268,20 +268,20 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<List<Position>>> GetAvailablePositionsAsync()
-        {
-            try
-            {
-                var positions = await _hotelRepository.GetAvailablePositionsAsync();
+        //public async Task<Result<List<Position>>> GetAvailablePositionsAsync()
+        //{
+        //    try
+        //    {
+        //        var positions = await _hotelRepository.GetAvailablePositionsAsync();
 
-                return positions;
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!");
-                throw new Exception("Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!", er);
-            }
-        }
+        //        return positions;
+        //    }
+        //    catch (Exception er)
+        //    {
+        //        Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!");
+        //        throw new Exception("Ceva nu a mers bine la gasirea pozitiilor disponibile in hotel in servicii!", er);
+        //    }
+        //}
 
         public async Task<Result<List<CaMarca>>> GetMarci()
         {

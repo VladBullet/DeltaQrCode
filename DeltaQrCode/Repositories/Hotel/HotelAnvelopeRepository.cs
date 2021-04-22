@@ -122,27 +122,27 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
-        {
-            try
-            {
-                var occupiedPositions = await _db.CaSetAnvelope.Where(x=> !x.Deleted).Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
-                var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
-                var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
+        //public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
+        //{
+        //    try
+        //    {
+        //        var occupiedPositions = await _db.CaSetAnvelope.Where(x=> !x.Deleted).Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
+        //        var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
+        //        var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
 
-                if (!string.IsNullOrEmpty(searchString))
-                {
-                    availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
-                }
-                availablePositions.Add(new Position("","",""));
-                return Result<List<Position>>.ResultOk(availablePositions);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in repository!", er);
-            }
-        }
+        //        if (!string.IsNullOrEmpty(searchString))
+        //        {
+        //            availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
+        //        }
+        //        availablePositions.Add(new Position("","",""));
+        //        return Result<List<Position>>.ResultOk(availablePositions);
+        //    }
+        //    catch (Exception er)
+        //    {
+        //        Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in repository!");
+        //        throw new Exception("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in repository!", er);
+        //    }
+        //}
 
 
 
