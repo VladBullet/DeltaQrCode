@@ -176,6 +176,18 @@ CREATE TABLE `deltatra_client_admin`.`history_appointments` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
 
+  CREATE TABLE `ca_hotel_positions` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `rand` varchar(45) NOT NULL,
+  `pozitie` varchar(45) NOT NULL,
+  `interval` varchar(45) NOT NULL,
+  `ocupat` bit(1) NOT NULL,
+  `locuriocupate` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 
 
 
