@@ -155,26 +155,26 @@
 
             <div class="form-row">
 
-                <div class="form-group col-md-3 col-sm-2 col-3">
+                <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.Diametru, htmlAttributes: new { @class = "control-label col-md-4" })
                     <select class="form-control" id="Diametru" asp-for="Diametru" data-placeholder="@Model.Diametru" value="@Model.Diametru"></select>
                     @Html.ValidationMessageFor(model => model.Diametru, "", new { @class = "text-danger error_span" })
 
                 </div>
 
-                <div class="form-group col-md-3 col-sm-2 col-3">
+                <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.Latime, htmlAttributes: new { @class = "control-label col-md-4" })
                     <select class="form-control" id="Latime" asp-for="Latime" data-placeholder="@Model.Latime" value="@Model.Latime"></select>
                     @Html.ValidationMessageFor(model => model.Latime, "", new { @class = "text-danger error_span" })
                 </div>
 
-                <div class="form-group col-md-3 col-sm-2 col-3">
+                <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.Inaltime, htmlAttributes: new { @class = "control-label col-md-4" })
                     <select class="form-control" id="Inaltime" asp-for="Inaltime" data-placeholder="@Model.Inaltime" value="@Model.Inaltime"></select>
                     @Html.ValidationMessageFor(model => model.Inaltime, "", new { @class = "text-danger error_span" })
                 </div>
 
-                <div class="form-group col-md-3 col-sm-2 col-3">
+                <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.Dot, htmlAttributes: new { @class = "control-label col-md-4" })
                     <select class="form-control" id="Dot" asp-for="Dot" data-placeholder="@Model.Dot" value="@Model.Dot"></select>
                     @Html.ValidationMessageFor(model => model.Dot, "", new { @class = "text-danger error_span" })
@@ -186,7 +186,7 @@
 
                 <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "tipSezonLabel", @name = "tipSezonLabel" })
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <select class="form-control" id="tipSezon" asp-for="TipSezon" data-placeholder="@Model.TipSezon" value="@Model.TipSezon"></select>
 
                         @Html.ValidationMessageFor(model => model.TipSezon, "", new { @class = "text-danger error_span" })
@@ -194,16 +194,16 @@
                 </div>
                 <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusAnvLabel", @name = "statusAnvLabel" })
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <select class="form-control" id="statusAnv" asp-for="StatusCurent" data-placeholder="@Model.StatusCurent" value="@Model.StatusCurent"></select>
 
                         @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-6 col-sm-3 col-6">
+                <div class="form-group col-md-6 col-sm-6 col-6">
                     @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "pozitieInRaftLabel", @name = "pozitieInRaftLabel" })
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <select id="selPoz" class="form-control" asp-for="PozitieInRaft" data-placeholder="@Model.PozitieInRaft" value="@Model.PozitieInRaft"></select>
                         @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger error_span" })
                     </div>
