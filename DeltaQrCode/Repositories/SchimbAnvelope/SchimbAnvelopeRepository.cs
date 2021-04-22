@@ -9,7 +9,7 @@ using Serilog;
 
 namespace DeltaQrCode.Repositories.SchimbAnvelope
 {
-    public class SchimbAnvelopeRepository
+    public class SchimbAnvelopeRepository:ISchimbAnvelopeRepository
     {
         private ApplicationDbContext _db;
 
@@ -46,6 +46,11 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
                 Log.Error(er, "Ceva nu a mers bine la adaugarea operatiunii in repository!");
                 throw new Exception("Ceva nu a mers bine la adaugarea operatiunii in repository!", er);
             }
+        }
+
+        public Task<Result<CaOperatiuneSchimbAnvelope>> SetOperationStep()
+        {
+            throw new NotImplementedException();
         }
     }
 }

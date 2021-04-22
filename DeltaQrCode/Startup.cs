@@ -16,6 +16,8 @@ namespace DeltaQrCode
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.Repositories.Guest;
+    using DeltaQrCode.Repositories.Hotel_Positions;
+    using DeltaQrCode.Repositories.SchimbAnvelope;
     using DeltaQrCode.Services.Guest;
     using DeltaQrCode.Services.Hotel;
     using DeltaQrCode.Services.Mail;
@@ -70,6 +72,8 @@ namespace DeltaQrCode
 
             services.AddScoped<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
             services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
+            services.AddScoped<ISchimbAnvelopeRepository, SchimbAnvelopeRepository>();
+            services.AddScoped<IHotelPositionsRepository, HotelPositionsRepository>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(AutoMapperProfile));

@@ -22,6 +22,7 @@ namespace DeltaQrCode.Data
         public virtual DbSet<CaOperatiuneSchimbAnvelope> CaOperatiuneSchimbAnvelope { get; set; }
         public virtual DbSet<CaServicetypes> CaServicetypes { get; set; }
         public virtual DbSet<CaSetAnvelope> CaSetAnvelope { get; set; }
+        public virtual DbSet<CaHotelPositions> CaHotelPositions { get; set; }
         public virtual DbSet<CaUsers> CaUsers { get; set; }
         public virtual DbSet<HistoryAnvelope> HistoryAnvelope { get; set; }
 

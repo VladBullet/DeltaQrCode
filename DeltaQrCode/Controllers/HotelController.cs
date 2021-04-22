@@ -21,11 +21,13 @@ namespace DeltaQrCode.Controllers
     using Serilog;
     using ClosedXML.Excel;
     using System.IO;
+    using DeltaQrCode.Services.Hotel_Positions;
 
     [Authorize]
     public class HotelController : Controller
     {
         private readonly IHotelService _hotelService;
+        private readonly IHotelPositionsService _hotelPositionsService;
         private readonly IMapper _mapper;
         private const int PageSize = 2;
 
@@ -161,27 +163,27 @@ namespace DeltaQrCode.Controllers
             }
         }
 
-        //[HttpGet]
-        //[Produces("application/json")]
-        //public async Task<IActionResult> GetAvailablePositions(string term)
-        //{
-        //    try
-        //   {
-        //        var positions = await _hotelService.GetAvailablePositionsAsync();
-        //        var list = positions.Entity.Select(x => x.PositionString).ToList();
-        //        if (!string.IsNullOrEmpty(term))
-        //        {
-        //            list = positions.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
-        //        }
-        //        return new JsonResult(list);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Log.Error(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
-        //        return BadRequest("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
-        //    }
+        [HttpGet]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetAvailablePositions(string term, int nrbuc)
+        {
+            try
+            {
+                var positions = await _hotelPositionsService.GetAvailablePositionsAsync(nrbuc);
+                var availablepositions = _mapper.Map<HotelPositionsDto>(positions.Entity);
+                if (!string.IsNullOrEmpty(term))
+                {
+                    availablepositions = availablepositions.Where(x => (x.Rand + x.Pozitie + x.Interval).ToLower().Contains(term.ToLower())).ToList();
+                }
+                return new JsonResult(positions);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
+                return BadRequest("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
+            }
 
-        //}
+        }
 
         [HttpGet]
         public async Task<IActionResult> Download()
