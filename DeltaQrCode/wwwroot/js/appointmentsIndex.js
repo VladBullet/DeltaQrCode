@@ -317,7 +317,17 @@ var checkDateAndTimeAvailable = function () {
     var span = $(document).find("#availableHourSpan");
 
     var url = "/Appointments/GetAvailableSpans"; // the url to the controller
-    $.get(url + '?startDateStr=' + datepickerVal + '&startHour=' + time + '&duration=' + durata + '&rampId=' + rampId + "&apptId=" + apptId,
+    $.get(url +
+        '?startDateStr=' +
+        datepickerVal +
+        '&startHour=' +
+        time +
+        '&duration=' +
+        durata +
+        '&rampId=' +
+        rampId +
+        "&apptId=" +
+        apptId,
         function (data) {
             span.text("").removeClass("text-danger").removeClass("text-success");
             span.addClass("hide");
@@ -328,12 +338,19 @@ var checkDateAndTimeAvailable = function () {
             console.log("selectie after: ", selectieBuna.val());
 
             if (data.selectedIsAvailable) {
-                span.text("Selectia de data si ora este buna! Nu se suprapune cu alta programare!").removeClass("text-danger").addClass("text-success");
+
+                var spanSelectie = $(document).find("#selectieBunaElem").closest('.' + "form-group").find('.error_span');
+                spanSelectie.text("").addClass("hide");
+
+                span.text(
+                    "Selectia de data si ora este buna! Nu se suprapune cu alta programare!")
+                    .removeClass("text-danger").addClass("text-success");
                 span.removeClass("hide");
             } else {
                 var message = "Selectia nu este buna!";
                 if (data.availableSpans.length > 0) {
-                    message += " Pentru durata selectata, urmatoarele ore sunt disponibile:";
+                    message +=
+                        " Pentru durata selectata, urmatoarele ore sunt disponibile:";
                     $.each(data.availableSpans,
                         function (index, value) {
                             message = message + " " + value;
@@ -343,4 +360,4 @@ var checkDateAndTimeAvailable = function () {
                 span.removeClass("hide");
             }
         });
-}
+};

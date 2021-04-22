@@ -181,7 +181,8 @@
     });
 
 
-    $(document).one("click", "#apptsEditButton", function () {
+    $(document).one("click", "#apptsEditButton", function (event) {
+        event.preventDefault();
         $(this).prop("disabled", true);
         checkDateAndTimeAvailable();
         console.log("selection after check : ", selectieBuna);
@@ -207,10 +208,11 @@
         else {
             updateUi(result.validationResults, "form-group", "error_span");
         }
+        $(this).prop("disabled", false);
     });
 
 
-    $(document).on("keyup",
+    $(document).on("keyup change",
         ".validate",
         function () {
             var result = validator.validate(validator);

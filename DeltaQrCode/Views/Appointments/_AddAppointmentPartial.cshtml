@@ -147,9 +147,12 @@
 
 
 
-    $("#apptsAddButton").one("click", function () {
+    $("#apptsAddButton").on("click", function (event) {
+        event.preventDefault();
+        $(this).prop("disabled", true);
         checkDateAndTimeAvailable();
         var result = validator.validate(validator);
+        console.log(result.formIsValid);
         if (result.formIsValid) {
             $.ajax({
                 type: "POST",
@@ -171,9 +174,10 @@
         else {
             updateUi(result.validationResults, "form-group", "error_span");
         }
+        $(this).prop("disabled", false);
     });
 
-    $(document).on("keyup",
+    $(document).on("keyup change",
         ".validate",
         function () {
             var result = validator.validate(validator);
