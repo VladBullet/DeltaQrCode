@@ -121,9 +121,6 @@ CREATE TABLE `ca_set_anvelope` (
   `NumeClient` varchar(50) NOT NULL,
   `NumarTelefon` varchar(45) NOT NULL,
   `NumarInmatriculare` varchar(45) NOT NULL,
-  `Rand` varchar(45) DEFAULT NULL,
-  `Pozitie` varchar(45) DEFAULT NULL,
-  `Interval` varchar(45) DEFAULT NULL,
   `MarcaId` int unsigned DEFAULT NULL,
   `NrBucati` int NOT NULL,
   `Dimensiuni` varchar(100) NOT NULL,
@@ -135,9 +132,11 @@ CREATE TABLE `ca_set_anvelope` (
   `Deleted` bit(1) NOT NULL,
   `FlotaId` int unsigned DEFAULT NULL,
   `SerieSasiu` varchar(45) DEFAULT NULL,
+  `PozitieId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+
 
 
 CREATE TABLE `ca_users` (
