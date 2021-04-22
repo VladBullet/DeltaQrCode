@@ -2,8 +2,7 @@
 var dateToday = new Date();
 console.log(dateToday);
 $(function () {
-    $("#datepicker").datepicker({ "setDate": dateToday, dateFormat: "yy-mm-dd" });
-    $("#datepicker").val(dateToday.toLocaleDateString());
+    $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).datepicker("setDate", dateToday);
 
     /* Enables scrolling to a set position  scrollToId('.hour-container', '#hour4');*/
     var scrollToId = function (scrollContainer, aid) {
@@ -53,7 +52,7 @@ var apptNewModalDialog = function (startDate, startHour, rampId) {
 
             var dateFromPage = $("#datepicker").val();
             var datePage = new Date(dateFromPage);
-            $("#datepickerModal").datepicker({ "setDate": datePage, format: "yy-mm-dd", minDate: 0 });
+            $("#datepickerModal").datepicker({ format: "yy-mm-dd", minDate: 0 }).datepicker("setDate", datePage);
             //enableselect2forServiciu();
         });
 };
@@ -71,7 +70,7 @@ var apptEditModalDialog = function (id) {
 
             var dateFromPage = $("#datepicker").val();
             var datePage = new Date(dateFromPage);
-            $("#datepickerModal").datepicker({ "setDate": datePage, format: "yy-mm-dd", minDate: 0 });
+            $("#datepickerModal").datepicker({format: "yy-mm-dd", minDate: 0 }).datepicker("setDate", datePage);
             //enableselect2forServiciu();
 
         });
