@@ -255,7 +255,7 @@ namespace DeltaQrCode.Controllers
             {
                 list = list.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
             }
-            return new JsonResult(ConstantsAndEnums.DOTlist());
+            return new JsonResult(list);
         }
 
         public IActionResult GetDiametru(string term)
@@ -265,7 +265,7 @@ namespace DeltaQrCode.Controllers
             {
                 list = list.Where(x => x.Value.ToLower().Contains(term.ToLower())).ToDictionary(x =>x.Key, x=>x.Value);   // Select(x => new KeyValuePair<int, string>(x.Key, x.Value)).ToList().ToDictionary<int, string>(y => y.Key, y => y.Value)
             }
-            return new JsonResult(ConstantsAndEnums.DiametruDictionary);
+            return new JsonResult(list);
 
         }
 
@@ -277,7 +277,7 @@ namespace DeltaQrCode.Controllers
             {
                 result = result.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
             }
-            return new JsonResult(ConstantsAndEnums.Latime);
+            return new JsonResult(result);
 
         }
 
@@ -289,7 +289,7 @@ namespace DeltaQrCode.Controllers
             {
                 result = result.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
             }
-            return new JsonResult(ConstantsAndEnums.Inaltime);
+            return new JsonResult(result);
 
         }
     }
