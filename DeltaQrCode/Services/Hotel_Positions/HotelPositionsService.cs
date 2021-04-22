@@ -38,6 +38,21 @@ namespace DeltaQrCode.Services.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la gasirea pozitiilor in servicii!", er);
             }
         }
+
+        public async Task<Result<HotelPositionsDto>> GetPositionByIdAsync(int id)
+        {
+            try
+            {
+                var value = await _hotelPositionsRepository.GetAvailablePositionsAsync(id);
+                var model = _mapper.Map<HotelPositionsDto>(value.Entity);
+                return Result<HotelPositionsDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea pozitiei in functie de id in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea pozitiei in functie de id in servicii!", er);
+            }
+        }
     }
 
 }

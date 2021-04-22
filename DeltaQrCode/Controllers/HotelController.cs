@@ -32,9 +32,10 @@ namespace DeltaQrCode.Controllers
         private const int PageSize = 2;
 
 
-        public HotelController(IHotelService hotelService, IMapper mapper)
+        public HotelController(IHotelService hotelService, IHotelPositionsService hotelPositionsService, IMapper mapper)
         {
             _hotelService = hotelService;
+            _hotelPositionsService = hotelPositionsService;
             _mapper = mapper;
         }
 
@@ -170,12 +171,12 @@ namespace DeltaQrCode.Controllers
             try
             {
                 var positions = await _hotelPositionsService.GetAvailablePositionsAsync(nrbuc);
-                var availablepositions = _mapper.Map<HotelPositionsDto>(positions.Entity);
+                var availablepositions = _mapper.Map<List<HotelPositionsDto>>(positions.Entity);
                 if (!string.IsNullOrEmpty(term))
                 {
                     availablepositions = availablepositions.Where(x => (x.Rand + x.Pozitie + x.Interval).ToLower().Contains(term.ToLower())).ToList();
                 }
-                return new JsonResult(positions);
+                return new JsonResult(availablepositions);
             }
             catch (Exception e)
             {

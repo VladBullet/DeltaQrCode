@@ -58,7 +58,8 @@
             CreateMap<AppointmentDto, AppointmentVM>().ForMember(d => d.StartTime_Hour, m => m.MapFrom(s => s.OraInceput.Hours))
                 .ForMember(d => d.StartTime_Minutes, m => m.MapFrom(s => s.OraInceput.Minutes));
 
-
+            CreateMap<CaHotelPositions, HotelPositionsDto>();
+            CreateMap<HotelPositionsDto, CaHotelPositions>();
 
 
         }

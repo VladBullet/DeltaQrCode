@@ -20,8 +20,9 @@ namespace DeltaQrCode
     using DeltaQrCode.Repositories.SchimbAnvelope;
     using DeltaQrCode.Services.Guest;
     using DeltaQrCode.Services.Hotel;
+    using DeltaQrCode.Services.Hotel_Positions;
     using DeltaQrCode.Services.Mail;
-
+    using DeltaQrCode.Services.SchimbAnvelope;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
@@ -68,8 +69,10 @@ namespace DeltaQrCode
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IGuestService, GuestService>();
-            services.AddScoped<IGuestRepository, GuestRepository>();
+            services.AddScoped<ISchimbAnvelopeService, SchimbAnvelopeService>();
+            services.AddScoped<IHotelPositionsService, HotelPositionsService>();
 
+            services.AddScoped<IGuestRepository, GuestRepository>();
             services.AddScoped<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
             services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
             services.AddScoped<ISchimbAnvelopeRepository, SchimbAnvelopeRepository>();

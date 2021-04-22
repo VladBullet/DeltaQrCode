@@ -10,5 +10,6 @@ namespace DeltaQrCode.Services.Hotel_Positions
     public interface IHotelPositionsService
     {
         Task<Result<List<HotelPositionsDto>>> GetAvailablePositionsAsync(int? nrbuc = null);
+        Task<Result<HotelPositionsDto>> GetPositionByIdAsync(int id);
     }
 }
