@@ -248,26 +248,47 @@ namespace DeltaQrCode.Controllers
             return new JsonResult(list);
         }
 
-        public IActionResult GetDot()
+        public IActionResult GetDot(string term)
         {
-
+            var list = ConstantsAndEnums.DOTlist();
+            if (!string.IsNullOrEmpty(term))
+            {
+                list = list.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
+            }
             return new JsonResult(ConstantsAndEnums.DOTlist());
         }
 
-        public IActionResult GetDiametru()
+        public IActionResult GetDiametru(string term)
         {
+            var list = ConstantsAndEnums.DiametruDictionary;
+            if (!string.IsNullOrEmpty(term))
+            {
+                list = list.Where(x => x.Value.ToLower().Contains(term.ToLower())).ToDictionary(x =>x.Key, x=>x.Value);   // Select(x => new KeyValuePair<int, string>(x.Key, x.Value)).ToList().ToDictionary<int, string>(y => y.Key, y => y.Value)
+            }
             return new JsonResult(ConstantsAndEnums.DiametruDictionary);
 
         }
 
-        public IActionResult GetLatime()
+        public IActionResult GetLatime(string term)
         {
+            var list = ConstantsAndEnums.Latime;
+            List<string> result = list.ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                result = result.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
+            }
             return new JsonResult(ConstantsAndEnums.Latime);
 
         }
 
-        public IActionResult GetInaltime()
+        public IActionResult GetInaltime(string term)
         {
+            var list = ConstantsAndEnums.Inaltime;
+            List<string> result = list.ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                result = result.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
+            }
             return new JsonResult(ConstantsAndEnums.Inaltime);
 
         }
