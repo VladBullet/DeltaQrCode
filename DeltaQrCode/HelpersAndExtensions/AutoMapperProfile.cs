@@ -44,6 +44,7 @@
                 .ForMember(d => d.Diametru, m => m.MapFrom(s => s.Dimensiuni.Diam))
                 .ForMember(d => d.Latime, m => m.MapFrom(s => s.Dimensiuni.Lat))
                 .ForMember(d => d.Inaltime, m => m.MapFrom(s => s.Dimensiuni.H))
+                .ForMember(d => d.Dot, m => m.MapFrom(s => s.Dimensiuni.Dot))
 
                 .ForMember(d => d.StangaFata, m => m.MapFrom(s => s.Uzura.StF))
                 .ForMember(d => d.DreaptaFata, m => m.MapFrom(s => s.Uzura.DrF))
