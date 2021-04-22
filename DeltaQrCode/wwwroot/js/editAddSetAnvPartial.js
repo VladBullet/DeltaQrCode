@@ -147,12 +147,13 @@ $("#Diametru").select2({
         },
         processResults: function (result) {
             return {
-                results: $.map(result, function (item) {
-                    return {
-                        id: item,
-                        text: item
-                    };
-                }),
+                results: $.map(result,
+                    function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
             };
         }
     }
@@ -176,12 +177,13 @@ $("#Latime").select2({
         },
         processResults: function (result) {
             return {
-                results: $.map(result, function (item) {
-                    return {
-                        id: item,
-                        text: item
-                    };
-                }),
+                results: $.map(result,
+                    function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
             };
         }
     }
@@ -204,12 +206,13 @@ $("#Inaltime").select2({
         },
         processResults: function (result) {
             return {
-                results: $.map(result, function (item) {
-                    return {
-                        id: item,
-                        text: item
-                    };
-                }),
+                results: $.map(result,
+                    function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
             };
         }
     }
@@ -232,12 +235,13 @@ $("#Dot").select2({
         },
         processResults: function (result) {
             return {
-                results: $.map(result, function (item) {
-                    return {
-                        id: item,
-                        text: item
-                    };
-                }),
+                results: $.map(result,
+                    function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
             };
         }
     }
