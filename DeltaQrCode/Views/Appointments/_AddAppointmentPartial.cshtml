@@ -59,10 +59,10 @@
                 <div class="form-group col-md-6 col-sm-4">
                     @Html.LabelFor(model => model.DurataInMinute, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
-                        <input id="durataValue" class="changeable" hidden="hidden" data-value="30" />
+                        <input id="durataValue" class="changeable changeableDateTimeRamp" hidden="hidden" data-value="30" />
                         <input id="selectieBunaElem" hidden="hidden" value="false" />
                         <select class="form-control" id="Durata" asp-for="DurataInMinute" data-placeholder="@Model.DurataInMinute" value="@Model.DurataInMinute"></select>
-                        @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.DurataInMinute, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
 
@@ -136,18 +136,19 @@
 <script src="~/js/validationRulesAppt.js"></script>
 <script type="text/javascript">
     var validator = new CustomValidation(apptFormValidationRules);
+    var selectieBuna = $("#selectieBunaElem").val();
 
     $(document).ready(function () {
         checkDateAndTimeAvailable();
         validator.validate(validator);
-        var saveBtn = $("#apptsAddButton");
+        var saveBtn = $("#apptsEditButton");
         $(saveBtn).prop("disabled", true);
     });
 
 
+
     $("#apptsAddButton").one("click", function () {
-        $(this).prop("disabled", true);
-        console.log("durataValue", $("#durataValue").val());
+        checkDateAndTimeAvailable();
         var result = validator.validate(validator);
         if (result.formIsValid) {
             $.ajax({

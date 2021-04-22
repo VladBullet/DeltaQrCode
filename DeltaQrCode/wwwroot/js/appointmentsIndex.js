@@ -52,7 +52,7 @@ var apptNewModalDialog = function (startDate, startHour, rampId) {
 
             var dateFromPage = $("#datepicker").val();
             var datePage = new Date(dateFromPage);
-            $("#datepickerModal").datepicker({ format: "yy-mm-dd", minDate: 0 }).datepicker("setDate", datePage);
+            $("#datepickerModal").datepicker({ "setDate": datePage, format: "yy-mm-dd", minDate: 0 });
             //enableselect2forServiciu();
         });
 };
@@ -70,7 +70,7 @@ var apptEditModalDialog = function (id) {
 
             var dateFromPage = $("#datepicker").val();
             var datePage = new Date(dateFromPage);
-            $("#datepickerModal").datepicker({format: "yy-mm-dd", minDate: 0 }).datepicker("setDate", datePage);
+            $("#datepickerModal").datepicker({ "setDate": datePage, format: "yy-mm-dd", minDate: 0 });
             //enableselect2forServiciu();
 
         });
@@ -297,8 +297,8 @@ $(document).on('select2:select',
     function (e) {
         var data = e.params.data;
         var durataval = $(document).find("#durataValue");
-        durataval.attr("data-value", data.id);
-        durataval.trigger("change");
+        $(durataval).attr("data-value", data.id);
+        $(durataval).trigger("change");
     });
 
 
