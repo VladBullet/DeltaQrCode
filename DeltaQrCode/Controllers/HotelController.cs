@@ -29,7 +29,7 @@ namespace DeltaQrCode.Controllers
         private readonly IHotelService _hotelService;
         private readonly IHotelPositionsService _hotelPositionsService;
         private readonly IMapper _mapper;
-        private const int PageSize = 2;
+        private const int PageSize = 20;
 
 
         public HotelController(IHotelService hotelService, IHotelPositionsService hotelPositionsService, IMapper mapper)
