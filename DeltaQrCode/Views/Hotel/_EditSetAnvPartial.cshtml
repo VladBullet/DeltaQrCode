@@ -40,6 +40,7 @@
         <form id="apptform">
 
             <input  hidden="hidden" asp-for="OldPozitieId", value="@Model.OldPozitieId" />
+            <input  hidden="hidden" asp-for="OldNumarBucati", value="@Model.OldNumarBucati" />
             @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()
             <div class="form-row">

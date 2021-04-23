@@ -10,7 +10,8 @@ $("#selPoz").select2({
         contentType: "application/json; charset=utf-8",
         data: function (params) {
             var query = {
-                term: params.term
+                term: params.term,
+                nrbuc: $(document).find("#NrBucati").val()
             }
             return query;
         },

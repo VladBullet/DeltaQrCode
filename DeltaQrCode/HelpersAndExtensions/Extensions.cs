@@ -101,19 +101,19 @@
             return string.Format("Rand:{0}, Poz:{1}, Int:{2}, Ocupate:{3}", pos.Rand, pos.Pozitie, pos.Interval, pos.Locuriocupate);
         }  
         
-        public static string ToSetAnvPositionString(this SetAnvelopeDto pos)
+        public static string ToSetAnvPositionString(this SetAnvelopeDto setanv)
         {
-            if(pos == null)
+            if(setanv.Pozitie == null)
             {
                 return string.Empty;
             }
 
-            if (string.IsNullOrEmpty(pos.Pozitie.Pozitie) && string.IsNullOrEmpty(pos.Pozitie.Rand) && string.IsNullOrEmpty(pos.Pozitie.Interval))
+            if (string.IsNullOrEmpty(setanv.Pozitie.Pozitie) && string.IsNullOrEmpty(setanv.Pozitie.Rand) && string.IsNullOrEmpty(setanv.Pozitie.Interval))
             {
                 return string.Empty;
             }
 
-            return string.Format("Rand:{0}, Poz:{1}, Int:{2}, NrBuc:{3}", pos.Pozitie.Rand, pos.Pozitie.Pozitie, pos.Pozitie.Interval, pos.NrBucati);
+            return string.Format("Rand:{0}, Poz:{1}, Int:{2}, NrBuc:{3}", setanv.Pozitie.Rand, setanv.Pozitie.Pozitie, setanv.Pozitie.Interval, setanv.NrBucati);
         }
 
 

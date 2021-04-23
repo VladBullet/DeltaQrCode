@@ -67,7 +67,10 @@ namespace DeltaQrCode.Controllers
             }
             var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
             var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
+
             model.OldPozitieId = model.PozitieId;
+            model.OldNumarBucati = model.NrBucati;
+
             HotelModalVM setVm = new HotelModalVM(model, actType);
 
             if (actType == ActionType.Info)

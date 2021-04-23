@@ -27,7 +27,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 var availablepositions = await _db.CaHotelPositions.Where(x => !x.Ocupat).ToListAsync();
                 if (nrbuc != null)
                 {
-                    availablepositions = availablepositions.Where(x => nrbuc.Value <= ConstantsAndEnums.MaxLocuriPoz - x.Locuriocupate).ToList();
+                    availablepositions = availablepositions.Where(x => nrbuc.Value <= (ConstantsAndEnums.MaxLocuriPoz - x.Locuriocupate)).ToList();
                 }
 
                 return Result<List<CaHotelPositions>>.ResultOk(availablepositions);
@@ -61,7 +61,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 value.Locuriocupate = value.Locuriocupate + nrbuc;
                 await _db.SaveChangesAsync();
 
-                if(value.Locuriocupate == ConstantsAndEnums.MaxLocuriPoz)
+                if(value.Locuriocupate >= ConstantsAndEnums.MaxLocuriPoz)
                 {
                     value.Ocupat = true;
                 }

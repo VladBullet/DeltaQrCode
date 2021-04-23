@@ -178,31 +178,40 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
+                var oldSetAnv = setAnv;
+
+                if(oldSetAnv.OldNumarBucati > oldSetAnv.NrBucati)
+                {
+                    oldSetAnv.NrBucati = oldSetAnv.OldNumarBucati - oldSetAnv.NrBucati;
+                    oldSetAnv.PozitieId = oldSetAnv.OldPozitieId;
+                    oldSetAnv.Id = 0;
+                    await AddSetAnvelopeAsync(oldSetAnv);
+                }
 
                 if (setAnv.OldPozitieId.HasValue && setAnv.StatusCurent != "InRaft")
                 {
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
-                }
-
+                } else
 
                 if(setAnv.OldPozitieId.HasValue && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != null)
                 {
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
-                }
+                } else
                 
                 if(setAnv.OldPozitieId.HasValue && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId == null)
                 {
                     setAnv.PozitieId = setAnv.OldPozitieId;
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, 0, OperatiunePozitie.Adaugare);
-                }
+                } else
 
                 if (setAnv.PozitieId != null && setAnv.OldPozitieId == null)
                 {
 
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
                     
-                }
+                } else
+
                 if(setAnv.PozitieId != null)
                 {
                     var position = await _hotelPositionsRepository.GetPositionByIdAsync(setAnv.PozitieId.Value);
