@@ -99,6 +99,21 @@
             }
 
             return string.Format("Rand:{0}, Poz:{1}, Int:{2}, NrBuc:{3}", pos.Rand, pos.Pozitie, pos.Interval, pos.Locuriocupate);
+        }  
+        
+        public static string ToSetAnvPositionString(this SetAnvelopeDto pos)
+        {
+            if(pos == null)
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(pos.Pozitie.Pozitie) && string.IsNullOrEmpty(pos.Pozitie.Rand) && string.IsNullOrEmpty(pos.Pozitie.Interval))
+            {
+                return string.Empty;
+            }
+
+            return string.Format("Rand:{0}, Poz:{1}, Int:{2}, NrBuc:{3}", pos.Pozitie.Rand, pos.Pozitie.Pozitie, pos.Pozitie.Interval, pos.NrBucati);
         }
 
 

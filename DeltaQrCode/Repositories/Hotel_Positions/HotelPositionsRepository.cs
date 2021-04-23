@@ -80,7 +80,11 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             try
             {
                 var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
-                value.Locuriocupate = value.Locuriocupate - nrbuc;
+                if((value.Locuriocupate - nrbuc) >= 0)
+                {
+                    value.Locuriocupate = value.Locuriocupate - nrbuc;
+
+                }
                 await _db.SaveChangesAsync();
 
                 if (value.Locuriocupate < ConstantsAndEnums.MaxLocuriPoz)

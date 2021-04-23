@@ -72,21 +72,6 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                //var prev = await _db.CaSetAnvelope.FirstOrDefaultAsync(x => x.Id == setAnv.Id);
-                //var entry = _db.Entry(prev).Properties.FirstOrDefault(x => x.Metadata.Name == "StatusCurent");
-                //if (prev.StatusCurent != setAnv.StatusCurent)
-                //{
-                   
-
-                //    if(prev.StatusCurent == "InRaft" && setAnv.StatusCurent != "InRaft")
-                //    {
-                //        await _hotelPositionRepository.ElibereazaPozitieAsync(setAnv.PozitieId.Value, setAnv.NrBucati);
-                //    }
-                //    else if(prev.StatusCurent != "InRaft" && setAnv.StatusCurent == "InRaft")
-                //    {
-                //        await _hotelPositionRepository.PunePePozitieAsync(setAnv.PozitieId.Value, setAnv.NrBucati);
-                //    }
-                //}
                 _db.CaSetAnvelope.Update(setAnv);
                 await _db.SaveChangesAsync();
 
