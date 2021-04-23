@@ -204,7 +204,7 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-3">
                     @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <select id="selPoz" class="form-control" asp-for="PozitieInRaft" data-placeholder="@Model.PozitieInRaft" value="@Model.PozitieInRaft"></select>
                         @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger error_span" })
                     </div>

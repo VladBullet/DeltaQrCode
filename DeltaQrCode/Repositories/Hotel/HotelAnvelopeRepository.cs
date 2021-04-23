@@ -8,16 +8,19 @@ namespace DeltaQrCode.Repositories
     using DeltaQrCode.Data;
     using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
+    using DeltaQrCode.Repositories.Hotel_Positions;
     using Microsoft.EntityFrameworkCore;
     using Serilog;
 
     public class HotelAnvelopeRepository : IHotelAnvelopeRepository
     {
         private ApplicationDbContext _db;
+        private readonly IHotelPositionsRepository _hotelPositionRepository;
 
-        public HotelAnvelopeRepository(ApplicationDbContext db)
+        public HotelAnvelopeRepository(ApplicationDbContext db, IHotelPositionsRepository hotelPositionsRepository )
         {
             _db = db;
+            _hotelPositionRepository = hotelPositionsRepository;
         }
 
 
@@ -69,10 +72,25 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var value = _db.CaSetAnvelope.Update(setAnv);
+                //var prev = await _db.CaSetAnvelope.FirstOrDefaultAsync(x => x.Id == setAnv.Id);
+                //var entry = _db.Entry(prev).Properties.FirstOrDefault(x => x.Metadata.Name == "StatusCurent");
+                //if (prev.StatusCurent != setAnv.StatusCurent)
+                //{
+                   
+
+                //    if(prev.StatusCurent == "InRaft" && setAnv.StatusCurent != "InRaft")
+                //    {
+                //        await _hotelPositionRepository.ElibereazaPozitieAsync(setAnv.PozitieId.Value, setAnv.NrBucati);
+                //    }
+                //    else if(prev.StatusCurent != "InRaft" && setAnv.StatusCurent == "InRaft")
+                //    {
+                //        await _hotelPositionRepository.PunePePozitieAsync(setAnv.PozitieId.Value, setAnv.NrBucati);
+                //    }
+                //}
+                _db.CaSetAnvelope.Update(setAnv);
                 await _db.SaveChangesAsync();
 
-                return Result<CaSetAnvelope>.ResultOk(value.Entity);
+                return Result<CaSetAnvelope>.ResultOk(setAnv);
 
             }
             catch (Exception er)

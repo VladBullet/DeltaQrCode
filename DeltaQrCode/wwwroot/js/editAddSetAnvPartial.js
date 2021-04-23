@@ -19,8 +19,8 @@ $("#selPoz").select2({
                 results: $.map(result,
                     function (item) {
                         return {
-                            id: item,
-                            text: item
+                            id: item.id,
+                            text: item.text
                         };
                     }),
             };

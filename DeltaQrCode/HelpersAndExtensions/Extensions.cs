@@ -17,16 +17,6 @@
         }
         #endregion
 
-        public static Position ToPosition(this string input)
-        {
-            var str = input.Split(",");
-            var rand = str[0].Split(":")[1];
-            var pozitie = str[1].Split(":")[1];
-            var interval = str[2].Split(":")[1];
-
-            return new Position(rand, pozitie, interval);
-
-        }
 
         public static string ToJson(this Dimensiuni dim)
         {
@@ -96,14 +86,19 @@
             return result;
         }
 
-        public static string ToDisplayString(this Position pos)
+        public static string ToDisplayString(this HotelPositionsDto pos)
         {
-            if (string.IsNullOrEmpty(pos.Poz) && string.IsNullOrEmpty(pos.Rand) && string.IsNullOrEmpty(pos.Interval))
+            if(pos == null)
             {
                 return string.Empty;
             }
 
-            return string.Format("Rand:{0}, Poz:{1}, Int:{2}", pos.Rand, pos.Poz, pos.Interval);
+            if (string.IsNullOrEmpty(pos.Pozitie) && string.IsNullOrEmpty(pos.Rand) && string.IsNullOrEmpty(pos.Interval))
+            {
+                return string.Empty;
+            }
+
+            return string.Format("Rand:{0}, Poz:{1}, Int:{2}, NrBuc:{3}", pos.Rand, pos.Pozitie, pos.Interval, pos.Locuriocupate);
         }
 
 

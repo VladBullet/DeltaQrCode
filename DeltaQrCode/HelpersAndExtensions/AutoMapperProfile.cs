@@ -18,7 +18,6 @@
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.Dimensiuni))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToUzuraFromJsonString()))
                 .ForMember(d => d.UzuraString, m => m.MapFrom(s => s.Uzura))
-                //.ForMember(d => d.Position, m => m.MapFrom(s => new Position(s.Rand, s.Pozitie, s.Interval)))
                 ;
             CreateMap<SetAnvelopeDto, CaSetAnvelope>()
 
@@ -36,8 +35,8 @@
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => new Dimensiuni(s.Diametru, s.Latime, s.Inaltime, s.Dot)))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => new Uzura(s.StangaFata, s.StangaSpate, s.DreaptaFata, s.DreaptaSpate)))
-                .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.DimensiuniString))
-                .ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
+                .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.DimensiuniString));
+            //.ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
 
             CreateMap<SetAnvelopeDto, AddEditSetAnvelopeVM>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
@@ -50,8 +49,7 @@
                 .ForMember(d => d.DreaptaFata, m => m.MapFrom(s => s.Uzura.DrF))
                 .ForMember(d => d.StangaSpate, m => m.MapFrom(s => s.Uzura.StS))
                 .ForMember(d => d.DreaptaSpate, m => m.MapFrom(s => s.Uzura.DrS))
-
-                .ForMember(d => d.PozitieInRaft, m => m.MapFrom(s => s.Position.PositionString));
+                .ForMember(d => d.PozitieInRaft, m => m.MapFrom(s => s.Pozitie.ToDisplayString()));
 
             CreateMap<AppointmentDto, CaAppointments>().ReverseMap();
             CreateMap<AppointmentVM, AppointmentDto>();

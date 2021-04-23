@@ -53,6 +53,36 @@ namespace DeltaQrCode.Services.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la gasirea pozitiei in functie de id in servicii!", er);
             }
         }
+
+        public async Task<Result<HotelPositionsDto>> UpdatePositionAsync(uint id, int nrbuc, OperatiunePozitie op)
+        {
+            try
+            {
+                var value = new HotelPositionsDto();
+                var result = new Result<CaHotelPositions>();
+                if (op == OperatiunePozitie.Adaugare)
+                {
+                    result = await _hotelPositionsRepository.PunePePozitieAsync(id, nrbuc);
+
+                }
+                else
+                    if (op == OperatiunePozitie.Scoatere)
+                    {
+                        result = await _hotelPositionsRepository.ElibereazaPozitieAsync(id, nrbuc);
+
+                    }
+
+                value = _mapper.Map<HotelPositionsDto>(result.Entity);
+
+                return Result<HotelPositionsDto>.ResultOk(value);
+            }
+
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la modificarea pozitiei in servicii!");
+                throw new Exception("Ceva nu a mers bine la modificarea pozitiei in servicii!", er);
+            }
+        }
     }
 
 }

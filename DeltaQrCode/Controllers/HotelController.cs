@@ -67,6 +67,7 @@ namespace DeltaQrCode.Controllers
             }
             var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
             var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
+            model.OldPozitieId = model.PozitieId;
             HotelModalVM setVm = new HotelModalVM(model, actType);
 
             if (actType == ActionType.Info)
@@ -176,7 +177,10 @@ namespace DeltaQrCode.Controllers
                 {
                     availablepositions = availablepositions.Where(x => (x.Rand + x.Pozitie + x.Interval).ToLower().Contains(term.ToLower())).ToList();
                 }
-                return new JsonResult(availablepositions);
+                var model = new List<ItemVM>();
+                model = availablepositions.Select(x => new ItemVM(x.Id, x.ToDisplayString())).ToList();
+
+                return new JsonResult(model);
             }
             catch (Exception e)
             {

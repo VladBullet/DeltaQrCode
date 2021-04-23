@@ -19,6 +19,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
         }
 
 
+
         public async Task<Result<List<CaHotelPositions>>> GetAvailablePositionsAsync(int? nrbuc = null)
         {
             try
@@ -42,13 +43,57 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
         {
             try
             {
-                var value = await _db.CaHotelPositions.FirstAsync(x => x.Id == id);
+                var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
                 return Result<CaHotelPositions>.ResultOk(value);
             }
             catch (Exception er)
             {
                 Log.Error(er, "Ceva nu a mers bine la gasirea pozitiei in functie de id in repository!");
                 throw new Exception("Ceva nu a mers bine la gasirea pozitiei in functie de id in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaHotelPositions>> PunePePozitieAsync(uint id, int nrbuc)
+        {
+            try
+            {
+                var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
+                value.Locuriocupate = value.Locuriocupate + nrbuc;
+                await _db.SaveChangesAsync();
+
+                if(value.Locuriocupate == ConstantsAndEnums.MaxLocuriPoz)
+                {
+                    value.Ocupat = true;
+                }
+
+                return Result<CaHotelPositions>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaHotelPositions>> ElibereazaPozitieAsync(uint id, int nrbuc)
+        {
+            try
+            {
+                var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
+                value.Locuriocupate = value.Locuriocupate - nrbuc;
+                await _db.SaveChangesAsync();
+
+                if (value.Locuriocupate < ConstantsAndEnums.MaxLocuriPoz)
+                {
+                    value.Ocupat = false;
+                }
+
+                return Result<CaHotelPositions>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la scaderea nr bucati pe pozitie in repository!");
+                throw new Exception("Ceva nu a mers bine la scaderea nr bucati pe pozitie in repository!", er);
             }
         }
     }

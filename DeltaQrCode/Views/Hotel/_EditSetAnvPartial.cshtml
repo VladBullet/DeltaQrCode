@@ -38,6 +38,8 @@
 <div>
     <div class="modal-body modal-min-height ui-front" id="hotelModalBody">
         <form id="apptform">
+
+            <input  hidden="hidden" asp-for="OldPozitieId", value="@Model.OldPozitieId" />
             @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()
             <div class="form-row">
@@ -203,9 +205,9 @@
 
                 <div class="form-group col-md-6 col-sm-3">
                     @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "pozitieInRaftLabel", @name = "pozitieInRaftLabel" })
-                    <div class="col-md-9">
-                        <select id="selPoz" class="form-control" asp-for="PozitieInRaft" data-placeholder="@Model.PozitieInRaft" value="@Model.PozitieInRaft"></select>
-                        @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger error_span" })
+                    <div class="col-md-12">
+                        <select id="selPoz" class="form-control" asp-for="PozitieId" data-placeholder="@Model.PozitieId" value="@Model.PozitieInRaft"></select>
+                        @Html.ValidationMessageFor(model => model.PozitieId, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
             </div>

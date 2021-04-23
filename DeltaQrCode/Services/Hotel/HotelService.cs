@@ -13,6 +13,7 @@ namespace DeltaQrCode.Services.Hotel
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.Repositories.Hotel_Positions;
+    using DeltaQrCode.Services.Hotel_Positions;
     using Microsoft.AspNetCore.Mvc;
     using Serilog;
 
@@ -20,12 +21,14 @@ namespace DeltaQrCode.Services.Hotel
     {
         private readonly IHotelAnvelopeRepository _hotelRepository;
         private readonly IHotelPositionsRepository _hotelPositionsRepository;
+        private readonly IHotelPositionsService _hotelPositionsService;
         private readonly IMapper _mapper;
 
-        public HotelService(IHotelAnvelopeRepository hotelRepository,IHotelPositionsRepository hotelPositionsRepository, IMapper mapper)
+        public HotelService(IHotelAnvelopeRepository hotelRepository,IHotelPositionsRepository hotelPositionsRepository, IHotelPositionsService hotelPositionsService, IMapper mapper)
         {
             _hotelRepository = hotelRepository;
             _hotelPositionsRepository = hotelPositionsRepository;
+            _hotelPositionsService = hotelPositionsService;
             _mapper = mapper;
         }
 
@@ -35,6 +38,12 @@ namespace DeltaQrCode.Services.Hotel
             {
                 var value = await _hotelRepository.GetSetAnvelopeByIdAsync(id);
                 var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                if (model.PozitieId != null)
+                {
+                    var pozitie = await _hotelPositionsRepository.GetPositionByIdAsync(model.PozitieId.Value);
+                    var pozitiedto = _mapper.Map<HotelPositionsDto>(pozitie.Entity);
+                    model.Pozitie = pozitie.Successful ? pozitiedto : null;
+                }
                 if (value.Entity.MarcaId != null)
                 {
                     var marca = await _hotelRepository.GetMarcaByIdAsync(value.Entity.MarcaId.Value);
@@ -74,6 +83,21 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
+                if (setAnv.PozitieId.HasValue && setAnv.StatusCurent == "InRaft")
+                {
+                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
+                    var position = await _hotelPositionsRepository.GetPositionByIdAsync(setAnv.PozitieId.Value);
+
+                    if (!position.Successful)
+                    {
+                        Log.Error("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                        throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                    }
+
+                    setAnv.Pozitie = _mapper.Map<HotelPositionsDto>(position.Entity);
+                    
+                }
+
                 var marca = await _hotelRepository.GetMarcaByLableAsync(setAnv.Marca);
                 if (!marca.Successful)
                 {
@@ -154,6 +178,32 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
+
+                if (setAnv.OldPozitieId.HasValue && setAnv.StatusCurent != "InRaft")
+                {
+                    await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
+                }
+
+                if (setAnv.PozitieId != null && setAnv.OldPozitieId == null)
+                {
+
+                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
+                    
+                }
+                if(setAnv.PozitieId != null)
+                {
+                    var position = await _hotelPositionsRepository.GetPositionByIdAsync(setAnv.PozitieId.Value);
+
+
+                    if (!position.Successful)
+                    {
+                        Log.Error("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                        throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                    }
+
+                    setAnv.Pozitie = _mapper.Map<HotelPositionsDto>(position.Entity);
+                }
+
                 var marca = await _hotelRepository.GetMarcaByLableAsync(setAnv.Marca);
                 if (!marca.Successful)
                 {
@@ -234,6 +284,13 @@ namespace DeltaQrCode.Services.Hotel
 
                     foreach (var item in model)
                     {
+                        if (item.PozitieId != null)
+                        {
+                            var pozitie = await _hotelPositionsRepository.GetPositionByIdAsync(item.PozitieId.Value);
+                            var pozitiedto = _mapper.Map<HotelPositionsDto>(pozitie.Entity);
+                            item.Pozitie = pozitie.Successful ? pozitiedto : null;
+                        }
+
                         if (item.MarcaId != null)
                         {
                             var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
@@ -319,7 +376,7 @@ namespace DeltaQrCode.Services.Hotel
         public async Task<DataTable> GenerateDataForExcel()
         {  
             DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[22] {
+            dt.Columns.AddRange(new DataColumn[23] {
                                             new DataColumn("NumeClient"),
                                             new DataColumn("NumarInmatriculare"),
                                             new DataColumn("NumarTelefon"),
@@ -327,6 +384,7 @@ namespace DeltaQrCode.Services.Hotel
                                             new DataColumn("Rand"),
                                             new DataColumn("Pozitie"),
                                             new DataColumn("Interval"),
+                                            new DataColumn("LocuriOcupate"),
                                             new DataColumn("Marca"),
                                             new DataColumn("Flota"),
                                             new DataColumn("NrBucati"),
@@ -356,9 +414,10 @@ namespace DeltaQrCode.Services.Hotel
                     anvelope.NumarInmatriculare,
                     anvelope.NumarTelefon,
                     anvelope.SerieSasiu,
-                    anvelope.Position.Rand,
-                    anvelope.Position.Poz,
-                    anvelope.Position.Interval,
+                    anvelope.Pozitie.Rand,
+                    anvelope.Pozitie.Pozitie,
+                    anvelope.Pozitie.Interval,
+                    anvelope.Pozitie.Locuriocupate,
                     anvelope.Marca,
                     anvelope.Flota,
                     anvelope.NrBucati,
