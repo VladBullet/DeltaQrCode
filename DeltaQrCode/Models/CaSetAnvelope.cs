@@ -20,6 +20,6 @@ namespace DeltaQrCode.Models
         public bool Deleted { get; set; }
         public uint? FlotaId { get; set; }
         public string SerieSasiu { get; set; }
-        public int? PozitieId { get; set; }
+        public uint? PozitieId { get; set; }
     }
 }

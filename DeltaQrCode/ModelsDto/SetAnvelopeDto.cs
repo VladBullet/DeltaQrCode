@@ -21,6 +21,8 @@ namespace DeltaQrCode.ModelsDto
         public Uzura Uzura { get; set; }
         public Position Position { get; set; }
 
+        public uint? PozitieId { get; set; }
+
         public string DimensiuniString { get; set; }
         public string UzuraString { get; set; }
         public string PositionString { get; set; }

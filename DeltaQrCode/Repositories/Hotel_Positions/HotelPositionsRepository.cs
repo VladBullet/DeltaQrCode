@@ -38,7 +38,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             }
         }
 
-        public async Task<Result<CaHotelPositions>> GetPositionByIdAsync(int id)
+        public async Task<Result<CaHotelPositions>> GetPositionByIdAsync(uint id)
         {
             try
             {

@@ -12,17 +12,20 @@ namespace DeltaQrCode.Services.Hotel
     using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
+    using DeltaQrCode.Repositories.Hotel_Positions;
     using Microsoft.AspNetCore.Mvc;
     using Serilog;
 
     public class HotelService : IHotelService
     {
         private readonly IHotelAnvelopeRepository _hotelRepository;
+        private readonly IHotelPositionsRepository _hotelPositionsRepository;
         private readonly IMapper _mapper;
 
-        public HotelService(IHotelAnvelopeRepository hotelRepository, IMapper mapper)
+        public HotelService(IHotelAnvelopeRepository hotelRepository,IHotelPositionsRepository hotelPositionsRepository, IMapper mapper)
         {
             _hotelRepository = hotelRepository;
+            _hotelPositionsRepository = hotelPositionsRepository;
             _mapper = mapper;
         }
 
@@ -121,6 +124,8 @@ namespace DeltaQrCode.Services.Hotel
                 {
                     setAnv.FlotaId = null;
                 }
+
+                
 
 
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
