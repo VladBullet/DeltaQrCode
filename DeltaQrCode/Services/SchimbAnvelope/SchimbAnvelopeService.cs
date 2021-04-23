@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Services.SchimbAnvelope
 {
-    public class SchimbAnvelopeService
+    public class SchimbAnvelopeService:ISchimbAnvelopeService
     {
     }
 }

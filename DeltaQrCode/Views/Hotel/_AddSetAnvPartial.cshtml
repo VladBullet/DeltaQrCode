@@ -188,7 +188,7 @@
 
                 <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <select class="form-control" id="tipSezon" asp-for="TipSezon"></select>
 
                         @Html.ValidationMessageFor(model => model.TipSezon, "", new { @class = "text-danger error_span" })
@@ -196,7 +196,7 @@
                 </div>
                 <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <select class="form-control" id="statusAnv" asp-for="StatusCurent" data-placeholder="@Model.StatusCurent" value="@Model.StatusCurent"></select>
 
                         @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger error_span" })
@@ -204,7 +204,7 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-6">
                     @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <select id="selPoz" class="form-control" asp-for="PozitieInRaft" data-placeholder="@Model.PozitieInRaft" value="@Model.PozitieInRaft"></select>
                         @Html.ValidationMessageFor(model => model.PozitieInRaft, "", new { @class = "text-danger error_span" })
                     </div>
