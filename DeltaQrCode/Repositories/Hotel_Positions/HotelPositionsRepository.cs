@@ -111,12 +111,15 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                     value.Locuriocupate = value.Locuriocupate - nrbuc;
 
                 }
-                await _db.SaveChangesAsync();
 
                 if (value.Locuriocupate < ConstantsAndEnums.MaxLocuriPoz)
                 {
                     value.Ocupat = false;
                 }
+
+                await _db.SaveChangesAsync();
+
+                
 
                 return Result<CaHotelPositions>.ResultOk(value);
             }
