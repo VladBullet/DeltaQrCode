@@ -9,6 +9,7 @@ namespace DeltaQrCode.Repositories
     {
         Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id);
         Task<Result<CaSetAnvelope>> AddSetAnvelopeAsync(CaSetAnvelope setAnv);
+        Result<CaSetAnvelope> AddSetAnvelope(CaSetAnvelope setAnv);
         Task<Result<CaSetAnvelope>> UpdateSetAnvelopeAsync(CaSetAnvelope setAnv);
         Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
         Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(int id);

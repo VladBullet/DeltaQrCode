@@ -67,6 +67,22 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la adaugarea setului de anvelope in repository!", er);
             }
         }
+        
+        public Result<CaSetAnvelope> AddSetAnvelope(CaSetAnvelope setAnv)
+        {
+            try
+            {
+                var value = _db.CaSetAnvelope.Add(setAnv);
+                _db.SaveChanges();
+                return Result<CaSetAnvelope>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea setului de anvelope in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea setului de anvelope in repository!", er);
+            }
+        }
 
         public async Task<Result<CaSetAnvelope>> UpdateSetAnvelopeAsync(CaSetAnvelope setAnv)
         {

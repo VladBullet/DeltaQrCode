@@ -59,12 +59,15 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             {
                 var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
                 value.Locuriocupate = value.Locuriocupate + nrbuc;
-                await _db.SaveChangesAsync();
 
                 if (value.Locuriocupate >= ConstantsAndEnums.MaxLocuriPoz)
                 {
                     value.Ocupat = true;
                 }
+
+                await _db.SaveChangesAsync();
+
+                
 
                 return Result<CaHotelPositions>.ResultOk(value);
             }
@@ -80,12 +83,14 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             {
                 var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
                 value.Locuriocupate = nrbuc;
-                await _db.SaveChangesAsync();
 
                 if (value.Locuriocupate >= ConstantsAndEnums.MaxLocuriPoz)
                 {
                     value.Ocupat = true;
                 }
+                await _db.SaveChangesAsync();
+
+                
 
                 return Result<CaHotelPositions>.ResultOk(value);
             }
