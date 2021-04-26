@@ -65,7 +65,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                     value.Ocupat = true;
                 }
 
-                if (value.Locuriocupate <= ConstantsAndEnums.MaxLocuriPoz)
+                if (value.Locuriocupate < ConstantsAndEnums.MaxLocuriPoz)
                 {
                     value.Ocupat = false;
                 }
@@ -94,10 +94,11 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                     value.Ocupat = true;
                 }
 
-                if (value.Locuriocupate <= ConstantsAndEnums.MaxLocuriPoz)
+                if (value.Locuriocupate < ConstantsAndEnums.MaxLocuriPoz)
                 {
                     value.Ocupat = false;
                 }
+
                 await _db.SaveChangesAsync();
 
                 
@@ -127,7 +128,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                     value.Ocupat = true;
                 }
 
-                if (value.Locuriocupate <= ConstantsAndEnums.MaxLocuriPoz)
+                if (value.Locuriocupate < ConstantsAndEnums.MaxLocuriPoz)
                 {
                     value.Ocupat = false;
                 }

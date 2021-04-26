@@ -245,12 +245,11 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != setAnv.OldPozitieId && setAnv.NrBucati != setAnv.OldNumarBucati)
                 {
-                    if (setAnv.NrBucati < setAnv.OldNumarBucati)
-                    {
-                        var newNrBuc = setAnv.OldNumarBucati - setAnv.NrBucati;
+                    
+                        var newNrBuc = setAnv.OldNumarBucati - oldSetAnv.NrBucati;
                         var operatiune = OperatiunePozitie.Adaugare;
                         await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
-                    }
+                    
                 }
 
 
