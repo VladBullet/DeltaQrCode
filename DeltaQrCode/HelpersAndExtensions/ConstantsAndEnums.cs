@@ -77,7 +77,8 @@ namespace DeltaQrCode
     public enum OperatiunePozitie
     {
         Adaugare = 1,
-        Scoatere = 2
+        Scoatere = 2,
+        Setare  =3
     }
 
 }

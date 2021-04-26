@@ -62,21 +62,21 @@ namespace DeltaQrCode
                 return factory.GetUrlHelper(actionContext);
             });
 
-            services.AddScoped<IHttpHelper, HttpHelper>();
-            services.AddScoped<IQrService, QrService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IHotelService, HotelService>();
-            services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddScoped<IMailService, MailService>();
-            services.AddScoped<IGuestService, GuestService>();
-            services.AddScoped<ISchimbAnvelopeService, SchimbAnvelopeService>();
-            services.AddScoped<IHotelPositionsService, HotelPositionsService>();
+            services.AddTransient<IHttpHelper, HttpHelper>();
+            services.AddTransient<IQrService, QrService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IHotelService, HotelService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
+            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IGuestService, GuestService>();
+            services.AddTransient<ISchimbAnvelopeService, SchimbAnvelopeService>();
+            services.AddTransient<IHotelPositionsService, HotelPositionsService>();
 
-            services.AddScoped<IGuestRepository, GuestRepository>();
-            services.AddScoped<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
-            services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
-            services.AddScoped<ISchimbAnvelopeRepository, SchimbAnvelopeRepository>();
-            services.AddScoped<IHotelPositionsRepository, HotelPositionsRepository>();
+            services.AddTransient<IGuestRepository, GuestRepository>();
+            services.AddTransient<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
+            services.AddTransient<IAppointmentsRepository, AppointmentsRepository>();
+            services.AddTransient<ISchimbAnvelopeRepository, SchimbAnvelopeRepository>();
+            services.AddTransient<IHotelPositionsRepository, HotelPositionsRepository>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(AutoMapperProfile));

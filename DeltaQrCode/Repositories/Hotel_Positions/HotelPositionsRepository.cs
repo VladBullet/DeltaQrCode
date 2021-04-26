@@ -61,7 +61,28 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 value.Locuriocupate = value.Locuriocupate + nrbuc;
                 await _db.SaveChangesAsync();
 
-                if(value.Locuriocupate >= ConstantsAndEnums.MaxLocuriPoz)
+                if (value.Locuriocupate >= ConstantsAndEnums.MaxLocuriPoz)
+                {
+                    value.Ocupat = true;
+                }
+
+                return Result<CaHotelPositions>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!", er);
+            }
+        }
+        public async Task<Result<CaHotelPositions>> SeteazaPozitiaAsync(uint id, int nrbuc)
+        {
+            try
+            {
+                var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
+                value.Locuriocupate = nrbuc;
+                await _db.SaveChangesAsync();
+
+                if (value.Locuriocupate >= ConstantsAndEnums.MaxLocuriPoz)
                 {
                     value.Ocupat = true;
                 }
@@ -80,7 +101,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             try
             {
                 var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
-                if((value.Locuriocupate - nrbuc) >= 0)
+                if ((value.Locuriocupate - nrbuc) >= 0)
                 {
                     value.Locuriocupate = value.Locuriocupate - nrbuc;
 

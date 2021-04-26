@@ -17,7 +17,7 @@ namespace DeltaQrCode.Repositories
         private ApplicationDbContext _db;
         private readonly IHotelPositionsRepository _hotelPositionRepository;
 
-        public HotelAnvelopeRepository(ApplicationDbContext db, IHotelPositionsRepository hotelPositionsRepository )
+        public HotelAnvelopeRepository(ApplicationDbContext db, IHotelPositionsRepository hotelPositionsRepository)
         {
             _db = db;
             _hotelPositionRepository = hotelPositionsRepository;
@@ -95,7 +95,7 @@ namespace DeltaQrCode.Repositories
                 var list = await _db.CaSetAnvelope.Where(x => !x.Deleted).ToListAsync();
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || flote.Any(y => y.Id == x.FlotaId)  || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower())).ToList();
+                    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || flote.Any(y => y.Id == x.FlotaId) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower())).ToList();
                 }
                 return Result<List<CaSetAnvelope>>.ResultOk(list);
             }

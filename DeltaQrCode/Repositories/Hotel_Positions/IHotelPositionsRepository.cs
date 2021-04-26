@@ -12,6 +12,8 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
         Task<Result<CaHotelPositions>> GetPositionByIdAsync(uint id);
         Task<Result<CaHotelPositions>> ElibereazaPozitieAsync(uint id, int nrbuc);
         Task<Result<CaHotelPositions>> PunePePozitieAsync(uint id, int nrbuc);
-        
+        Task<Result<CaHotelPositions>> SeteazaPozitiaAsync(uint id, int nrbuc);
+
+
     }
 }

@@ -60,18 +60,21 @@ namespace DeltaQrCode.Services.Hotel_Positions
             {
                 var value = new HotelPositionsDto();
                 var result = new Result<CaHotelPositions>();
-                if (op == OperatiunePozitie.Adaugare)
+                switch (op)
                 {
-                    result = await _hotelPositionsRepository.PunePePozitieAsync(id, nrbuc);
-
-                }
-                else
-                    if (op == OperatiunePozitie.Scoatere)
-                    {
+                    case OperatiunePozitie.Adaugare:
+                        result = await _hotelPositionsRepository.PunePePozitieAsync(id, nrbuc);
+                        break;
+                    case OperatiunePozitie.Scoatere:
                         result = await _hotelPositionsRepository.ElibereazaPozitieAsync(id, nrbuc);
-
-                    }
-
+                        break;
+                    case OperatiunePozitie.Setare:
+                        result = await _hotelPositionsRepository.SeteazaPozitiaAsync(id, nrbuc);
+                        break;
+                    default:
+                        Log.Error("Ceva nu a mers bine la modificarea pozitiei in servicii!");
+                        throw new Exception("Nu am putut modifica pozitia!");
+                }
                 value = _mapper.Map<HotelPositionsDto>(result.Entity);
 
                 return Result<HotelPositionsDto>.ResultOk(value);
