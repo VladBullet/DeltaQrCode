@@ -9,6 +9,7 @@ namespace DeltaQrCode.Services.Hotel
     using System.Linq;
     using AutoMapper;
     using ClosedXML.Excel;
+    using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
@@ -166,7 +167,8 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
-                var oldSetAnv = setAnv;
+                var oldSetAnv = setAnv.Copy();
+                
                 // if we move n(1/2/3) out of 4 we need to create a new set with the remaining values that were not moved to the new position
 
                 //////////////// Creeaza + Adauga set cu anvelopele ramase
@@ -189,7 +191,8 @@ namespace DeltaQrCode.Services.Hotel
                     }
                     oldSetAnv.Id = 0;
 
-                    var addedOldSet = await AddSetAnvelopeAsync(oldSetAnv, OperatiunePozitie.Setare);
+                    var addedOldSet = await AddSetAnvelopeAsync(oldSetAnv,OperatiunePozitie.Setare);
+
                     if (!addedOldSet.Successful)
                     {
                         Log.Error("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
@@ -218,9 +221,9 @@ namespace DeltaQrCode.Services.Hotel
 
 
                 // case: no change for position but change for nr of anv => 
-                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft"  && setAnv.NrBucati != setAnv.OldNumarBucati)
+                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft"  && setAnv.NrBucati != setAnv.OldNumarBucati && setAnv.PozitieId == setAnv.OldPozitieId)
                 {
-                    setAnv.PozitieId = setAnv.OldPozitieId;
+                    //setAnv.PozitieId = setAnv.OldPozitieId;
 
                     // case we have added some new anv to this set => we have to also update the nr inside position
                     if (setAnv.NrBucati > setAnv.OldNumarBucati)
@@ -238,11 +241,27 @@ namespace DeltaQrCode.Services.Hotel
                     }
                 }
 
+                // case: was InRaft, will be InRaft, Position changed, NrBuc changed
+
+                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != setAnv.OldPozitieId && setAnv.NrBucati != setAnv.OldNumarBucati)
+                {
+                    if (setAnv.NrBucati < setAnv.OldNumarBucati)
+                    {
+                        var newNrBuc = setAnv.OldNumarBucati - setAnv.NrBucati;
+                        var operatiune = OperatiunePozitie.Adaugare;
+                        await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
+                    }
+                }
+
+
+
                 // case: was not in hotel but will be in hotel
                 if (setAnv.PozitieId != null && setAnv.OldPozitieId == null)
                 {
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
                 }
+
+
 
                 if (setAnv.PozitieId != null)
                 {
