@@ -191,14 +191,14 @@ namespace DeltaQrCode.Services.Hotel
                     {
                         var newNrBuc = setAnv.NrBucati - setAnv.OldNumarBucati;
                         var operatiune = OperatiunePozitie.Adaugare;
-                        _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, newNrBuc, operatiune);
+                        _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
                     }
                     // case we have removed some anv from this set => we have to also update the nr inside position
                     if (setAnv.NrBucati < setAnv.OldNumarBucati)
                     {
                         var newNrBuc = setAnv.OldNumarBucati - setAnv.NrBucati;
                         var operatiune = OperatiunePozitie.Scoatere;
-                        _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, newNrBuc, operatiune);
+                        _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
                     }
                 }
 
