@@ -52,7 +52,7 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
         {
             try
             {
-                var pascurent = await _db.CaOperatiuneSchimbAnvelope.FirstAsync(x => x.PasCurentOperatiuneId == pas);
+                var pascurent = await _db.CaOperatiuneSchimbAnvelope.FirstOrDefaultAsync(x => x.PasCurentOperatiuneId == pas);
                 return Result<CaOperatiuneSchimbAnvelope>.ResultOk(pascurent);
             }
 
@@ -64,9 +64,5 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
 
         }
 
-        public Task<Result<CaOperatiuneSchimbAnvelope>> SetOperationStep()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

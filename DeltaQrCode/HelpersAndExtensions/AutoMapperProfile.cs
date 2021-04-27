@@ -58,6 +58,9 @@
 
             CreateMap<CaHotelPositions, HotelPositionsDto>();
             CreateMap<HotelPositionsDto, CaHotelPositions>();
+            
+            CreateMap<CaOperatiuneSchimbAnvelope, SchimbAnvelopeDto>();
+            CreateMap<SchimbAnvelopeDto, CaOperatiuneSchimbAnvelope>();
 
 
         }
