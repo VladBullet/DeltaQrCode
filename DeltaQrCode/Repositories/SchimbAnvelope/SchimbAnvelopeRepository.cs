@@ -64,5 +64,18 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
 
         }
 
+        public async Task<Result<CaOperatiuneSchimbAnvelope>> GetOperationStep(int id, int pas)
+        {
+            try
+            {
+                var value = await _db.CaOperatiuneSchimbAnvelope.Where(x => x.Id == id).FirstOrDefault(y =>y.PasCurentOperatiuneId == pas);
+                return Result<CaOperatiuneSchimbAnvelope>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea operatiunii in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea operatiunii in functie de id in repository!", er);
+            }
+        }
     }
 }

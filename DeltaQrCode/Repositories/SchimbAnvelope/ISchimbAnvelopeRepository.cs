@@ -11,5 +11,6 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
         Task<Result<CaOperatiuneSchimbAnvelope>> GetOperatiuneByIdAsync(int id);
         Task<Result<CaOperatiuneSchimbAnvelope>> FinalizareOperatiuneAsync(CaOperatiuneSchimbAnvelope schimb);
         Task<Result<CaOperatiuneSchimbAnvelope>> SetOperationStep(int pas);
+        Task<Result<CaOperatiuneSchimbAnvelope>> GetOperationStep(int pas);
     }
 }
