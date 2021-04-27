@@ -81,7 +81,7 @@ namespace DeltaQrCode.Services.Hotel
                         throw new Exception("Ceva nu a mers bine la gasirea pozitiei in metoda de adaugare anvelope in servicii!");
                     }
 
-                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, operatiunePoz);
+                    _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, operatiunePoz);
                     //if (!position.Entity.Ocupat && (ConstantsAndEnums.MaxLocuriPoz - position.Entity.Locuriocupate) >= setAnv.NrBucati)
                     //{
                     //}
@@ -151,7 +151,7 @@ namespace DeltaQrCode.Services.Hotel
                 modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
                 modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
                 // send model to database
-                var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
+                var value = _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
                 var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
                 return Result<SetAnvelopeDto>.ResultOk(returnModel);
 
@@ -172,52 +172,51 @@ namespace DeltaQrCode.Services.Hotel
                 // case: changed status in other than InRaft =>  empty the position for this set
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent != "InRaft")
                 {
-                    await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
+                    _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
                 }
 
                 // case: was inRaft, will be in raft => position changed
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != null && setAnv.NrBucati == setAnv.OldNumarBucati)
                 {
-                    await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
-                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
+                    _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
+                    _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
                 }
 
                 // case: no change for position but change for nr of anv => 
-                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.NrBucati != setAnv.OldNumarBucati && setAnv.PozitieId == setAnv.OldPozitieId)
+                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.NrBucati != setAnv.OldNumarBucati && setAnv.PozitieId == null)
                 {
-                    //setAnv.PozitieId = setAnv.OldPozitieId;
-
+                    setAnv.PozitieId = setAnv.OldPozitieId;
                     // case we have added some new anv to this set => we have to also update the nr inside position
                     if (setAnv.NrBucati > setAnv.OldNumarBucati)
                     {
                         var newNrBuc = setAnv.NrBucati - setAnv.OldNumarBucati;
                         var operatiune = OperatiunePozitie.Adaugare;
-                        await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
+                        _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, newNrBuc, operatiune);
                     }
                     // case we have removed some anv from this set => we have to also update the nr inside position
                     if (setAnv.NrBucati < setAnv.OldNumarBucati)
                     {
                         var newNrBuc = setAnv.OldNumarBucati - setAnv.NrBucati;
                         var operatiune = OperatiunePozitie.Scoatere;
-                        await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
+                        _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, newNrBuc, operatiune);
                     }
                 }
 
                 // case: was InRaft, will be InRaft, Position changed, NrBuc changed
 
-                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != setAnv.OldPozitieId && setAnv.NrBucati != setAnv.OldNumarBucati)
+                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != null && setAnv.PozitieId != setAnv.OldPozitieId && setAnv.NrBucati != setAnv.OldNumarBucati)
                 {
 
                     var newNrBuc = setAnv.OldNumarBucati - oldSetAnv.NrBucati;
                     var operatiune = OperatiunePozitie.Adaugare;
-                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
+                    _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
 
                 }
 
                 // case: was not in hotel but will be in hotel
                 if (setAnv.PozitieId != null && setAnv.OldPozitieId == null)
                 {
-                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
+                    _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
                 }
 
 
@@ -292,7 +291,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
-                var value = await _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);
+                var value = _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);
                 if (!value.Successful)
                 {
                     return Result<SetAnvelopeDto>.ResultError(value.Error);
@@ -391,7 +390,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (setAnv.PozitieId != null)
                 {
-                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
+                    _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
                     var position = await _hotelPositionsRepository.GetPositionByIdAsync(setAnv.PozitieId.Value);
 
                     if (!position.Successful)

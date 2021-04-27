@@ -53,11 +53,11 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             }
         }
 
-        public async Task<Result<CaHotelPositions>> PunePePozitieAsync(uint id, int nrbuc)
+        public Result<CaHotelPositions> PunePePozitieAsync(uint id, int nrbuc)
         {
             try
             {
-                var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
+                var value = _db.CaHotelPositions.FirstOrDefault(x => x.Id == id);
                 value.Locuriocupate = value.Locuriocupate + nrbuc;
 
                 if (value.Locuriocupate >= ConstantsAndEnums.MaxLocuriPoz)
@@ -69,7 +69,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 {
                     value.Ocupat = false;
                 }
-                await _db.SaveChangesAsync();
+                _db.SaveChanges();
 
                 return Result<CaHotelPositions>.ResultOk(value);
             }
@@ -79,11 +79,11 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!", er);
             }
         }
-        public async Task<Result<CaHotelPositions>> SeteazaPozitiaAsync(uint id, int nrbuc)
+        public Result<CaHotelPositions> SeteazaPozitiaAsync(uint id, int nrbuc)
         {
             try
             {
-                var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
+                var value = _db.CaHotelPositions.FirstOrDefault(x => x.Id == id);
                 value.Locuriocupate = nrbuc;
 
                 if (value.Locuriocupate >= ConstantsAndEnums.MaxLocuriPoz)
@@ -96,9 +96,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                     value.Ocupat = false;
                 }
 
-                await _db.SaveChangesAsync();
-
-                
+                _db.SaveChanges();
 
                 return Result<CaHotelPositions>.ResultOk(value);
             }
@@ -109,11 +107,11 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             }
         }
 
-        public async Task<Result<CaHotelPositions>> ElibereazaPozitieAsync(uint id, int nrbuc)
+        public Result<CaHotelPositions> ElibereazaPozitieAsync(uint id, int nrbuc)
         {
             try
             {
-                var value = await _db.CaHotelPositions.FirstOrDefaultAsync(x => x.Id == id);
+                var value = _db.CaHotelPositions.FirstOrDefault(x => x.Id == id);
                 if ((value.Locuriocupate - nrbuc) >= 0)
                 {
                     value.Locuriocupate = value.Locuriocupate - nrbuc;
@@ -130,9 +128,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                     value.Ocupat = false;
                 }
 
-                await _db.SaveChangesAsync();
-
-                
+                _db.SaveChanges();
 
                 return Result<CaHotelPositions>.ResultOk(value);
             }

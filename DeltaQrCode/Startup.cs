@@ -84,7 +84,7 @@ namespace DeltaQrCode
             // DBContexts
             // for data
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             // for auth
             services.AddDbContext<AuthDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("AuthConnection")));

@@ -52,12 +52,12 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaSetAnvelope>> AddSetAnvelopeAsync(CaSetAnvelope setAnv)
+        public Result<CaSetAnvelope> AddSetAnvelopeAsync(CaSetAnvelope setAnv)
         {
             try
             {
-                var value = await _db.CaSetAnvelope.AddAsync(setAnv);
-                await _db.SaveChangesAsync();
+                var value = _db.CaSetAnvelope.Add(setAnv);
+                _db.SaveChanges();
                 return Result<CaSetAnvelope>.ResultOk(value.Entity);
 
             }
@@ -68,12 +68,12 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaSetAnvelope>> UpdateSetAnvelopeAsync(CaSetAnvelope setAnv)
+        public Result<CaSetAnvelope> UpdateSetAnvelopeAsync(CaSetAnvelope setAnv)
         {
             try
             {
                 _db.CaSetAnvelope.Update(setAnv);
-                await _db.SaveChangesAsync();
+                _db.SaveChanges();
 
                 return Result<CaSetAnvelope>.ResultOk(setAnv);
 
