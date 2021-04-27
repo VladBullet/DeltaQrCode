@@ -214,8 +214,6 @@ namespace DeltaQrCode.Services.Hotel
 
                 }
 
-
-
                 // case: was not in hotel but will be in hotel
                 if (setAnv.PozitieId != null && setAnv.OldPozitieId == null)
                 {
@@ -262,7 +260,6 @@ namespace DeltaQrCode.Services.Hotel
 
 
                 ///////////////////// FLOTA
-                ///
                 var flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
                 if (!flota.Successful)
                 {
@@ -282,8 +279,7 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 setAnv.FlotaId = flota.Entity.Id;
 
-
-                ///////////////////////////////////////////////////////
+                // ------------------------------------------------------------------------------------------
 
                 var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
                 modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
@@ -292,7 +288,6 @@ namespace DeltaQrCode.Services.Hotel
                 if (modelForDatabase.SerieSasiu != null)
                 {
                     modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
-
                 }
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
@@ -331,8 +326,6 @@ namespace DeltaQrCode.Services.Hotel
                         Log.Error("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
                         throw new Exception("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
                     }
-
-
                 }
 
                 return Result<SetAnvelopeDto>.ResultOk(returnModel);
