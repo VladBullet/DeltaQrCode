@@ -25,6 +25,7 @@ namespace DeltaQrCode.Data
         public virtual DbSet<CaHotelPositions> CaHotelPositions { get; set; }
         public virtual DbSet<CaUsers> CaUsers { get; set; }
         public virtual DbSet<HistoryAnvelope> HistoryAnvelope { get; set; }
+        public virtual DbSet<PasOperatiune> PasOperatiune { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -214,67 +215,65 @@ namespace DeltaQrCode.Data
                 entity.Property(e => e.ZileExpirareAbonament).HasColumnName("zile_expirare_abonament");
             });
 
-
             modelBuilder.Entity<CaAppointments>(entity =>
-            {
-                entity.ToTable("ca_appointments");
+                    {
+                        entity.ToTable("ca_appointments");
 
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
+                        entity.HasIndex(e => e.Id)
+                            .HasName("id_UNIQUE")
+                            .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                        entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Confirmed).HasColumnType("bit(1)");
+                        entity.Property(e => e.Confirmed).HasColumnType("bit(1)");
 
-                entity.Property(e => e.ConfirmedCode)
-                    .IsRequired()
-                    .HasColumnType("varchar(100)");
+                        entity.Property(e => e.ConfirmedCode)
+                            .IsRequired()
+                            .HasColumnType("varchar(100)");
 
-                entity.Property(e => e.ConfirmedDate).HasColumnType("datetime");
+                        entity.Property(e => e.ConfirmedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.DataAppointment).HasColumnType("datetime");
+                        entity.Property(e => e.DataAppointment).HasColumnType("datetime");
 
-                entity.Property(e => e.DataIntroducere).HasColumnType("datetime");
+                        entity.Property(e => e.DataIntroducere).HasColumnType("datetime");
 
-                entity.Property(e => e.Deleted).HasColumnType("bit(1)");
+                        entity.Property(e => e.Deleted).HasColumnType("bit(1)");
 
-                entity.Property(e => e.EmailClient).HasColumnType("varchar(100)");
+                        entity.Property(e => e.EmailClient).HasColumnType("varchar(100)");
 
-                entity.Property(e => e.LastModified).HasColumnType("datetime");
+                        entity.Property(e => e.LastModified).HasColumnType("datetime");
 
-                entity.Property(e => e.RampId)
-                    .IsRequired()
-                    .HasColumnType("int");
+                        entity.Property(e => e.RampId)
+                            .IsRequired()
+                            .HasColumnType("int");
 
-                entity.Property(e => e.DurataInMinute)
-                    .IsRequired()
-                    .HasColumnType("int");
+                        entity.Property(e => e.DurataInMinute)
+                            .IsRequired()
+                            .HasColumnType("int");
 
-                entity.Property(e => e.ServiciuId)
-                    .IsRequired()
-                    .HasColumnType("int");
+                        entity.Property(e => e.ServiciuId)
+                            .IsRequired()
+                            .HasColumnType("int");
 
-                entity.Property(e => e.NumarInmatriculare)
-                    .IsRequired()
-                    .HasColumnType("varchar(45)");
+                        entity.Property(e => e.NumarInmatriculare)
+                            .IsRequired()
+                            .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.NumarTelefon)
-                    .IsRequired()
-                    .HasColumnType("varchar(45)");
+                        entity.Property(e => e.NumarTelefon)
+                            .IsRequired()
+                            .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.NumeClient)
-                    .IsRequired()
-                    .HasColumnType("varchar(45)");
+                        entity.Property(e => e.NumeClient)
+                            .IsRequired()
+                            .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.Observatii)
-                    .HasColumnType("varchar(256)");
-                
-                entity.Property(e => e.OraInceput).HasColumnType("time");
-                entity.Property(e => e.ChangedByClient).HasColumnType("bit(1)");
+                        entity.Property(e => e.Observatii)
+                            .HasColumnType("varchar(256)");
 
-            });
+                        entity.Property(e => e.OraInceput).HasColumnType("time");
+                        entity.Property(e => e.ChangedByClient).HasColumnType("bit(1)");
 
+                    });
 
             modelBuilder.Entity<CaLogOperatiune>(entity =>
             {
@@ -498,7 +497,6 @@ namespace DeltaQrCode.Data
                 entity.Property(e => e.DataModificare).HasColumnType("datetime");
             });
 
-
             modelBuilder.Entity<CaHotelPositions>(entity =>
             {
                 entity.ToTable("ca_hotel_positions");
@@ -530,6 +528,36 @@ namespace DeltaQrCode.Data
                     .HasColumnName("rand")
                     .HasColumnType("varchar(45)");
             });
+
+            modelBuilder.Entity<PasOperatiune>(entity =>
+                {
+                    entity.ToTable("pas_operatiune");
+
+                    entity.Property(e => e.Id)
+                        .HasColumnName("id")
+                        .HasColumnType("int(11)");
+
+                    entity.Property(e => e.InsertedDate)
+                        .HasColumnName("insertedDate")
+                        .HasColumnType("datetime");
+
+                    entity.Property(e => e.OperatiuneId)
+                        .HasColumnName("operatiuneId")
+                        .HasColumnType("int(11)");
+
+                    entity.Property(e => e.Pas)
+                        .HasColumnName("pas")
+                        .HasColumnType("int(11)");
+
+                    entity.Property(e => e.SavedData)
+                        .IsRequired()
+                        .HasColumnName("savedData")
+                        .HasColumnType("varchar(45)");
+
+                    entity.Property(e => e.UserId)
+                        .HasColumnName("userId")
+                        .HasColumnType("int(11)");
+                });
         }
     }
 }

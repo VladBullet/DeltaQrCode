@@ -168,48 +168,12 @@ namespace DeltaQrCode.Services.Hotel
             try
             {
                 var oldSetAnv = setAnv.Copy();
-                
-                // if we move n(1/2/3) out of 4 we need to create a new set with the remaining values that were not moved to the new position
-
-                //////////////// Creeaza + Adauga set cu anvelopele ramase
-                
-                if (oldSetAnv.OldNumarBucati > oldSetAnv.NrBucati && oldSetAnv.PozitieId != oldSetAnv.OldPozitieId && oldSetAnv.PozitieId != null && oldSetAnv.OldPozitieId != null)
-                {
-                    oldSetAnv.NrBucati = oldSetAnv.OldNumarBucati - oldSetAnv.NrBucati;
-                    oldSetAnv.PozitieId = oldSetAnv.OldPozitieId;
-                    if (oldSetAnv.NrBucati < 4)
-                    {
-                        oldSetAnv.Uzura.DrS = null;
-                        if (oldSetAnv.NrBucati < 3)
-                        {
-                            oldSetAnv.Uzura.StS = null;
-                            if (oldSetAnv.NrBucati == 1)
-                            {
-                                oldSetAnv.Uzura.DrF = null;
-                            }
-                        }
-                    }
-                    oldSetAnv.Id = 0;
-
-                    var addedOldSet = await AddSetAnvelopeAsync(oldSetAnv,OperatiunePozitie.Setare);
-
-                    if (!addedOldSet.Successful)
-                    {
-                        Log.Error("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
-                        throw new Exception("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
-                    }
-
-
-                }
-
 
                 // case: changed status in other than InRaft =>  empty the position for this set
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent != "InRaft")
                 {
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
                 }
-
-
 
                 // case: was inRaft, will be in raft => position changed
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != null && setAnv.NrBucati == setAnv.OldNumarBucati)
@@ -218,10 +182,8 @@ namespace DeltaQrCode.Services.Hotel
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
                 }
 
-
-
                 // case: no change for position but change for nr of anv => 
-                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft"  && setAnv.NrBucati != setAnv.OldNumarBucati && setAnv.PozitieId == setAnv.OldPozitieId)
+                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.NrBucati != setAnv.OldNumarBucati && setAnv.PozitieId == setAnv.OldPozitieId)
                 {
                     //setAnv.PozitieId = setAnv.OldPozitieId;
 
@@ -245,11 +207,11 @@ namespace DeltaQrCode.Services.Hotel
 
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != setAnv.OldPozitieId && setAnv.NrBucati != setAnv.OldNumarBucati)
                 {
-                    
-                        var newNrBuc = setAnv.OldNumarBucati - oldSetAnv.NrBucati;
-                        var operatiune = OperatiunePozitie.Adaugare;
-                        await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
-                    
+
+                    var newNrBuc = setAnv.OldNumarBucati - oldSetAnv.NrBucati;
+                    var operatiune = OperatiunePozitie.Adaugare;
+                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
+
                 }
 
 
@@ -342,6 +304,36 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
 
+                // if we move n(1/2/3) out of 4 we need to create a new set with the remaining values that were not moved to the new position
+                //////////////// Creeaza + Adauga set cu anvelopele ramase
+                if (oldSetAnv.OldNumarBucati > oldSetAnv.NrBucati && oldSetAnv.PozitieId != oldSetAnv.OldPozitieId && oldSetAnv.PozitieId != null && oldSetAnv.OldPozitieId != null)
+                {
+                    oldSetAnv.NrBucati = oldSetAnv.OldNumarBucati - oldSetAnv.NrBucati;
+                    oldSetAnv.PozitieId = oldSetAnv.OldPozitieId;
+                    if (oldSetAnv.NrBucati < 4)
+                    {
+                        oldSetAnv.Uzura.DrS = null;
+                        if (oldSetAnv.NrBucati < 3)
+                        {
+                            oldSetAnv.Uzura.StS = null;
+                            if (oldSetAnv.NrBucati == 1)
+                            {
+                                oldSetAnv.Uzura.DrF = null;
+                            }
+                        }
+                    }
+                    oldSetAnv.Id = 0;
+
+                    var addedOldSet = await AddSetAnvelopeAsync(oldSetAnv, OperatiunePozitie.Setare);
+
+                    if (!addedOldSet.Successful)
+                    {
+                        Log.Error("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
+                        throw new Exception("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
+                    }
+
+
+                }
 
                 return Result<SetAnvelopeDto>.ResultOk(returnModel);
 

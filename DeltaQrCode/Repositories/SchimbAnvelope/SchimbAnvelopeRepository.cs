@@ -9,7 +9,9 @@ using Serilog;
 
 namespace DeltaQrCode.Repositories.SchimbAnvelope
 {
-    public class SchimbAnvelopeRepository:ISchimbAnvelopeRepository
+    using Microsoft.EntityFrameworkCore.Migrations.Operations;
+
+    public class SchimbAnvelopeRepository : ISchimbAnvelopeRepository
     {
         private ApplicationDbContext _db;
 
@@ -48,12 +50,14 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
             }
         }
 
-        public async Task<Result<CaOperatiuneSchimbAnvelope>> SetOperationStep(int pas)
+        public async Task<Result<CaOperatiuneSchimbAnvelope>> SetCurrentOperationStep(int operatiuneId, int pasId)
         {
             try
             {
-                var pascurent = await _db.CaOperatiuneSchimbAnvelope.FirstOrDefaultAsync(x => x.PasCurentOperatiuneId == pas);
-                return Result<CaOperatiuneSchimbAnvelope>.ResultOk(pascurent);
+                var operatiuneCurenta = await _db.CaOperatiuneSchimbAnvelope.FirstOrDefaultAsync(x => x.Id == operatiuneId);
+                operatiuneCurenta.PasCurentOperatiuneId = pasId;
+                await _db.SaveChangesAsync();
+                return Result<CaOperatiuneSchimbAnvelope>.ResultOk(operatiuneCurenta);
             }
 
             catch (Exception er)
@@ -64,11 +68,35 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
 
         }
 
-        public async Task<Result<CaOperatiuneSchimbAnvelope>> GetOperationStep(int id, int pas)
+        public async Task<Result<PasOperatiune>> PseudoSaveOperationStep(int userId, int operatiuneId, int step, string dataToSave)
         {
             try
             {
-                var value = await _db.CaOperatiuneSchimbAnvelope.Where(x => x.Id == id).FirstOrDefault(y =>y.PasCurentOperatiuneId == pas);
+                PasOperatiune stepToInsert = new PasOperatiune();
+
+                stepToInsert.UserId = userId;
+                stepToInsert.InsertedDate = DateTime.Now;
+                stepToInsert.OperatiuneId = operatiuneId;
+                stepToInsert.Pas = step;
+                stepToInsert.SavedData = dataToSave;
+
+                var added = await _db.PasOperatiune.AddAsync(stepToInsert);
+                await _db.SaveChangesAsync();
+                return Result<PasOperatiune>.ResultOk(stepToInsert);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la pseudoSave step in repository!");
+                throw new Exception("Ceva nu a mers bine la pseudoSave step in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaOperatiuneSchimbAnvelope>> GetOperationStep(int pas)
+        {
+            try
+            {
+
+                var value = await _db.CaOperatiuneSchimbAnvelope.OrderByDescending(x => x.OraInceput).FirstOrDefaultAsync(x => x.PasCurentOperatiuneId == pas && !x.OperatiuneFinalizata);
                 return Result<CaOperatiuneSchimbAnvelope>.ResultOk(value);
             }
             catch (Exception er)

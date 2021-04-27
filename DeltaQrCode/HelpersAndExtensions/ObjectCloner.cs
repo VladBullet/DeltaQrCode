@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using System.ArrayExtensions;
-
-namespace System
+﻿namespace DeltaQrCode.HelpersAndExtensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+
+    using DeltaQrCode.HelpersAndExtensions.ArrayExtensions;
+
     public static class ObjectExtensions
     {
         private static readonly MethodInfo CloneMethod = typeof(Object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -68,7 +70,7 @@ namespace System
         }
     }
 
-    public class ReferenceEqualityComparer : EqualityComparer<Object>
+    public class ReferenceEqualityComparer : EqualityComparer<object>
     {
         public override bool Equals(object x, object y)
         {

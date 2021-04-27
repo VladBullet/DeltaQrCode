@@ -26,7 +26,7 @@ namespace DeltaQrCode.Controllers
 
         public ActionResult Index()
         {
-            SetStep(step);
+            //SetStep(step);
             return View();
         }
         public ActionResult StepOne(AppointmentVM appt)

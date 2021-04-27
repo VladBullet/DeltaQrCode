@@ -69,10 +69,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 {
                     value.Ocupat = false;
                 }
-
                 await _db.SaveChangesAsync();
-
-                
 
                 return Result<CaHotelPositions>.ResultOk(value);
             }
