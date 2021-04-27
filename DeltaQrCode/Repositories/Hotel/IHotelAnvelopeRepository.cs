@@ -9,11 +9,12 @@ namespace DeltaQrCode.Repositories
     {
         Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id);
         Task<Result<CaSetAnvelope>> AddSetAnvelopeAsync(CaSetAnvelope setAnv);
+        Result<CaSetAnvelope> AddSetAnvelope(CaSetAnvelope setAnv);
         Task<Result<CaSetAnvelope>> UpdateSetAnvelopeAsync(CaSetAnvelope setAnv);
         Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
         Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(int id);
         Task<Result<List<CaSetAnvelope>>> GetAllSetAnvelopeAsync();
-        Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null);
+        //Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null);
 
         Task<Result<CaMarca>> GetMarcaByIdAsync(uint id);
         Task<Result<List<CaMarca>>> GetMarciAsync(); 

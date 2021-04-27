@@ -105,11 +105,28 @@ body {
     }
 }
 
-@media (min-width: 1400px) {
-    .filicontainer {
-        max-width: 1350px;
+.car{
+    display:normal;
+}
+
+
+
+@media (max-width: 991px) {
+    .car {
+        display: none;
     }
 }
+
+.margins-0 {
+
+}
+
+@media (max-width: 991px) {
+    .margins-0 {
+        margin-left:0 !important;
+    }
+}
+
 
 * {
     margin: 0;
@@ -192,6 +209,7 @@ p {
     margin: 10px 0px 10px 5px;
     float: right
 }
+
 #msform .action-button-left {
     width: 100px;
     background: #008000;
@@ -205,10 +223,10 @@ p {
     float: left
 }
 
-    #msform .action-button:hover,
-    #msform .action-button:focus {
-        background-color: #2F2F37
-    }
+#msform .action-button:hover,
+#msform .action-button:focus {
+    background-color: #2F2F37
+}
 
 #msform .action-button-previous {
     width: 100px;
@@ -292,7 +310,6 @@ p {
     #progressbar #payment:before {
         font-family: FontAwesome;
         content: "3"
-            
     }
 
     #progressbar #confirm:before {

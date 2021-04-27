@@ -22,6 +22,7 @@ namespace DeltaQrCode.Data
         public virtual DbSet<CaOperatiuneSchimbAnvelope> CaOperatiuneSchimbAnvelope { get; set; }
         public virtual DbSet<CaServicetypes> CaServicetypes { get; set; }
         public virtual DbSet<CaSetAnvelope> CaSetAnvelope { get; set; }
+        public virtual DbSet<CaHotelPositions> CaHotelPositions { get; set; }
         public virtual DbSet<CaUsers> CaUsers { get; set; }
         public virtual DbSet<HistoryAnvelope> HistoryAnvelope { get; set; }
 
@@ -377,22 +378,8 @@ namespace DeltaQrCode.Data
                     .IsRequired()
                     .HasColumnType("varchar(100)");
 
-                entity.Property(e => e.Interval)
-                    .HasColumnType("varchar(45)");
-
-                entity.Property(e => e.NrBucati).HasColumnType("int(11)");
-
-                entity.Property(e => e.MarcaId)
-                .IsRequired()
-                .HasColumnType("int");
-
-                entity.Property(e => e.FlotaId)
-                .HasColumnType("int");
-
                 entity.Property(e => e.NumarInmatriculare)
                     .IsRequired()
-                    .HasColumnType("varchar(45)");
-                entity.Property(e => e.SerieSasiu)
                     .HasColumnType("varchar(45)");
 
                 entity.Property(e => e.NumarTelefon)
@@ -403,14 +390,9 @@ namespace DeltaQrCode.Data
                     .IsRequired()
                     .HasColumnType("varchar(50)");
 
-
                 entity.Property(e => e.Observatii).HasColumnType("varchar(100)");
 
-                entity.Property(e => e.Pozitie)
-                    .HasColumnType("varchar(45)");
-
-                entity.Property(e => e.Rand)
-                    .HasColumnType("varchar(45)");
+                entity.Property(e => e.SerieSasiu).HasColumnType("varchar(45)");
 
                 entity.Property(e => e.StatusCurent)
                     .IsRequired()
@@ -514,6 +496,39 @@ namespace DeltaQrCode.Data
                     .HasColumnType("varchar(256)");
 
                 entity.Property(e => e.DataModificare).HasColumnType("datetime");
+            });
+
+
+            modelBuilder.Entity<CaHotelPositions>(entity =>
+            {
+                entity.ToTable("ca_hotel_positions");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Interval)
+                    .IsRequired()
+                    .HasColumnName("interval")
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Locuriocupate).HasColumnName("locuriocupate");
+
+                entity.Property(e => e.Ocupat)
+                    .HasColumnName("ocupat")
+                    .HasColumnType("bit(1)");
+
+                entity.Property(e => e.Pozitie)
+                    .IsRequired()
+                    .HasColumnName("pozitie")
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Rand)
+                    .IsRequired()
+                    .HasColumnName("rand")
+                    .HasColumnType("varchar(45)");
             });
         }
     }

@@ -16,10 +16,13 @@ namespace DeltaQrCode
     using DeltaQrCode.ModelsDto;
     using DeltaQrCode.Repositories;
     using DeltaQrCode.Repositories.Guest;
+    using DeltaQrCode.Repositories.Hotel_Positions;
+    using DeltaQrCode.Repositories.SchimbAnvelope;
     using DeltaQrCode.Services.Guest;
     using DeltaQrCode.Services.Hotel;
+    using DeltaQrCode.Services.Hotel_Positions;
     using DeltaQrCode.Services.Mail;
-
+    using DeltaQrCode.Services.SchimbAnvelope;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
@@ -59,17 +62,21 @@ namespace DeltaQrCode
                 return factory.GetUrlHelper(actionContext);
             });
 
-            services.AddScoped<IHttpHelper, HttpHelper>();
-            services.AddScoped<IQrService, QrService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IHotelService, HotelService>();
-            services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddScoped<IMailService, MailService>();
-            services.AddScoped<IGuestService, GuestService>();
-            services.AddScoped<IGuestRepository, GuestRepository>();
+            services.AddTransient<IHttpHelper, HttpHelper>();
+            services.AddTransient<IQrService, QrService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IHotelService, HotelService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
+            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IGuestService, GuestService>();
+            services.AddTransient<ISchimbAnvelopeService, SchimbAnvelopeService>();
+            services.AddTransient<IHotelPositionsService, HotelPositionsService>();
 
-            services.AddScoped<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
-            services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
+            services.AddTransient<IGuestRepository, GuestRepository>();
+            services.AddTransient<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
+            services.AddTransient<IAppointmentsRepository, AppointmentsRepository>();
+            services.AddTransient<ISchimbAnvelopeRepository, SchimbAnvelopeRepository>();
+            services.AddTransient<IHotelPositionsRepository, HotelPositionsRepository>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(AutoMapperProfile));
@@ -77,7 +84,7 @@ namespace DeltaQrCode
             // DBContexts
             // for data
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
             // for auth
             services.AddDbContext<AuthDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("AuthConnection")));

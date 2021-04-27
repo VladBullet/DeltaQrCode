@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DeltaQrCode.Models
 {
@@ -8,12 +9,7 @@ namespace DeltaQrCode.Models
         public string NumeClient { get; set; }
         public string NumarTelefon { get; set; }
         public string NumarInmatriculare { get; set; }
-        public string SerieSasiu { get; set; }
-        public string Rand { get; set; }
-        public string Pozitie { get; set; }
-        public string Interval { get; set; }
         public uint? MarcaId { get; set; }
-        public uint? FlotaId { get; set; }
         public int NrBucati { get; set; }
         public string Dimensiuni { get; set; }
         public string Uzura { get; set; }
@@ -22,5 +18,8 @@ namespace DeltaQrCode.Models
         public string StatusCurent { get; set; }
         public DateTime DataUltimaModificare { get; set; }
         public bool Deleted { get; set; }
+        public uint? FlotaId { get; set; }
+        public string SerieSasiu { get; set; }
+        public uint? PozitieId { get; set; }
     }
 }

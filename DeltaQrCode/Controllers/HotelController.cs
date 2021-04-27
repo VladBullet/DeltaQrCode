@@ -21,18 +21,21 @@ namespace DeltaQrCode.Controllers
     using Serilog;
     using ClosedXML.Excel;
     using System.IO;
+    using DeltaQrCode.Services.Hotel_Positions;
 
     [Authorize]
     public class HotelController : Controller
     {
         private readonly IHotelService _hotelService;
+        private readonly IHotelPositionsService _hotelPositionsService;
         private readonly IMapper _mapper;
         private const int PageSize = 20;
 
 
-        public HotelController(IHotelService hotelService, IMapper mapper)
+        public HotelController(IHotelService hotelService, IHotelPositionsService hotelPositionsService, IMapper mapper)
         {
             _hotelService = hotelService;
+            _hotelPositionsService = hotelPositionsService;
             _mapper = mapper;
         }
 
@@ -64,6 +67,10 @@ namespace DeltaQrCode.Controllers
             }
             var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
             var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
+
+            model.OldPozitieId = model.PozitieId;
+            model.OldNumarBucati = model.NrBucati;
+
             HotelModalVM setVm = new HotelModalVM(model, actType);
 
             if (actType == ActionType.Info)
@@ -163,17 +170,20 @@ namespace DeltaQrCode.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAvailablePositions(string term)
+        public async Task<IActionResult> GetAvailablePositions(string term, int nrbuc)
         {
             try
-           {
-                var positions = await _hotelService.GetAvailablePositionsAsync();
-                var list = positions.Entity.Select(x => x.PositionString).ToList();
+            {
+                var positions = await _hotelPositionsService.GetAvailablePositionsAsync(nrbuc);
+                var availablepositions = _mapper.Map<List<HotelPositionsDto>>(positions.Entity);
                 if (!string.IsNullOrEmpty(term))
                 {
-                    list = positions.Entity.Where(x => (x.Rand + x.Poz + x.Interval).ToLower().Contains(term.ToLower())).Select(x => x.PositionString).ToList();
+                    availablepositions = availablepositions.Where(x => (x.Rand + x.Pozitie + x.Interval).ToLower().Contains(term.ToLower())).ToList();
                 }
-                return new JsonResult(list);
+                var model = new List<ItemVM>();
+                model = availablepositions.Select(x => new ItemVM(x.Id, x.ToDisplayString())).ToList();
+
+                return new JsonResult(model);
             }
             catch (Exception e)
             {

@@ -121,9 +121,6 @@ CREATE TABLE `ca_set_anvelope` (
   `NumeClient` varchar(50) NOT NULL,
   `NumarTelefon` varchar(45) NOT NULL,
   `NumarInmatriculare` varchar(45) NOT NULL,
-  `Rand` varchar(45) DEFAULT NULL,
-  `Pozitie` varchar(45) DEFAULT NULL,
-  `Interval` varchar(45) DEFAULT NULL,
   `MarcaId` int unsigned DEFAULT NULL,
   `NrBucati` int NOT NULL,
   `Dimensiuni` varchar(100) NOT NULL,
@@ -135,9 +132,11 @@ CREATE TABLE `ca_set_anvelope` (
   `Deleted` bit(1) NOT NULL,
   `FlotaId` int unsigned DEFAULT NULL,
   `SerieSasiu` varchar(45) DEFAULT NULL,
+  `PozitieId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+
 
 
 CREATE TABLE `ca_users` (
@@ -175,6 +174,18 @@ CREATE TABLE `deltatra_client_admin`.`history_appointments` (
   `Changes` VARCHAR(1000) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+
+  CREATE TABLE `ca_hotel_positions` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `rand` varchar(45) NOT NULL,
+  `pozitie` varchar(45) NOT NULL,
+  `interval` varchar(45) NOT NULL,
+  `ocupat` bit(1) NOT NULL,
+  `locuriocupate` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 
 

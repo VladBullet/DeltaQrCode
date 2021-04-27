@@ -11,8 +11,11 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string SerieSasiu { get; set; }
         public string PozitieInRaft { get; set; }
         public int? MarcaId { get; set; }
+        public int? PozitieId { get; set; }
+        public int? OldPozitieId { get; set; }
         public int? FlotaId { get; set; }
         public string Marca { get; set; }
+        public int OldNumarBucati { get; set; }
         public string Flota { get; set; }
         public int NrBucati { get; set; }
         public int Diametru { get; set; }

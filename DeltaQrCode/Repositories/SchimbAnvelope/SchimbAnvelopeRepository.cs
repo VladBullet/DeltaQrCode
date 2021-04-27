@@ -63,5 +63,10 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
             }
 
         }
+
+        public Task<Result<CaOperatiuneSchimbAnvelope>> SetOperationStep()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
