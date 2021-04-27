@@ -300,6 +300,7 @@ namespace DeltaQrCode.Services.Hotel
 
 
                 ///////////////////// FLOTA
+                ///
                 var flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
                 if (!flota.Successful)
                 {
