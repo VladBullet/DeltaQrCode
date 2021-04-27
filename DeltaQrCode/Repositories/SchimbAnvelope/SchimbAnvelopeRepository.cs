@@ -48,6 +48,22 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
             }
         }
 
+        public async Task<Result<CaOperatiuneSchimbAnvelope>> SetOperationStep(int pas)
+        {
+            try
+            {
+                var pascurent = await _db.CaOperatiuneSchimbAnvelope.FirstAsync(x => x.PasCurentOperatiuneId == pas);
+                return Result<CaOperatiuneSchimbAnvelope>.ResultOk(pascurent);
+            }
+
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la setarea pasului operatiunii in repository!");
+                throw new Exception("Ceva nu a mers bine la setarea pasului operatiunii in repository!", er);
+            }
+
+        }
+
         public Task<Result<CaOperatiuneSchimbAnvelope>> SetOperationStep()
         {
             throw new NotImplementedException();

@@ -130,7 +130,7 @@
                 <div class="form-group col-md-6 col-sm-4 col-4">
                     @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
-                        <select id="Marca" class="form-control" asp-for="Marca" data-placeholder="@Model.Marca" value="@Model.Marca"></select>
+                        <select id="Marca" class="form-control col-4" asp-for="Marca" data-placeholder="@Model.Marca" value="@Model.Marca"></select>
                         @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                 <div class="form-group col-md-6 col-sm-4 col-4">
                     @Html.LabelFor(model => model.Flota, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
-                        <select id="Flota" class="form-control" asp-for="Flota" data-placeholder="@Model.Flota" value="@Model.Flota"></select>
+                        <select id="Flota" class="form-control col-4" asp-for="Flota" data-placeholder="@Model.Flota" value="@Model.Flota"></select>
                         @Html.ValidationMessageFor(model => model.Flota, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
