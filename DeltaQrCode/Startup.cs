@@ -65,18 +65,18 @@ namespace DeltaQrCode
             services.AddScoped<IHttpHelper, HttpHelper>();
             services.AddScoped<IQrService, QrService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IHotelService, HotelService>();
+            services.AddTransient<IHotelService, HotelService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<ISchimbAnvelopeService, SchimbAnvelopeService>();
-            services.AddScoped<IHotelPositionsService, HotelPositionsService>();
+            services.AddTransient<IHotelPositionsService, HotelPositionsService>();
 
             services.AddScoped<IGuestRepository, GuestRepository>();
-            services.AddScoped<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
+            services.AddTransient<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
             services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
             services.AddScoped<ISchimbAnvelopeRepository, SchimbAnvelopeRepository>();
-            services.AddScoped<IHotelPositionsRepository, HotelPositionsRepository>();
+            services.AddTransient<IHotelPositionsRepository, HotelPositionsRepository>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(AutoMapperProfile));
