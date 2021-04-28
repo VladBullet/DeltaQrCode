@@ -247,5 +247,124 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
+        public Result<CaMarca> GetMarcaByLable(string label)
+        {
+            try
+            {
+                label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
+                var value = _db.CaMarca.FirstOrDefault(x => x.Label.ToLower().Contains(label.ToLower()));
+                return Result<CaMarca>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea marcii in functie de label in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de label in repository!", er);
+            }
+        }
+
+        public Result<CaFlota> GetFlotaByLable(string label)
+        {
+            try
+            {
+                label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
+                var value = _db.CaFlota.FirstOrDefault(x => x.Label.ToLower().Contains(label.ToLower()));
+                return Result<CaFlota>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea flotei in functie de label in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de label in repository!", er);
+            }
+        }
+
+        public Result<CaSetAnvelope> GetSetAnvelopeById(int id)
+        {
+            try
+            {
+                var value = _db.CaSetAnvelope.First(x => x.Id == id && !x.Deleted);
+                return Result<CaSetAnvelope>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de id in repository!", er);
+            }
+        }
+
+        public Result<CaMarca> GetMarcaById(uint id)
+        {
+            try
+            {
+                var value = _db.CaMarca.First(x => x.Id == id);
+                return Result<CaMarca>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea marcii in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de id in repository!", er);
+            }
+        }
+
+        public Result<CaFlota> GetFlotaById(uint id)
+        {
+            try
+            {
+                var value = _db.CaFlota.First(x => x.Id == id);
+                return Result<CaFlota>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea flotei in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de id in repository!", er);
+            }
+        }
+
+        public Result<List<CaSetAnvelope>> SearchAnvelope(string searchString, int page, int itemsPerPage)
+        {
+            try
+            {
+                var flote = _db.CaFlota.Where(x => x.Label.ToLower().Contains(searchString.ToLower()));
+                var list = _db.CaSetAnvelope.Where(x => !x.Deleted).ToList();
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || flote.Any(y => y.Id == x.FlotaId) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower())).ToList();
+                }
+                return Result<List<CaSetAnvelope>>.ResultOk(list);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la cautarea setului de anvelope in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea setului de anvelope in repository!", er);
+            }
+        }
+
+        public Result<List<CaMarca>> GetMarci()
+        {
+            try
+            {
+                var value = _db.CaMarca.ToList();
+                return Result<List<CaMarca>>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea marcii in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea marcii in repository!", er);
+            }
+        }
+
+        public Result<List<CaFlota>> GetFlota()
+        {
+            try
+            {
+                var value = _db.CaFlota.ToList();
+                return Result<List<CaFlota>>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea flotei in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea flotei in repository!", er);
+            }
+        }
     }
 }

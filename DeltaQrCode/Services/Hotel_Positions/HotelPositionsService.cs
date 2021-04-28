@@ -22,6 +22,23 @@ namespace DeltaQrCode.Services.Hotel_Positions
             _mapper = mapper;
         }
 
+        public Result<List<HotelPositionsDto>> GetAvailablePositions(int? nrbuc = null)
+        {
+            try
+            {
+                var value = _hotelPositionsRepository.GetAvailablePositions(nrbuc);
+                var model = _mapper.Map<List<HotelPositionsDto>>(value.Entity);
+
+                return Result<List<HotelPositionsDto>>.ResultOk(model);
+            }
+
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea pozitiilor in servicii!", er);
+            }
+        }
+
         public async Task<Result<List<HotelPositionsDto>>> GetAvailablePositionsAsync(int? nrbuc = null)
         {
             try
@@ -36,6 +53,21 @@ namespace DeltaQrCode.Services.Hotel_Positions
             {
                 Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea pozitiilor in servicii!", er);
+            }
+        }
+
+        public Result<HotelPositionsDto> GetPositionById(uint id)
+        {
+            try
+            {
+                var value = _hotelPositionsRepository.GetPositionById(id);
+                var model = _mapper.Map<HotelPositionsDto>(value.Entity);
+                return Result<HotelPositionsDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea pozitiei in functie de id in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea pozitiei in functie de id in servicii!", er);
             }
         }
 
