@@ -22,12 +22,12 @@ namespace DeltaQrCode.Services.SchimbAnvelope
             _mapper = mapper;
         }
 
-        public async Task<Result<SchimbAnvelopeDto>> FinalizareOperatiuneAsync(SchimbAnvelopeDto schimb)
+        public Result<SchimbAnvelopeDto> FinalizareOperatiune(SchimbAnvelopeDto schimb)
         {
             try
             {
                 var model = _mapper.Map<CaOperatiuneSchimbAnvelope>(schimb);
-                var value = await _schimbAnvelopeRepository.FinalizareOperatiuneAsync(model);
+                var value = _schimbAnvelopeRepository.FinalizareOperatiune(model);
 
                 var returnModel = _mapper.Map<SchimbAnvelopeDto>(value.Entity);
                 return Result<SchimbAnvelopeDto>.ResultOk(returnModel);

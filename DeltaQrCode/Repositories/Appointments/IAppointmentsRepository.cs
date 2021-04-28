@@ -9,15 +9,15 @@ namespace DeltaQrCode.Repositories
     public interface IAppointmentsRepository
     {
         Task<Result<CaAppointments>> GetAppointmentByIdAsync(int id);
-        Task<Result<CaAppointments>> AddAppointmentAsync(CaAppointments appointment);
-        Task<Result<CaAppointments>> UpdateAppointmentAsync(CaAppointments appointment);
-        Task<Result<CaAppointments>> DeleteAppointmentAsync(int id);
-        Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id, bool confirm);
+        Result<CaAppointments> AddAppointment(CaAppointments appointment);
+        Result<CaAppointments> UpdateAppointment(CaAppointments appointment);
+        Result<CaAppointments> DeleteAppointment(int id);
+        Result<CaAppointments> ConfirmAppointment(int id, bool confirm);
         Task<Result<List<CaAppointments>>> GetAppointmentsAsync(DateTime date, int? rampId = null);
 
         Task<Result<CaServicetypes>> GetServiceTypeByIdAsync(uint id);
         Task<Result<List<CaServicetypes>>> GetServiceTypesAsync();
-        Task<Result<CaServicetypes>> AddServiceTypeAsync(CaServicetypes serviciu);
+        Result<CaServicetypes> AddServiceType(CaServicetypes serviciu);
         Task<Result<CaServicetypes>> GetServiceTypeByLableAsync(string label);
 
     }

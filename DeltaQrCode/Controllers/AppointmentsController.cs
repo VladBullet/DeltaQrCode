@@ -35,7 +35,7 @@ namespace DeltaQrCode.Controllers
 
 
             // Get the appointments with a list of employees details this user can access
-            CalendarVm calendarVm = new CalendarVm(); 
+            CalendarVm calendarVm = new CalendarVm();
             var startDate = Helpers.GetStartDateFromStringParam(startDateString);
             var activeDate = Helpers.GetStartDateFromStringParam(activeDateString);
 
@@ -83,7 +83,7 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> ModalEdit(int id)
+        public async Task<IActionResult> ModalEdit(int id)
         {
             var hours = new List<SelectListItem>();
             for (int i = 8; i <= 17; i++)
@@ -106,7 +106,7 @@ namespace DeltaQrCode.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAppt(AppointmentVM appt)
+        public async Task<IActionResult> EditAppt(AppointmentVM appt)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpGet]
-        public ActionResult ModalAdd(string startDateStr, string startHour, string rampId)
+        public IActionResult ModalAdd(string startDateStr, string startHour, string rampId)
         {
 
             var hours = new List<SelectListItem>();
@@ -162,7 +162,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddAppt(AppointmentVM appt) //ADDMODAL
+        public async Task<IActionResult> AddAppt(AppointmentVM appt) //ADDMODAL
         {
             try
             {
@@ -176,12 +176,12 @@ namespace DeltaQrCode.Controllers
 
                 }
 
-                return BadRequest("Ceva nu a mers bine la adaugarea programarii in controller!" );
+                return BadRequest("Ceva nu a mers bine la adaugarea programarii in controller!");
             }
             catch (Exception e)
             {
                 Log.Error(e, "Ceva nu a mers bine la adaugarea programarii in controller!");
-                return BadRequest("Ceva nu a mers bine la adaugarea programarii in controller!" );
+                return BadRequest("Ceva nu a mers bine la adaugarea programarii in controller!");
             }
         }
 
@@ -196,11 +196,11 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> ConfirmDelete(int id)
+        public IActionResult ConfirmDelete(int id)
         {
             try
             {
-                var result = await _appointmentService.DeleteAppointmentAsync(id);
+                var result = _appointmentService.DeleteAppointment(id);
 
                 if (result.Successful)
                 {
@@ -224,11 +224,11 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ConfirmAppt(int id, bool confirm)
+        public IActionResult ConfirmAppt(int id, bool confirm)
         {
             try
             {
-                var result = await _appointmentService.ConfirmAppointmentAsync(id, confirm);
+                var result = _appointmentService.ConfirmAppointment(id, confirm);
 
                 if (result.Successful)
                 {
@@ -251,9 +251,9 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpGet]
-        public IActionResult MenuModal(int id,bool confirm)
+        public IActionResult MenuModal(int id, bool confirm)
         {
-            return PartialView("_MenuAppointmentPartial",new ConfirmVM(id, !confirm));
+            return PartialView("_MenuAppointmentPartial", new ConfirmVM(id, !confirm));
         }
 
         [HttpGet]

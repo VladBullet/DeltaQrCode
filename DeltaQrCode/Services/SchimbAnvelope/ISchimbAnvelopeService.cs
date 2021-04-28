@@ -10,7 +10,7 @@ namespace DeltaQrCode.Services.SchimbAnvelope
     public interface ISchimbAnvelopeService
     {
         Task<Result<SchimbAnvelopeDto>> GetOperatiuneByIdAsync(int id);
-        Task<Result<SchimbAnvelopeDto>> FinalizareOperatiuneAsync(SchimbAnvelopeDto schimb);
+        Result<SchimbAnvelopeDto> FinalizareOperatiune(SchimbAnvelopeDto schimb);
         Task<Result<SchimbAnvelopeDto>> SetOperationStep(int pas);
     }
 }

@@ -34,12 +34,12 @@ namespace DeltaQrCode.Repositories.SchimbAnvelope
             }
         }
 
-        public async Task<Result<CaOperatiuneSchimbAnvelope>> FinalizareOperatiuneAsync(CaOperatiuneSchimbAnvelope schimb)
+        public  Result<CaOperatiuneSchimbAnvelope> FinalizareOperatiune(CaOperatiuneSchimbAnvelope schimb)
         {
             try
             {
-                var value = await _db.CaOperatiuneSchimbAnvelope.AddAsync(schimb);
-                await _db.SaveChangesAsync();
+                var value =  _db.CaOperatiuneSchimbAnvelope.Add(schimb);
+                 _db.SaveChanges();
                 return Result<CaOperatiuneSchimbAnvelope>.ResultOk(value.Entity);
 
             }

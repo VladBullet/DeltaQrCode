@@ -53,7 +53,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             }
         }
 
-        public Result<CaHotelPositions> PunePePozitieAsync(uint id, int nrbuc)
+        public Result<CaHotelPositions> PunePePozitie(uint id, int nrbuc)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!", er);
             }
         }
-        public Result<CaHotelPositions> SeteazaPozitiaAsync(uint id, int nrbuc)
+        public Result<CaHotelPositions> SeteazaPozitia(uint id, int nrbuc)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             }
         }
 
-        public Result<CaHotelPositions> ElibereazaPozitieAsync(uint id, int nrbuc)
+        public Result<CaHotelPositions> ElibereazaPozitie(uint id, int nrbuc)
         {
             try
             {

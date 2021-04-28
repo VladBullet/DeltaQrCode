@@ -39,11 +39,11 @@ namespace DeltaQrCode.Services.Hotel_Positions
             }
         }
 
-        public async Task<Result<HotelPositionsDto>> GetPositionByIdAsync(int id)
+        public async Task<Result<HotelPositionsDto>> GetPositionByIdAsync(uint id)
         {
             try
             {
-                var value = await _hotelPositionsRepository.GetAvailablePositionsAsync(id);
+                var value = await _hotelPositionsRepository.GetPositionByIdAsync(id);
                 var model = _mapper.Map<HotelPositionsDto>(value.Entity);
                 return Result<HotelPositionsDto>.ResultOk(model);
             }
@@ -54,7 +54,7 @@ namespace DeltaQrCode.Services.Hotel_Positions
             }
         }
 
-        public Result<HotelPositionsDto> UpdatePositionAsync(uint id, int nrbuc, OperatiunePozitie op)
+        public Result<HotelPositionsDto> UpdatePosition(uint id, int nrbuc, OperatiunePozitie op)
         {
             try
             {
@@ -63,13 +63,13 @@ namespace DeltaQrCode.Services.Hotel_Positions
                 switch (op)
                 {
                     case OperatiunePozitie.Adaugare:
-                        result = _hotelPositionsRepository.PunePePozitieAsync(id, nrbuc);
+                        result = _hotelPositionsRepository.PunePePozitie(id, nrbuc);
                         break;
                     case OperatiunePozitie.Scoatere:
-                        result = _hotelPositionsRepository.ElibereazaPozitieAsync(id, nrbuc);
+                        result = _hotelPositionsRepository.ElibereazaPozitie(id, nrbuc);
                         break;
                     case OperatiunePozitie.Setare:
-                        result = _hotelPositionsRepository.SeteazaPozitiaAsync(id, nrbuc);
+                        result = _hotelPositionsRepository.SeteazaPozitia(id, nrbuc);
                         break;
                     default:
                         Log.Error("Ceva nu a mers bine la modificarea pozitiei in servicii!");

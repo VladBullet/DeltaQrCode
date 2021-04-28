@@ -52,7 +52,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public Result<CaSetAnvelope> AddSetAnvelopeAsync(CaSetAnvelope setAnv)
+        public Result<CaSetAnvelope> AddSetAnvelope(CaSetAnvelope setAnv)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public Result<CaSetAnvelope> UpdateSetAnvelopeAsync(CaSetAnvelope setAnv)
+        public Result<CaSetAnvelope> UpdateSetAnvelope(CaSetAnvelope setAnv)
         {
             try
             {
@@ -106,14 +106,14 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(int id)
+        public Result<CaSetAnvelope> DeleteSetAnvelope(int id)
         {
             try
             {
-                var entity = await _db.CaSetAnvelope.FirstAsync(x => x.Id == id);
+                var entity = _db.CaSetAnvelope.First(x => x.Id == id);
                 entity.Deleted = true;
                 var value = _db.CaSetAnvelope.Update(entity);
-                await _db.SaveChangesAsync();
+                _db.SaveChanges();
 
                 return Result<CaSetAnvelope>.ResultOk(value.Entity);
 
@@ -124,30 +124,6 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la stergerea setului de anvelope in repository!", er);
             }
         }
-
-        //public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
-        //{
-        //    try
-        //    {
-        //        var occupiedPositions = await _db.CaSetAnvelope.Where(x=> !x.Deleted).Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
-        //        var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
-        //        var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
-
-        //        if (!string.IsNullOrEmpty(searchString))
-        //        {
-        //            availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
-        //        }
-        //        availablePositions.Add(new Position("","",""));
-        //        return Result<List<Position>>.ResultOk(availablePositions);
-        //    }
-        //    catch (Exception er)
-        //    {
-        //        Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in repository!");
-        //        throw new Exception("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in repository!", er);
-        //    }
-        //}
-
-
 
         public async Task<Result<CaMarca>> GetMarcaByIdAsync(uint id)
         {
@@ -178,12 +154,12 @@ namespace DeltaQrCode.Repositories
 
         }
 
-        public async Task<Result<CaMarca>> AddMarcaAsync(CaMarca marca)
+        public Result<CaMarca> AddMarca(CaMarca marca)
         {
             try
             {
-                var value = await _db.CaMarca.AddAsync(marca);
-                await _db.SaveChangesAsync();
+                var value = _db.CaMarca.Add(marca);
+                _db.SaveChanges();
                 return Result<CaMarca>.ResultOk(value.Entity);
 
             }
@@ -209,9 +185,6 @@ namespace DeltaQrCode.Repositories
             }
 
         }
-
-
-
 
         public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
         {
@@ -243,12 +216,12 @@ namespace DeltaQrCode.Repositories
 
         }
 
-        public async Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota)
+        public Result<CaFlota> AddFlota(CaFlota flota)
         {
             try
             {
-                var value = await _db.CaFlota.AddAsync(flota);
-                await _db.SaveChangesAsync();
+                var value = _db.CaFlota.Add(flota);
+                _db.SaveChanges();
                 return Result<CaFlota>.ResultOk(value.Entity);
 
             }

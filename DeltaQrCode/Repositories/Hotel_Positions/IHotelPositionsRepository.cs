@@ -10,9 +10,9 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
     {
         Task<Result<List<CaHotelPositions>>> GetAvailablePositionsAsync(int? nrbuc = null);
         Task<Result<CaHotelPositions>> GetPositionByIdAsync(uint id);
-        Result<CaHotelPositions> ElibereazaPozitieAsync(uint id, int nrbuc);
-        Result<CaHotelPositions> PunePePozitieAsync(uint id, int nrbuc);
-        Result<CaHotelPositions> SeteazaPozitiaAsync(uint id, int nrbuc);
+        Result<CaHotelPositions> ElibereazaPozitie(uint id, int nrbuc);
+        Result<CaHotelPositions> PunePePozitie(uint id, int nrbuc);
+        Result<CaHotelPositions> SeteazaPozitia(uint id, int nrbuc);
 
 
     }

@@ -33,12 +33,12 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaAppointments>> AddAppointmentAsync(CaAppointments appointment)
+        public Result<CaAppointments> AddAppointment(CaAppointments appointment)
         {
             try
             {
-                var value = await _db.CaAppointments.AddAsync(appointment);
-                await _db.SaveChangesAsync();
+                var value = _db.CaAppointments.Add(appointment);
+                _db.SaveChanges();
                 return Result<CaAppointments>.ResultOk(value.Entity);
             }
             catch (Exception er)
@@ -49,12 +49,12 @@ namespace DeltaQrCode.Repositories
 
         }
 
-        public async Task<Result<CaAppointments>> UpdateAppointmentAsync(CaAppointments appointment)
+        public Result<CaAppointments> UpdateAppointment(CaAppointments appointment)
         {
             try
             {
                 var value = _db.CaAppointments.Update(appointment);
-                await _db.SaveChangesAsync();
+                _db.SaveChanges();
 
                 return Result<CaAppointments>.ResultOk(value.Entity);
 
@@ -66,14 +66,14 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaAppointments>> DeleteAppointmentAsync(int id)
+        public Result<CaAppointments> DeleteAppointment(int id)
         {
             try
             {
-                var result = await _db.CaAppointments.FirstAsync(x => x.Id == id);
+                var result = _db.CaAppointments.First(x => x.Id == id);
                 result.Deleted = true;
                 var value = _db.CaAppointments.Update(result);
-                await _db.SaveChangesAsync();
+                _db.SaveChanges();
 
                 return Result<CaAppointments>.ResultOk(value.Entity);
             }
@@ -84,14 +84,14 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id, bool confirm)
+        public Result<CaAppointments> ConfirmAppointment(int id, bool confirm)
         {
             try
             {
-                var result = await _db.CaAppointments.FirstOrDefaultAsync(x => x.Id == id);
+                var result = _db.CaAppointments.FirstOrDefault(x => x.Id == id);
                 result.Confirmed = confirm;
                 result.ConfirmedDate = DateTime.Now;
-                await _db.SaveChangesAsync();
+                _db.SaveChanges();
                 return Result<CaAppointments>.ResultOk(result);
             }
             catch (Exception er)
@@ -112,7 +112,7 @@ namespace DeltaQrCode.Repositories
                 }
 
                 var result = await _db.CaAppointments.Where(x => x.DataAppointment.ToShortDateString() == date.ToShortDateString() && !x.Deleted).ToListAsync();
-                if (rampValue!=0)
+                if (rampValue != 0)
                 {
                     result = result.Where(x => x.RampId == rampValue).ToList();
                 }
@@ -156,12 +156,12 @@ namespace DeltaQrCode.Repositories
 
         }
 
-        public async Task<Result<CaServicetypes>> AddServiceTypeAsync(CaServicetypes serviciu)
+        public Result<CaServicetypes> AddServiceType(CaServicetypes serviciu)
         {
             try
             {
-                var value = await _db.CaServicetypes.AddAsync(serviciu);
-                await _db.SaveChangesAsync();
+                var value = _db.CaServicetypes.Add(serviciu);
+                _db.SaveChanges();
                 return Result<CaServicetypes>.ResultOk(value.Entity);
 
             }

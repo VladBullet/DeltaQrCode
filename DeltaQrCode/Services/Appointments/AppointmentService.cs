@@ -72,7 +72,7 @@ namespace DeltaQrCode.Services
 
                 if (serviciu.Entity == null && !string.IsNullOrEmpty(appointment.Serviciu))
                 {
-                    serviciu = await _appointmentsRepository.AddServiceTypeAsync(new CaServicetypes() { Label = appointment.Serviciu });
+                    serviciu = _appointmentsRepository.AddServiceType(new CaServicetypes() { Label = appointment.Serviciu });
                 }
 
                 if (!serviciu.Successful)
@@ -81,7 +81,7 @@ namespace DeltaQrCode.Services
                     throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de adaugare programare(services)!");
                 }
 
-                appointment.ServiciuId = serviciu.Entity.Id;
+                appointment.ServiciuId = serviciu.Entity?.Id;
 
                 var app = _mapper.Map<CaAppointments>(appointment);
                 app.Deleted = false;
@@ -91,7 +91,7 @@ namespace DeltaQrCode.Services
                 app.NumeClient = app.NumeClient.ToUpper();
                 app.NumarInmatriculare = app.NumarInmatriculare.ToUpper();
 
-                var value = await _appointmentsRepository.AddAppointmentAsync(app);
+                var value = _appointmentsRepository.AddAppointment(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
 
                 if (!string.IsNullOrEmpty(model.EmailClient))
@@ -135,7 +135,7 @@ namespace DeltaQrCode.Services
 
                 if (serviciu.Entity == null && !string.IsNullOrEmpty(appt.Serviciu))
                 {
-                    serviciu = await _appointmentsRepository.AddServiceTypeAsync(new CaServicetypes() { Label = appt.Serviciu });
+                    serviciu = _appointmentsRepository.AddServiceType(new CaServicetypes() { Label = appt.Serviciu });
                 }
 
                 if (!serviciu.Successful)
@@ -144,7 +144,7 @@ namespace DeltaQrCode.Services
                     throw new Exception("Ceva nu a mers bine la adaugarea tipului de serviciu in metoda de editare programare(services)!");
                 }
 
-                appt.ServiciuId = serviciu.Entity.Id;
+                appt.ServiciuId = serviciu.Entity?.Id;
 
                 appt.LastModified = DateTime.Now;
 
@@ -153,7 +153,7 @@ namespace DeltaQrCode.Services
 
                 var app = _mapper.Map<CaAppointments>(appt);
 
-                var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
+                var value = _appointmentsRepository.UpdateAppointment(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
                 return Result<AppointmentDto>.ResultOk(model);
 
@@ -165,11 +165,11 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<AppointmentDto>> DeleteAppointmentAsync(int id)
+        public Result<AppointmentDto> DeleteAppointment(int id)
         {
             try
             {
-                var value = await _appointmentsRepository.DeleteAppointmentAsync(id);
+                var value = _appointmentsRepository.DeleteAppointment(id);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
 
                 return Result<AppointmentDto>.ResultOk(model);
@@ -181,11 +181,11 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<AppointmentDto>> ConfirmAppointmentAsync(int id, bool confirm)
+        public  Result<AppointmentDto> ConfirmAppointment(int id, bool confirm)
         {
             try
             {
-                var value = await _appointmentsRepository.ConfirmAppointmentAsync(id, confirm);
+                var value = _appointmentsRepository.ConfirmAppointment(id, confirm);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
 
                 return Result<AppointmentDto>.ResultOk(model);
