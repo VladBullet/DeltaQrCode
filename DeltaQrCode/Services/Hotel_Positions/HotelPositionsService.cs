@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using DeltaQrCode.Models;
-using DeltaQrCode.ModelsDto;
-using DeltaQrCode.Repositories.Hotel_Positions;
-using Serilog;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
+//using AutoMapper;
+//using DeltaQrCode.Models;
+//using DeltaQrCode.ModelsDto;
+//using DeltaQrCode.Repositories;
+//using DeltaQrCode.Repositories.Hotel_Positions;
+//using Serilog;
 
-namespace DeltaQrCode.Services.Hotel_Positions
-{
-    public class HotelPositionsService : IHotelPositionsService
-    {
+//namespace DeltaQrCode.Services.Hotel_Positions
+//{
+//    public class HotelPositionsService : IHotelPositionsService
+//    {
 
-        private readonly IHotelPositionsRepository _hotelPositionsRepository;
-        private readonly IMapper _mapper;
+//        private readonly IHotelAnvelopeRepository _hotelAnvelopeRepository;
+//        private readonly IMapper _mapper;
 
         public HotelPositionsService(IHotelPositionsRepository hotelPositionsRepository, IMapper mapper)
         {

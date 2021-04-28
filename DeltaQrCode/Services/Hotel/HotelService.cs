@@ -24,15 +24,11 @@ namespace DeltaQrCode.Services.Hotel
     public class HotelService : IHotelService
     {
         private readonly IHotelAnvelopeRepository _hotelRepository;
-        private readonly IHotelPositionsRepository _hotelPositionsRepository;
-        private readonly IHotelPositionsService _hotelPositionsService;
         private readonly IMapper _mapper;
 
-        public HotelService(IHotelAnvelopeRepository hotelRepository, IHotelPositionsRepository hotelPositionsRepository, IHotelPositionsService hotelPositionsService, IMapper mapper)
+        public HotelService(IHotelAnvelopeRepository hotelRepository, IMapper mapper)
         {
             _hotelRepository = hotelRepository;
-            _hotelPositionsRepository = hotelPositionsRepository;
-            _hotelPositionsService = hotelPositionsService;
             _mapper = mapper;
         }
 

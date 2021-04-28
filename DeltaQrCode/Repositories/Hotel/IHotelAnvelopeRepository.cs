@@ -26,5 +26,13 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota);
         Task<Result<CaFlota>> GetFlotaByLableAsync(string label);
 
+        Task<Result<List<CaHotelPositions>>> GetAvailablePositionsAsync(int? nrbuc = null);
+        Result<List<CaHotelPositions>> GetAvailablePositions(int? nrbuc = null);
+        Task<Result<CaHotelPositions>> GetPositionByIdAsync(uint id);
+        Result<CaHotelPositions> GetPositionById(uint id);
+        Result<CaHotelPositions> ElibereazaPozitie(uint id, int nrbuc);
+        Result<CaHotelPositions> PunePePozitie(uint id, int nrbuc);
+        Result<CaHotelPositions> SeteazaPozitia(uint id, int nrbuc);
+
     }
 }
