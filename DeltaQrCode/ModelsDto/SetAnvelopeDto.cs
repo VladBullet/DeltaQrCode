@@ -21,6 +21,7 @@ namespace DeltaQrCode.ModelsDto
 
         public Dimensiuni Dimensiuni { get; set; }
         public Uzura Uzura { get; set; }
+        public Uzura OldUzura { get; set; }
         public HotelPositionsDto Pozitie { get; set; }
 
         public uint? PozitieId { get; set; }

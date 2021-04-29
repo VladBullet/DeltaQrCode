@@ -23,10 +23,19 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public int Inaltime { get; set; }
         public int Dot { get; set; }
         public string DimensiuniString { get; set; }
+
         public int StangaFata { get; set; }
+        public int OldStangaFata { get; set; }
+
         public int? StangaSpate { get; set; }
+        public int? OldStangaSpate { get; set; }
+
         public int? DreaptaFata { get; set; }
+        public int? OldDreaptaFata { get; set; }
+
         public int? DreaptaSpate { get; set; }
+        public int? OldDreaptaSpate { get; set; }
+
         public string TipSezon { get; set; }
         public string Observatii { get; set; }
         public string StatusCurent { get; set; }

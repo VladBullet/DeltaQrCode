@@ -169,12 +169,17 @@ namespace DeltaQrCode.Services.Hotel
             {
                 var oldSetAnv = setAnv.Copy();
 
-                // if we move n(1/2/3) out of 4 we need to create a new set with the remaining values that were not moved to the new position
+                
 
-                //////////////// Creeaza + Adauga set cu anvelopele ramase
+                // case: Create new set => Working! #BUG uzura
 
                 if (oldSetAnv.OldNumarBucati > oldSetAnv.NrBucati && oldSetAnv.PozitieId != oldSetAnv.OldPozitieId && oldSetAnv.PozitieId != null && oldSetAnv.OldPozitieId != null)
                 {
+                    //setAnv.Uzura.DrF = setAnv.OldUzura.DrF;
+                    //setAnv.Uzura.DrS = setAnv.OldUzura.DrS;
+                    //setAnv.Uzura.StF = setAnv.OldUzura.StF;
+                    //setAnv.Uzura.StS = setAnv.OldUzura.StS;
+
                     oldSetAnv.NrBucati = oldSetAnv.OldNumarBucati - oldSetAnv.NrBucati;
                     oldSetAnv.PozitieId = oldSetAnv.OldPozitieId;
                     if (oldSetAnv.NrBucati < 4)
@@ -203,7 +208,7 @@ namespace DeltaQrCode.Services.Hotel
                 }
 
 
-                // case: changed status in other than InRaft =>  Working!
+                // case: was InRaft, will be different =>  Working!
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent != "InRaft")
                 {
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
@@ -220,19 +225,18 @@ namespace DeltaQrCode.Services.Hotel
 
 
 
-                // case: no change for position but change for nr of anv => 
-                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.NrBucati != setAnv.OldNumarBucati && setAnv.PozitieId == setAnv.OldPozitieId)
+                // case: was inRaft, will be in raft, nrBuc changed  => Working!
+                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.NrBucati != setAnv.OldNumarBucati && setAnv.PozitieId == null)
                 {
-                    //setAnv.PozitieId = setAnv.OldPozitieId;
+                    setAnv.PozitieId = setAnv.OldPozitieId;
 
-                    // case we have added some new anv to this set => we have to also update the nr inside position
                     if (setAnv.NrBucati > setAnv.OldNumarBucati)
                     {
                         var newNrBuc = setAnv.NrBucati - setAnv.OldNumarBucati;
                         var operatiune = OperatiunePozitie.Adaugare;
                         await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, newNrBuc, operatiune);
                     }
-                    // case we have removed some anv from this set => we have to also update the nr inside position
+
                     if (setAnv.NrBucati < setAnv.OldNumarBucati)
                     {
                         var newNrBuc = setAnv.OldNumarBucati - setAnv.NrBucati;
@@ -241,9 +245,9 @@ namespace DeltaQrCode.Services.Hotel
                     }
                 }
 
-                // case: was InRaft, will be InRaft, Position changed, NrBuc changed
+                // case: was InRaft, will be InRaft, Position changed, NrBuc changed => Working! #BUG Uzura
 
-                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != setAnv.OldPozitieId && setAnv.NrBucati != setAnv.OldNumarBucati)
+                if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != setAnv.OldPozitieId && setAnv.NrBucati != setAnv.OldNumarBucati && setAnv.PozitieId != null)
                 {
 
                     var newNrBuc = setAnv.OldNumarBucati - oldSetAnv.NrBucati;
@@ -254,7 +258,7 @@ namespace DeltaQrCode.Services.Hotel
 
 
 
-                // case: was not in hotel but will be in hotel
+                // case: was NOT InRaft, will be InRaft => Working!
                 if (setAnv.PozitieId != null && setAnv.OldPozitieId == null)
                 {
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Adaugare);
