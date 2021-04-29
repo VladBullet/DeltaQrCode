@@ -380,10 +380,12 @@ $(document).one("click", "#apptsEditSubmitButton", function () {
                 CloseModalById('myHotelModal');
                 ShowHeaderAlert(response, "success", 5000);
                 $('#hotelListState').change();
+                o.end_task(true, s.response);
             },
             error: function (error) {
                 CloseModalById('myHotelModal');
                 swalErrorTimer(error.responseText, 7000);
+                o.end_task(true, s.response);
             }
         });
     } else {
@@ -404,10 +406,12 @@ $("#apptsAddSubmitButton").one("click", function () {
                 CloseModalById('myHotelModal');
                 ShowHeaderAlert(response, "success", 5000);
                 $('#hotelListState').change();
+                o.end_task(true, s.response);
             },
             error: function (error) {
                 CloseModalById('myHotelModal');
                 swalErrorTimer(error.responseText, 7000);
+                o.end_task(true, s.response);
             }
         });
     }
@@ -423,7 +427,6 @@ $(document).on("keyup",
         var result = validator.validate(validator);
         updateUi(result.validationResults, "form-group", "error_span");
     });
-
 
 
 var disableElementsByIds = function (elements) {

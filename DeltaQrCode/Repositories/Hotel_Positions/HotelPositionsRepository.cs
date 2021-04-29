@@ -83,6 +83,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 {
                     value.Ocupat = false;
                 }
+                _db.CaHotelPositions.Update(value);
                 _db.SaveChanges();
 
                 return Result<CaHotelPositions>.ResultOk(value);
@@ -109,7 +110,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 {
                     value.Ocupat = false;
                 }
-
+                _db.CaHotelPositions.Update(value);
                 _db.SaveChanges();
 
                 return Result<CaHotelPositions>.ResultOk(value);
@@ -141,7 +142,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 {
                     value.Ocupat = false;
                 }
-
+                _db.CaHotelPositions.Update(value);
                 _db.SaveChanges();
 
                 return Result<CaHotelPositions>.ResultOk(value);
