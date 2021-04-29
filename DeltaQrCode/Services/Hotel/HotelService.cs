@@ -203,7 +203,7 @@ namespace DeltaQrCode.Services.Hotel
                 }
 
 
-                // case: changed status in other than InRaft =>  empty the position for this set
+                // case: changed status in other than InRaft =>  Working!
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent != "InRaft")
                 {
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);
@@ -211,7 +211,7 @@ namespace DeltaQrCode.Services.Hotel
 
 
 
-                // case: was inRaft, will be in raft => position changed
+                // case: was inRaft, will be in raft, position changed => Working!
                 if (setAnv.OldPozitieId != null && setAnv.StatusCurent == "InRaft" && setAnv.PozitieId != null && setAnv.NrBucati == setAnv.OldNumarBucati)
                 {
                     await _hotelPositionsService.UpdatePositionAsync(setAnv.OldPozitieId.Value, setAnv.NrBucati, OperatiunePozitie.Scoatere);

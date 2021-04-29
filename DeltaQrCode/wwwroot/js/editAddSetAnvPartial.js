@@ -163,6 +163,24 @@ $(document).ready(function () {
 
             initialized = true;
         }
+
+        $(document).on("change",
+            "#statusAnv",
+            function () {
+                $("#selPoz").trigger("updatedStatus");
+            });
+
+        $("#selPoz").on("updatedStatus",
+            function () {
+                var pos = $("#selPoz");
+                pos.removeAttr("disabled");
+                pos.removeClass("disabled");
+                var statusVal = $("#statusAnv").val();
+                if (statusVal != "InRaft") {
+                    pos.attr("disabled", "disabled");
+                    pos.addClass("disabled");
+                }
+            });
         $(document).on("keyup",
             ".validate",
             function () {
@@ -513,23 +531,6 @@ $(document).ready(function () {
         dotObj.trigger('change'); // Notify any JS components that the value changed
     }
 
-    $(document).on("change",
-        "#statusAnv",
-        function () {
-            $("#selPoz").trigger("updatedStatus");
-        });
-
-    $("#selPoz").on("updatedStatus",
-        function () {
-            var pos = $("#selPoz");
-            pos.removeAttr("disabled");
-            pos.removeClass("disabled");
-            var statusVal = $("#statusAnv").val();
-            if (statusVal != "InRaft") {
-                pos.attr("disabled", "disabled");
-                pos.addClass("disabled");
-            }
-        });
 
 });
 
