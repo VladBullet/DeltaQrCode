@@ -105,7 +105,7 @@ $(document).ready(function () {
 
 
             // SAVE BTN CLICK EVENT
-            $(document).one("click", "#apptsEditSubmitButton", function () {
+            $(document).on("click", "#apptsEditSubmitButton", function () {
                 $(this).attr("disabled", "disabled");
                 var result = validator.validate(validator);
                 if (result.formIsValid) {
@@ -132,7 +132,7 @@ $(document).ready(function () {
                 }
             });
 
-            $(document).one("click", "#apptsAddSubmitButton", function () {
+            $(document).on("click", "#apptsAddSubmitButton", function () {
                 $(this).attr("disabled", "disabled");
                 var result = validator.validate(validator);
                 if (result.formIsValid) {
