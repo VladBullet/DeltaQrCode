@@ -44,9 +44,9 @@ namespace DeltaQrCode.Controllers
             return View();
         }
 
-        public IActionResult Search(string searchString, int pageNumber = 1)
+        public async Task<IActionResult> Search(string searchString, int pageNumber = 1)
         {
-            var anvelopeResult = _hotelService.SearchAnvelope(searchString, pageNumber, PageSize);
+            var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
             var anvelope = anvelopeResult.Entity;
 
 
@@ -58,14 +58,14 @@ namespace DeltaQrCode.Controllers
         //EDIT
 
         [HttpGet]
-        public IActionResult EditModal(int id, string actionType)
+        public async Task<IActionResult> EditModal(int id, string actionType)
         {
             ActionType actType = ActionType.Edit;
             if (actionType == "info")
             {
                 actType = ActionType.Info;
             }
-            var set = _hotelService.GetSetAnvelopeById(id);
+            var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
             var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
 
             model.OldPozitieId = model.PozitieId;
@@ -83,12 +83,12 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  ActionResult EditModal(AddEditSetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> EditModal(AddEditSetAnvelopeVM setAnvelope)
         {
             try
             {
                 var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
-                var result = _hotelService.UpdateSetAnvelope(dto);
+                var result = await _hotelService.UpdateSetAnvelopeAsync(dto);
                 if (result.Successful)
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
@@ -107,7 +107,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddModal(AddEditSetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> AddModal(AddEditSetAnvelopeVM setAnvelope)
         {
             try
             {
@@ -118,13 +118,13 @@ namespace DeltaQrCode.Controllers
                 dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime, setAnvelope.Dot);
                 dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
 
-                var result = _hotelService.AddSetAnvelope(dto);
+                var result = await _hotelService.AddSetAnvelopeAsync(dto);
                 if (result.Successful)
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
                 }
 
-                return BadRequest("Ceva nu a mers bine la adaugarea setului de anvelope in controller!" );
+                return BadRequest("Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
             }
             catch (Exception e)
             {
@@ -148,11 +148,11 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpPost]
-        public ActionResult ConfirmDelete(int id)
+        public async Task<ActionResult> ConfirmDelete(int id)
         {
             try
             {
-                var result = _hotelService.DeleteSetAnvelope(id);
+                var result = await _hotelService.DeleteSetAnvelopeAsync(id);
 
                 if (result.Successful)
                 {
@@ -170,11 +170,11 @@ namespace DeltaQrCode.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        public IActionResult GetAvailablePositions(string term, int nrbuc)
+        public async Task<IActionResult> GetAvailablePositions(string term, int nrbuc)
         {
             try
             {
-                var positions = _hotelPositionsService.GetAvailablePositions(nrbuc);
+                var positions = await _hotelPositionsService.GetAvailablePositionsAsync(nrbuc);
                 var availablepositions = _mapper.Map<List<HotelPositionsDto>>(positions.Entity);
                 if (!string.IsNullOrEmpty(term))
                 {
@@ -194,10 +194,10 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpGet]
-        public IActionResult Download()
+        public async Task<IActionResult> Download()
         {
 
-            var data = _hotelService.GenerateDataForExcel();
+            var data = await _hotelService.GenerateDataForExcel();
             var filename = "RaportHotelAnvelope" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".xlsx";
             using (XLWorkbook wb = new XLWorkbook())
             {
@@ -212,9 +212,9 @@ namespace DeltaQrCode.Controllers
         }
 
         [Produces("application/json")]
-        public IActionResult GetMarci(string term)
+        public async Task<IActionResult> GetMarci(string term)
         {
-            var marci = _hotelService.GetMarci();
+            var marci = await _hotelService.GetMarci();
             var list = marci.Entity.Select(x => x.Label).ToList();
             if (!string.IsNullOrEmpty(term))
             {
@@ -224,9 +224,9 @@ namespace DeltaQrCode.Controllers
         }
 
         [Produces("application/json")]
-        public IActionResult GetFlote(string term)
+        public async Task<IActionResult> GetFlote(string term)
         {
-            var flote = _hotelService.GetFlote();
+            var flote = await _hotelService.GetFlote();
             var list = flote.Entity.Select(x => x.Label).ToList();
             if (!string.IsNullOrEmpty(term))
             {
@@ -273,7 +273,7 @@ namespace DeltaQrCode.Controllers
             var list = ConstantsAndEnums.DiametruDictionary;
             if (!string.IsNullOrEmpty(term))
             {
-                list = list.Where(x => x.Value.ToLower().Contains(term.ToLower())).ToDictionary(x =>x.Key, x=>x.Value);   // Select(x => new KeyValuePair<int, string>(x.Key, x.Value)).ToList().ToDictionary<int, string>(y => y.Key, y => y.Value)
+                list = list.Where(x => x.Value.ToLower().Contains(term.ToLower())).ToDictionary(x => x.Key, x => x.Value);   // Select(x => new KeyValuePair<int, string>(x.Key, x.Value)).ToList().ToDictionary<int, string>(y => y.Key, y => y.Value)
             }
             return new JsonResult(list);
 

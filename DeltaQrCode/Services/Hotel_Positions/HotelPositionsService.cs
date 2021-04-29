@@ -22,23 +22,6 @@ namespace DeltaQrCode.Services.Hotel_Positions
             _mapper = mapper;
         }
 
-        public Result<List<HotelPositionsDto>> GetAvailablePositions(int? nrbuc = null)
-        {
-            try
-            {
-                var value = _hotelPositionsRepository.GetAvailablePositions(nrbuc);
-                var model = _mapper.Map<List<HotelPositionsDto>>(value.Entity);
-
-                return Result<List<HotelPositionsDto>>.ResultOk(model);
-            }
-
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor in servicii!");
-                throw new Exception("Ceva nu a mers bine la gasirea pozitiilor in servicii!", er);
-            }
-        }
-
         public async Task<Result<List<HotelPositionsDto>>> GetAvailablePositionsAsync(int? nrbuc = null)
         {
             try
@@ -56,11 +39,11 @@ namespace DeltaQrCode.Services.Hotel_Positions
             }
         }
 
-        public Result<HotelPositionsDto> GetPositionById(uint id)
+        public async Task<Result<HotelPositionsDto>> GetPositionByIdAsync(int id)
         {
             try
             {
-                var value = _hotelPositionsRepository.GetPositionById(id);
+                var value = await _hotelPositionsRepository.GetAvailablePositionsAsync(id);
                 var model = _mapper.Map<HotelPositionsDto>(value.Entity);
                 return Result<HotelPositionsDto>.ResultOk(model);
             }
@@ -71,42 +54,24 @@ namespace DeltaQrCode.Services.Hotel_Positions
             }
         }
 
-        public async Task<Result<HotelPositionsDto>> GetPositionByIdAsync(uint id)
-        {
-            try
-            {
-                var value = await _hotelPositionsRepository.GetPositionByIdAsync(id);
-                var model = _mapper.Map<HotelPositionsDto>(value.Entity);
-                return Result<HotelPositionsDto>.ResultOk(model);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea pozitiei in functie de id in servicii!");
-                throw new Exception("Ceva nu a mers bine la gasirea pozitiei in functie de id in servicii!", er);
-            }
-        }
-
-        public Result<HotelPositionsDto> UpdatePosition(uint id, int nrbuc, OperatiunePozitie op)
+        public async Task<Result<HotelPositionsDto>> UpdatePositionAsync(uint id, int nrbuc, OperatiunePozitie op)
         {
             try
             {
                 var value = new HotelPositionsDto();
                 var result = new Result<CaHotelPositions>();
-                switch (op)
+                if (op == OperatiunePozitie.Adaugare)
                 {
-                    case OperatiunePozitie.Adaugare:
-                        result = _hotelPositionsRepository.PunePePozitie(id, nrbuc);
-                        break;
-                    case OperatiunePozitie.Scoatere:
-                        result = _hotelPositionsRepository.ElibereazaPozitie(id, nrbuc);
-                        break;
-                    case OperatiunePozitie.Setare:
-                        result = _hotelPositionsRepository.SeteazaPozitia(id, nrbuc);
-                        break;
-                    default:
-                        Log.Error("Ceva nu a mers bine la modificarea pozitiei in servicii!");
-                        throw new Exception("Nu am putut modifica pozitia!");
+                    result = await _hotelPositionsRepository.PunePePozitieAsync(id, nrbuc);
+
                 }
+                else
+                    if (op == OperatiunePozitie.Scoatere)
+                {
+                    result = await _hotelPositionsRepository.ElibereazaPozitieAsync(id, nrbuc);
+
+                }
+
                 value = _mapper.Map<HotelPositionsDto>(result.Entity);
 
                 return Result<HotelPositionsDto>.ResultOk(value);
