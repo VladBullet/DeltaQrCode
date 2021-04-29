@@ -47,8 +47,11 @@
 
 <div id="GetModalCode"></div>
 
-@section Scripts{
 
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/editAddSetAnvPartial.js"></script>
+    
     <script type="text/javascript">
         $(document).ready(function () {
             var data = { searchString: $("#search").val(), page: 1 };
@@ -101,12 +104,14 @@
 
         var setAnvEditModalDialog = function (id, actionType) {
 
+            console.log('edit called');
             var url = "/Hotel/EditModal"; // the url to the controller
             $.get(url + '?id=' + id + '&actionType=' + actionType,
                 function (data) {
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
 
+                    console.log('edit resp');
                     var pos = $("#selPoz");
                     pos.removeAttr("disabled");
                     pos.removeClass("disabled");
@@ -140,6 +145,7 @@
             function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
+                console.log('aici');
                 var id = $(this).attr("data-value");
                 var actionType = $(this).attr("data-actionType");
 
