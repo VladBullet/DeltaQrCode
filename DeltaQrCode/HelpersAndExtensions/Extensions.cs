@@ -1,6 +1,8 @@
 ﻿namespace DeltaQrCode.HelpersAndExtensions
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Policy;
 
     using DeltaQrCode.Models;
@@ -88,7 +90,7 @@
 
         public static string ToDisplayString(this HotelPositionsDto pos)
         {
-            if(pos == null)
+            if (pos == null)
             {
                 return string.Empty;
             }
@@ -99,11 +101,11 @@
             }
 
             return string.Format("Rand:{0}, Poz:{1}, Int:{2}, Ocupate:{3}", pos.Rand, pos.Pozitie, pos.Interval, pos.Locuriocupate);
-        }  
-        
+        }
+
         public static string ToSetAnvPositionString(this SetAnvelopeDto setanv)
         {
-            if(setanv.Pozitie == null)
+            if (setanv.Pozitie == null)
             {
                 return string.Empty;
             }
@@ -132,5 +134,37 @@
             return JsonConvert.SerializeObject(input);
         }
 
+
+        //public static Uzura CevaUzura(this Uzura editUzura, Uzura oldUzura)
+        //{
+        //    int counter = 0;
+        //    counter = editUzura.DrF == null ? counter++ : counter;
+        //    counter = editUzura.DrS == null ? counter++ : counter;
+        //    counter = editUzura.StS == null ? counter++ : counter;
+
+        //    List<int?> uzuraList = new List<int?>();
+
+        //    uzuraList.Add(oldUzura.DrF);
+        //    uzuraList.Add(oldUzura.DrS);
+        //    uzuraList.Add(oldUzura.StS);
+        //    uzuraList.Add(oldUzura.StF);
+
+        //    uzuraList = uzuraList.Where(x => x != null).ToList();
+
+
+        //    uzuraList.Add(oldUzura.StF);
+        //    if (counter > 1)
+        //    {
+        //        uzuraList.Add(oldUzura.DrF);
+        //        if (counter > 2)
+        //        {
+        //            uzuraList.Add(oldUzura.StS);
+        //            if (counter > 3)
+        //            {
+        //                uzuraList.Add(oldUzura.DrS);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

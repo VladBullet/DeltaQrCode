@@ -40,10 +40,10 @@
         <form id="apptform">
 
             <input  hidden="hidden" asp-for="OldPozitieId", value="@Model.OldPozitieId" />
-            <input  hidden="hidden" asp-for="StangaFata", value="@Model.StangaFata" />
-            <input  hidden="hidden" asp-for="DreaptaFata", value="@Model.DreaptaFata" />
-            <input  hidden="hidden" asp-for="StangaSpate", value="@Model.StangaSpate" />
-            <input  hidden="hidden" asp-for="DreaptaSpate", value="@Model.DreaptaSpate" />
+            <input  hidden="hidden" asp-for="OldStangaFata", value="@Model.OldStangaFata" />
+            <input  hidden="hidden" asp-for="OldDreaptaFata", value="@Model.OldDreaptaFata" />
+            <input  hidden="hidden" asp-for="OldStangaSpate", value="@Model.OldStangaSpate" />
+            <input  hidden="hidden" asp-for="OldDreaptaSpate", value="@Model.OldDreaptaSpate" />
             <input  hidden="hidden" asp-for="OldNumarBucati", value="@Model.OldNumarBucati" />
             @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()

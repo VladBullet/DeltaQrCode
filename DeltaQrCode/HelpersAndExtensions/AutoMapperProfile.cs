@@ -35,6 +35,7 @@
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => new Dimensiuni(s.Diametru, s.Latime, s.Inaltime, s.Dot)))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => new Uzura(s.StangaFata, s.StangaSpate, s.DreaptaFata, s.DreaptaSpate)))
+                .ForMember(d => d.OldUzura, m => m.MapFrom(s => new Uzura(s.OldStangaFata, s.OldStangaSpate, s.OldDreaptaFata, s.OldDreaptaSpate)))
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.DimensiuniString));
             //.ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
 
@@ -49,6 +50,11 @@
                 .ForMember(d => d.DreaptaFata, m => m.MapFrom(s => s.Uzura.DrF))
                 .ForMember(d => d.StangaSpate, m => m.MapFrom(s => s.Uzura.StS))
                 .ForMember(d => d.DreaptaSpate, m => m.MapFrom(s => s.Uzura.DrS))
+
+                .ForMember(d => d.OldStangaFata, m => m.MapFrom(s => s.Uzura.StF))
+                .ForMember(d => d.OldDreaptaFata, m => m.MapFrom(s => s.Uzura.DrF))
+                .ForMember(d => d.OldStangaSpate, m => m.MapFrom(s => s.Uzura.StS))
+                .ForMember(d => d.OldDreaptaSpate, m => m.MapFrom(s => s.Uzura.DrS))
                 .ForMember(d => d.PozitieInRaft, m => m.MapFrom(s => s.Pozitie.ToDisplayString()));
 
             CreateMap<AppointmentDto, CaAppointments>().ReverseMap();

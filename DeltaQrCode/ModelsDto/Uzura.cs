@@ -8,6 +8,14 @@ namespace DeltaQrCode.ModelsDto
 
         }
 
+        public Uzura(Uzura u)
+        {
+            StF = u.StF;
+            StS = u.StS;
+            DrF = u.DrF;
+            DrS = u.DrS;
+        }
+
         public Uzura(int stF, int? stS, int? drF, int? drS)
         {
             StF = stF;
@@ -20,5 +28,7 @@ namespace DeltaQrCode.ModelsDto
         public int? StS { get; set; }
         public int? DrF { get; set; }
         public int? DrS { get; set; }
+
     }
+   
 }
