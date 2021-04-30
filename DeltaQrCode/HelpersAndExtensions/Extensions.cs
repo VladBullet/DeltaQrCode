@@ -133,38 +133,5 @@
         {
             return JsonConvert.SerializeObject(input);
         }
-
-
-        //public static Uzura CevaUzura(this Uzura editUzura, Uzura oldUzura)
-        //{
-        //    int counter = 0;
-        //    counter = editUzura.DrF == null ? counter++ : counter;
-        //    counter = editUzura.DrS == null ? counter++ : counter;
-        //    counter = editUzura.StS == null ? counter++ : counter;
-
-        //    List<int?> uzuraList = new List<int?>();
-
-        //    uzuraList.Add(oldUzura.DrF);
-        //    uzuraList.Add(oldUzura.DrS);
-        //    uzuraList.Add(oldUzura.StS);
-        //    uzuraList.Add(oldUzura.StF);
-
-        //    uzuraList = uzuraList.Where(x => x != null).ToList();
-
-
-        //    uzuraList.Add(oldUzura.StF);
-        //    if (counter > 1)
-        //    {
-        //        uzuraList.Add(oldUzura.DrF);
-        //        if (counter > 2)
-        //        {
-        //            uzuraList.Add(oldUzura.StS);
-        //            if (counter > 3)
-        //            {
-        //                uzuraList.Add(oldUzura.DrS);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }
