@@ -342,9 +342,9 @@ $(document).ready(function () {
             processResults: function (result) {
                 return {
                     results: $.map(result,
-                        function (item) {
+                        function (item,val) {
                             return {
-                                id: item,
+                                id: val,
                                 text: item
                             };
                         }),
