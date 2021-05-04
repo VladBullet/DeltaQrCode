@@ -220,27 +220,25 @@ namespace DeltaQrCode.Services.Hotel
 
                     if (editSetAnv.OldNumarBucati == 3)
                     {
-                        if (editSetAnv.NrBucati < 4)
+                        if (editSetAnv.NrBucati < 3)
                         {
-                            editSetAnv.Uzura.DrS = 0;
+                            editSetAnv.Uzura.StS = null;
                             editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
                             editSetAnv.Uzura.DrF = editSetAnv.OldUzura.StS;
-                            editSetAnv.Uzura.StS = editSetAnv.OldUzura.DrS;
 
-                            if (editSetAnv.NrBucati < 3)
+                            if (editSetAnv.NrBucati == 1)
                             {
-                                editSetAnv.Uzura.StS = 0;
+                                editSetAnv.Uzura.DrF = null;
                                 editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.StS;
-                                editSetAnv.Uzura.DrF = editSetAnv.OldUzura.DrS;
-
-                                if (editSetAnv.NrBucati == 1)
-                                {
-                                    editSetAnv.Uzura.DrF = 0;
-                                    editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrS;
-                                }
                             }
                         }
 
+                    }
+
+                    if(editSetAnv.OldNumarBucati == 2)
+                    {
+                        editSetAnv.Uzura.DrF = null;
+                        editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
                     }
 
                     addSetAnv.Id = 0;
