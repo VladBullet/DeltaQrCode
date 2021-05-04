@@ -196,11 +196,11 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpPost]
-        public IActionResult ConfirmDelete(int id)
+        public async Task<IActionResult> ConfirmDelete(int id)
         {
             try
             {
-                var result = _appointmentService.DeleteAppointment(id);
+                var result = await _appointmentService.DeleteAppointmentAsync(id);
 
                 if (result.Successful)
                 {
@@ -224,11 +224,11 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpPost]
-        public IActionResult ConfirmAppt(int id, bool confirm)
+        public async Task<IActionResult> ConfirmAppt(int id, bool confirm)
         {
             try
             {
-                var result = _appointmentService.ConfirmAppointment(id, confirm);
+                var result = await _appointmentService.ConfirmAppointmentAsync(id, confirm);
 
                 if (result.Successful)
                 {
