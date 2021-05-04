@@ -45,6 +45,20 @@
             <input  hidden="hidden" asp-for="OldStangaSpate", value="@Model.OldStangaSpate" />
             <input  hidden="hidden" asp-for="OldDreaptaSpate", value="@Model.OldDreaptaSpate" />
             <input  hidden="hidden" asp-for="OldNumarBucati", value="@Model.OldNumarBucati" />
+
+            <input  hidden="hidden" asp-for="OldNumeClient", value="@Model.OldNumeClient" />
+            <input  hidden="hidden" asp-for="OldNumarInmatriculare", value="@Model.OldNumarInmatriculare" />
+            <input  hidden="hidden" asp-for="OldNumarTelefon", value="@Model.OldNumarTelefon" />
+            <input  hidden="hidden" asp-for="OldMarca", value="@Model.OldMarca" />
+            <input  hidden="hidden" asp-for="OldFlota", value="@Model.OldFlota" />
+            <input  hidden="hidden" asp-for="OldDiametru", value="@Model.OldDiametru" />
+            <input  hidden="hidden" asp-for="OldInaltime", value="@Model.OldInaltime" />
+            <input  hidden="hidden" asp-for="OldLatime", value="@Model.OldLatime" />
+            <input  hidden="hidden" asp-for="OldDot", value="@Model.OldDot" />
+            <input  hidden="hidden" asp-for="OldObservatii", value="@Model.OldObservatii" />
+            <input  hidden="hidden" asp-for="OldSerieSasiu", value="@Model.OldSerieSasiu" />
+            <input  hidden="hidden" asp-for="OldTipSezon", value="@Model.OldTipSezon" />
+
             @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()
             <div class="form-row">

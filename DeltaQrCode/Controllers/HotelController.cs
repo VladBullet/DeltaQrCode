@@ -70,6 +70,15 @@ namespace DeltaQrCode.Controllers
 
             model.OldPozitieId = model.PozitieId;
             model.OldNumarBucati = model.NrBucati;
+            model.OldNumeClient = model.NumeClient;
+            model.OldNumarInmatriculare = model.NumarInmatriculare;
+            model.OldSerieSasiu = model.SerieSasiu;
+            model.OldNumarTelefon = model.NumarTelefon;
+            model.OldTipSezon = model.TipSezon;
+            model.OldObservatii = model.Observatii;
+            model.OldMarca = model.Marca;
+            model.OldFlota = model.Flota;
+
 
             HotelModalVM setVm = new HotelModalVM(model, actType);
 

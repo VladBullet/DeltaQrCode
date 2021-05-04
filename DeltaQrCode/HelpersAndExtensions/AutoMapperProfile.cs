@@ -34,6 +34,7 @@
             CreateMap<AddEditSetAnvelopeVM, SetAnvelopeDto>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => new Dimensiuni(s.Diametru, s.Latime, s.Inaltime, s.Dot)))
+                .ForMember(d => d.OldDimensiuni, m => m.MapFrom(s => new Dimensiuni(s.OldDiametru, s.OldLatime, s.OldInaltime, s.OldDot)))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => new Uzura(s.StangaFata, s.StangaSpate, s.DreaptaFata, s.DreaptaSpate)))
                 .ForMember(d => d.OldUzura, m => m.MapFrom(s => new Uzura(s.OldStangaFata, s.OldStangaSpate, s.OldDreaptaFata, s.OldDreaptaSpate)))
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.DimensiuniString));
@@ -41,10 +42,16 @@
 
             CreateMap<SetAnvelopeDto, AddEditSetAnvelopeVM>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
+
                 .ForMember(d => d.Diametru, m => m.MapFrom(s => s.Dimensiuni.Diam))
                 .ForMember(d => d.Latime, m => m.MapFrom(s => s.Dimensiuni.Lat))
                 .ForMember(d => d.Inaltime, m => m.MapFrom(s => s.Dimensiuni.H))
                 .ForMember(d => d.Dot, m => m.MapFrom(s => s.Dimensiuni.Dot))
+
+                .ForMember(d => d.OldDiametru, m => m.MapFrom(s => s.Dimensiuni.Diam))
+                .ForMember(d => d.OldLatime, m => m.MapFrom(s => s.Dimensiuni.Lat))
+                .ForMember(d => d.OldInaltime, m => m.MapFrom(s => s.Dimensiuni.H))
+                .ForMember(d => d.OldDot, m => m.MapFrom(s => s.Dimensiuni.Dot))
 
                 .ForMember(d => d.StangaFata, m => m.MapFrom(s => s.Uzura.StF))
                 .ForMember(d => d.DreaptaFata, m => m.MapFrom(s => s.Uzura.DrF))

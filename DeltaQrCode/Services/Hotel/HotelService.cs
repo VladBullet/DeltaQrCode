@@ -177,6 +177,18 @@ namespace DeltaQrCode.Services.Hotel
                 {
                     editSetAnv.NrBucati = editSetAnv.OldNumarBucati - editSetAnv.NrBucati;
                     editSetAnv.PozitieId = editSetAnv.OldPozitieId;
+                    editSetAnv.NumeClient = editSetAnv.OldNumeClient;
+                    editSetAnv.NumarTelefon = editSetAnv.OldNumarTelefon;
+                    editSetAnv.NumarInmatriculare = editSetAnv.OldNumarInmatriculare;
+                    editSetAnv.SerieSasiu = editSetAnv.OldSerieSasiu;
+                    editSetAnv.Marca = editSetAnv.OldMarca;
+                    editSetAnv.Flota = editSetAnv.OldFlota;
+                    editSetAnv.TipSezon = editSetAnv.OldTipSezon;
+                    editSetAnv.Observatii = editSetAnv.OldObservatii;
+                    editSetAnv.Dimensiuni.Diam = editSetAnv.OldDimensiuni.Diam;
+                    editSetAnv.Dimensiuni.H = editSetAnv.OldDimensiuni.H;
+                    editSetAnv.Dimensiuni.Lat = editSetAnv.OldDimensiuni.Lat;
+                    editSetAnv.Dimensiuni.Dot = editSetAnv.OldDimensiuni.Dot;
 
                     var uzura = new Uzura(editSetAnv.Uzura);
 
@@ -186,20 +198,20 @@ namespace DeltaQrCode.Services.Hotel
                     {
                         if (editSetAnv.NrBucati < 4)
                         {
-                            editSetAnv.Uzura.DrS = 0;
+                            editSetAnv.Uzura.DrS = null;
                             editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
                             editSetAnv.Uzura.DrF = editSetAnv.OldUzura.StS;
                             editSetAnv.Uzura.StS = editSetAnv.OldUzura.DrS;
 
                             if (editSetAnv.NrBucati < 3)
                             {
-                                editSetAnv.Uzura.StS = 0;
+                                editSetAnv.Uzura.StS = null;
                                 editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.StS;
                                 editSetAnv.Uzura.DrF = editSetAnv.OldUzura.DrS;
 
                                 if (editSetAnv.NrBucati == 1)
                                 {
-                                    editSetAnv.Uzura.DrF = 0;
+                                    editSetAnv.Uzura.DrF = null;
                                     editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrS;
                                 }
                             }
