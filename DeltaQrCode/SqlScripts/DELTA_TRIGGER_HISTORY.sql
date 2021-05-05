@@ -35,27 +35,6 @@ BEGIN
                         ' => ',
                         NEW.NumarInmatriculare, '; ');
 	END IF;
-    # ------- Rand -------
-    IF NEW.Rand <> OLD.Rand THEN
-    SET changes = CONCAT(changes, 'Rand: ',
-                        OLD.Rand,
-                        ' => ',
-                        NEW.Rand, '; ');
-	END IF;
-     # ------- Pozitie -------
-    IF NEW.Pozitie <> OLD.Pozitie THEN
-    SET changes = CONCAT(changes, 'Pozitie: ',
-                        OLD.Pozitie,
-                        ' => ',
-                        NEW.Pozitie, '; ');
-	END IF;
-      # ------- Interval -------
-    IF NEW.`Interval` <> OLD.`Interval` THEN
-    SET changes = CONCAT(changes, 'Interval: ',
-                        OLD.`Interval`,
-                        ' => ',
-                        NEW.`Interval`, '; ');
-	END IF;
       # ------- Marca -------
     IF NEW.MarcaId <> OLD.MarcaId THEN
     BEGIN
@@ -67,6 +46,19 @@ BEGIN
                         marcaVeche,
                         ' => ',
                         marcaNoua, '; ');
+	END;
+	END IF;
+    # ------- Pozitie -------
+    IF NEW.PozitieId <> OLD.PozitieId THEN
+    BEGIN
+	DECLARE pozitieVeche VARCHAR(50);
+	DECLARE pozitieNoua VARCHAR(50);
+    SELECT Label INTO pozitieVeche from ca_hotel_positions where Id = OLD.PozitieId order by Id LIMIT 1;
+    SELECT Label INTO pozitieNoua from ca_hotel_positions where Id = NEW.PozitieId order by Id LIMIT 1;
+    SET changes = CONCAT(changes, 'Pozitie : ',
+                        pozitieVeche,
+                        ' => ',
+                        pozitieNoua, '; ');
 	END;
 	END IF;
        # ------- Flota -------

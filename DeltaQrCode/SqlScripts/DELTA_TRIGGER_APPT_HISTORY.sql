@@ -140,7 +140,14 @@ BEGIN
                         CAST(OLD.DurataInMinute as char),
                         ' => ',
                         CAST(NEW.DurataInMinute as char), '; ');
-    END IF;  
+    END IF; 
+    	  # ------- ChangedByClient -------
+    IF NEW.ChangedByClient <> OLD.ChangedByClient THEN
+    SET changes = CONCAT(changes, 'ChangedByClient: ',
+                        CAST(OLD.ChangedByClient as char),
+                        ' => ',
+                        CAST(NEW.ChangedByClient as char), '; ');
+	END IF;
 
    
     SELECT NOW() into nowDate;
