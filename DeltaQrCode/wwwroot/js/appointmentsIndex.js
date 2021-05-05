@@ -175,16 +175,19 @@ var showAppointmentsForDate = function (calendarDate) {
 /* click event on the hour */
 $('.hour').on('click',
     function (event) {
+
         event.stopPropagation();
         var self = $(this);
 
-        var startHourOnly = $(this).attr("class").replace('hour-red', '');
-        startHourOnly = startHourOnly.replaceAll("hour", "");
+        if (!$(this).hasClass('noclick')) {
+            var startHourOnly = $(this).attr("class").replace('hour-red', '');
+            startHourOnly = startHourOnly.replaceAll("hour", "");
 
-        var selectedDateDiv = $('#datepicker');
-        var rampNr = self.closest(".ramp").attr("data-value");
-        // Make the modal here!
-        apptNewModalDialog(selectedDateDiv.val(), startHourOnly, rampNr);
+            var selectedDateDiv = $('#datepicker');
+            var rampNr = self.closest(".ramp").attr("data-value");
+            // Make the modal here!
+            apptNewModalDialog(selectedDateDiv.val(), startHourOnly, rampNr);
+        }
     });
 
 
@@ -198,6 +201,7 @@ $("#datepicker").on("change",
     function () {
         clearAppointments();
         getAppointmentsForSelectedDate();
+        addNoClick();
     });
 
 
@@ -361,3 +365,35 @@ var checkDateAndTimeAvailable = function () {
             }
         });
 };
+
+$(document).ready(function () {
+    addNoClick();
+});
+
+
+var addNoClick = function () {
+    var dateFromPage = $("#datepicker").val();
+    var datePage = new Date(dateFromPage);
+    var date = $.datepicker.formatDate('yy/mm/dd', datePage);
+    var today = $.datepicker.formatDate('yy/mm/dd', new Date());
+    console.log("date", date);
+    console.log("today", today);
+    var hours = $(document).find(".hour");
+    $.each(hours, function (key, data) {
+        console.log("data", data);
+        $(data).removeClass("noclick");
+
+    })
+    if (today > date) {
+        $.each(hours, function (key, data) {
+            $(data).addClass("noclick");
+        })
+    }
+};
+
+
+
+// document ready 
+// getDate from datetime picker
+// check date with today
+// if lower add class noclick to all "hour" classes

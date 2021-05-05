@@ -56,10 +56,10 @@ namespace DeltaQrCode.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult NotFound()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult NotFound()
+        //{
+        //    return View();
+        //}
     }
 }

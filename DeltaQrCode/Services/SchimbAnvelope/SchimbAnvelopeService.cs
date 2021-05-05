@@ -54,9 +54,9 @@ namespace DeltaQrCode.Services.SchimbAnvelope
             }
         }
 
-        public async Task<Result<SchimbAnvelopeDto>> SetOperationStep(int pas)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<Result<SchimbAnvelopeDto>> SetOperationStep(int pas)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
