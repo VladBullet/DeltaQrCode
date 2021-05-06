@@ -27,7 +27,7 @@ namespace DeltaQrCode.HelpersAndExtensions
             var host = _request.Host;
             string path = _urlHelper.Action("Details", "Guest");
             string query = "?guid=" + code;
-            string url = scheme + @"//" + host + path + query;
+            string url = scheme + @"://" + host + path + query;
 
             return url;
         }
