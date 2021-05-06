@@ -26,7 +26,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-expand-md flex-column flex-sm-row flex-md-row navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="filicontainer">
+            <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DeltaOnlineTools</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
             </div>
         </nav>
     </header>
-    <div class="filicontainer">
+    <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
@@ -67,7 +67,7 @@
     </div>
 
     <footer class="border-top flex-column flex-sm-row flex-md-row text-muted text-center">
-        <div class="filicontainer">
+        <div class="container">
             &copy; 2020 - Delta Auto Center - Vlad Bulete
             @*<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
         </div>
