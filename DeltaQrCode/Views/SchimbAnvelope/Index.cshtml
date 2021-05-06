@@ -1,10 +1,10 @@
 ﻿@using DeltaQrCode.HelpersAndExtensions
-@model DeltaQrCode.ViewModels.HotelListViewModel
-
+@model DeltaQrCode.ViewModels.SchimbAnvelope.SchimbAnvelopeIndexVM
 <div class="container container-fluid">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
             <form id="msform">
+                <input type="hidden" asp-for="StepNr" value="1" />
                 <!-- progressbar -->
                 <ul id="progressbar">
                     <li class="active" id="account"><strong>Selectare programare</strong></li>
@@ -17,17 +17,17 @@
                 </div>
                 <br>
                 <!-- fieldsets -->
-                <fieldset>
-                    <partial name="_StepOne" />
+                <fieldset id="fieldset_1" data-value="1">
+                    @*<partial name="_StepOne" />*@
                 </fieldset>
-                <fieldset>
-                    <partial name="_StepTwo" />
+                <fieldset id="fieldset_2" data-value="2">
+                    @*<partial name="_StepTwo" />*@
                 </fieldset>
-                <fieldset>
-                    <partial name="_StepThree" />
+                <fieldset id="fieldset_3" data-value="3">
+                    @*<partial name="_StepThree" />*@
                 </fieldset>
-                <fieldset>
-                    <partial name="_StepFour" />
+                <fieldset id="fieldset_4" data-value="4">
+                    @*<partial name="_StepFour" />*@
                 </fieldset>
             </form>
         </div>
@@ -40,67 +40,122 @@
 
         $(document).ready(function () {
 
-            var current_fs, next_fs, previous_fs; //fieldsets
+            var current_fs, next_fs, prev_fs; //fieldsets
             var opacity;
             var current = 1;
             var steps = $("fieldset").length;
 
             setProgressBar(current);
 
-            $(".next").click(function () {
+            var toRender1 = $(document).find("#fieldset_1");
 
-                current_fs = $(this).parent();
-                next_fs = $(this).parent().next();
+            var form1 = $(document).find("#msform");
+            var data1 = { rampId: 1 };
+            $(toRender1).load("/SchimbAnvelope/GetStepOne",
+                data1,
+                function () {
+                    setPagination();
+                }
+            );
 
-                //Add Class Active
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+            toRender1.show();
 
-                //show the next fieldset
-                next_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate({ opacity: 0 }, {
-                    step: function (now) {
-                        // for making fielset appear animation
-                        opacity = 1 - now;
+            $(document).on("click", ".next",
+                function () {
 
-                        current_fs.css({
-                            'display': 'none',
-                            'position': 'relative'
-                        });
-                        next_fs.css({ 'opacity': opacity });
-                    },
-                    duration: 500
+                    current_fs = $(this).closest("fieldset");
+                    console.log(current_fs);
+                    var current_fs_value = $(current_fs).attr("data-value");
+                    next_fs = $(this).closest("fieldset").next();
+                    var next_fs_value = $(next_fs).attr("data-value");
+
+                    var toRender = $(document).find("#fieldset_" + next_fs_value);
+
+                    setHTMLStep(next_fs_value);
+
+                    var form = $(document).find("#msform");
+                    var data = form.serialize();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/SchimbAnvelope/SetStep",
+                        data: data,
+                        dataType: "json",
+                    });
+
+
+                    $(toRender).load("/SchimbAnvelope/GetStep",
+                        data,
+                        function () {
+                            setPagination();
+                        }
+                    );
+
+                    //Add Class Active
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                    //show the next fieldset
+                    next_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({ opacity: 0 }, {
+                        step: function (now) {
+                            // for making fielset appear animation
+                            opacity = 1 - now;
+
+                            current_fs.css({
+                                'display': 'none',
+                                'position': 'relative'
+                            });
+                            next_fs.css({ 'opacity': opacity });
+                        },
+                        duration: 500
+                    });
+                    setProgressBar(++current);
                 });
-                setProgressBar(++current);
-            });
 
-            $(".previous").click(function () {
+            $(document).on("click", ".previous",
+                function () {
 
-                current_fs = $(this).parent();
-                previous_fs = $(this).parent().prev();
+                    current_fs = $(this).closest("fieldset");
+                    var current_fs_value = $(current_fs).attr("data-value");
+                    prev_fs = $(this).closest("fieldset").prev();
+                    var prev_fs_value = $(prev_fs).attr("data-value");
 
-                //Remove class active
-                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+                    var toRender = $(document).find("#fieldset_" + prev_fs_value);
 
-                //show the previous fieldset
-                previous_fs.show();
+                    setHTMLStep(prev_fs_value);
 
-                //hide the current fieldset with style
-                current_fs.animate({ opacity: 0 }, {
-                    step: function (now) {
-                        // for making fielset appear animation
-                        opacity = 1 - now;
+                    var form = $(document).find("#msform");
+                    var data = form.serialize();
+                    $(toRender).load("/SchimbAnvelope/GetStep",
+                        data,
+                        function () {
+                            setPagination();
+                        }
+                    );
 
-                        current_fs.css({
-                            'display': 'none',
-                            'position': 'relative'
-                        });
-                        previous_fs.css({ 'opacity': opacity });
-                    },
-                    duration: 500
+                    //Remove class active
+                    $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                    //show the previous fieldset
+                    prev_fs.show();
+
+                    //hide the current fieldset with style
+                    current_fs.animate({ opacity: 0 }, {
+                        step: function (now) {
+                            // for making fielset appear animation
+                            opacity = 1 - now;
+
+                            current_fs.css({
+                                'display': 'none',
+                                'position': 'relative'
+                            });
+                            prev_fs.css({ 'opacity': opacity });
+                        },
+                        duration: 500
+                    });
+                    setProgressBar(--current);
                 });
-                setProgressBar(--current);
-            });
 
             function setProgressBar(curStep) {
                 var percent = parseFloat(100 / steps) * curStep;
@@ -114,5 +169,22 @@
             })
 
         });
+
+        var setHTMLStep = function (step) {
+            var before = $(document).find("#StepNr").val();
+            console.log("was : ", before);
+            $(document).find("#StepNr").val(step);
+            console.log("is : ", step);
+
+        };
+
+        var greyOutApptStepOne = function (element) {
+            $(element).addClass("table-danger");
+        }
+
+        $(document).on("click", ".noArrival", function () {
+            var element = $(this).closest("tr");
+            greyOutApptStepOne(element);
+        })
     </script>
 }

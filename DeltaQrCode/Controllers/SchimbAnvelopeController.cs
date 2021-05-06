@@ -7,6 +7,7 @@ using DeltaQrCode.Services;
 using DeltaQrCode.Services.SchimbAnvelope;
 using DeltaQrCode.ViewModels.Appointments;
 using DeltaQrCode.ViewModels.HotelAnvelope;
+using DeltaQrCode.ViewModels.SchimbAnvelope;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeltaQrCode.Controllers
@@ -26,46 +27,72 @@ namespace DeltaQrCode.Controllers
 
         public ActionResult Index()
         {
-            //SetStep(step);
             return View();
         }
-        public ActionResult StepOne(AppointmentVM appt)
+        public async Task<IActionResult> GetStepOne(int rampId)
         {
-
+            var appt = new StepOneVM();
+            var appointmentsDto = await _appointmentService.GetAppointmentsByDateAndRampAsync(DateTime.Today,rampId);
+            var appointments = _mapper.Map<List<AppointmentVM>>(appointmentsDto.Entity);
+            appt.Appointments = appointments;
             return PartialView("_StepOne", appt);
         }
-        public ActionResult StepTwo(AddEditSetAnvelopeVM set)
+
+        //public async Task<IActionResult> SetStepOne()
+        //{
+
+        //}
+        public IActionResult GetStepTwo(StepTwoAndThreeVM set)
         {
 
             return PartialView("_StepTwo", set);
         }
-        public ActionResult StepThree(AddEditSetAnvelopeVM set)
+        public ActionResult GetStepThree(StepTwoAndThreeVM set)
         {
 
             return PartialView("_StepThree", set);
         }
-        public ActionResult StepFour(AddEditSetAnvelopeVM set)
+        public ActionResult GetStepFour(StepFourVM set)
         {
 
             return PartialView("_StepFour", set);
         }
-        public ActionResult SetStep(int step)
+        public ActionResult GetStep(SchimbAnvelopeIndexVM model)
         {
-            switch (step)
+            switch (model.StepNr)
             {
                 case 1:
-                    return RedirectToAction("StepOne");
+                    return RedirectToAction("GetStepOne", model.StepOne.RampId);
                 case 2:
-                    return RedirectToAction("StepTwo");
+                    return RedirectToAction("GetStepTwo");
                 case 3:
-                    return RedirectToAction("StepThree");
+                    return RedirectToAction("GetStepThree");
                 case 4:
-                    return RedirectToAction("StepFour");
+                    return RedirectToAction("GetStepFour");
                 default :
                     return BadRequest("ceva nu a mers bine");
                     
             }
                 
+        }
+
+        public ActionResult SetStep(SchimbAnvelopeIndexVM model)
+        {
+            switch (model.StepNr)
+            {
+                case 1:
+                    return RedirectToAction("SetStepOne");
+                case 2:
+                    return RedirectToAction("SetStepTwo");
+                case 3:
+                    return RedirectToAction("SetStepThree");
+                case 4:
+                    return RedirectToAction("SetStepFour");
+                default:
+                    return BadRequest("ceva nu a mers bine");
+
+            }
+
         }
     }
 }

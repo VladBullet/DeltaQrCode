@@ -1,17 +1,16 @@
 ﻿@using DeltaQrCode.ModelsDto
 @using Microsoft.AspNetCore.Razor.TagHelpers
-@model DeltaQrCode.ViewModels.Appointments.AppointmentVM
+@model DeltaQrCode.ViewModels.SchimbAnvelope.StepOneVM
 
 <div class="form-card">
-    <input id="RampId" hidden="hidden" asp-for="RampId" />
 
     <div class="row">
 
         <div class="col-4 col-md-4 col-sm-4 col-lg-4 col-xl-4">
-            <select id="Ramp" class="col-4" asp-for="RampId" data-value="@Model.RampId"></select>
+            <select id="Ramp" class="col-4" asp-for="RampId"></select>
         </div>
         <div class="col-4 col-md-4 col-sm-4 col-lg-4 col-xl-4">
-            <button class="btn btn-outline-danger float-left col-8 col-sm-6 col-md-6 col-lg-4 col-xl-4">Fara Programare</button>
+            <div class="next btn btn-outline-danger float-left col-8 col-sm-6 col-md-6 col-lg-4 col-xl-4">Fara Programare</div>
         </div>
 
         <div class="col-4 col-md-4 col-sm-4 col-lg-4 col-xl-4">
@@ -38,30 +37,17 @@
             </thead>
 
             <tbody class="text-center">
-                <tr>
-                    <td>12:30</td>
-                    <td>BZ02GDK</td>
-                    <td>Mecanica</td>
-                    <td>Fili</td>
-                    <td class="table-success">Apasa</td>
-                    <td class="table-danger">Apasa</td>
-                </tr>
-                <tr>
-                    <td>12:30</td>
-                    <td>BZ02GDK</td>
-                    <td>Mecanica</td>
-                    <td>Fili</td>
-                    <td class="table-success">Apasa</td>
-                    <td class="table-danger">Apasa</td>
-                </tr>
-                <tr>
-                    <td>12:30</td>
-                    <td>BZ02GDK</td>
-                    <td>Mecanica</td>
-                    <td>Fili</td>
-                    <td class="table-success">Apasa</td>
-                    <td class="table-danger">Apasa</td>
-                </tr>
+                @foreach (var item in Model.Appointments)
+                {
+                    <tr class="text-center">
+                        <td>@item.OraInceput</td>
+                        <td>@item.NumarInmatriculare</td>
+                        <td>@item.Serviciu</td>
+                        <td>@item.NumeClient</td>
+                        <td><div class="next btn btn-success btn-lg">APASA</div></td>
+                        <td><div class="noArrival btn btn-danger btn-lg">APASA</div></td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

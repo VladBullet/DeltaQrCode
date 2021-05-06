@@ -326,5 +326,29 @@ namespace DeltaQrCode.Services
 
 
         }
+
+        public async Task<Result<List<AppointmentDto>>> GetAppointmentsByDateAndRampAsync(DateTime date, int? rampId)
+        {
+            try
+            {
+                var appt = await GetAppointmentsAsync(date);
+                var result = appt.Entity;
+
+                if (rampId != null)
+                {
+                  result = appt.Entity.Where(x => x.RampId == rampId).ToList();
+                }
+
+                return Result<List<AppointmentDto>>.ResultOk(result.OrderBy(x=>x.OraInceput).ToList());
+            }
+
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de data si rampa in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de data si rampa in servicii!", er);
+            }
+
+
+        }
     }
 }

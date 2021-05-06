@@ -148,3 +148,20 @@ function download(file, img) {
 
     document.body.removeChild(element);
 };
+
+var setPagination = function () {
+    var hasPrev = $("#hasPrev").attr("data-value");
+    var hasNext = $("#hasNext").attr("data-value");
+
+    if (hasPrev == "true") {
+        enablePrevious();
+    } else if (hasPrev == "false") {
+        disablePrevious();
+    }
+
+    if (hasNext == "true") {
+        enableNext();
+    } else if (hasNext == "false") {
+        disableNext();
+    }
+};
