@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DeltaQrCode.HelpersAndExtensions
+﻿namespace DeltaQrCode.HelpersAndExtensions
 {
     public interface IHttpHelper
     {

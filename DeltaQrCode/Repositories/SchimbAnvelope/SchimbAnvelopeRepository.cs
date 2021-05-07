@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DeltaQrCode.Data;
@@ -9,8 +8,6 @@ using Serilog;
 
 namespace DeltaQrCode.Repositories.SchimbAnvelope
 {
-    using Microsoft.EntityFrameworkCore.Migrations.Operations;
-
     public class SchimbAnvelopeRepository : ISchimbAnvelopeRepository
     {
         private ApplicationDbContext _db;

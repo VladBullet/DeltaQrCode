@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 namespace DeltaQrCode.Repositories
 {
     using DeltaQrCode.Data;
-    using DeltaQrCode.HelpersAndExtensions;
     using DeltaQrCode.Models;
     using DeltaQrCode.Repositories.Hotel_Positions;
     using Microsoft.EntityFrameworkCore;
@@ -38,6 +37,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+
         public async Task<Result<List<CaSetAnvelope>>> GetAllSetAnvelopeAsync()
         {
             try
@@ -51,6 +51,7 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la gasirea tuturor seturilor de anvelope in repository!", er);
             }
         }
+
 
         public async Task<Result<CaSetAnvelope>> AddSetAnvelopeAsync(CaSetAnvelope setAnv)
         {
@@ -68,6 +69,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+
         public async Task<Result<CaSetAnvelope>> UpdateSetAnvelopeAsync(CaSetAnvelope setAnv)
         {
             try
@@ -84,7 +86,6 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la editarea setului de anvelope in repository!", er);
             }
         }
-
 
 
         public async Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page = 1, int itemsPerPage = 20)
@@ -125,29 +126,6 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        //public async Task<Result<List<Position>>> GetAvailablePositionsAsync(string searchString = null)
-        //{
-        //    try
-        //    {
-        //        var occupiedPositions = await _db.CaSetAnvelope.Where(x=> !x.Deleted).Select(x => new Position(x.Rand, x.Pozitie, x.Interval)).ToListAsync();
-        //        var allCombinations = Helpers.GetAllCombinationsRowsAndPositionsAndIntervals();
-        //        var availablePositions = allCombinations.Where(p => !occupiedPositions.Any(p2 => p2.Rand == p.Rand && p2.Poz == p.Poz && p2.Interval == p.Interval)).ToList();
-
-        //        if (!string.IsNullOrEmpty(searchString))
-        //        {
-        //            availablePositions = availablePositions.Where(x => x.PositionString.ToLower().Contains(searchString.ToLower())).ToList();
-        //        }
-        //        availablePositions.Add(new Position("","",""));
-        //        return Result<List<Position>>.ResultOk(availablePositions);
-        //    }
-        //    catch (Exception er)
-        //    {
-        //        Log.Error(er, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in repository!");
-        //        throw new Exception("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in repository!", er);
-        //    }
-        //}
-
-
 
         public async Task<Result<CaMarca>> GetMarcaByIdAsync(uint id)
         {
@@ -163,6 +141,8 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
+
         public async Task<Result<List<CaMarca>>> GetMarciAsync()
         {
             try
@@ -177,6 +157,7 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
 
         public async Task<Result<CaMarca>> AddMarcaAsync(CaMarca marca)
         {
@@ -193,6 +174,7 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la adaugarea marcii in repository!", er);
             }
         }
+
 
         public async Task<Result<CaMarca>> GetMarcaByLableAsync(string label)
         {
@@ -211,8 +193,6 @@ namespace DeltaQrCode.Repositories
         }
 
 
-
-
         public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
         {
             try
@@ -228,6 +208,7 @@ namespace DeltaQrCode.Repositories
 
         }
 
+
         public async Task<Result<List<CaFlota>>> GetFlotaAsync()
         {
             try
@@ -242,6 +223,7 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
 
         public async Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota)
         {
@@ -259,6 +241,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+
         public async Task<Result<CaFlota>> GetFlotaByLableAsync(string label)
         {
             try
@@ -274,5 +257,7 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
+
     }
 }

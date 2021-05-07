@@ -15,8 +15,6 @@ namespace DeltaQrCode.Services
     using DeltaQrCode.Repositories;
     using DeltaQrCode.Services.Mail;
 
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
-
     using MimeKit.Text;
 
     using Serilog;
@@ -24,11 +22,10 @@ namespace DeltaQrCode.Services
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentsRepository _appointmentsRepository;
-
         private readonly IMapper _mapper;
         private readonly IMailService _mailService;
-
         private readonly IHttpHelper _httpHelper;
+
 
         public AppointmentService(IAppointmentsRepository appointmentsRepository, IMapper mapper, IMailService mailService, IHttpHelper helper)
         {
@@ -37,6 +34,7 @@ namespace DeltaQrCode.Services
             _mailService = mailService;
             _httpHelper = helper;
         }
+
 
         public async Task<Result<AppointmentDto>> GetAppointmentByIdAsync(int id)
         {
@@ -59,6 +57,7 @@ namespace DeltaQrCode.Services
                 throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in servicii!", er);
             }
         }
+
 
         public async Task<Result<AppointmentDto>> AddAppointmentAsync(AppointmentDto appointment)
         {
@@ -85,10 +84,10 @@ namespace DeltaQrCode.Services
                 appointment.ServiciuId = serviciu.Entity?.Id;
 
                 var app = _mapper.Map<CaAppointments>(appointment);
+
                 app.Deleted = false;
                 app.ConfirmedCode = GuidHelper.RandomGuid();
                 app.DataIntroducere = DateTime.Now;
-
                 app.NumeClient = app.NumeClient.ToUpper();
                 app.NumarInmatriculare = app.NumarInmatriculare.ToUpper();
                 app.LastModified = DateTime.Now;
@@ -126,6 +125,7 @@ namespace DeltaQrCode.Services
             }
         }
 
+
         public async Task<Result<AppointmentDto>> UpdateAppointmentAsync(AppointmentDto appt)
         {
             try
@@ -149,17 +149,15 @@ namespace DeltaQrCode.Services
                 }
 
                 appt.ServiciuId = serviciu.Entity?.Id;
-
                 appt.LastModified = DateTime.Now;
-
                 appt.NumeClient = appt.NumeClient.ToUpper();
                 appt.NumarInmatriculare = appt.NumarInmatriculare.ToUpper();
+                appt.LastModified = DateTime.Now;
 
                 var app = _mapper.Map<CaAppointments>(appt);
-
                 var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
-                model.LastModified = DateTime.Now;
+                
                 return Result<AppointmentDto>.ResultOk(model);
 
             }
@@ -169,6 +167,7 @@ namespace DeltaQrCode.Services
                 throw new Exception("Ceva nu a mers bine la editarea programarii in servicii!", er);
             }
         }
+
 
         public async Task<Result<AppointmentDto>> DeleteAppointmentAsync(int id)
         {
@@ -186,6 +185,7 @@ namespace DeltaQrCode.Services
             }
         }
 
+
         public async Task<Result<AppointmentDto>> ConfirmAppointmentAsync(int id, bool confirm)
         {
             try
@@ -201,6 +201,7 @@ namespace DeltaQrCode.Services
                 throw new Exception("Ceva nu a mers bine la confirmarea programarii in servicii!", er);
             }
         }
+
 
         public async Task<Result<List<AppointmentDto>>> GetAppointmentsAsync(DateTime date)
         {
@@ -220,9 +221,7 @@ namespace DeltaQrCode.Services
                             item.Serviciu = marca.Successful ? marca.Entity.Label : string.Empty;
                         }
                     }
-
                 }
-
                 return Result<List<AppointmentDto>>.ResultOk(model);
             }
             catch (Exception er)
@@ -232,19 +231,6 @@ namespace DeltaQrCode.Services
             }
         }
 
-        public async Task<Result<List<CaServicetypes>>> GetServiceTypesAsync()
-        {
-            try
-            {
-                var result = await _appointmentsRepository.GetServiceTypesAsync();
-                return Result<List<CaServicetypes>>.ResultOk(result.Entity);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea tipului de serviciu in servicii!");
-                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in servicii!", er);
-            }
-        }
 
         public async Task<Result<AvailableIntervalDto>> DateAndHourIsAvailable(DateTime selectedDate, TimeSpan selectedOraInceput, int selectedDurata, int selectedRampId, int? apptId = null)
         {
@@ -252,7 +238,9 @@ namespace DeltaQrCode.Services
             {
                 var dbList = await _appointmentsRepository.GetAppointmentsAsync(selectedDate, selectedRampId);
                 var apptsList = dbList.Entity;
+
                 Result<CaAppointments> appt = null;
+
                 if (apptId != null)
                 {
                     appt = await _appointmentsRepository.GetAppointmentByIdAsync(apptId.Value);
@@ -262,10 +250,13 @@ namespace DeltaQrCode.Services
                 {
                     return Result<AvailableIntervalDto>.ResultOk(new AvailableIntervalDto(true, new List<TimeSpan>()));
                 }
+
                 var apptsDto = _mapper.Map<List<AppointmentDto>>(apptsList);
                 var occupied = new List<Tuple<TimeSpan, TimeSpan, int>>();
                 var free = new List<TimeSpan>();
+
                 occupied.Add(new Tuple<TimeSpan, TimeSpan, int>(new TimeSpan(0, 0, 0), new TimeSpan(8, 0, 0), 0));
+
                 foreach (var item in apptsDto.OrderBy(x => x.OraInceput.Ticks))
                 {
                     occupied.Add(new Tuple<TimeSpan, TimeSpan, int>(item.OraInceput, item.OraSfarsit, item.Id));
@@ -300,7 +291,6 @@ namespace DeltaQrCode.Services
 
                 if (appt != null && appt.Entity.RampId == selectedRampId)
                 {
-                    // get next appt after selected one from db
                     var selectedOccIndex = occ.FindIndex(x => x.Item3 == apptId);
                     var prevOcc = occ[selectedOccIndex - 1];
                     var nextOcc = occ[selectedOccIndex + 1];
@@ -328,9 +318,8 @@ namespace DeltaQrCode.Services
                 Log.Error(er, "Ceva nu a mers bine la extragerea orelor disponibile pentru programari in servicii!");
                 throw new Exception("Ceva nu a mers bine la extragerea orelor disponibile pentru programari in servicii!", er);
             }
-
-
         }
+
 
         public async Task<List<DataTable>> GenerateDataForExcel()
         {
@@ -387,5 +376,6 @@ namespace DeltaQrCode.Services
             }
             return list;
         }
+
     }
 }

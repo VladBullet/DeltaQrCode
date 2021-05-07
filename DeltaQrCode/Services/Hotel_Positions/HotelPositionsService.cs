@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DeltaQrCode.Models;
@@ -22,6 +21,7 @@ namespace DeltaQrCode.Services.Hotel_Positions
             _mapper = mapper;
         }
 
+
         public async Task<Result<List<HotelPositionsDto>>> GetAvailablePositionsAsync(int? nrbuc = null)
         {
             try
@@ -39,6 +39,7 @@ namespace DeltaQrCode.Services.Hotel_Positions
             }
         }
 
+
         public async Task<Result<HotelPositionsDto>> GetPositionByIdAsync(int id)
         {
             try
@@ -53,6 +54,7 @@ namespace DeltaQrCode.Services.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la gasirea pozitiei in functie de id in servicii!", er);
             }
         }
+
 
         public async Task<Result<HotelPositionsDto>> UpdatePositionAsync(uint id, int nrbuc, OperatiunePozitie op)
         {
@@ -79,7 +81,6 @@ namespace DeltaQrCode.Services.Hotel_Positions
 
                 return Result<HotelPositionsDto>.ResultOk(value);
             }
-
             catch (Exception er)
             {
                 Log.Error(er, "Ceva nu a mers bine la modificarea pozitiei in servicii!");

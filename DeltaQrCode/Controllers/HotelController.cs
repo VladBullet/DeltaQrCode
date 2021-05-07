@@ -39,10 +39,12 @@ namespace DeltaQrCode.Controllers
             _mapper = mapper;
         }
 
+
         public IActionResult Index()
         {
             return View();
         }
+
 
         public async Task<IActionResult> Search(string searchString, int pageNumber = 1)
         {
@@ -55,7 +57,6 @@ namespace DeltaQrCode.Controllers
             return PartialView("_HotelList", model);
         }
 
-        //EDIT
 
         [HttpGet]
         public async Task<IActionResult> EditModal(int id, string actionType)
@@ -78,7 +79,6 @@ namespace DeltaQrCode.Controllers
             model.OldObservatii = model.Observatii;
             model.OldMarca = model.Marca;
             model.OldFlota = model.Flota;
-
 
             HotelModalVM setVm = new HotelModalVM(model, actType);
 
@@ -112,7 +112,6 @@ namespace DeltaQrCode.Controllers
             }
         }
 
-        //ADD
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -141,13 +140,13 @@ namespace DeltaQrCode.Controllers
                 return BadRequest("Ceva nu a mers bine la adaugarea setului de anvelope in controller!");
             }
         }
+
+
         [HttpGet]
         public IActionResult AddModalNew()
         {
             return PartialView("_AddSetAnvPartial", new AddEditSetAnvelopeVM());
         }
-
-        //DELETE
 
 
         [HttpGet]
@@ -155,6 +154,7 @@ namespace DeltaQrCode.Controllers
         {
             return PartialView("_DeleteSetAnvPartial", id);
         }
+
 
         [HttpPost]
         public async Task<ActionResult> ConfirmDelete(int id)
@@ -176,6 +176,7 @@ namespace DeltaQrCode.Controllers
                 return BadRequest("Ceva nu a mers bine la stergerea setului de anvelope in controller!");
             }
         }
+
 
         [HttpGet]
         [Produces("application/json")]
@@ -199,8 +200,8 @@ namespace DeltaQrCode.Controllers
                 Log.Error(e, "Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
                 return BadRequest("Ceva nu a mers bine la gasirea pozitiilor disponibile din hotel in controller!");
             }
-
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Download()
@@ -220,6 +221,7 @@ namespace DeltaQrCode.Controllers
             }
         }
 
+
         [Produces("application/json")]
         public async Task<IActionResult> GetMarci(string term)
         {
@@ -231,6 +233,7 @@ namespace DeltaQrCode.Controllers
             }
             return new JsonResult(list);
         }
+
 
         [Produces("application/json")]
         public async Task<IActionResult> GetFlote(string term)
@@ -244,6 +247,7 @@ namespace DeltaQrCode.Controllers
             return new JsonResult(list);
         }
 
+
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetTireTypes()
@@ -254,6 +258,7 @@ namespace DeltaQrCode.Controllers
             list.Add(TireType.AllSeason.ToDisplayString());
             return new JsonResult(list);
         }
+
 
         [HttpGet]
         [Produces("application/json")]
@@ -267,6 +272,7 @@ namespace DeltaQrCode.Controllers
             return new JsonResult(list);
         }
 
+
         public IActionResult GetDot(string term)
         {
             var list = ConstantsAndEnums.DOTlist();
@@ -277,16 +283,17 @@ namespace DeltaQrCode.Controllers
             return new JsonResult(list);
         }
 
+
         public IActionResult GetDiametru(string term)
         {
             var list = ConstantsAndEnums.DiametruDictionary;
             if (!string.IsNullOrEmpty(term))
             {
-                list = list.Where(x => x.Value.ToLower().Contains(term.ToLower())).ToDictionary(x => x.Key, x => x.Value);   // Select(x => new KeyValuePair<int, string>(x.Key, x.Value)).ToList().ToDictionary<int, string>(y => y.Key, y => y.Value)
+                list = list.Where(x => x.Value.ToLower().Contains(term.ToLower())).ToDictionary(x => x.Key, x => x.Value);
             }
             return new JsonResult(list);
-
         }
+
 
         public IActionResult GetLatime(string term)
         {
@@ -297,8 +304,8 @@ namespace DeltaQrCode.Controllers
                 result = result.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
             }
             return new JsonResult(result);
-
         }
+
 
         public IActionResult GetInaltime(string term)
         {
@@ -309,7 +316,6 @@ namespace DeltaQrCode.Controllers
                 result = result.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
             }
             return new JsonResult(result);
-
         }
     }
 }

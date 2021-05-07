@@ -2,8 +2,6 @@
 
 namespace DeltaQrCode.ModelsDto
 {
-    using DeltaQrCode.Models;
-
     public class SetAnvelopeDto
     {
         public uint Id { get; set; }

@@ -19,6 +19,7 @@ namespace DeltaQrCode.Repositories
             _db = db;
         }
 
+
         public async Task<Result<CaAppointments>> GetAppointmentByIdAsync(int id)
         {
             try
@@ -32,6 +33,7 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in repository!", er);
             }
         }
+
 
         public async Task<Result<CaAppointments>> AddAppointmentAsync(CaAppointments appointment)
         {
@@ -49,6 +51,7 @@ namespace DeltaQrCode.Repositories
 
         }
 
+
         public async Task<Result<CaAppointments>> UpdateAppointmentAsync(CaAppointments appointment)
         {
             try
@@ -65,6 +68,7 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la editarea programarii in repository!", er);
             }
         }
+
 
         public async Task<Result<CaAppointments>> DeleteAppointmentAsync(int id)
         {
@@ -84,6 +88,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+
         public async Task<Result<CaAppointments>> ConfirmAppointmentAsync(int id, bool confirm)
         {
             try
@@ -100,6 +105,7 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la confirmarea programarii in repository!", er);
             }
         }
+
 
         public async Task<Result<List<CaAppointments>>> GetAppointmentsAsync(DateTime date, int? rampId = null)
         {
@@ -126,6 +132,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+
         public async Task<Result<CaServicetypes>> GetServiceTypeByIdAsync(uint id)
         {
             try
@@ -138,23 +145,8 @@ namespace DeltaQrCode.Repositories
                 Log.Error(er, "Ceva nu a mers bine la gasirea tipului de serviciu in functie de id in repository!");
                 throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in functie de id in repository!", er);
             }
-
         }
 
-        public async Task<Result<List<CaServicetypes>>> GetServiceTypesAsync()
-        {
-            try
-            {
-                var value = await _db.CaServicetypes.ToListAsync();
-                return Result<List<CaServicetypes>>.ResultOk(value);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea tipului de serviciu in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in repository!", er);
-            }
-
-        }
 
         public async Task<Result<CaServicetypes>> AddServiceTypeAsync(CaServicetypes serviciu)
         {
@@ -172,6 +164,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+
         public async Task<Result<CaServicetypes>> GetServiceTypeByLableAsync(string label)
         {
             try
@@ -185,22 +178,8 @@ namespace DeltaQrCode.Repositories
                 Log.Error(er, "Ceva nu a mers bine la gasirea tipului de serviciu in functie de label in repository!");
                 throw new Exception("Ceva nu a mers bine la gasirea tipului de serviciu in functie de label in repository!", er);
             }
-
         }
 
-        public async Task<Result<CaAppointments>> GetAppointmentByRampIdAsync(int rampId)
-        {
-            try
-            {
-                var result = await _db.CaAppointments.FirstOrDefaultAsync(x => x.RampId == rampId && !x.Deleted);
-                return Result<CaAppointments>.ResultOk(result);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de id in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in repository!", er);
-            }
-        }
 
         public async Task<Result<List<CaAppointments>>> GetAppointmentsAsync()
         {
@@ -215,5 +194,7 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in repository!", er);
             }
         }
+
+
     }
 }

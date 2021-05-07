@@ -19,7 +19,6 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
         }
 
 
-
         public async Task<Result<List<CaHotelPositions>>> GetAvailablePositionsAsync(int? nrbuc = null)
         {
             try
@@ -39,6 +38,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             }
         }
 
+
         public async Task<Result<CaHotelPositions>> GetPositionByIdAsync(uint id)
         {
             try
@@ -52,6 +52,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la gasirea pozitiei in functie de id in repository!", er);
             }
         }
+
 
         public async Task<Result<CaHotelPositions>> PunePePozitieAsync(uint id, int nrbuc)
         {
@@ -79,6 +80,8 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!", er);
             }
         }
+
+
         public async Task<Result<CaHotelPositions>> SeteazaPozitiaAsync(uint id, int nrbuc)
         {
             try
@@ -98,8 +101,6 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
 
                 await _db.SaveChangesAsync();
 
-
-
                 return Result<CaHotelPositions>.ResultOk(value);
             }
             catch (Exception er)
@@ -108,6 +109,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!", er);
             }
         }
+
 
         public async Task<Result<CaHotelPositions>> ElibereazaPozitieAsync(uint id, int nrbuc)
         {
@@ -132,8 +134,6 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
 
                 await _db.SaveChangesAsync();
 
-
-
                 return Result<CaHotelPositions>.ResultOk(value);
             }
             catch (Exception er)
@@ -142,5 +142,7 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
                 throw new Exception("Ceva nu a mers bine la scaderea nr bucati pe pozitie in repository!", er);
             }
         }
+
+
     }
 }

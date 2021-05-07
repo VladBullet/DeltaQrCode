@@ -31,12 +31,9 @@ namespace DeltaQrCode.Controllers
             _mapper = mapper;
         }
 
-        //GET: Appointments
+
         public ActionResult Index(string startDateString, string activeDateString)
         {
-
-
-            // Get the appointments with a list of employees details this user can access
             CalendarVm calendarVm = new CalendarVm();
             var startDate = Helpers.GetStartDateFromStringParam(startDateString);
             var activeDate = Helpers.GetStartDateFromStringParam(activeDateString);
@@ -106,6 +103,8 @@ namespace DeltaQrCode.Controllers
 
             return PartialView("_EditAppointmentPartial", appointment);
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAppt(AppointmentVM appt)
@@ -132,6 +131,7 @@ namespace DeltaQrCode.Controllers
                 return BadRequest("Ceva nu a mers bine la editarea programarii in controller!");
             }
         }
+
 
         [HttpGet]
         public IActionResult ModalAdd(string startDateStr, string startHour, string rampId)
@@ -162,9 +162,10 @@ namespace DeltaQrCode.Controllers
             return PartialView("_AddAppointmentPartial", appointment);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddAppt(AppointmentVM appt) //ADDMODAL
+        public async Task<IActionResult> AddAppt(AppointmentVM appt)
         {
             try
             {
@@ -187,7 +188,6 @@ namespace DeltaQrCode.Controllers
             }
         }
 
-        // DELETE
 
         [HttpGet]
         public IActionResult DeleteModal(int id)
@@ -219,11 +219,13 @@ namespace DeltaQrCode.Controllers
 
         }
 
+
         [HttpGet]
         public IActionResult ConfirmModal(int id, bool confirm)
         {
             return PartialView("_ConfirmAppointmentPartial", new ConfirmVM(id, confirm));
         }
+
 
         [HttpPost]
         public async Task<IActionResult> ConfirmAppt(int id, bool confirm)
@@ -252,11 +254,13 @@ namespace DeltaQrCode.Controllers
 
         }
 
+
         [HttpGet]
         public IActionResult MenuModal(int id, bool confirm)
         {
             return PartialView("_MenuAppointmentPartial", new ConfirmVM(id, !confirm));
         }
+
 
         [HttpGet]
         public async Task<ActionResult> InfoModal(int id)
@@ -266,6 +270,7 @@ namespace DeltaQrCode.Controllers
 
             return PartialView("_InfoAppointmentPartial", appointment);
         }
+
 
         [HttpGet]
         [Produces("application/json")]
@@ -277,12 +282,14 @@ namespace DeltaQrCode.Controllers
             return new JsonResult(list);
         }
 
+
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetTimeDictionary()
         {
             return new JsonResult(ConstantsAndEnums.TimeDictionary);
         }
+
 
         [HttpGet]
         [Produces("application/json")]
@@ -308,6 +315,7 @@ namespace DeltaQrCode.Controllers
             }
         }
 
+
         [HttpGet]
         public async Task<IActionResult> Download()
         {
@@ -328,5 +336,7 @@ namespace DeltaQrCode.Controllers
                 }
             }
         }
+
+
     }
 }

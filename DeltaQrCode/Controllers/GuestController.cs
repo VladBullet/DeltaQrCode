@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Controllers
 {
-    using System;
 
     using DeltaQrCode.Services.Guest;
 
@@ -17,6 +16,7 @@ namespace DeltaQrCode.Controllers
         {
             _guestService = guestService;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Details(string guid)
@@ -33,6 +33,8 @@ namespace DeltaQrCode.Controllers
             }
             return RedirectToAction("WrongAppointment");
         }
+
+
         [Route("Guest/ConfirmAppointment")]
         [HttpPost]
         public async Task<IActionResult> ConfirmAppointment(string guid)
@@ -50,6 +52,7 @@ namespace DeltaQrCode.Controllers
             return RedirectToAction("WrongAppointment");
         }
 
+
         [Route("Guest/UnConfirmAppointment")]
         [HttpPost]
         public async Task<IActionResult> UnConfirmAppointment(string guid)
@@ -66,6 +69,7 @@ namespace DeltaQrCode.Controllers
             }
             return RedirectToAction("WrongAppointment");
         }
+
 
         [HttpGet]
         public IActionResult WrongAppointment()

@@ -15,7 +15,6 @@ namespace DeltaQrCode.Services
         Task<Result<AppointmentDto>> DeleteAppointmentAsync(int id);
         Task<Result<AppointmentDto>> ConfirmAppointmentAsync(int id, bool confirm);
         Task<Result<List<AppointmentDto>>> GetAppointmentsAsync(DateTime date);
-        Task<Result<List<CaServicetypes>>> GetServiceTypesAsync();
         Task<List<DataTable>> GenerateDataForExcel();
         Task<Result<AvailableIntervalDto>> DateAndHourIsAvailable(DateTime selectedDate, TimeSpan selectedOraInceput, int selectedDurata, int selectedRampId, int? apptId = null);
     }

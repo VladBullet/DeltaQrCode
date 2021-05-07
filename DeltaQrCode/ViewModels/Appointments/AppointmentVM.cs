@@ -34,7 +34,6 @@ namespace DeltaQrCode.ViewModels.Appointments
         public DateTime? ConfirmedDate { get; set; }
         public string Observatii { get; set; }
         public bool ChangedByClient { get; set; }
-
         public int StartTime_Hour { get; set; }
         public int StartTime_Minutes { get; set; }
 

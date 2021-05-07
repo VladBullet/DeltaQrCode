@@ -52,7 +52,6 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string StatusCurent { get; set; }
         public DateTime DataUltimaModificare { get; set; }
         public bool Deleted { get; set; }
-
         public string OldNumarInmatriculare { get; set; }
         public string OldNumeClient { get; set; }
         public string OldNumarTelefon { get; set; }
