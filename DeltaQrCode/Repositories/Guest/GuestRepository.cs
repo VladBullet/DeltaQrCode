@@ -26,7 +26,30 @@ namespace DeltaQrCode.Repositories.Guest
                 var result = await _db.CaAppointments.FirstOrDefaultAsync(x => x.ConfirmedCode == guid);
                 if (!result.Deleted)
                 {
-                    result.Confirmed = !result.Confirmed;
+                    result.Confirmed = true;
+                    result.ConfirmedDate = DateTime.Now;
+                    result.ChangedByClient = true;
+                    await _db.SaveChangesAsync();
+                }
+                var model = new GuestInfoDto(result.ConfirmedCode, result.Confirmed, result.DataAppointment, result.OraInceput, result.DurataInMinute, !result.Deleted);
+                return Result<GuestInfoDto>.ResultOk(model);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la confirmarea programarii in repository!");
+                throw new Exception("Ceva nu a mers bine la confirmarea programarii in repository!", er);
+            }
+        }
+
+        public async Task<Result<GuestInfoDto>> UnConfirmAppointmentAsync(string guid)
+        {
+            try
+            {
+                var result = await _db.CaAppointments.FirstOrDefaultAsync(x => x.ConfirmedCode == guid);
+                if (!result.Deleted)
+                {
+                    result.Confirmed = false;
                     result.ConfirmedDate = DateTime.Now;
                     result.ChangedByClient = true;
                     await _db.SaveChangesAsync();

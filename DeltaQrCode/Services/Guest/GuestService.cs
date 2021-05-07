@@ -34,6 +34,19 @@ namespace DeltaQrCode.Services.Guest
                 throw new Exception("Ceva nu a mers bine la confirmarea programarii in servicii!", er);
             }
         }
+        public async Task<Result<GuestInfoDto>> UnConfirmAppointmentAsync(string guid)
+        {
+            try
+            {
+                var value = await _guestRepo.UnConfirmAppointmentAsync(guid);
+                return value;
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la confirmarea programarii in servicii!");
+                throw new Exception("Ceva nu a mers bine la confirmarea programarii in servicii!", er);
+            }
+        }
         public async Task<Result<GuestInfoDto>> GetAppointmentInfoByGuid(string guid)
         {
             try

@@ -18,13 +18,12 @@
             {
                 <span class="bg-warning">Programarea dvs a expirat</span><br />
             }
-            else if (Model.Confirmed)
+            else
             {
-                <p>Anulati programarea aici: </p><div class="btn btn-info guestAction" data-guid="@Model.Guid">Anuleaza</div>
-            }
-            else if (!Model.Confirmed)
-            {
-                <p>Confirmati programarea aici: </p><div class="btn btn-info guestAction" data-guid="@Model.Guid">Confirma</div>
+                <div class="d-inline">
+                    <p>Confirmati programarea aici: </p><div class="btn btn-info guestActionConfirm" data-guid="@Model.Guid">Confirma</div>
+                    <p>Anulati programarea aici: </p><div class="btn btn-info guestActionUnConfirm" data-guid="@Model.Guid">Anuleaza</div>
+                </div>
             }
             <br />
             Adresa: Bulevardul Expozitiei 1-3, Bucuresti (vis-a-vis de intrarea C - Romexpo)
@@ -40,12 +39,54 @@
     <script type="text/javascript">
 
         $(document).one("click",
-            ".guestAction",
+            ".guestActionConfirm",
             function () {
                 var guid = $(this).attr("data-guid");
                 $.ajax({
                     type: "POST",
                     url: "/Guest/ConfirmAppointment",
+                    dataType: "json",
+                    data: { 'guid': guid },
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Vesti bune!',
+                            html: response,
+                            footer: 'Acest mesaj se va inchide automat! Si veti fi redirectionat/a pe pagina principala!',
+                            icon: 'success',
+                            timer: 10000,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                            willClose: () => {
+                                var callbackUrl = $("#callBackUrl").attr("href");
+                                window.location.href = callbackUrl;
+                                //$("#callBackUrl").trigger("click");
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: 'Nu am reusit sa modificam programarea dvs.! </br> Va rugam contactati service-ul la nr: +40.745.525.678',
+                            willClose: () => {
+                                //$("#callBackUrl").trigger("click");
+                                var callbackUrl = $("#callBackUrl").attr("href");
+                                window.location.href = callbackUrl;
+                            }
+                        });
+                    }
+                });
+            });
+
+        $(document).one("click",
+            ".guestActionUnConfirm",
+            function () {
+                var guid = $(this).attr("data-guid");
+                $.ajax({
+                    type: "POST",
+                    url: "/Guest/UnConfirmAppointment",
                     dataType: "json",
                     data: { 'guid': guid },
                     success: function (response) {

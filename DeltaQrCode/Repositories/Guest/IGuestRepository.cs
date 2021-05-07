@@ -8,6 +8,7 @@ namespace DeltaQrCode.Repositories.Guest
     public interface IGuestRepository
     {
         Task<Result<GuestInfoDto>> ConfirmAppointmentAsync(string guid);
+        Task<Result<GuestInfoDto>> UnConfirmAppointmentAsync(string guid);
         Task<Result<CaAppointments>> GetAppointmentByGuid(string guid);
         Task<Result<GuestInfoDto>> GetAppointmentInfoByGuid(string guid);
     }

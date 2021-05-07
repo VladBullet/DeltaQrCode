@@ -50,6 +50,23 @@ namespace DeltaQrCode.Controllers
             return RedirectToAction("WrongAppointment");
         }
 
+        [Route("Guest/UnConfirmAppointment")]
+        [HttpPost]
+        public async Task<IActionResult> UnConfirmAppointment(string guid)
+        {
+            if (string.IsNullOrEmpty(guid))
+            {
+                return RedirectToAction("WrongAppointment");
+            }
+
+            var confirmed = await _guestService.UnConfirmAppointmentAsync(guid);
+            if (confirmed.Successful)
+            {
+                return Ok(JsonConvert.SerializeObject("Am modificat programarea dvs. si service-ul a fost anuntat!"));
+            }
+            return RedirectToAction("WrongAppointment");
+        }
+
         [HttpGet]
         public IActionResult WrongAppointment()
         {
