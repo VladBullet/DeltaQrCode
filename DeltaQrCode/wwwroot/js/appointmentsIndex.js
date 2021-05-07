@@ -1,6 +1,6 @@
 ﻿
 var dateToday = new Date();
-console.log(dateToday);
+/*console.log(dateToday);*/
 $(function () {
     $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).datepicker("setDate", dateToday);
 
@@ -252,7 +252,7 @@ $(document).on('click',
 var confirmApptModalDialog = function (id, confirm) {
 
     var url = "/Appointments/ConfirmModal"; // the url to the controller
-    console.log("confirmed is: " + confirm);
+/*    console.log("confirmed is: " + confirm);*/
     $.get(url + '?id=' + id + '&confirm=' + confirm,
         function (data) {
             CloseModalById('myApptMenuModal');
@@ -337,9 +337,9 @@ var checkDateAndTimeAvailable = function () {
             span.addClass("hide");
             var selectieBuna = $(document).find("#selectieBunaElem");
 
-            console.log("selectie before: ", selectieBuna.val());
+/*            console.log("selectie before: ", selectieBuna.val());*/
             $(selectieBuna).val(data.selectedIsAvailable);
-            console.log("selectie after: ", selectieBuna.val());
+/*            console.log("selectie after: ", selectieBuna.val());*/
 
             if (data.selectedIsAvailable) {
 
@@ -376,11 +376,8 @@ var addNoClick = function () {
     var datePage = new Date(dateFromPage);
     var date = $.datepicker.formatDate('yy/mm/dd', datePage);
     var today = $.datepicker.formatDate('yy/mm/dd', new Date());
-    console.log("date", date);
-    console.log("today", today);
     var hours = $(document).find(".hour");
     $.each(hours, function (key, data) {
-        console.log("data", data);
         $(data).removeClass("noclick");
 
     })

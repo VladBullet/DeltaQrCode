@@ -152,7 +152,7 @@
         $(this).prop("disabled", true);
         checkDateAndTimeAvailable();
         var result = validator.validate(validator);
-        console.log(result.formIsValid);
+        //console.log(result.formIsValid);
         if (result.formIsValid) {
             $.ajax({
                 type: "POST",
