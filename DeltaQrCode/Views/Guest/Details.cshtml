@@ -1,11 +1,14 @@
-﻿@model DeltaQrCode.ModelsDto.GuestInfoDto
+﻿@using System;
+@using System.Globalization;
+@model DeltaQrCode.ModelsDto.GuestInfoDto
+
 
 <a id="callBackUrl" href="@Model.CallBackUrl" hidden="hidden"></a>
 <div class="container">
     <h1>Delta Auto Center - Programarea dumneavoastra la service </h1>
     <div class="row">
         <div class="col-md-8">
-            Data Programarii: <span class="bg-info">@Model.DataAppt.ToString("d")</span>
+            Data Programarii: <span class="bg-info">@Model.DataAppt.ToString("dddd", new CultureInfo("ro-RO")), @Model.DataAppt.ToString("d", new CultureInfo("ro-RO")) </span>
             <br />
             Ora: <span class="bg-info">@Model.OraAppt.Hours.ToString():@(Model.OraAppt.Minutes==0 ? "00" : Model.OraAppt.Minutes.ToString())</span>
             <br />
