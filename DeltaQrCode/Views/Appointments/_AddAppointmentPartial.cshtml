@@ -147,7 +147,7 @@
 
 
 
-    $("#apptsAddButton").on("click", function (event) {
+    $("#apptsAddButton").one("click", function (event) {
         event.preventDefault();
         $(this).prop("disabled", true);
         checkDateAndTimeAvailable();
