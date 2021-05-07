@@ -261,6 +261,7 @@ namespace DeltaQrCode.Services.Hotel
                 if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent != "InRaft")
                 {
                     await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, editSetAnv.NrBucati, OperatiunePozitie.Scoatere);
+                    editSetAnv.PozitieId = null;
                 }
 
 
@@ -315,7 +316,7 @@ namespace DeltaQrCode.Services.Hotel
 
                 // case: was InRaft, will be InRaft, No Changes
 
-                if (editSetAnv.NrBucati == editSetAnv.OldNumarBucati && editSetAnv.PozitieId == null)
+                if (editSetAnv.NrBucati == editSetAnv.OldNumarBucati && editSetAnv.PozitieId == null && editSetAnv.StatusCurent == "InRaft")
                 {
                     editSetAnv.PozitieId = editSetAnv.OldPozitieId;
                 }
@@ -575,21 +576,21 @@ namespace DeltaQrCode.Services.Hotel
                     anvelope.NumarInmatriculare,
                     anvelope.NumarTelefon,
                     anvelope.SerieSasiu,
-                    anvelope.Pozitie.Rand,
-                    anvelope.Pozitie.Pozitie,
-                    anvelope.Pozitie.Interval,
-                    anvelope.Pozitie.Locuriocupate,
+                    anvelope.Pozitie?.Rand,
+                    anvelope.Pozitie?.Pozitie,
+                    anvelope.Pozitie?.Interval,
+                    anvelope.Pozitie?.Locuriocupate,
                     anvelope.Marca,
                     anvelope.Flota,
                     anvelope.NrBucati,
-                    anvelope.Dimensiuni.Diam,
-                    anvelope.Dimensiuni.Lat,
-                    anvelope.Dimensiuni.H,
-                    anvelope.Dimensiuni.Dot,
-                    anvelope.Uzura.StF,
-                    anvelope.Uzura.StS,
-                    anvelope.Uzura.DrF,
-                    anvelope.Uzura.DrS,
+                    anvelope.Dimensiuni?.Diam,
+                    anvelope.Dimensiuni?.Lat,
+                    anvelope.Dimensiuni?.H,
+                    anvelope.Dimensiuni?.Dot,
+                    anvelope.Uzura?.StF,
+                    anvelope.Uzura?.StS,
+                    anvelope.Uzura?.DrF,
+                    anvelope.Uzura?.DrS,
                     anvelope.TipSezon,
                     anvelope.Observatii,
                     anvelope.StatusCurent,
