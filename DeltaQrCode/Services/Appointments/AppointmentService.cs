@@ -91,9 +91,11 @@ namespace DeltaQrCode.Services
 
                 app.NumeClient = app.NumeClient.ToUpper();
                 app.NumarInmatriculare = app.NumarInmatriculare.ToUpper();
+                app.LastModified = DateTime.Now;
 
                 var value = await _appointmentsRepository.AddAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
+                
 
                 if (!string.IsNullOrEmpty(model.EmailClient))
                 {
@@ -157,6 +159,7 @@ namespace DeltaQrCode.Services
 
                 var value = await _appointmentsRepository.UpdateAppointmentAsync(app);
                 var model = _mapper.Map<AppointmentDto>(value.Entity);
+                model.LastModified = DateTime.Now;
                 return Result<AppointmentDto>.ResultOk(model);
 
             }
@@ -329,10 +332,15 @@ namespace DeltaQrCode.Services
 
         }
 
-        public async Task<DataTable> GenerateDataForExcel(int rampId)
+        public async Task<List<DataTable>> GenerateDataForExcel()
         {
-            DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[16] {
+            var list = new List<DataTable>();
+            for (int i = 1; i <= 4; i++)
+            {
+                var rampId = i;
+
+                DataTable dt = new DataTable("Ramp"+rampId);
+                dt.Columns.AddRange(new DataColumn[15] {
 
                                             new DataColumn("NumeClient"),
                                             new DataColumn("NumarInmatriculare"),
@@ -346,38 +354,38 @@ namespace DeltaQrCode.Services
                                             new DataColumn("Observatii"),
                                             new DataColumn("Deleted"),
                                             new DataColumn("Confirmed"),
-                                            new DataColumn("ConfirmedCode"),
                                             new DataColumn("ConfirmedDate"),
                                             new DataColumn("LastModified"),
                                             new DataColumn("ChangedByClient") });
 
-            var allAppts = await _appointmentsRepository.GetAppointmentByRampIdAsync(rampId);
-            var model = _mapper.Map<List<AppointmentDto>>(allAppts.Entity);
+                var allAppts = await _appointmentsRepository.GetAppointmentsAsync();
+                var model = _mapper.Map<List<AppointmentDto>>(allAppts.Entity);
 
 
-            var appointment = from appts in model
-                              select appts;
+                var appointment = from appts in model
+                                  select appts;
 
-            foreach (var appts in appointment)
-            {
-                dt.Rows.Add(appts.NumeClient,
-                    appts.NumarInmatriculare,
-                    appts.NumarTelefon,
-                    appts.EmailClient,
-                    appts.DataAppointment,
-                    appts.DataIntroducere,
-                    appts.OraInceput,
-                    appts.DurataInMinute,
-                    appts.Serviciu,
-                    appts.Observatii,
-                    appts.Deleted,
-                    appts.Confirmed,
-                    appts.ConfirmedCode,
-                    appts.ConfirmedDate,
-                    appts.LastModified,
-                    appts.ChangedByClient);
+                foreach (var appts in appointment.Where(x=>x.RampId == rampId))
+                {
+                    dt.Rows.Add(appts.NumeClient,
+                        appts.NumarInmatriculare,
+                        appts.NumarTelefon,
+                        appts.EmailClient,
+                        appts.DataAppointment,
+                        appts.DataIntroducere,
+                        appts.OraInceput,
+                        appts.DurataInMinute,
+                        appts.Serviciu,
+                        appts.Observatii,
+                        appts.Deleted,
+                        appts.Confirmed,
+                        appts.ConfirmedDate,
+                        appts.LastModified,
+                        appts.ChangedByClient);
+                }
+                list.Add(dt);
             }
-            return dt;
+            return list;
         }
     }
 }

@@ -201,5 +201,19 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in repository!", er);
             }
         }
+
+        public async Task<Result<List<CaAppointments>>> GetAppointmentsAsync()
+        {
+            try
+            {
+                var result = await _db.CaAppointments.ToListAsync();
+                return Result<List<CaAppointments>>.ResultOk(result);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in repository!", er);
+            }
+        }
     }
 }

@@ -309,14 +309,17 @@ namespace DeltaQrCode.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Download(int rampId)
+        public async Task<IActionResult> Download()
         {
 
-            var data = await _appointmentService.GenerateDataForExcel(rampId);
-            var filename = "RaportHotelAnvelope" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".xlsx";
+            var data = await _appointmentService.GenerateDataForExcel();
+            var filename = "RaportProgramari" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".xlsx";
             using (XLWorkbook wb = new XLWorkbook())
             {
-                wb.Worksheets.Add(data);
+                foreach(var item in data)
+                {
+                    wb.Worksheets.Add(item);
+                }
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
