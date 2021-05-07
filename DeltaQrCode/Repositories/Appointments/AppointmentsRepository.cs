@@ -187,5 +187,19 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
+        public async Task<Result<CaAppointments>> GetAppointmentByRampIdAsync(int rampId)
+        {
+            try
+            {
+                var result = await _db.CaAppointments.FirstOrDefaultAsync(x => x.RampId == rampId && !x.Deleted);
+                return Result<CaAppointments>.ResultOk(result);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de id in repository!", er);
+            }
+        }
     }
 }

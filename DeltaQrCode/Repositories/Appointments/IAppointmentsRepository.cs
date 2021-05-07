@@ -9,6 +9,7 @@ namespace DeltaQrCode.Repositories
     public interface IAppointmentsRepository
     {
         Task<Result<CaAppointments>> GetAppointmentByIdAsync(int id);
+        Task<Result<CaAppointments>> GetAppointmentByRampIdAsync(int rampId);
         Task<Result<CaAppointments>> AddAppointmentAsync(CaAppointments appointment);
         Task<Result<CaAppointments>> UpdateAppointmentAsync(CaAppointments appointment);
         Task<Result<CaAppointments>> DeleteAppointmentAsync(int id);

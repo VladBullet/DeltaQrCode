@@ -28,6 +28,7 @@ namespace DeltaQrCode.ModelsDto
         public TimeSpan OraSfarsit => OraInceput.Add(new TimeSpan(0, 0, DurataInMinute, 0));
         public DateTime DataIntroducere { get; set; }
         public bool Confirmed { get; set; }
+        public bool Deleted { get; set; }
         public DateTime? ConfirmedDate { get; set; }
         public DateTime LastModified { get; set; }
         public string Observatii { get; set; }

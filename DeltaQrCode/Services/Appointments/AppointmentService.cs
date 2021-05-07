@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace DeltaQrCode.Services
 {
+    using System.Data;
     using System.Globalization;
     using System.Text;
     using AutoMapper;
@@ -326,6 +327,57 @@ namespace DeltaQrCode.Services
             }
 
 
+        }
+
+        public async Task<DataTable> GenerateDataForExcel(int rampId)
+        {
+            DataTable dt = new DataTable("Grid");
+            dt.Columns.AddRange(new DataColumn[16] {
+
+                                            new DataColumn("NumeClient"),
+                                            new DataColumn("NumarInmatriculare"),
+                                            new DataColumn("NumarTelefon"),
+                                            new DataColumn("EmailClient"),
+                                            new DataColumn("DataAppointment"),
+                                            new DataColumn("DataIntroducere"),
+                                            new DataColumn("OraInceput"),
+                                            new DataColumn("DurataInMinute"),
+                                            new DataColumn("Serviciu"),
+                                            new DataColumn("Observatii"),
+                                            new DataColumn("Deleted"),
+                                            new DataColumn("Confirmed"),
+                                            new DataColumn("ConfirmedCode"),
+                                            new DataColumn("ConfirmedDate"),
+                                            new DataColumn("LastModified"),
+                                            new DataColumn("ChangedByClient") });
+
+            var allAppts = await _appointmentsRepository.GetAppointmentByRampIdAsync(rampId);
+            var model = _mapper.Map<List<AppointmentDto>>(allAppts.Entity);
+
+
+            var appointment = from appts in model
+                              select appts;
+
+            foreach (var appts in appointment)
+            {
+                dt.Rows.Add(appts.NumeClient,
+                    appts.NumarInmatriculare,
+                    appts.NumarTelefon,
+                    appts.EmailClient,
+                    appts.DataAppointment,
+                    appts.DataIntroducere,
+                    appts.OraInceput,
+                    appts.DurataInMinute,
+                    appts.Serviciu,
+                    appts.Observatii,
+                    appts.Deleted,
+                    appts.Confirmed,
+                    appts.ConfirmedCode,
+                    appts.ConfirmedDate,
+                    appts.LastModified,
+                    appts.ChangedByClient);
+            }
+            return dt;
         }
     }
 }

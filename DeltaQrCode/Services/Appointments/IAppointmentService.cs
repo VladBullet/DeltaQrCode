@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using DeltaQrCode.Models;
 using DeltaQrCode.ModelsDto;
@@ -15,7 +16,7 @@ namespace DeltaQrCode.Services
         Task<Result<AppointmentDto>> ConfirmAppointmentAsync(int id, bool confirm);
         Task<Result<List<AppointmentDto>>> GetAppointmentsAsync(DateTime date);
         Task<Result<List<CaServicetypes>>> GetServiceTypesAsync();
-
+        Task<DataTable> GenerateDataForExcel(int rampId);
         Task<Result<AvailableIntervalDto>> DateAndHourIsAvailable(DateTime selectedDate, TimeSpan selectedOraInceput, int selectedDurata, int selectedRampId, int? apptId = null);
     }
 }
