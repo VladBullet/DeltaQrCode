@@ -73,19 +73,21 @@
 @section Scripts{
 
     <script type="text/javascript" src="~/js/appointmentsIndex.js"></script>
+    <script type="text/javascript" src="~/js/editAddApptPartial.js"></script>
+    <script type="text/javascript" src="~/js/validationRulesAppt.js"></script>
     <script type="text/javascript">
         // Clear the existing appts.
         $('.appt-no-height').remove();
 
         // initial data load.
         window.setTimeout(function () {
-                getAppointmentsForSelectedDate();
-            },
+            getAppointmentsForSelectedDate();
+        },
             1000);
-        
+
         /* on load, scroll to a sensible hour */
         scrollToWorkingHours();
-        /*end page load*/
+            /*end page load*/
     </script>
 
 }

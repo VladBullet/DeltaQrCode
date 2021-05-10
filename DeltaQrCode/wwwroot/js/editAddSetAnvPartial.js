@@ -105,7 +105,8 @@ $(document).ready(function () {
 
             // SAVE BTN CLICK EVENT
             $(document).on("click", "#apptsEditSubmitButton", function () {
-                $(this).attr("disabled", "disabled");
+                $this = $("#apptsEditSubmitButton");
+                $this.prop("disabled", true);
                 var result = validator.validate(validator);
                 if (result.formIsValid) {
                     console.log("edit");
@@ -129,10 +130,14 @@ $(document).ready(function () {
                 } else {
                     updateUi(result.validationResults, "form-group", "error_span");
                 }
+                setTimeout(function () {
+                    $this.prop("disabled", false);
+                }, 3000);
             });
 
             $(document).on("click", "#apptsAddSubmitButton", function () {
-                $(this).attr("disabled", "disabled");
+                $this = $("#apptsAddSubmitButton");
+                $this.prop("disabled", true);
                 var result = validator.validate(validator);
                 if (result.formIsValid) {
                     console.log("submit add");
@@ -157,6 +162,9 @@ $(document).ready(function () {
                 else {
                     updateUi(result.validationResults, "form-group", "error_span");
                 }
+                setTimeout(function () {
+                    $this.prop("disabled", false);
+                }, 3000);
             });
 
 
