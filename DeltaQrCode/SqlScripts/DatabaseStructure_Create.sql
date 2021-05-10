@@ -116,28 +116,6 @@ CREATE TABLE `ca_servicetypes` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `ca_set_anvelope` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `NumeClient` varchar(50) NOT NULL,
-  `NumarTelefon` varchar(45) NOT NULL,
-  `NumarInmatriculare` varchar(45) NOT NULL,
-  `MarcaId` int unsigned DEFAULT NULL,
-  `NrBucati` int NOT NULL,
-  `Dimensiuni` varchar(100) NOT NULL,
-  `Uzura` varchar(100) NOT NULL,
-  `TipSezon` varchar(45) NOT NULL,
-  `Observatii` varchar(100) DEFAULT NULL,
-  `StatusCurent` varchar(45) NOT NULL,
-  `DataUltimaModificare` datetime NOT NULL,
-  `Deleted` bit(1) NOT NULL,
-  `FlotaId` int unsigned DEFAULT NULL,
-  `SerieSasiu` varchar(45) DEFAULT NULL,
-  `PozitieId` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
-
-
 
 CREATE TABLE `ca_users` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -186,6 +164,65 @@ CREATE TABLE `deltatra_client_admin`.`history_appointments` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `ca_anvelopa` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `NumeClient` varchar(50) NOT NULL,
+  `NumarTelefon` varchar(45) NOT NULL,
+  `NumarInmatriculare` varchar(45) NOT NULL,
+  `MarcaId` int unsigned DEFAULT NULL,
+  `NrBucati` int NOT NULL,
+  `Dimensiuni` varchar(100) NOT NULL,
+  `Uzura` varchar(100) NOT NULL,
+  `TipSezon` varchar(45) NOT NULL,
+  `Observatii` varchar(100) DEFAULT NULL,
+  `StatusCurent` varchar(45) NOT NULL,
+  `DataUltimaModificare` datetime NOT NULL,
+  `Deleted` bit(1) NOT NULL,
+  `FlotaId` int unsigned DEFAULT NULL,
+  `SerieSasiu` varchar(45) DEFAULT NULL,
+  `PozitieId` int unsigned DEFAULT NULL,
+  `SetAnvelopeId` int NOT NULL,
+  `PozitiePeMasina` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `ca_client_hotel` (
+  `Id` int unsigned NOT NULL AUTO_INCREMENT,
+  `NumeClient` varchar(45) NOT NULL,
+  `NumarTelefon` varchar(45) NOT NULL,
+  `Sofer` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `Id_UNIQUE` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `ca_masina` (
+  `Id` int unsigned NOT NULL AUTO_INCREMENT,
+  `NumarInmatriculare` varchar(45) DEFAULT NULL,
+  `SerieSasiu` varchar(45) DEFAULT NULL,
+  `TipVehicul` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `Id_UNIQUE` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `ca_set_anvelope` (
+  `Id` int unsigned NOT NULL AUTO_INCREMENT,
+  `MasinaId` int NOT NULL,
+  `ClientId` int NOT NULL,
+  `Nume_Set` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `Id_UNIQUE` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `istoric_status_anvelopa` (
+  `Id` int unsigned NOT NULL AUTO_INCREMENT,
+  `AnvelopaId` int NOT NULL,
+  `LastModified` datetime NOT NULL,
+  `OldStatus` varchar(45) NOT NULL,
+  `NewStatus` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `Id_UNIQUE` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
