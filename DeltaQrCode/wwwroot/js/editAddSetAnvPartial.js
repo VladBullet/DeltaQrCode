@@ -134,7 +134,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     $this.prop("disabled", false);
                     hideLoading();
-                }, 3000);
+                }, 1000);
             });
 
             $(document).on("click", "#apptsAddSubmitButton", function () {
@@ -168,7 +168,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     $this.prop("disabled", false);
                     hideLoading();
-                }, 3000);
+                }, 1000);
             });
 
 
