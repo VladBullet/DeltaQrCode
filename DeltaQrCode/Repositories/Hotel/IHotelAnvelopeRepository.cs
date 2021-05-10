@@ -20,10 +20,10 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaMarca>> GetMarcaByLableAsync(string label);
 
 
-        Task<Result<CaFlota>> GetFlotaByIdAsync(uint id);
-        Task<Result<List<CaFlota>>> GetFlotaAsync();
-        Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota);
-        Task<Result<CaFlota>> GetFlotaByLableAsync(string label);
+        //Task<Result<CaFlota>> GetFlotaByIdAsync(uint id);
+        //Task<Result<List<CaFlota>>> GetFlotaAsync();
+        //Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota);
+        //Task<Result<CaFlota>> GetFlotaByLableAsync(string label);
 
         Task<Result<CaMasina>> GetMasinaByIdAsync(uint id);
         Task<Result<CaMarca>> AddMasinaAsync(CaMarca marca);

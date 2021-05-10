@@ -22,6 +22,10 @@ namespace DeltaQrCode.Data
         public virtual DbSet<CaOperatiuneSchimbAnvelope> CaOperatiuneSchimbAnvelope { get; set; }
         public virtual DbSet<CaServicetypes> CaServicetypes { get; set; }
         public virtual DbSet<CaAnvelopa> CaAnvelopa { get; set; }
+        public virtual DbSet<CaMasina> CaMasina { get; set; }
+        public virtual DbSet<CaClientHotel> CaClientHotel { get; set; }
+        public virtual DbSet<IstoricStatusAnvelopa> IstoricStatusAnvelopa { get; set; }
+        public virtual DbSet<CaSetAnvelope> CaSetAnvelope { get; set; }
         public virtual DbSet<CaHotelPositions> CaHotelPositions { get; set; }
         public virtual DbSet<CaUsers> CaUsers { get; set; }
         public virtual DbSet<HistoryAnvelope> HistoryAnvelope { get; set; }
@@ -377,23 +381,10 @@ namespace DeltaQrCode.Data
                     .IsRequired()
                     .HasColumnType("varchar(100)");
 
-                entity.Property(e => e.NumarInmatriculare)
-                    .IsRequired()
-                    .HasColumnType("varchar(45)");
-
-                entity.Property(e => e.NumarTelefon)
-                    .IsRequired()
-                    .HasColumnType("varchar(45)");
-
-                entity.Property(e => e.NumeClient)
-                    .IsRequired()
-                    .HasColumnType("varchar(50)");
-
                 entity.Property(e => e.Observatii).HasColumnType("varchar(100)");
 
                 entity.Property(e => e.PozitiePeMasina).HasColumnType("varchar(45)");
 
-                entity.Property(e => e.SerieSasiu).HasColumnType("varchar(45)");
 
                 entity.Property(e => e.StatusCurent)
                     .IsRequired()

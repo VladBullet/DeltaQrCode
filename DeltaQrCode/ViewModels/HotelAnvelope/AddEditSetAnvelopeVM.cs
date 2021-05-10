@@ -5,20 +5,13 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
     public class AddEditSetAnvelopeVM
     {
         public uint Id { get; set; }
-        public string NumarInmatriculare { get; set; }
-        public string NumeClient { get; set; }
-        public string NumarTelefon { get; set; }
-        public string SerieSasiu { get; set; }
         public string PozitieInRaft { get; set; }
         public int? MarcaId { get; set; }
         public int? PozitieId { get; set; }
         public int? OldPozitieId { get; set; }
-        public int? FlotaId { get; set; }
         public string Marca { get; set; }
         public string OldMarca { get; set; }
         public int OldNumarBucati { get; set; }
-        public string Flota { get; set; }
-        public string OldFlota { get; set; }
         public int NrBucati { get; set; }
 
         public int Diametru { get; set; }
@@ -52,12 +45,7 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string StatusCurent { get; set; }
         public DateTime DataUltimaModificare { get; set; }
         public bool Deleted { get; set; }
-        public string OldNumarInmatriculare { get; set; }
-        public string OldNumeClient { get; set; }
-        public string OldNumarTelefon { get; set; }
-        public string OldSerieSasiu { get; set; }
         public uint? OldMarcaId { get; set; }
-        public uint? OldFlotaId { get; set; }
         public string OldTipSezon { get; set; }
         public string OldObservatii { get; set; }
     }

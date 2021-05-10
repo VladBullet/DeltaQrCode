@@ -42,7 +42,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var list = await _db.CaAnvelopa.Where(x => !x.Deleted).OrderBy(s => s.NumarInmatriculare).ThenBy(x => x.DataUltimaModificare).ToListAsync();
+                var list = await _db.CaAnvelopa.Where(x => !x.Deleted).OrderBy(x => x.DataUltimaModificare).ToListAsync();
                 return Result<List<CaAnvelopa>>.ResultOk(list);
             }
             catch (Exception er)
@@ -94,10 +94,10 @@ namespace DeltaQrCode.Repositories
             {
                 var flote = _db.CaFlota.Where(x => x.Label.ToLower().Contains(searchString.ToLower()));
                 var list = await _db.CaAnvelopa.Where(x => !x.Deleted).ToListAsync();
-                if (!string.IsNullOrEmpty(searchString))
-                {
-                    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || flote.Any(y => y.Id == x.FlotaId) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower())).ToList();
-                }
+                //if (!string.IsNullOrEmpty(searchString))
+                //{
+                //    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || flote.Any(y => y.Id == x.FlotaId) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower())).ToList();
+                //}
                 return Result<List<CaAnvelopa>>.ResultOk(list);
             }
             catch (Exception er)
@@ -193,70 +193,70 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
-        {
-            try
-            {
-                var value = await _db.CaFlota.FirstAsync(x => x.Id == id);
-                return Result<CaFlota>.ResultOk(value);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea flotei in functie de id in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de id in repository!", er);
-            }
+        //public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
+        //{
+        //    try
+        //    {
+        //        var value = await _db.CaFlota.FirstAsync(x => x.Id == id);
+        //        return Result<CaFlota>.ResultOk(value);
+        //    }
+        //    catch (Exception er)
+        //    {
+        //        Log.Error(er, "Ceva nu a mers bine la gasirea flotei in functie de id in repository!");
+        //        throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de id in repository!", er);
+        //    }
 
-        }
-
-
-        public async Task<Result<List<CaFlota>>> GetFlotaAsync()
-        {
-            try
-            {
-                var value = await _db.CaFlota.ToListAsync();
-                return Result<List<CaFlota>>.ResultOk(value);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea flotei in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea flotei in repository!", er);
-            }
-
-        }
+        //}
 
 
-        public async Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota)
-        {
-            try
-            {
-                var value = await _db.CaFlota.AddAsync(flota);
-                await _db.SaveChangesAsync();
-                return Result<CaFlota>.ResultOk(value.Entity);
+        //public async Task<Result<List<CaFlota>>> GetFlotaAsync()
+        //{
+        //    try
+        //    {
+        //        var value = await _db.CaFlota.ToListAsync();
+        //        return Result<List<CaFlota>>.ResultOk(value);
+        //    }
+        //    catch (Exception er)
+        //    {
+        //        Log.Error(er, "Ceva nu a mers bine la gasirea flotei in repository!");
+        //        throw new Exception("Ceva nu a mers bine la gasirea flotei in repository!", er);
+        //    }
 
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la adaugarea flotei in repository!");
-                throw new Exception("Ceva nu a mers bine la adaugarea flotei in repository!", er);
-            }
-        }
+        //}
 
 
-        public async Task<Result<CaFlota>> GetFlotaByLableAsync(string label)
-        {
-            try
-            {
-                label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
-                var value = await _db.CaFlota.FirstOrDefaultAsync(x => x.Label.ToLower().Contains(label.ToLower()));
-                return Result<CaFlota>.ResultOk(value);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea flotei in functie de label in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de label in repository!", er);
-            }
+        //public async Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota)
+        //{
+        //    try
+        //    {
+        //        var value = await _db.CaFlota.AddAsync(flota);
+        //        await _db.SaveChangesAsync();
+        //        return Result<CaFlota>.ResultOk(value.Entity);
 
-        }
+        //    }
+        //    catch (Exception er)
+        //    {
+        //        Log.Error(er, "Ceva nu a mers bine la adaugarea flotei in repository!");
+        //        throw new Exception("Ceva nu a mers bine la adaugarea flotei in repository!", er);
+        //    }
+        //}
+
+
+        //public async Task<Result<CaFlota>> GetFlotaByLableAsync(string label)
+        //{
+        //    try
+        //    {
+        //        label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
+        //        var value = await _db.CaFlota.FirstOrDefaultAsync(x => x.Label.ToLower().Contains(label.ToLower()));
+        //        return Result<CaFlota>.ResultOk(value);
+        //    }
+        //    catch (Exception er)
+        //    {
+        //        Log.Error(er, "Ceva nu a mers bine la gasirea flotei in functie de label in repository!");
+        //        throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de label in repository!", er);
+        //    }
+
+        //}
 
         public Task<Result<CaMasina>> GetMasinaByIdAsync(uint id)
         {

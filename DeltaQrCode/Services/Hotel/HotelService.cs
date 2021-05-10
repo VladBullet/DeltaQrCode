@@ -48,11 +48,11 @@ namespace DeltaQrCode.Services.Hotel
                     var marca = await _hotelRepository.GetMarcaByIdAsync(value.Entity.MarcaId.Value);
                     model.Marca = marca.Successful ? marca.Entity.Label : string.Empty;
                 }
-                if (value.Entity.FlotaId != null)
-                {
-                    var flota = await _hotelRepository.GetFlotaByIdAsync(value.Entity.FlotaId.Value);
-                    model.Flota = flota.Successful ? flota.Entity.Label : string.Empty;
-                }
+                //if (value.Entity.FlotaId != null)
+                //{
+                //    var flota = await _hotelRepository.GetFlotaByIdAsync(value.Entity.FlotaId.Value);
+                //    model.Flota = flota.Successful ? flota.Entity.Label : string.Empty;
+                //}
                 return Result<AnvelopDto>.ResultOk(model);
             }
             catch (Exception er)
@@ -103,35 +103,35 @@ namespace DeltaQrCode.Services.Hotel
 
                 var flota = Result<CaFlota>.ResultOk(null);
 
-                if (!string.IsNullOrEmpty(setAnv.Flota))
-                {
-                    flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
-                }
+                //if (!string.IsNullOrEmpty(setAnv.Flota))
+                //{
+                //    flota = await _hotelRepository.GetFlotaByLableAsync(setAnv.Flota);
+                //}
 
-                if (!flota.Successful)
-                {
-                    Log.Error("Ceva nu a mers bine la gasirea floyei in functie de label in metoda de adaugare anvelope in servicii!");
-                    throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de label in metoda de adaugare anvelope in servicii!");
-                }
+                //if (!flota.Successful)
+                //{
+                //    Log.Error("Ceva nu a mers bine la gasirea floyei in functie de label in metoda de adaugare anvelope in servicii!");
+                //    throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de label in metoda de adaugare anvelope in servicii!");
+                //}
 
-                if (flota.Entity == null && !string.IsNullOrEmpty(setAnv.Flota))
-                {
-                    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = setAnv.Flota.ToUpper() });
-                }
+                //if (flota.Entity == null && !string.IsNullOrEmpty(setAnv.Flota))
+                //{
+                //    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = setAnv.Flota.ToUpper() });
+                //}
 
-                if (!flota.Successful)
-                {
-                    Log.Error("Ceva nu a mers bine la adaugarea flotei in metoda de adaugare anvelope in servicii!");
-                    throw new Exception("Ceva nu a mers bine la adaugarea flotei in metoda de adaugare anvelope in servicii!");
-                }
-                if (flota.Entity != null)
-                {
-                    setAnv.FlotaId = flota.Entity.Id;
-                }
-                else
-                {
-                    setAnv.FlotaId = null;
-                }
+                //if (!flota.Successful)
+                //{
+                //    Log.Error("Ceva nu a mers bine la adaugarea flotei in metoda de adaugare anvelope in servicii!");
+                //    throw new Exception("Ceva nu a mers bine la adaugarea flotei in metoda de adaugare anvelope in servicii!");
+                //}
+                //if (flota.Entity != null)
+                //{
+                //    setAnv.FlotaId = flota.Entity.Id;
+                //}
+                //else
+                //{
+                //    setAnv.FlotaId = null;
+                //}
 
                 var modelForDatabase = _mapper.Map<CaAnvelopa>(setAnv);
 
@@ -139,9 +139,9 @@ namespace DeltaQrCode.Services.Hotel
 
                 modelForDatabase.Deleted = false;
 
-                modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
-                modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
-                modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
+                //modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
+                //modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
+                //modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
                 var value = await _hotelRepository.AddAnvelopaAsync(modelForDatabase);
                 var returnModel = _mapper.Map<AnvelopDto>(value.Entity);
                 return Result<AnvelopDto>.ResultOk(returnModel);
@@ -166,12 +166,12 @@ namespace DeltaQrCode.Services.Hotel
                 {
                     editSetAnv.NrBucati = editSetAnv.OldNumarBucati - editSetAnv.NrBucati;
                     editSetAnv.PozitieId = editSetAnv.OldPozitieId;
-                    editSetAnv.NumeClient = editSetAnv.OldNumeClient;
-                    editSetAnv.NumarTelefon = editSetAnv.OldNumarTelefon;
-                    editSetAnv.NumarInmatriculare = editSetAnv.OldNumarInmatriculare;
-                    editSetAnv.SerieSasiu = editSetAnv.OldSerieSasiu;
+                    //editSetAnv.NumeClient = editSetAnv.OldNumeClient;
+                    //editSetAnv.NumarTelefon = editSetAnv.OldNumarTelefon;
+                    //editSetAnv.NumarInmatriculare = editSetAnv.OldNumarInmatriculare;
+                    //editSetAnv.SerieSasiu = editSetAnv.OldSerieSasiu;
                     editSetAnv.Marca = editSetAnv.OldMarca;
-                    editSetAnv.Flota = editSetAnv.OldFlota;
+                    //editSetAnv.Flota = editSetAnv.OldFlota;
                     editSetAnv.TipSezon = editSetAnv.OldTipSezon;
                     editSetAnv.Observatii = editSetAnv.OldObservatii;
                     editSetAnv.Dimensiuni.Diam = editSetAnv.OldDimensiuni.Diam;
@@ -340,35 +340,35 @@ namespace DeltaQrCode.Services.Hotel
                 editSetAnv.MarcaId = marca.Entity.Id;
 
 
-                // Flota
-                var flota = await _hotelRepository.GetFlotaByLableAsync(editSetAnv.Flota);
-                if (!flota.Successful)
-                {
-                    Log.Error("Ceva nu a mers bine la gasirea floyei in functie de label in metoda de editare anvelope in servicii!");
-                    throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de label in metoda de editare anvelope in servicii!");
-                }
+                //// Flota
+                //var flota = await _hotelRepository.GetFlotaByLableAsync(editSetAnv.Flota);
+                //if (!flota.Successful)
+                //{
+                //    Log.Error("Ceva nu a mers bine la gasirea floyei in functie de label in metoda de editare anvelope in servicii!");
+                //    throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de label in metoda de editare anvelope in servicii!");
+                //}
 
-                if (flota.Entity == null && !string.IsNullOrEmpty(editSetAnv.Flota))
-                {
-                    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = editSetAnv.Flota.ToUpper() });
-                }
+                //if (flota.Entity == null && !string.IsNullOrEmpty(editSetAnv.Flota))
+                //{
+                //    flota = await _hotelRepository.AddFlotaAsync(new CaFlota() { Label = editSetAnv.Flota.ToUpper() });
+                //}
 
-                if (!flota.Successful)
-                {
-                    Log.Error("Ceva nu a mers bine la adaugarea flotei in metoda de editare anvelope in servicii!");
-                    throw new Exception("Ceva nu a mers bine la adaugarea flotei in metoda de editare anvelope in servicii!");
-                }
-                editSetAnv.FlotaId = flota.Entity.Id;
+                //if (!flota.Successful)
+                //{
+                //    Log.Error("Ceva nu a mers bine la adaugarea flotei in metoda de editare anvelope in servicii!");
+                //    throw new Exception("Ceva nu a mers bine la adaugarea flotei in metoda de editare anvelope in servicii!");
+                //}
+                //editSetAnv.FlotaId = flota.Entity.Id;
 
 
                 var modelForDatabase = _mapper.Map<CaAnvelopa>(editSetAnv);
-                modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
-                modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
-                if (modelForDatabase.SerieSasiu != null)
-                {
-                    modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
+                //modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
+                //modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
+                //if (modelForDatabase.SerieSasiu != null)
+                //{
+                //    modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
 
-                }
+                //}
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
                 var value = await _hotelRepository.UpdateAnvelopaAsync(modelForDatabase);
@@ -414,11 +414,11 @@ namespace DeltaQrCode.Services.Hotel
                             var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
                             item.Marca = marca.Successful ? marca.Entity.Label : string.Empty;
                         }
-                        if (item.FlotaId != null)
-                        {
-                            var flota = await _hotelRepository.GetFlotaByIdAsync(item.FlotaId.Value);
-                            item.Flota = flota.Successful ? flota.Entity.Label : string.Empty;
-                        }
+                        //if (item.FlotaId != null)
+                        //{
+                        //    var flota = await _hotelRepository.GetFlotaByIdAsync(item.FlotaId.Value);
+                        //    item.Flota = flota.Successful ? flota.Entity.Label : string.Empty;
+                        //}
 
                     }
                     return Result<List<AnvelopDto>>.ResultOk(model);
@@ -482,35 +482,35 @@ namespace DeltaQrCode.Services.Hotel
         }
 
 
-        public async Task<Result<List<CaFlota>>> GetFlote()
-        {
-            try
-            {
-                var result = await _hotelRepository.GetFlotaAsync();
-                return Result<List<CaFlota>>.ResultOk(result.Entity);
-            }
-            catch (Exception er)
-            {
-                Log.Error(er, "Ceva nu a mers bine la gasirea flotei in servicii!");
-                throw new Exception("Ceva nu a mers bine la gasirea flotei in servicii!", er);
-            }
-        }
+        //public async Task<Result<List<CaFlota>>> GetFlote()
+        //{
+        //    try
+        //    {
+        //        var result = await _hotelRepository.GetFlotaAsync();
+        //        return Result<List<CaFlota>>.ResultOk(result.Entity);
+        //    }
+        //    catch (Exception er)
+        //    {
+        //        Log.Error(er, "Ceva nu a mers bine la gasirea flotei in servicii!");
+        //        throw new Exception("Ceva nu a mers bine la gasirea flotei in servicii!", er);
+        //    }
+        //}
 
 
         public async Task<DataTable> GenerateDataForExcel()
         {
             DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[23] {
-                                            new DataColumn("NumeClient"),
-                                            new DataColumn("NumarInmatriculare"),
-                                            new DataColumn("NumarTelefon"),
-                                            new DataColumn("SerieSasiu"),
+            dt.Columns.AddRange(new DataColumn[18] {
+                                            //new DataColumn("NumeClient"),
+                                            //new DataColumn("NumarInmatriculare"),
+                                            //new DataColumn("NumarTelefon"),
+                                            //new DataColumn("SerieSasiu"),
                                             new DataColumn("Rand"),
                                             new DataColumn("Pozitie"),
                                             new DataColumn("Interval"),
                                             new DataColumn("LocuriOcupate"),
                                             new DataColumn("Marca"),
-                                            new DataColumn("Flota"),
+                                            //new DataColumn("Flota"),
                                             new DataColumn("NrBucati"),
                                             new DataColumn("Diametru"),
                                             new DataColumn("Latime"),
@@ -534,16 +534,17 @@ namespace DeltaQrCode.Services.Hotel
 
             foreach (var anvelope in setanvelope)
             {
-                dt.Rows.Add(anvelope.NumeClient,
-                    anvelope.NumarInmatriculare,
-                    anvelope.NumarTelefon,
-                    anvelope.SerieSasiu,
+                dt.Rows.Add(
+                    //anvelope.NumeClient,
+                //    anvelope.NumarInmatriculare,
+                //    anvelope.NumarTelefon,
+                //    anvelope.SerieSasiu,
                     anvelope.Pozitie?.Rand,
                     anvelope.Pozitie?.Pozitie,
                     anvelope.Pozitie?.Interval,
                     anvelope.Pozitie?.Locuriocupate,
                     anvelope.Marca,
-                    anvelope.Flota,
+                    //anvelope.Flota,
                     anvelope.NrBucati,
                     anvelope.Dimensiuni?.Diam,
                     anvelope.Dimensiuni?.Lat,

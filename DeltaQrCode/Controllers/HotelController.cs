@@ -71,14 +71,14 @@ namespace DeltaQrCode.Controllers
 
             model.OldPozitieId = model.PozitieId;
             model.OldNumarBucati = model.NrBucati;
-            model.OldNumeClient = model.NumeClient;
-            model.OldNumarInmatriculare = model.NumarInmatriculare;
-            model.OldSerieSasiu = model.SerieSasiu;
-            model.OldNumarTelefon = model.NumarTelefon;
+            //model.OldNumeClient = model.NumeClient;
+            //model.OldNumarInmatriculare = model.NumarInmatriculare;
+            //model.OldSerieSasiu = model.SerieSasiu;
+            //model.OldNumarTelefon = model.NumarTelefon;
             model.OldTipSezon = model.TipSezon;
             model.OldObservatii = model.Observatii;
             model.OldMarca = model.Marca;
-            model.OldFlota = model.Flota;
+            //model.OldFlota = model.Flota;
 
             HotelModalVM setVm = new HotelModalVM(model, actType);
 
@@ -235,17 +235,17 @@ namespace DeltaQrCode.Controllers
         }
 
 
-        [Produces("application/json")]
-        public async Task<IActionResult> GetFlote(string term)
-        {
-            var flote = await _hotelService.GetFlote();
-            var list = flote.Entity.Select(x => x.Label).ToList();
-            if (!string.IsNullOrEmpty(term))
-            {
-                list = list.Where(x => x.ToLower().Contains(term.ToLower())).ToList();
-            }
-            return new JsonResult(list);
-        }
+        //[Produces("application/json")]
+        //public async Task<IActionResult> GetFlote(string term)
+        //{
+        //    //var flote = await _hotelService.GetFlote();
+        //    var list = flote.Entity.Select(x => x.Label).ToList();
+        //    if (!string.IsNullOrEmpty(term))
+        //    {
+        //        list = list.Where(x => x.ToLower().Contains(term.ToLower())).ToList();
+        //    }
+        //    return new JsonResult(list);
+        //}
 
 
         [HttpGet]

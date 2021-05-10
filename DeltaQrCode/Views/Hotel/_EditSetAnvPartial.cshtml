@@ -22,7 +22,7 @@
 <input id="defaultInaltime" hidden="hidden" data-value="@Model.Inaltime" />
 <input id="defaultDot" hidden="hidden" data-value="@Model.Dot" />
 <input id="defaultMarca" hidden="hidden" data-value="@Model.Marca" />
-<input id="defaultFlota" hidden="hidden" data-value="@Model.Flota" />
+@*<input id="defaultFlota" hidden="hidden" data-value="@Model.Flota" />*@
 <input id="defaultTipSezon" hidden="hidden" data-value="@Model.TipSezon" />
 <input id="defaultStatusAnv" hidden="hidden" data-value="@Model.StatusCurent" />
 
@@ -46,17 +46,17 @@
             <input  hidden="hidden" asp-for="OldDreaptaSpate", value="@Model.OldDreaptaSpate" />
             <input  hidden="hidden" asp-for="OldNumarBucati", value="@Model.OldNumarBucati" />
 
-            <input  hidden="hidden" asp-for="OldNumeClient", value="@Model.OldNumeClient" />
+            @*<input  hidden="hidden" asp-for="OldNumeClient", value="@Model.OldNumeClient" />
             <input  hidden="hidden" asp-for="OldNumarInmatriculare", value="@Model.OldNumarInmatriculare" />
-            <input  hidden="hidden" asp-for="OldNumarTelefon", value="@Model.OldNumarTelefon" />
+            <input  hidden="hidden" asp-for="OldNumarTelefon", value="@Model.OldNumarTelefon" />*@
             <input  hidden="hidden" asp-for="OldMarca", value="@Model.OldMarca" />
-            <input  hidden="hidden" asp-for="OldFlota", value="@Model.OldFlota" />
+            @*<input  hidden="hidden" asp-for="OldFlota", value="@Model.OldFlota" />*@
             <input  hidden="hidden" asp-for="OldDiametru", value="@Model.OldDiametru" />
             <input  hidden="hidden" asp-for="OldInaltime", value="@Model.OldInaltime" />
             <input  hidden="hidden" asp-for="OldLatime", value="@Model.OldLatime" />
             <input  hidden="hidden" asp-for="OldDot", value="@Model.OldDot" />
             <input  hidden="hidden" asp-for="OldObservatii", value="@Model.OldObservatii" />
-            <input  hidden="hidden" asp-for="OldSerieSasiu", value="@Model.OldSerieSasiu" />
+            @*<input  hidden="hidden" asp-for="OldSerieSasiu", value="@Model.OldSerieSasiu" />*@
             <input  hidden="hidden" asp-for="OldTipSezon", value="@Model.OldTipSezon" />
 
             @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
@@ -64,7 +64,7 @@
             <div class="form-row">
                 <div class="col">
 
-                    <div class="form-group col-md-12">
+                    @*<div class="form-group col-md-12">
                         @Html.LabelFor(model => model.NumeClient, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
@@ -94,7 +94,7 @@
                             @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
                             @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger error_span" })
                         </div>
-                    </div>
+                    </div>*@
 
                 </div>
                 <br />
@@ -152,13 +152,13 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-6 col-sm-4 col-4">
+                @*<div class="form-group col-md-6 col-sm-4 col-4">
                     @Html.LabelFor(model => model.Flota, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                     <div class="col-md-9">
                         <select id="Flota" class="form-control" asp-for="Flota" data-placeholder="@Model.Flota" value="@Model.Flota"></select>
                         @Html.ValidationMessageFor(model => model.Flota, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>*@
 
                 <div class="form-group col-md-3 col-sm-3 col-3">
                     @Html.LabelFor(model => model.NrBucati, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
