@@ -2,7 +2,7 @@
 @using System.Security.Claims
 
 <ul class="navbar-nav">
-    @if (User.Identity.IsAuthenticated && User.HasClaim(ClaimTypes.Role, "admin"))
+    @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
             <span class="nav-link text-dark" title="Manage">Hello @User.Identity.Name!</span>

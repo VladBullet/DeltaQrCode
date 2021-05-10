@@ -45,12 +45,14 @@ namespace DeltaQrCode.Controllers
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(LoginViewPath, model);
                 }
+                string role = user.UserAccount == "receptie" || user.UserAccount == "vulcanizare" ? "operator" : "admin";
 
+                var roleClaim = new Claim(ClaimTypes.Role, role);
                 var claims = new List<Claim>
                                  {
                                      new Claim(ClaimTypes.Name, user.UserAccount),
                                      new Claim("Mail", user.UserEmailAddress),
-                                     new Claim(ClaimTypes.Role, "admin")
+                                     roleClaim
                                  };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -46,7 +46,7 @@ $(document).ready(function () {
                 }
                 setTimeout(function () {
                     $this.prop("disabled", false);
-                }, 3000);
+                }, 100);
             });
 
             $(document).on("click", "#apptsAddButton", function (event) {
@@ -79,7 +79,7 @@ $(document).ready(function () {
                 }
                 setTimeout(function () {
                     $this.prop("disabled", false);
-                }, 3000);
+                }, 100);
             });
 
 

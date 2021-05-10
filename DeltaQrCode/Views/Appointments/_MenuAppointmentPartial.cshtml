@@ -1,5 +1,6 @@
 ﻿@using DeltaQrCode.ModelsDto
 @using Microsoft.AspNetCore.Razor.TagHelpers
+@using System.Security.Claims
 @model DeltaQrCode.ViewModels.Appointments.ConfirmVM
 
 <div class="modal-body">
@@ -10,7 +11,7 @@
         </div>
 
         <div class="col-md-3">
-            <div class="btn btn-squared-default-plain btn-primary"  id="confirmButton" type="button" data-value="@Model.Id" data-confirm="@Model.Confirm">
+            <div class="btn btn-squared-default-plain btn-primary" id="confirmButton" type="button" data-value="@Model.Id" data-confirm="@Model.Confirm">
                 @if (Model.Confirm)
                 {
                     <br /><i class="fas fa-check-circle fa-4x"></i> <br />
@@ -27,10 +28,12 @@
         <div class="col-md-3">
             <div class="btn btn-squared-default-plain btn-warning text-white" id="editButton" type="button" data-value="@Model.Id"><br /><i class="fas fa-pen-square fa-4x "></i> <br />Editeaza</div>
         </div>
-
-        <div class="col-md-3">
-            <div class="btn btn-squared-default-plain btn-danger" id="deleteButton" type="button" data-value="@Model.Id"><br /><i class="fas fa-trash-alt fa-4x"></i> <br />  Sterge </div>
-        </div>
+        @if (User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "admin")
+        {
+            <div class="col-md-3">
+                <div class="btn btn-squared-default-plain btn-danger" id="deleteButton" type="button" data-value="@Model.Id"><br /><i class="fas fa-trash-alt fa-4x"></i> <br />  Sterge </div>
+            </div>
+        }
 
     </div>
 
