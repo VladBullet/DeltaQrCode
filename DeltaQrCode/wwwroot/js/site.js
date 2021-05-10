@@ -149,10 +149,11 @@ function download(file, img) {
     document.body.removeChild(element);
 };
 var showLoading = function () {
-    $(".overlay").show();
-    $(".spinner").show();
+    $(document).find(".overlay").show();
+    $(document).find(".spinner").show();
 };
 var hideLoading = function () {
-    $(".overlay").hide();
-    $(".spinner").hide();
+    $(document).find(".overlay").hide();
+    $(document).find(".spinner").hide();
+
 };

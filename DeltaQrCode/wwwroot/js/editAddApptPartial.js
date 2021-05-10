@@ -80,11 +80,9 @@ $(document).ready(function () {
                 }
                 setTimeout(function () {
                     $this.prop("disabled", false);
+                    hideLoading();
                 }, 1000);
-                
-                hideLoading();
             });
-
 
             initialized = true;
         }
