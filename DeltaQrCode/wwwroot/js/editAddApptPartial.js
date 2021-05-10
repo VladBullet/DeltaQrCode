@@ -20,6 +20,7 @@ $(document).ready(function () {
                 event.preventDefault();
                 $this = $("#apptsEditButton");
                 $this.prop("disabled", true);
+                showLoading();
                 checkDateAndTimeAvailable();
                 console.log("selection after check : ", selectieBuna);
                 var result = validator.validate(validator);
@@ -46,6 +47,7 @@ $(document).ready(function () {
                 }
                 setTimeout(function () {
                     $this.prop("disabled", false);
+                    hideLoading();
                 }, 1000);
             });
 
