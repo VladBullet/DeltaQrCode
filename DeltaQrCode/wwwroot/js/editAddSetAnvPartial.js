@@ -107,6 +107,7 @@ $(document).ready(function () {
             $(document).on("click", "#apptsEditSubmitButton", function () {
                 $this = $("#apptsEditSubmitButton");
                 $this.prop("disabled", true);
+                showLoading();
                 var result = validator.validate(validator);
                 if (result.formIsValid) {
                     console.log("edit");
@@ -132,12 +133,14 @@ $(document).ready(function () {
                 }
                 setTimeout(function () {
                     $this.prop("disabled", false);
-                }, 3000);
+                    hideLoading();
+                }, 1000);
             });
 
             $(document).on("click", "#apptsAddSubmitButton", function () {
                 $this = $("#apptsAddSubmitButton");
                 $this.prop("disabled", true);
+                showLoading();
                 var result = validator.validate(validator);
                 if (result.formIsValid) {
                     console.log("submit add");
@@ -164,7 +167,8 @@ $(document).ready(function () {
                 }
                 setTimeout(function () {
                     $this.prop("disabled", false);
-                }, 3000);
+                    hideLoading();
+                }, 1000);
             });
 
 

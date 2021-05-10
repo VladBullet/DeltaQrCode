@@ -148,3 +148,12 @@ function download(file, img) {
 
     document.body.removeChild(element);
 };
+var showLoading = function () {
+    $(document).find(".overlay").show();
+    $(document).find(".spinner").show();
+};
+var hideLoading = function () {
+    $(document).find(".overlay").hide();
+    $(document).find(".spinner").hide();
+
+};

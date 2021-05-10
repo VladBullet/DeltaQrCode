@@ -17,10 +17,10 @@
 <div class="container">
     <div class="form-row">
         <div class="input-group col-md-5 col-5">
-                <label class="col-form-label"></label>
-                <input id="datepicker" class="form-control" placeholder="Selecteaza data" />
-                <span class="text-danger"></span>
-                <a style="margin-left:10px;" type="button" id="DownloadExcel" asp-action="download" asp-controller="Appointments" class="btn btn-secondary"><i class="fas fa-file-download"></i></a>
+            <label class="col-form-label"></label>
+            <input id="datepicker" class="form-control" placeholder="Selecteaza data" />
+            <span class="text-danger"></span>
+            <a style="margin-left:10px;" type="button" id="DownloadExcel" asp-action="download" asp-controller="Appointments" class="btn btn-secondary"><i class="fas fa-file-download"></i></a>
 
         </div>
     </div>
@@ -71,6 +71,7 @@
     </div>
 </div>
 
+<partial name="_LoadingSpinner"/>
 
 @section Scripts{
 
@@ -85,11 +86,11 @@
         window.setTimeout(function () {
             getAppointmentsForSelectedDate();
         },
-            1000);
+            100);
 
         /* on load, scroll to a sensible hour */
         scrollToWorkingHours();
-            /*end page load*/
+                                /*end page load*/
     </script>
 
 }
