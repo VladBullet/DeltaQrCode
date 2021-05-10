@@ -34,20 +34,20 @@
         comparerValue: /^((\+|)\d{1,3}( |-)?)?((\(\d {3}\))|\d{3})[- .]?\d{3}[- .]?\d{4}$|^((\+|)\d{1,3}( )?)?(\d{3}[ ]?){2}\d{3}$|^(\+\d{1,3}( )?)?(\d{3}[ ]?)(\d{2}[ ]?){2}\d{2}$|^(\(?\d{1,3}\)?)(( *)-|\/| )(\d{1,3}(-*)(\d{1,5}))$|^(\+?)((\d{2,})(-)( *)){1,4}(\d{1,5})$/g,
         message: "Numarul introdus nu este valid. Introduceti un numar de telefon valid!"
     },
-    {
-        ruleName: "emailClientRequired",
-        ruleForElementId: "#EmailClient",
-        check: "required",
-        comparerValue: true,
-        message: "Va rugam introduceti adresa de email!"
-    },
-    {
-        ruleName: "emailClientRequired",
-        ruleForElementId: "#EmailClient",
-        check: "regex",
-        comparerValue: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
-        message: "Adresa de email nu este valida. Introduceti o adresa de email valida!"
-    },
+    //{
+    //    ruleName: "emailClientRequired",
+    //    ruleForElementId: "#EmailClient",
+    //    check: "required",
+    //    comparerValue: true,
+    //    message: "Va rugam introduceti adresa de email!"
+    //},
+    //{
+    //    ruleName: "emailClientRequired",
+    //    ruleForElementId: "#EmailClient",
+    //    check: "regex",
+    //    comparerValue: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
+    //    message: "Adresa de email nu este valida. Introduceti o adresa de email valida!"
+    //},
     {
         ruleName: "rampIdRange",
         ruleForElementId: "#RampId",

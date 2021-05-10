@@ -176,14 +176,17 @@
     $(document).ready(function () {
         checkDateAndTimeAvailable();
         validator.validate(validator);
-        var saveBtn = $("#apptsEditButton");
-        $(saveBtn).prop("disabled", true);
     });
 
+    function enable() {
+        $('#apptsAddButton').removeAttr('disabled');
+    }
 
-    $(document).one("click", "#apptsEditButton", function (event) {
+
+    $(document).on("click", "#apptsEditButton", function (event) {
         event.preventDefault();
-        $(this).prop("disabled", true);
+        $('#apptsEditButton').attr('disabled', 'disabled');
+        setTimeout(enable, 3000);
         checkDateAndTimeAvailable();
         console.log("selection after check : ", selectieBuna);
         var result = validator.validate(validator);
@@ -208,7 +211,6 @@
         else {
             updateUi(result.validationResults, "form-group", "error_span");
         }
-        $(this).prop("disabled", false);
     });
 
 

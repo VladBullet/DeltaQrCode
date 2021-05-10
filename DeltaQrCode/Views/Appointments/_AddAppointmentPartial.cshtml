@@ -141,15 +141,15 @@
     $(document).ready(function () {
         checkDateAndTimeAvailable();
         validator.validate(validator);
-        var saveBtn = $("#apptsEditButton");
-        $(saveBtn).prop("disabled", true);
     });
 
 
-
-    $("#apptsAddButton").one("click", function (event) {
+    $(document).on("click","#apptsAddButton", function (event) {
         event.preventDefault();
-        $(this).prop("disabled", true);
+        $this = $("#apptsAddButton");
+        $this.prop("disabled", true);
+        //$('#apptsAddButton').attr('disabled', 'disabled');
+        //setTimeout(enable, 3000);
         checkDateAndTimeAvailable();
         var result = validator.validate(validator);
         //console.log(result.formIsValid);
@@ -174,7 +174,9 @@
         else {
             updateUi(result.validationResults, "form-group", "error_span");
         }
-        $(this).prop("disabled", false);
+        setTimeout(function () {
+            $this.prop("disabled", false);
+        }, 3000);
     });
 
     $(document).on("keyup change",

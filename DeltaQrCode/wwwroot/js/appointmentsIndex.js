@@ -49,7 +49,7 @@ var apptNewModalDialog = function (startDate, startHour, rampId) {
             preOpenModal();
             $('#myApptModal').modal('show');
             makeModalScrollable("myApptModal");
-
+            console.log("add listener");
             var dateFromPage = $("#datepicker").val();
             var datePage = new Date(dateFromPage);
             $("#datepickerModal").datepicker({ "setDate": datePage, format: "yy-mm-dd", minDate: 0 });
@@ -186,6 +186,7 @@ $('.hour').on('click',
             var selectedDateDiv = $('#datepicker');
             var rampNr = self.closest(".ramp").attr("data-value");
             // Make the modal here!
+            console.log("add on click");
             apptNewModalDialog(selectedDateDiv.val(), startHourOnly, rampNr);
         }
     });
