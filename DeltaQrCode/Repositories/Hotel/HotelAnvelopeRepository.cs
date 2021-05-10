@@ -258,6 +258,14 @@ namespace DeltaQrCode.Repositories
 
         }
 
+        public Task<Result<CaMasina>> GetMasinaByIdAsync(uint id)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<Result<CaMarca>> AddMasinaAsync(CaMarca marca)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
