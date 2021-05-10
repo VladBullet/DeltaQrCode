@@ -609,6 +609,38 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
+        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnvelope)
+        {
+            try
+            {
+                var model = _mapper.Map<CaSetAnvelope>(setAnvelope);
+                var value = await _hotelRepository.AddSetAnvelopeAsync(model);
+                var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                return Result<SetAnvelopeDto>.ResultOk(returnModel);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea setului de anvelope in servicii!");
+                throw new Exception("Ceva nu a mers bine la adaugarea setului de anvelope in servicii!", er);
+            }
+        }
+
+        public async Task<Result<SetAnvelopeDto>> EditSetAnvelopeAsync(SetAnvelopeDto setAnvelope)
+        {
+            try
+            {
+                var model = _mapper.Map<CaSetAnvelope>(setAnvelope);
+                var value = await _hotelRepository.EditSetAnvelopeAsync(model);
+                var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                return Result<SetAnvelopeDto>.ResultOk(returnModel);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la editarea setului de anvelope in servicii!");
+                throw new Exception("Ceva nu a mers bine la editarea setului de anvelope in servicii!", er);
+            }
+        }
+
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         public async Task<Result<MasinaDto>> GetMasinaByIdAsync(int id)
@@ -645,7 +677,7 @@ namespace DeltaQrCode.Services.Hotel
         {
             try
             {
-                var value = await _hotelRepository.GetMasinaByNrAutoAsync(serieSasiu);
+                var value = await _hotelRepository.GetMasinaBySerieSasiuAsync(serieSasiu);
                 var model = _mapper.Map<MasinaDto>(value.Entity);
                 return Result<MasinaDto>.ResultOk(model);
             }
@@ -661,7 +693,7 @@ namespace DeltaQrCode.Services.Hotel
             throw new NotImplementedException();
         }
 
-        public async Task<Result<MasinaDto>> AddMasinaAsync(CaMasina masina)
+        public async Task<Result<MasinaDto>> AddMasinaAsync(MasinaDto masina)
         {
             try
             {
@@ -677,7 +709,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<MasinaDto>> EditMasinaAsync(CaMasina masina)
+        public async Task<Result<MasinaDto>> EditMasinaAsync(MasinaDto masina)
         {
             try
             {
@@ -690,6 +722,75 @@ namespace DeltaQrCode.Services.Hotel
             {
                 Log.Error(er, "Ceva nu a mers bine la editarea masinii in servicii!");
                 throw new Exception("Ceva nu a mers bine la editarea masinii in servicii!", er);
+            }
+        }
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+        public async Task<Result<ClientHotelDto>> GetClientByIdAsync(int id)
+        {
+            try
+            {
+                var value = await _hotelRepository.GetClientByIdAsync(id);
+                var model = _mapper.Map<ClientHotelDto>(value.Entity);
+                return Result<ClientHotelDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea clientului in functie de id in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea clientului in functie de id in servicii!", er);
+            }
+        }
+
+        public async Task<Result<ClientHotelDto>> GetClientByNameAsync(string numeClient)
+        {
+            try
+            {
+                var value = await _hotelRepository.GetClientByNameAsync(numeClient);
+                var model = _mapper.Map<ClientHotelDto>(value.Entity);
+                return Result<ClientHotelDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea clientului in functie de numeClient in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea clientului in functie de numeClient in servicii!", er);
+            }
+        }
+
+        public async Task<Result<ClientHotelDto>> GetClientForSetIdAsync(int setId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Result<ClientHotelDto>> AddClientAsync(ClientHotelDto client)
+        {
+            try
+            {
+                var model = _mapper.Map<CaClientHotel>(client);
+                var value = await _hotelRepository.AddClientAsync(model);
+                var returnModel = _mapper.Map<ClientHotelDto>(value.Entity);
+                return Result<ClientHotelDto>.ResultOk(returnModel);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea clientului in servicii!");
+                throw new Exception("Ceva nu a mers bine la adaugarea clientului in servicii!", er);
+            }
+        }
+
+        public async Task<Result<ClientHotelDto>> EditClientAsync(ClientHotelDto client)
+        {
+            try
+            {
+                var model = _mapper.Map<CaClientHotel>(client);
+                var value = await _hotelRepository.EditClientAsync(model);
+                var returnModel = _mapper.Map<ClientHotelDto>(value.Entity);
+                return Result<ClientHotelDto>.ResultOk(returnModel);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la editarea clientului in servicii!");
+                throw new Exception("Ceva nu a mers bine la editarea clientului in servicii!", er);
             }
         }
     }

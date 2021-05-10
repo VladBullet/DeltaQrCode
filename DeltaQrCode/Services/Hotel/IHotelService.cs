@@ -21,13 +21,21 @@ namespace DeltaQrCode.Services.Hotel
         Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id);
         Task<Result<SetAnvelopeDto>> GetSetAnvelopeByClientIdAsync(int clientId);
         Task<Result<SetAnvelopeDto>> GetSetAnvelopeByMasinaIdAsync(int masinaId);
+        Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnvelope);
+        Task<Result<SetAnvelopeDto>> EditSetAnvelopeAsync(SetAnvelopeDto setAnvelope);
 
         Task<Result<MasinaDto>> GetMasinaByIdAsync(int id);
         Task<Result<MasinaDto>> GetMasinaByNrAutoAsync(string nrAuto);
         Task<Result<MasinaDto>> GetMasinaBySerieSasiuAsync(string serieSasiu);
         Task<Result<MasinaDto>> GetMasinaForSetIdAsync(int setId);
-        Task<Result<MasinaDto>> AddMasinaAsync(CaMasina masina);
-        Task<Result<MasinaDto>> EditMasinaAsync(CaMasina masina);
+        Task<Result<MasinaDto>> AddMasinaAsync(MasinaDto masina);
+        Task<Result<MasinaDto>> EditMasinaAsync(MasinaDto masina);
+
+        Task<Result<ClientHotelDto>> GetClientByIdAsync(int id);
+        Task<Result<ClientHotelDto>> GetClientByNameAsync(string numeClient);
+        Task<Result<ClientHotelDto>> GetClientForSetIdAsync(int setId);
+        Task<Result<ClientHotelDto>> AddClientAsync(ClientHotelDto client);
+        Task<Result<ClientHotelDto>> EditClientAsync(ClientHotelDto client);
 
     }
 }

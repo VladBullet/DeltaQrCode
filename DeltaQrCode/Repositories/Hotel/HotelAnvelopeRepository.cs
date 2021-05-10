@@ -306,7 +306,40 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        public async Task<Result<CaSetAnvelope>> AddSetAnvelopeAsync(CaSetAnvelope setAnvelope)
+        {
+            try
+            {
+                var value = await _db.CaSetAnvelope.AddAsync(setAnvelope);
+                await _db.SaveChangesAsync();
+                return Result<CaSetAnvelope>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea setului de anvelope in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea setului de anvelope in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaSetAnvelope>> EditSetAnvelopeAsync(CaSetAnvelope setAnvelope)
+        {
+            try
+            {
+                _db.CaSetAnvelope.Update(setAnvelope);
+                await _db.SaveChangesAsync();
+
+                return Result<CaSetAnvelope>.ResultOk(setAnvelope);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la editarea setului de anvelope in repository!");
+                throw new Exception("Ceva nu a mers bine la editarea setului de anvelope in repository!", er);
+            }
+        }
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
         public async Task<Result<CaMasina>> GetMasinaByIdAsync(int id)
         {
@@ -387,6 +420,76 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la editarea masinii in repository!", er);
             }
         }
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+        public async Task<Result<CaClientHotel>> GetClientByIdAsync(int id)
+        {
+            try
+            {
+                var value = await _db.CaClientHotel.FirstAsync(x => x.Id == id);
+                return Result<CaClientHotel>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea clientului in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea clientului in functie de id in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaClientHotel>> GetClientByNameAsync(string numeClient)
+        {
+            try
+            {
+                var value = await _db.CaClientHotel.FirstOrDefaultAsync(x => x.NumeClient.ToLower().Contains(numeClient.ToLower()));
+                return Result<CaClientHotel>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea clientului in functie de numeClient in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea clientului in functie de numeClient in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaClientHotel>> GetClientForSetIdAsync(int setId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Result<CaClientHotel>> AddClientAsync(CaClientHotel client)
+        {
+            try
+            {
+                var value = await _db.CaClientHotel.AddAsync(client);
+                await _db.SaveChangesAsync();
+                return Result<CaClientHotel>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea clientului in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea clientului in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaClientHotel>> EditClientAsync(CaClientHotel client)
+        {
+            try
+            {
+                _db.CaClientHotel.Update(client);
+                await _db.SaveChangesAsync();
+
+                return Result<CaClientHotel>.ResultOk(client);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la editarea clientului in repository!");
+                throw new Exception("Ceva nu a mers bine la editarea clientului in repository!", er);
+            }
+        }
+
+
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     }

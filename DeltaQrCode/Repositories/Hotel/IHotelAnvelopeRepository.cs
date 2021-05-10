@@ -28,6 +28,8 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id);
         Task<Result<CaSetAnvelope>> GetSetAnvelopeByClientIdAsync(int clientId);
         Task<Result<CaSetAnvelope>> GetSetAnvelopeByMasinaIdAsync(int masinaId);
+        Task<Result<CaSetAnvelope>> AddSetAnvelopeAsync(CaSetAnvelope setAnvelope);
+        Task<Result<CaSetAnvelope>> EditSetAnvelopeAsync(CaSetAnvelope setAnvelope);
 
         Task<Result<CaMasina>> GetMasinaByIdAsync(int id);
         Task<Result<CaMasina>> GetMasinaByNrAutoAsync(string nrAuto);
@@ -35,6 +37,12 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaMasina>> GetMasinaForSetIdAsync(int setId);
         Task<Result<CaMasina>> AddMasinaAsync(CaMasina masina);
         Task<Result<CaMasina>> EditMasinaAsync(CaMasina masina);
+
+        Task<Result<CaClientHotel>> GetClientByIdAsync(int id);
+        Task<Result<CaClientHotel>> GetClientByNameAsync(string numeClient);
+        Task<Result<CaClientHotel>> GetClientForSetIdAsync(int setId);
+        Task<Result<CaClientHotel>> AddClientAsync(CaClientHotel client);
+        Task<Result<CaClientHotel>> EditClientAsync(CaClientHotel client);
 
     }
 }
