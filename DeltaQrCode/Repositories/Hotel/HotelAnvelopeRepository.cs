@@ -23,7 +23,7 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<CaAnvelopa>> GetSetAnvelopeByIdAsync(int id)
+        public async Task<Result<CaAnvelopa>> GetAnvelopaByIdAsync(int id)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<List<CaAnvelopa>>> GetAllSetAnvelopeAsync()
+        public async Task<Result<List<CaAnvelopa>>> GetAllAnvelopaAsync()
         {
             try
             {
@@ -53,7 +53,7 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<CaAnvelopa>> AddSetAnvelopeAsync(CaAnvelopa setAnv)
+        public async Task<Result<CaAnvelopa>> AddAnvelopaAsync(CaAnvelopa setAnv)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<CaAnvelopa>> UpdateSetAnvelopeAsync(CaAnvelopa setAnv)
+        public async Task<Result<CaAnvelopa>> UpdateAnvelopaAsync(CaAnvelopa setAnv)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaAnvelopa>> DeleteSetAnvelopeAsync(int id)
+        public async Task<Result<CaAnvelopa>> DeleteAnvelopaAsync(int id)
         {
             try
             {

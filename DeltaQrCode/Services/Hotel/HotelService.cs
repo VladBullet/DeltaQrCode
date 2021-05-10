@@ -31,12 +31,12 @@ namespace DeltaQrCode.Services.Hotel
         }
 
 
-        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id)
+        public async Task<Result<AnvelopDto>> GetAnvelopaByIdAsync(int id)
         {
             try
             {
-                var value = await _hotelRepository.GetSetAnvelopeByIdAsync(id);
-                var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                var value = await _hotelRepository.GetAnvelopaByIdAsync(id);
+                var model = _mapper.Map<AnvelopDto>(value.Entity);
                 if (model.PozitieId != null)
                 {
                     var pozitie = await _hotelPositionsRepository.GetPositionByIdAsync(model.PozitieId.Value);
@@ -53,7 +53,7 @@ namespace DeltaQrCode.Services.Hotel
                     var flota = await _hotelRepository.GetFlotaByIdAsync(value.Entity.FlotaId.Value);
                     model.Flota = flota.Successful ? flota.Entity.Label : string.Empty;
                 }
-                return Result<SetAnvelopeDto>.ResultOk(model);
+                return Result<AnvelopDto>.ResultOk(model);
             }
             catch (Exception er)
             {
@@ -63,7 +63,7 @@ namespace DeltaQrCode.Services.Hotel
         }
 
 
-        public async Task<Result<SetAnvelopeDto>> AddSetAnvelopeAsync(SetAnvelopeDto setAnv, OperatiunePozitie operatiunePoz = OperatiunePozitie.Adaugare)
+        public async Task<Result<AnvelopDto>> AddAnvelopaAsync(AnvelopDto setAnv, OperatiunePozitie operatiunePoz = OperatiunePozitie.Adaugare)
         {
             try
             {
@@ -142,9 +142,9 @@ namespace DeltaQrCode.Services.Hotel
                 modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
                 modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
                 modelForDatabase.SerieSasiu = modelForDatabase.SerieSasiu.ToUpper();
-                var value = await _hotelRepository.AddSetAnvelopeAsync(modelForDatabase);
-                var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
-                return Result<SetAnvelopeDto>.ResultOk(returnModel);
+                var value = await _hotelRepository.AddAnvelopaAsync(modelForDatabase);
+                var returnModel = _mapper.Map<AnvelopDto>(value.Entity);
+                return Result<AnvelopDto>.ResultOk(returnModel);
 
             }
             catch (Exception er)
@@ -155,7 +155,7 @@ namespace DeltaQrCode.Services.Hotel
         }
 
 
-        public async Task<Result<SetAnvelopeDto>> UpdateSetAnvelopeAsync(SetAnvelopeDto addSetAnv)
+        public async Task<Result<AnvelopDto>> UpdateAnvelopaAsync(AnvelopDto addSetAnv)
         {
             try
             {
@@ -233,7 +233,7 @@ namespace DeltaQrCode.Services.Hotel
                     addSetAnv.Id = 0;
 
                     await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, addSetAnv.NrBucati, OperatiunePozitie.Scoatere);
-                    var addedOldSet = await AddSetAnvelopeAsync(addSetAnv, OperatiunePozitie.Setare);
+                    var addedOldSet = await AddAnvelopaAsync(addSetAnv, OperatiunePozitie.Setare);
 
                     if (!addedOldSet.Successful)
                     {
@@ -371,15 +371,15 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
-                var value = await _hotelRepository.UpdateSetAnvelopeAsync(modelForDatabase);
+                var value = await _hotelRepository.UpdateAnvelopaAsync(modelForDatabase);
                 if (!value.Successful)
                 {
-                    return Result<SetAnvelopeDto>.ResultError(value.Error);
+                    return Result<AnvelopDto>.ResultError(value.Error);
                 }
-                var returnModel = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                var returnModel = _mapper.Map<AnvelopDto>(value.Entity);
 
 
-                return Result<SetAnvelopeDto>.ResultOk(returnModel);
+                return Result<AnvelopDto>.ResultOk(returnModel);
             }
             catch (Exception er)
             {
@@ -389,16 +389,16 @@ namespace DeltaQrCode.Services.Hotel
         }
 
 
-        public async Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
+        public async Task<Result<List<AnvelopDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage)
         {
             try
             {
                 var result = await _hotelRepository.SearchAnvelopeAsync(searchString, page, itemsPerPage);
-                var model = new List<SetAnvelopeDto>();
+                var model = new List<AnvelopDto>();
                 if (result.Successful)
                 {
 
-                    model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
+                    model = _mapper.Map<List<AnvelopDto>>(result.Entity);
 
                     foreach (var item in model)
                     {
@@ -421,9 +421,9 @@ namespace DeltaQrCode.Services.Hotel
                         }
 
                     }
-                    return Result<List<SetAnvelopeDto>>.ResultOk(model);
+                    return Result<List<AnvelopDto>>.ResultOk(model);
                 }
-                return Result<List<SetAnvelopeDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
+                return Result<List<AnvelopDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
             }
             catch (Exception er)
             {
@@ -433,12 +433,12 @@ namespace DeltaQrCode.Services.Hotel
         }
 
 
-        public async Task<Result<SetAnvelopeDto>> DeleteSetAnvelopeAsync(int id)
+        public async Task<Result<AnvelopDto>> DeleteAnvelopaAsync(int id)
         {
             try
             {
-                var set = await _hotelRepository.GetSetAnvelopeByIdAsync(id);
-                var setAnv = _mapper.Map<SetAnvelopeDto>(set.Entity);
+                var set = await _hotelRepository.GetAnvelopaByIdAsync(id);
+                var setAnv = _mapper.Map<AnvelopDto>(set.Entity);
 
 
                 if (setAnv.PozitieId != null)
@@ -453,10 +453,10 @@ namespace DeltaQrCode.Services.Hotel
                     }
                 }
 
-                var value = await _hotelRepository.DeleteSetAnvelopeAsync(id);
-                var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                var value = await _hotelRepository.DeleteAnvelopaAsync(id);
+                var model = _mapper.Map<AnvelopDto>(value.Entity);
 
-                return Result<SetAnvelopeDto>.ResultOk(model);
+                return Result<AnvelopDto>.ResultOk(model);
 
             }
             catch (Exception er)
@@ -526,7 +526,7 @@ namespace DeltaQrCode.Services.Hotel
                                             new DataColumn("DataUltimaModificare") });
 
             var allAnv = await SearchAnvelopeAsync(string.Empty, 1, int.MaxValue);
-            var model = _mapper.Map<List<SetAnvelopeDto>>(allAnv.Entity);
+            var model = _mapper.Map<List<AnvelopDto>>(allAnv.Entity);
 
 
             var setanvelope = from anvelope in model

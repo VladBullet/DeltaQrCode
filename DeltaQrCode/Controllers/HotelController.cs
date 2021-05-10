@@ -52,7 +52,7 @@ namespace DeltaQrCode.Controllers
             var anvelope = anvelopeResult.Entity;
 
 
-            var paginatedModel = PaginatedList<SetAnvelopeDto>.Create(anvelope, pageNumber, PageSize);
+            var paginatedModel = PaginatedList<AnvelopDto>.Create(anvelope, pageNumber, PageSize);
             var model = new HotelListViewModel(paginatedModel);
             return PartialView("_HotelList", model);
         }
@@ -66,7 +66,7 @@ namespace DeltaQrCode.Controllers
             {
                 actType = ActionType.Info;
             }
-            var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
+            var set = await _hotelService.GetAnvelopaByIdAsync(id);
             var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
 
             model.OldPozitieId = model.PozitieId;
@@ -96,8 +96,8 @@ namespace DeltaQrCode.Controllers
         {
             try
             {
-                var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
-                var result = await _hotelService.UpdateSetAnvelopeAsync(dto);
+                var dto = _mapper.Map<AnvelopDto>(setAnvelope);
+                var result = await _hotelService.UpdateAnvelopaAsync(dto);
                 if (result.Successful)
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
@@ -119,14 +119,14 @@ namespace DeltaQrCode.Controllers
         {
             try
             {
-                var dto = _mapper.Map<SetAnvelopeDto>(setAnvelope);
+                var dto = _mapper.Map<AnvelopDto>(setAnvelope);
                 dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
                 dto.UzuraString = dto.Uzura.ToCustomString();
 
                 dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime, setAnvelope.Dot);
                 dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
 
-                var result = await _hotelService.AddSetAnvelopeAsync(dto);
+                var result = await _hotelService.AddAnvelopaAsync(dto);
                 if (result.Successful)
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
@@ -161,7 +161,7 @@ namespace DeltaQrCode.Controllers
         {
             try
             {
-                var result = await _hotelService.DeleteSetAnvelopeAsync(id);
+                var result = await _hotelService.DeleteAnvelopaAsync(id);
 
                 if (result.Successful)
                 {
