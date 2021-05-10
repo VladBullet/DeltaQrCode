@@ -101,7 +101,7 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 setAnv.MarcaId = marca.Entity.Id;
 
-                var flota = Result<CaFlota>.ResultOk(null);
+                //var flota = Result<CaFlota>.ResultOk(null);
 
                 //if (!string.IsNullOrEmpty(setAnv.Flota))
                 //{
@@ -562,6 +562,8 @@ namespace DeltaQrCode.Services.Hotel
             return dt;
         }
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
         public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id)
         {
             try
@@ -604,6 +606,90 @@ namespace DeltaQrCode.Services.Hotel
             {
                 Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de masinaId in servicii!");
                 throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de masinaId in servicii!", er);
+            }
+        }
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+        public async Task<Result<MasinaDto>> GetMasinaByIdAsync(int id)
+        {
+            try
+            {
+                var value = await _hotelRepository.GetMasinaByIdAsync(id);
+                var model = _mapper.Map<MasinaDto>(value.Entity);
+                return Result<MasinaDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de id in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de id in servicii!", er);
+            }
+        }
+
+        public async Task<Result<MasinaDto>> GetMasinaByNrAutoAsync(string nrAuto)
+        {
+            try
+            {
+                var value = await _hotelRepository.GetMasinaByNrAutoAsync(nrAuto);
+                var model = _mapper.Map<MasinaDto>(value.Entity);
+                return Result<MasinaDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de nrAuto in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de nrAuto in servicii!", er);
+            }
+        }
+
+        public async Task<Result<MasinaDto>> GetMasinaBySerieSasiuAsync(string serieSasiu)
+        {
+            try
+            {
+                var value = await _hotelRepository.GetMasinaByNrAutoAsync(serieSasiu);
+                var model = _mapper.Map<MasinaDto>(value.Entity);
+                return Result<MasinaDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in servicii!", er);
+            }
+        }
+
+        public async Task<Result<MasinaDto>> GetMasinaForSetIdAsync(int setId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Result<MasinaDto>> AddMasinaAsync(CaMasina masina)
+        {
+            try
+            {
+                var model = _mapper.Map<CaMasina>(masina);
+                var value = await _hotelRepository.AddMasinaAsync(model);
+                var returnModel = _mapper.Map<MasinaDto>(value.Entity);
+                return Result<MasinaDto>.ResultOk(returnModel);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea masinii in servicii!");
+                throw new Exception("Ceva nu a mers bine la adaugarea masinii in servicii!", er);
+            }
+        }
+
+        public async Task<Result<MasinaDto>> EditMasinaAsync(CaMasina masina)
+        {
+            try
+            {
+                var model = _mapper.Map<CaMasina>(masina);
+                var value = await _hotelRepository.EditMasinaAsync(model);
+                var returnModel = _mapper.Map<MasinaDto>(value.Entity);
+                return Result<MasinaDto>.ResultOk(returnModel);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la editarea masinii in servicii!");
+                throw new Exception("Ceva nu a mers bine la editarea masinii in servicii!", er);
             }
         }
     }

@@ -126,6 +126,8 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
 
         public async Task<Result<CaMarca>> GetMarcaByIdAsync(uint id)
         {
@@ -191,6 +193,8 @@ namespace DeltaQrCode.Repositories
             }
 
         }
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 
         //public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
@@ -258,6 +262,8 @@ namespace DeltaQrCode.Repositories
 
         //}
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
         public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id)
         {
             try
@@ -299,5 +305,89 @@ namespace DeltaQrCode.Repositories
                 throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de masinaId in repository!", er);
             }
         }
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+        public async Task<Result<CaMasina>> GetMasinaByIdAsync(int id)
+        {
+            try
+            {
+                var value = await _db.CaMasina.FirstAsync(x => x.Id == id);
+                return Result<CaMasina>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de id in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaMasina>> GetMasinaByNrAutoAsync(string nrAuto)
+        {
+            try
+            {
+                var value = await _db.CaMasina.FirstOrDefaultAsync(x => x.NumarInmatriculare.ToLower().Contains(nrAuto.ToLower()));
+                return Result<CaMasina>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de NrAuto in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de NrAuto in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaMasina>> GetMasinaBySerieSasiuAsync(string serieSasiu)
+        {
+            try
+            {
+                var value = await _db.CaMasina.FirstOrDefaultAsync(x => x.SerieSasiu.ToLower().Contains(serieSasiu.ToLower()));
+                return Result<CaMasina>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaMasina>> GetMasinaForSetIdAsync(int setId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Result<CaMasina>> AddMasinaAsync(CaMasina masina)
+        {
+            try
+            {
+                var value = await _db.CaMasina.AddAsync(masina);
+                await _db.SaveChangesAsync();
+                return Result<CaMasina>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la adaugarea masinii in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea masinii in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaMasina>> EditMasinaAsync(CaMasina masina)
+        {
+            try
+            {
+                _db.CaMasina.Update(masina);
+                await _db.SaveChangesAsync();
+
+                return Result<CaMasina>.ResultOk(masina);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la editarea masinii in repository!");
+                throw new Exception("Ceva nu a mers bine la editarea masinii in repository!", er);
+            }
+        }
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     }
 }

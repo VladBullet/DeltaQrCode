@@ -22,5 +22,12 @@ namespace DeltaQrCode.Services.Hotel
         Task<Result<SetAnvelopeDto>> GetSetAnvelopeByClientIdAsync(int clientId);
         Task<Result<SetAnvelopeDto>> GetSetAnvelopeByMasinaIdAsync(int masinaId);
 
+        Task<Result<MasinaDto>> GetMasinaByIdAsync(int id);
+        Task<Result<MasinaDto>> GetMasinaByNrAutoAsync(string nrAuto);
+        Task<Result<MasinaDto>> GetMasinaBySerieSasiuAsync(string serieSasiu);
+        Task<Result<MasinaDto>> GetMasinaForSetIdAsync(int setId);
+        Task<Result<MasinaDto>> AddMasinaAsync(CaMasina masina);
+        Task<Result<MasinaDto>> EditMasinaAsync(CaMasina masina);
+
     }
 }
