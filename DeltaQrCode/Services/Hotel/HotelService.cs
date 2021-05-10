@@ -133,7 +133,7 @@ namespace DeltaQrCode.Services.Hotel
                     setAnv.FlotaId = null;
                 }
 
-                var modelForDatabase = _mapper.Map<CaSetAnvelope>(setAnv);
+                var modelForDatabase = _mapper.Map<CaAnvelopa>(setAnv);
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
 
@@ -361,7 +361,7 @@ namespace DeltaQrCode.Services.Hotel
                 editSetAnv.FlotaId = flota.Entity.Id;
 
 
-                var modelForDatabase = _mapper.Map<CaSetAnvelope>(editSetAnv);
+                var modelForDatabase = _mapper.Map<CaAnvelopa>(editSetAnv);
                 modelForDatabase.NumarInmatriculare = modelForDatabase.NumarInmatriculare.ToUpper();
                 modelForDatabase.NumeClient = modelForDatabase.NumeClient.ToUpper();
                 if (modelForDatabase.SerieSasiu != null)

@@ -23,12 +23,12 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id)
+        public async Task<Result<CaAnvelopa>> GetSetAnvelopeByIdAsync(int id)
         {
             try
             {
-                var value = await _db.CaSetAnvelope.FirstAsync(x => x.Id == id && !x.Deleted);
-                return Result<CaSetAnvelope>.ResultOk(value);
+                var value = await _db.CaAnvelopa.FirstAsync(x => x.Id == id && !x.Deleted);
+                return Result<CaAnvelopa>.ResultOk(value);
             }
             catch (Exception er)
             {
@@ -38,12 +38,12 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<List<CaSetAnvelope>>> GetAllSetAnvelopeAsync()
+        public async Task<Result<List<CaAnvelopa>>> GetAllSetAnvelopeAsync()
         {
             try
             {
-                var list = await _db.CaSetAnvelope.Where(x => !x.Deleted).OrderBy(s => s.NumarInmatriculare).ThenBy(x => x.DataUltimaModificare).ToListAsync();
-                return Result<List<CaSetAnvelope>>.ResultOk(list);
+                var list = await _db.CaAnvelopa.Where(x => !x.Deleted).OrderBy(s => s.NumarInmatriculare).ThenBy(x => x.DataUltimaModificare).ToListAsync();
+                return Result<List<CaAnvelopa>>.ResultOk(list);
             }
             catch (Exception er)
             {
@@ -53,13 +53,13 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<CaSetAnvelope>> AddSetAnvelopeAsync(CaSetAnvelope setAnv)
+        public async Task<Result<CaAnvelopa>> AddSetAnvelopeAsync(CaAnvelopa setAnv)
         {
             try
             {
-                var value = await _db.CaSetAnvelope.AddAsync(setAnv);
+                var value = await _db.CaAnvelopa.AddAsync(setAnv);
                 await _db.SaveChangesAsync();
-                return Result<CaSetAnvelope>.ResultOk(value.Entity);
+                return Result<CaAnvelopa>.ResultOk(value.Entity);
 
             }
             catch (Exception er)
@@ -70,14 +70,14 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<CaSetAnvelope>> UpdateSetAnvelopeAsync(CaSetAnvelope setAnv)
+        public async Task<Result<CaAnvelopa>> UpdateSetAnvelopeAsync(CaAnvelopa setAnv)
         {
             try
             {
-                _db.CaSetAnvelope.Update(setAnv);
+                _db.CaAnvelopa.Update(setAnv);
                 await _db.SaveChangesAsync();
 
-                return Result<CaSetAnvelope>.ResultOk(setAnv);
+                return Result<CaAnvelopa>.ResultOk(setAnv);
 
             }
             catch (Exception er)
@@ -88,17 +88,17 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<List<CaSetAnvelope>>> SearchAnvelopeAsync(string searchString, int page = 1, int itemsPerPage = 20)
+        public async Task<Result<List<CaAnvelopa>>> SearchAnvelopeAsync(string searchString, int page = 1, int itemsPerPage = 20)
         {
             try
             {
                 var flote = _db.CaFlota.Where(x => x.Label.ToLower().Contains(searchString.ToLower()));
-                var list = await _db.CaSetAnvelope.Where(x => !x.Deleted).ToListAsync();
+                var list = await _db.CaAnvelopa.Where(x => !x.Deleted).ToListAsync();
                 if (!string.IsNullOrEmpty(searchString))
                 {
                     list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || flote.Any(y => y.Id == x.FlotaId) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower())).ToList();
                 }
-                return Result<List<CaSetAnvelope>>.ResultOk(list);
+                return Result<List<CaAnvelopa>>.ResultOk(list);
             }
             catch (Exception er)
             {
@@ -107,16 +107,16 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(int id)
+        public async Task<Result<CaAnvelopa>> DeleteSetAnvelopeAsync(int id)
         {
             try
             {
-                var entity = await _db.CaSetAnvelope.FirstAsync(x => x.Id == id);
+                var entity = await _db.CaAnvelopa.FirstAsync(x => x.Id == id);
                 entity.Deleted = true;
-                var value = _db.CaSetAnvelope.Update(entity);
+                var value = _db.CaAnvelopa.Update(entity);
                 await _db.SaveChangesAsync();
 
-                return Result<CaSetAnvelope>.ResultOk(value.Entity);
+                return Result<CaAnvelopa>.ResultOk(value.Entity);
 
             }
             catch (Exception er)

@@ -21,7 +21,7 @@ namespace DeltaQrCode.Data
         public virtual DbSet<CaFlota> CaFlota { get; set; }
         public virtual DbSet<CaOperatiuneSchimbAnvelope> CaOperatiuneSchimbAnvelope { get; set; }
         public virtual DbSet<CaServicetypes> CaServicetypes { get; set; }
-        public virtual DbSet<CaSetAnvelope> CaSetAnvelope { get; set; }
+        public virtual DbSet<CaAnvelopa> CaAnvelopa { get; set; }
         public virtual DbSet<CaHotelPositions> CaHotelPositions { get; set; }
         public virtual DbSet<CaUsers> CaUsers { get; set; }
         public virtual DbSet<HistoryAnvelope> HistoryAnvelope { get; set; }
@@ -359,9 +359,9 @@ namespace DeltaQrCode.Data
                     .HasColumnType("varchar(45)");
             });
 
-            modelBuilder.Entity<CaSetAnvelope>(entity =>
+            modelBuilder.Entity<CaAnvelopa>(entity =>
             {
-                entity.ToTable("ca_set_anvelope");
+                entity.ToTable("ca_anvelopa");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("id_UNIQUE")
@@ -390,6 +390,8 @@ namespace DeltaQrCode.Data
                     .HasColumnType("varchar(50)");
 
                 entity.Property(e => e.Observatii).HasColumnType("varchar(100)");
+
+                entity.Property(e => e.PozitiePeMasina).HasColumnType("varchar(45)");
 
                 entity.Property(e => e.SerieSasiu).HasColumnType("varchar(45)");
 
@@ -530,34 +532,103 @@ namespace DeltaQrCode.Data
             });
 
             modelBuilder.Entity<PasOperatiune>(entity =>
-                {
-                    entity.ToTable("pas_operatiune");
+            {
+                entity.ToTable("pas_operatiune");
 
-                    entity.Property(e => e.Id)
-                        .HasColumnName("id")
-                        .HasColumnType("int(11)");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
 
-                    entity.Property(e => e.InsertedDate)
-                        .HasColumnName("insertedDate")
-                        .HasColumnType("datetime");
+                entity.Property(e => e.InsertedDate)
+                    .HasColumnName("insertedDate")
+                    .HasColumnType("datetime");
 
-                    entity.Property(e => e.OperatiuneId)
-                        .HasColumnName("operatiuneId")
-                        .HasColumnType("int(11)");
+                entity.Property(e => e.OperatiuneId)
+                    .HasColumnName("operatiuneId")
+                    .HasColumnType("int(11)");
 
-                    entity.Property(e => e.Pas)
-                        .HasColumnName("pas")
-                        .HasColumnType("int(11)");
+                entity.Property(e => e.Pas)
+                    .HasColumnName("pas")
+                    .HasColumnType("int(11)");
 
-                    entity.Property(e => e.SavedData)
-                        .IsRequired()
-                        .HasColumnName("savedData")
-                        .HasColumnType("varchar(45)");
+                entity.Property(e => e.SavedData)
+                    .IsRequired()
+                    .HasColumnName("savedData")
+                    .HasColumnType("varchar(45)");
 
-                    entity.Property(e => e.UserId)
-                        .HasColumnName("userId")
-                        .HasColumnType("int(11)");
-                });
+                entity.Property(e => e.UserId)
+                    .HasColumnName("userId")
+                    .HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<CaSetAnvelope>(entity =>
+            {
+                entity.ToTable("ca_set_anvelope");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.NumeSet)
+                    .IsRequired()
+                    .HasColumnName("Nume_Set")
+                    .HasColumnType("varchar(45)");
+            });
+
+            modelBuilder.Entity<IstoricStatusAnvelopa>(entity =>
+            {
+                entity.ToTable("istoric_status_anvelopa");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.LastModified).HasColumnType("datetime");
+
+                entity.Property(e => e.NewStatus)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.OldStatus)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+            });
+
+            modelBuilder.Entity<CaMasina>(entity =>
+            {
+                entity.ToTable("ca_masina");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.NumarInmatriculare).HasColumnType("varchar(45)");
+
+                entity.Property(e => e.SerieSasiu).HasColumnType("varchar(45)");
+
+                entity.Property(e => e.TipVehicul)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+            });
+
+            modelBuilder.Entity<CaClientHotel>(entity =>
+            {
+                entity.ToTable("ca_client_hotel");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.NumarTelefon)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.NumeClient)
+                    .IsRequired()
+                    .HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Sofer).HasColumnType("varchar(45)");
+            });
         }
     }
 }
