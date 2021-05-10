@@ -27,6 +27,7 @@ namespace DeltaQrCode.ModelsDto
         public uint? OldPozitieId { get; set; }
         public int OldNumarBucati { get; set; }
         public string OldMarca { get; set; }
+        public string PozitiePeMasina { get; set; }
     }
 
 }

@@ -67,7 +67,7 @@ namespace DeltaQrCode.Controllers
                 actType = ActionType.Info;
             }
             var set = await _hotelService.GetAnvelopaByIdAsync(id);
-            var model = _mapper.Map<AddEditSetAnvelopeVM>(set.Entity);
+            var model = _mapper.Map<AnvelopaVM>(set.Entity);
 
             model.OldPozitieId = model.PozitieId;
             model.OldNumarBucati = model.NrBucati;
@@ -92,7 +92,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal(AddEditSetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> EditModal(AnvelopaVM setAnvelope)
         {
             try
             {
@@ -115,12 +115,12 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddModal(AddEditSetAnvelopeVM setAnvelope)
+        public async Task<ActionResult> AddModal(AnvelopaVM setAnvelope)
         {
             try
             {
                 var dto = _mapper.Map<AnvelopDto>(setAnvelope);
-                dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
+                //dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
                 dto.UzuraString = dto.Uzura.ToCustomString();
 
                 dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime, setAnvelope.Dot);
