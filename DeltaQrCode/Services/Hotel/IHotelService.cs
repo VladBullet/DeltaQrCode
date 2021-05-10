@@ -18,5 +18,9 @@ namespace DeltaQrCode.Services.Hotel
         //Task<Result<List<CaFlota>>> GetFlote();
         Task<DataTable> GenerateDataForExcel();
 
+        Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id);
+        Task<Result<SetAnvelopeDto>> GetSetAnvelopeByClientIdAsync(int clientId);
+        Task<Result<SetAnvelopeDto>> GetSetAnvelopeByMasinaIdAsync(int masinaId);
+
     }
 }

@@ -32,8 +32,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de id in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de id in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la gasirea anvelopei in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea anvelopei in functie de id in repository!", er);
             }
         }
 
@@ -47,8 +47,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la gasirea tuturor seturilor de anvelope in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea tuturor seturilor de anvelope in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la gasirea tuturor anvelopelor in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea tuturor anvelopelor in repository!", er);
             }
         }
 
@@ -64,8 +64,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la adaugarea setului de anvelope in repository!");
-                throw new Exception("Ceva nu a mers bine la adaugarea setului de anvelope in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la adaugarea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la adaugarea anvelopei in repository!", er);
             }
         }
 
@@ -82,8 +82,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la editarea setului de anvelope in repository!");
-                throw new Exception("Ceva nu a mers bine la editarea setului de anvelope in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la editarea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la editarea anvelopei in repository!", er);
             }
         }
 
@@ -102,8 +102,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea setului de anvelope in repository!");
-                throw new Exception("Ceva nu a mers bine la cautarea setului de anvelope in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
             }
         }
 
@@ -121,8 +121,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la stergerea setului de anvelope in repository!");
-                throw new Exception("Ceva nu a mers bine la stergerea setului de anvelope in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la stergerea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la stergerea anvelopei in repository!", er);
             }
         }
 
@@ -258,14 +258,46 @@ namespace DeltaQrCode.Repositories
 
         //}
 
-        public Task<Result<CaMasina>> GetMasinaByIdAsync(uint id)
+        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var value = await _db.CaSetAnvelope.FirstAsync(x => x.Id == id);
+                return Result<CaSetAnvelope>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de id in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de id in repository!", er);
+            }
         }
 
-        public Task<Result<CaMarca>> AddMasinaAsync(CaMarca marca)
+        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByClientIdAsync(int clientId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var value = await _db.CaSetAnvelope.FirstAsync(x => x.ClientId == clientId);
+                return Result<CaSetAnvelope>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de clientId in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de clientId in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByMasinaIdAsync(int masinaId)
+        {
+            try
+            {
+                var value = await _db.CaSetAnvelope.FirstAsync(x => x.MasinaId == masinaId);
+                return Result<CaSetAnvelope>.ResultOk(value);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de masinaId in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de masinaId in repository!", er);
+            }
         }
     }
 }

@@ -57,8 +57,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!");
-                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la gasirea anvelopei in functie de id in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea anvelopei in functie de id in servicii!", er);
             }
         }
 
@@ -149,8 +149,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la adaugarea setului de anvelope in servicii!");
-                throw new Exception("Ceva nu a mers bine la adaugarea setului de anvelope in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la adaugarea anvelopei in servicii!");
+                throw new Exception("Ceva nu a mers bine la adaugarea anvelopei in servicii!", er);
             }
         }
 
@@ -383,8 +383,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la editarea setului de anvelope in servicii!");
-                throw new Exception("Ceva nu a mers bine la editarea setului de anvelope in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la editarea anvelopei in servicii!");
+                throw new Exception("Ceva nu a mers bine la editarea anvelopei in servicii!", er);
             }
         }
 
@@ -427,8 +427,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea setului de anvelope in servicii!");
-                throw new Exception("Ceva nu a mers bine la cautarea setului de anvelope in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in servicii!", er);
             }
         }
 
@@ -461,8 +461,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la stergerea setului de anvelope in servicii!");
-                throw new Exception("Ceva nu a mers bine la stergerea setului de anvelope in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la stergerea anvelopei in servicii!");
+                throw new Exception("Ceva nu a mers bine la stergerea anvelopei in servicii!", er);
             }
         }
 
@@ -560,6 +560,51 @@ namespace DeltaQrCode.Services.Hotel
                     anvelope.DataUltimaModificare);
             }
             return dt;
+        }
+
+        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id)
+        {
+            try
+            {
+                var value = await _hotelRepository.GetSetAnvelopeByIdAsync(id);
+                var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                return Result<SetAnvelopeDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de id in servicii!", er);
+            }
+        }
+
+        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByClientIdAsync(int clientId)
+        {
+            try
+            {
+                var value = await _hotelRepository.GetSetAnvelopeByClientIdAsync(clientId);
+                var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                return Result<SetAnvelopeDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de clientId in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de clientId in servicii!", er);
+            }
+        }
+
+        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByMasinaIdAsync(int masinaId)
+        {
+            try
+            {
+                var value = await _hotelRepository.GetSetAnvelopeByMasinaIdAsync(masinaId);
+                var model = _mapper.Map<SetAnvelopeDto>(value.Entity);
+                return Result<SetAnvelopeDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea setului de anvelope in functie de masinaId in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea setului de anvelope in functie de masinaId in servicii!", er);
+            }
         }
     }
 }
