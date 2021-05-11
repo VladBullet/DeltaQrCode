@@ -1,6 +1,6 @@
 ﻿// Initialize select2
 //Select2 for Position
-$("#selPoz").select2({
+$(".pozitieinraft").select2({
     dropdownParent: "#hotelModalBody",
     theme: "bootstrap4",
     allowClear: true,
@@ -85,8 +85,9 @@ $("#Flota").select2({
         }
     }
 });
+
 // Select2 for TipSezon
-$("#tipSezon").select2({
+$(".tipsezon").select2({
     tags: true,
     dropdownParent: "#hotelModalBody",
     theme: "bootstrap4",
@@ -108,7 +109,7 @@ $("#tipSezon").select2({
     }
 });
 // Select2 for StatusAnvelope
-$("#statusAnv").select2({
+$(".statuscurent").select2({
     tags: true,
     dropdownParent: "#hotelModalBody",
     theme: "bootstrap4",
@@ -131,7 +132,7 @@ $("#statusAnv").select2({
 });
 
 // Select2 for Diametru
-$("#Diametru").select2({
+$(".diametru").select2({
     tags: true,
     dropdownParent: "#hotelModalBody",
     theme: "bootstrap4",
@@ -161,7 +162,7 @@ $("#Diametru").select2({
 
 
 // Select2 for Latime
-$("#Latime").select2({
+$(".latime").select2({
     tags: true,
     dropdownParent: "#hotelModalBody",
     theme: "bootstrap4",
@@ -190,7 +191,7 @@ $("#Latime").select2({
 });
 
 // Select2 for Inaltime
-$("#Inaltime").select2({
+$(".inaltime").select2({
     tags: true,
     dropdownParent: "#hotelModalBody",
     theme: "bootstrap4",
@@ -219,7 +220,7 @@ $("#Inaltime").select2({
 });
 
 // Select2 for DOT
-$("#Dot").select2({
+$(".dot").select2({
     tags: true,
     dropdownParent: "#hotelModalBody",
     theme: "bootstrap4",
@@ -250,7 +251,7 @@ $("#Dot").select2({
 
 
 // select2 initial value for position
-var selPozObj = $('#selPoz');
+var selPozObj = $('.pozitieinraft');
 var selPozVal = $("#defaultPosition").attr("data-value");
 if (selPozVal != NaN && selPozVal != '') {
     var optionPoz = new Option(selPozVal, selPozVal, true, true);
@@ -280,7 +281,7 @@ if (flotaVal != NaN && flotaVal != '') {
 }
 
 // select2 initial value for tipSezon
-var tipSezonObj = $('#tipSezon');
+var tipSezonObj = $('.tipsezon');
 var tipSezonValue = $("#defaultTipSezon").attr("data-value");
 if (tipSezonValue != NaN && tipSezonValue != '') {
     var optionTipSezon = new Option(tipSezonValue, tipSezonValue, true, true);
@@ -289,7 +290,7 @@ if (tipSezonValue != NaN && tipSezonValue != '') {
 }
 
 // select2 initial value for StatusAnvelope
-var statusAnvObj = $('#statusAnv');
+var statusAnvObj = $('.statuscurent');
 var statusAnvValue = $("#defaultStatusAnv").attr("data-value");
 if (statusAnvValue != NaN && statusAnvValue != '') {
     var optionstatusAnv = new Option(statusAnvValue, statusAnvValue, true, true);
@@ -298,7 +299,7 @@ if (statusAnvValue != NaN && statusAnvValue != '') {
 }
 
 // select2 initial value for Diametru
-var diametruObj = $('#Diametru');
+var diametruObj = $('.diametru');
 var diametruVal = $("#defaultDiametru").attr("data-value");
 if (diametruVal != NaN && diametruVal != '') {
     var optionDiametru = new Option(diametruVal, diametruVal, true, true);
@@ -308,7 +309,7 @@ if (diametruVal != NaN && diametruVal != '') {
 }
 
 // select2 initial value for Latime
-var latimeObj = $('#Latime');
+var latimeObj = $('.latime');
 var latimeVal = $("#defaultLatime").attr("data-value");
 if (latimeVal != NaN && latimeVal != '') {
     var optionLatime = new Option(latimeVal, latimeVal, true, true);
@@ -318,7 +319,7 @@ if (latimeVal != NaN && latimeVal != '') {
 }
 
 // select2 initial value for Inaltime
-var inaltimeObj = $('#Inaltime');
+var inaltimeObj = $('.inaltime');
 var inaltimeVal = $("#defaultInaltime").attr("data-value");
 if (inaltimeVal != NaN && inaltimeVal != '') {
     var optionInaltime = new Option(inaltimeVal, inaltimeVal, true, true);
@@ -328,7 +329,7 @@ if (inaltimeVal != NaN && inaltimeVal != '') {
 }
 
 // select2 initial value for DOT
-var dotObj = $('#Dot');
+var dotObj = $('.dot');
 var dotVal = $("#defaultDot").attr("data-value");
 if (dotVal != NaN && dotVal != '') {
     var optionDot = new Option(dotVal, dotVal, true, true);

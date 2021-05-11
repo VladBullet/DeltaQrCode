@@ -53,16 +53,16 @@
 
 @section Scripts{
     <script type="text/javascript" src="~/js/editAddSetAnvPartial.js"></script>
-    
+
     <script type="text/javascript">
-        $(document).ready(function () {
-            var data = { searchString: $("#search").val(), page: 1 };
-            $("#tableResult").load("/Hotel/Search",
-                data,
-                function () {
-                    setPagination();
-                });
-        });
+        //$(document).ready(function () {
+        //    var data = { searchString: $("#search").val(), page: 1 };
+        //    $("#tableResult").load("/Hotel/Search",
+        //        data,
+        //        function () {
+        //            setPagination();
+        //        });
+        //});
         $("#search-addon").on("click",
             function (event) {
                 event.preventDefault();

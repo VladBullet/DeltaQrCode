@@ -1,13 +1,14 @@
 ﻿
 
 $(document).ready(function () {
-    
+
 
 
     var initialized = false;
     $("#myHotelModal").on("shown.bs.modal", function () {
 
         hideAllHiddenAnv();
+        hideAllButtonEraseAnv();
         // when loading validate all inputs
         //var validator = new CustomValidation(anvelopeFormValidationRules);
         //validator.addcustomValidationRules(uzuraStFRules);
@@ -182,20 +183,24 @@ $(document).ready(function () {
         $(document).on("keyup",
             ".uzura",
             function () {
-                var uzura = $(document).find(".uzura");
-                if (uzura.val() != 0) {
 
-                    console.log("aici");
-                    showHiddenAnv($(this));
-                } else {
-                    console.log("else");
-                    hideHiddenAnv($(this));
-                }
+                showHiddenAnv($(this));
+                showButtonEraseAnv($(this));
+
+            });
+
+        $(document).on("click",
+            ".erase-data-anv",
+            function () {
+
+                eraseData($(this));
+                hideHiddenAnv($(this));
+                hideButtonEraseAnv($(this));
 
             });
 
         $(document).on("change",
-            ".",
+            "#selPoz",
             function () {
                 $("#selPoz").trigger("updatedStatus");
             });
@@ -222,15 +227,15 @@ $(document).ready(function () {
             //updateAndValidateUzura(true);
         });
 
-        
-        
+
+
 
     });
 
 });
 
 var showHiddenAnv = function (currentUzuraElement) {
-    var parent = $(currentUzuraElement).parent().closest(".parent");
+    var parent = $(currentUzuraElement).closest(".parent");
     var elements = $(parent).find(".hiddenAnv");
     $.each(elements, function (index, item) {
         $(item).show();
@@ -239,7 +244,7 @@ var showHiddenAnv = function (currentUzuraElement) {
 }
 
 var hideHiddenAnv = function (currentUzuraElement) {
-    var parent = $(currentUzuraElement).parent().closest(".parent");
+    var parent = $(currentUzuraElement).closest(".parent");
     var elements = $(parent).find(".hiddenAnv");
     $.each(elements, function (index, item) {
         $(item).hide();
@@ -260,7 +265,43 @@ var showAllHiddenAnv = function () {
     })
 }
 
+var hideButtonEraseAnv = function (element) {
+    var parent = $(element).closest(".parent");
+    var button = $(parent).find(".erase-data-anv");
+    $(button).hide();
 
+}
+var showButtonEraseAnv = function (element) {
+    var parent = $(element).closest(".parent");
+    var button = $(parent).find(".erase-data-anv");
+    $(button).show();
+
+}
+
+var hideAllButtonEraseAnv = function () {
+    var elements = $(document).find(".erase-data-anv");
+    $.each(elements, function (index, item) {
+        $(item).hide();
+    })
+}
+
+var showAllButtonEraseAnv = function () {
+    var elements = $(document).find(".erase-data-anv");
+    $.each(elements, function (index, item) {
+        $(item).show();
+    })
+}
+
+var eraseData = function (element) {
+    var parent = $(element).closest(".parent");
+    var children = $(parent).find(".form-control");
+    $.each(children, function (index, item) {
+        $(item).val(null).trigger("change");
+
+    });
+    var uzura = $(parent).find(".uzura");
+    $(uzura).val("0");
+}
 
 
 
