@@ -195,6 +195,18 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-
+        public async Task<Result<List<CaAppointments>>> GetAppointmentsForDateAsync(DateTime data)
+        {
+            try
+            {
+                var result = await _db.CaAppointments.Where(x => x.DataAppointment.ToShortDateString() == data.ToShortDateString() && !x.Deleted).ToListAsync();
+                return Result<List<CaAppointments>>.ResultOk(result);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea programarii in functie de data in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea programarii in functie de data in repository!", er);
+            }
+        }
     }
 }

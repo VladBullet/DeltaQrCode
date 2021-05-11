@@ -321,7 +321,7 @@ namespace DeltaQrCode.Services
         }
 
 
-        public async Task<List<DataTable>> GenerateDataForExcel()
+        public async Task<List<DataTable>> GenerateDataForExcel(DateTime? date = null)
         {
             var list = new List<DataTable>();
             for (int i = 1; i <= 4; i++)
@@ -347,7 +347,15 @@ namespace DeltaQrCode.Services
                                             new DataColumn("LastModified"),
                                             new DataColumn("ChangedByClient") });
 
-                var allAppts = await _appointmentsRepository.GetAppointmentsAsync();
+                var allAppts = new Result<List<CaAppointments>>();
+
+                if (date == null)
+                {
+                    allAppts = await _appointmentsRepository.GetAppointmentsAsync();
+                } else
+                {
+                    allAppts = await _appointmentsRepository.GetAppointmentsForDateAsync(date.Value);
+                }
                 var model = _mapper.Map<List<AppointmentDto>>(allAppts.Entity);
 
 

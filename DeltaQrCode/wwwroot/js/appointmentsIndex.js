@@ -389,6 +389,14 @@ var addNoClick = function () {
     }
 };
 
+var ondownload = function () {
+    var dateFromPage = $("#datepicker").val();
+    var datePage = new Date(dateFromPage);
+    var date = $.datepicker.formatDate('yy/mm/dd', datePage);
+    var url = "/Appointments/Download?date=" + date;
+    window.location.href = url;
+}
+
 
 
 // document ready 

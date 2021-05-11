@@ -317,11 +317,19 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Download()
+        public async Task<IActionResult> Download(string date = null)
         {
+            DateTime? selectedDate = null;
+            if (!string.IsNullOrEmpty(date))
+            {
+                selectedDate = DateTime.Parse(date);
+            }
 
-            var data = await _appointmentService.GenerateDataForExcel();
-            var filename = "RaportProgramari" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + DateTime.Now.Minute + ".xlsx";
+            var data = await _appointmentService.GenerateDataForExcel(selectedDate);
+
+            DateTime filedate = selectedDate == null ? DateTime.Now : selectedDate.Value ;
+            
+            var filename = "RaportProgramari" + filedate.Day + "_" + filedate.Month + "_" + filedate.Year + "_" + filedate.Hour + filedate.Minute + ".xlsx";
             using (XLWorkbook wb = new XLWorkbook())
             {
                 foreach(var item in data)
@@ -336,7 +344,5 @@ namespace DeltaQrCode.Controllers
                 }
             }
         }
-
-
     }
 }
