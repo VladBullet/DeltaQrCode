@@ -12,14 +12,14 @@
         public AutoMapperProfile()
         {
             // Add as many of these lines as you need to map your objects
-            CreateMap<CaAnvelopa, AnvelopDto>()
+            CreateMap<CaAnvelopa, AnvelopaDto>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => s.Dimensiuni.ToDimensiuniFromJsonString()))
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.Dimensiuni))
                 .ForMember(d => d.Uzura, m => m.MapFrom(s => s.Uzura.ToUzuraFromJsonString()))
                 .ForMember(d => d.UzuraString, m => m.MapFrom(s => s.Uzura))
                 ;
-            CreateMap<AnvelopDto, CaAnvelopa>()
+            CreateMap<AnvelopaDto, CaAnvelopa>()
 
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => s.Dimensiuni.ToJson()))
@@ -31,7 +31,7 @@
 
 
 
-            CreateMap<AnvelopaVM, AnvelopDto>()
+            CreateMap<AnvelopaVM, AnvelopaDto>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
                 .ForMember(d => d.Dimensiuni, m => m.MapFrom(s => new Dimensiuni(s.Diametru, s.Latime, s.Inaltime, s.Dot)))
                 .ForMember(d => d.OldDimensiuni, m => m.MapFrom(s => new Dimensiuni(s.OldDiametru, s.OldLatime, s.OldInaltime, s.OldDot)))
@@ -40,7 +40,7 @@
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.DimensiuniString));
             //.ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
 
-            CreateMap<AnvelopDto, AnvelopaVM>()
+            CreateMap<AnvelopaDto, AnvelopaVM>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
 
                 .ForMember(d => d.Diametru, m => m.MapFrom(s => s.Dimensiuni.Diam))

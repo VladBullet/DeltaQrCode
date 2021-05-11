@@ -1,12 +1,16 @@
 ﻿
 
 $(document).ready(function () {
+    
+
+
     var initialized = false;
     $("#myHotelModal").on("shown.bs.modal", function () {
 
+        hideAllHiddenAnv();
         // when loading validate all inputs
-        var validator = new CustomValidation(anvelopeFormValidationRules);
-        validator.addcustomValidationRules(uzuraStFRules);
+        //var validator = new CustomValidation(anvelopeFormValidationRules);
+        //validator.addcustomValidationRules(uzuraStFRules);
 
         var disableElementsByIds = function (elements) {
             $.each(elements, function (index, element) {
@@ -98,7 +102,7 @@ $(document).ready(function () {
             nrBuc.val(value);
         };
 
-        updateAndValidateUzura(false);
+        //updateAndValidateUzura(false);
 
         if (!initialized) {
 
@@ -175,8 +179,23 @@ $(document).ready(function () {
             initialized = true;
         }
 
+        $(document).on("keyup",
+            ".uzura",
+            function () {
+                var uzura = $(document).find(".uzura");
+                if (uzura.val() != 0) {
+
+                    console.log("aici");
+                    showHiddenAnv($(this));
+                } else {
+                    console.log("else");
+                    hideHiddenAnv($(this));
+                }
+
+            });
+
         $(document).on("change",
-            "#statusAnv",
+            ".",
             function () {
                 $("#selPoz").trigger("updatedStatus");
             });
@@ -200,7 +219,7 @@ $(document).ready(function () {
             });
 
         $(document).on("keyup", ".uzura", function () {
-            updateAndValidateUzura(true);
+            //updateAndValidateUzura(true);
         });
 
         
@@ -209,3 +228,39 @@ $(document).ready(function () {
     });
 
 });
+
+var showHiddenAnv = function (currentUzuraElement) {
+    var parent = $(currentUzuraElement).parent().closest(".parent");
+    var elements = $(parent).find(".hiddenAnv");
+    $.each(elements, function (index, item) {
+        $(item).show();
+    })
+
+}
+
+var hideHiddenAnv = function (currentUzuraElement) {
+    var parent = $(currentUzuraElement).parent().closest(".parent");
+    var elements = $(parent).find(".hiddenAnv");
+    $.each(elements, function (index, item) {
+        $(item).hide();
+    })
+}
+
+var hideAllHiddenAnv = function () {
+    var elements = $(document).find(".hiddenAnv");
+    $.each(elements, function (index, item) {
+        $(item).hide();
+    })
+}
+
+var showAllHiddenAnv = function () {
+    var elements = $(document).find(".hiddenAnv");
+    $.each(elements, function (index, item) {
+        $(item).show();
+    })
+}
+
+
+
+
+

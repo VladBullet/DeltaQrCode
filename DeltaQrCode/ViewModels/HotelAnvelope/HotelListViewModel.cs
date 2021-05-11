@@ -3,6 +3,7 @@
 namespace DeltaQrCode.ViewModels
 {
     using DeltaQrCode.ModelsDto;
+    using DeltaQrCode.ViewModels.HotelAnvelope;
 
     public class HotelListViewModel
     {
@@ -12,17 +13,18 @@ namespace DeltaQrCode.ViewModels
 
         }
 
-        public HotelListViewModel(PaginatedList<AnvelopDto> paginatedModel)
+        public HotelListViewModel(PaginatedList<HotelAnvelopaVm> paginatedModel)
         {
             List = paginatedModel;
         }
 
-        public HotelListViewModel(List<AnvelopDto> list, int pageIndex, int pageSize)
+        public HotelListViewModel(List<HotelAnvelopaVm> list, int pageIndex, int pageSize)
         {
-            List = PaginatedList<AnvelopDto>.Create(list, pageIndex, pageSize);
+            List = PaginatedList<HotelAnvelopaVm>.Create(list, pageIndex, pageSize);
         }
 
-        public PaginatedList<AnvelopDto> List { get; set; }
+        public PaginatedList<HotelAnvelopaVm> List { get; set; }
+        
 
     }
 }

@@ -8,11 +8,10 @@
     <thead>
         <tr class="text-center">
             <th style="" scope="col">Actiune</th>
-            @*<th scope="col">Nr. Auto</th>
-            <th scope="col">Client</th>
-            <th scope="col">Serie Sasiu</th>
+            <th scope="col">Client/Flota</th>
             <th scope="col">Nr. Telefon</th>
-            <th scope="col">Flota</th>*@
+            <th scope="col">Nr. Auto</th>
+            <th scope="col">Serie Sasiu</th>
             <th scope="col">Marca</th>
             <th scope="col">Nr.Buc</th>
             <th scope="col">Dimensiuni</th>
@@ -26,51 +25,50 @@
     <tbody>
         @foreach (var item in Model.List)
         {
-            <tr class="text-center">
-                <td class="flex-row">
+        <tr class="text-center">
+            <td class="flex-row">
+                <div class="col-md-12">
+                    <div class="btn btn-outline-info btn-sm actionButton" type="button" data-value="@item.SetAnvelope.Id" data-actionType="info"><i class="fas fa-info-circle "></i></div>
+                </div>
+                <div class="col-md-12">
+                    <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.SetAnvelope.Id" data-actionType="edit"><i class="fas fa-pencil-alt"></i></div>
+                </div>
+                @if (User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "admin")
+                {
                     <div class="col-md-12">
-                        <div class="btn btn-outline-info btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle "></i></div>
+                        <div class="btn btn-outline-danger btn-sm deleteButton" type="button" data-value="@item.SetAnvelope.Id"><i class="fas fa-trash-alt"></i></div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="edit"><i class="fas fa-pencil-alt"></i></div>
-                    </div>
-                    @if (User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "admin")
-                    {
-                        <div class="col-md-12">
-                            <div class="btn btn-outline-danger btn-sm deleteButton" type="button" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
-                        </div>
-                    }
-                </td>
-                @*<td>@item.NumarInmatriculare</td>
-                <td>@item.NumeClient</td>
-                <td>@item.SerieSasiu</td>
-                <td>@item.NumarTelefon</td>
-                <td>@item.Flota</td>*@
-                <td>@item.Marca</td>
-                <td>@item.NrBucati</td>
-                <td>@item.Dimensiuni.ToDisplayString()</td>
-                <td>@item.Uzura.ToDisplayString()</td>
-                <td>@item.TipSezon</td>
-                <td>@item.ToSetAnvPositionString()</td>
-                @{
-                    string color = "#ff4242";
-                    if (item.StatusCurent == StatusAnvelope.InRaft.ToDisplayString())
-                    {
-                        color = "lightgreen";
-                    }
-                    else if (item.StatusCurent == StatusAnvelope.Montate.ToDisplayString())
-                    {
-                        color = "yellow";
-                    }
-                    else if (item.StatusCurent == StatusAnvelope.Predate.ToDisplayString())
-                    {
-                        color = "#ff7b42";
-                    }
-                    <td style="background-color: @color">
-                        @item.StatusCurent
-                    </td>
                 }
-            </tr>
+            </td>
+            <td>@item.Client.NumeClient</td>
+            <td>@item.Client.NumarTelefon</td>
+            <td>@item.Masina.NumarInmatriculare</td>
+            <td>@item.Masina.SerieSasiu</td>
+            <td>@item.Anvelopa.Marca</td>
+            <td>@item.Anvelopa.NrBucati</td>
+            <td>@item.Anvelopa.DimensiuniString</td>
+            <td>@item.Anvelopa.Uzura</td>
+            <td>@item.Anvelopa.TipSezon</td>
+            <td>@item.Anvelopa.PozitieInRaft</td>
+            @{
+                string color = "#ff4242";
+                if (item.Anvelopa.StatusCurent == StatusAnvelope.InRaft.ToDisplayString())
+                {
+                    color = "lightgreen";
+                }
+                else if (item.Anvelopa.StatusCurent == StatusAnvelope.Montate.ToDisplayString())
+                {
+                    color = "yellow";
+                }
+                else if (item.Anvelopa.StatusCurent == StatusAnvelope.Predate.ToDisplayString())
+                {
+                    color = "#ff7b42";
+                }
+                <td style="background-color: @color">
+                    @item.Anvelopa.StatusCurent
+                </td>
+            }
+        </tr>
         }
     </tbody>
 </table>

@@ -98,7 +98,7 @@
             return string.Format("Rand:{0}, Poz:{1}, Int:{2}, Ocupate:{3}", pos.Rand, pos.Pozitie, pos.Interval, pos.Locuriocupate);
         }
 
-        public static string ToSetAnvPositionString(this AnvelopDto setanv)
+        public static string ToSetAnvPositionString(this AnvelopaDto setanv)
         {
             if (setanv.Pozitie == null)
             {

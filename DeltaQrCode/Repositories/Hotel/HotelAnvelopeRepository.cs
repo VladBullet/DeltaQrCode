@@ -196,74 +196,6 @@ namespace DeltaQrCode.Repositories
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-
-        //public async Task<Result<CaFlota>> GetFlotaByIdAsync(uint id)
-        //{
-        //    try
-        //    {
-        //        var value = await _db.CaFlota.FirstAsync(x => x.Id == id);
-        //        return Result<CaFlota>.ResultOk(value);
-        //    }
-        //    catch (Exception er)
-        //    {
-        //        Log.Error(er, "Ceva nu a mers bine la gasirea flotei in functie de id in repository!");
-        //        throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de id in repository!", er);
-        //    }
-
-        //}
-
-
-        //public async Task<Result<List<CaFlota>>> GetFlotaAsync()
-        //{
-        //    try
-        //    {
-        //        var value = await _db.CaFlota.ToListAsync();
-        //        return Result<List<CaFlota>>.ResultOk(value);
-        //    }
-        //    catch (Exception er)
-        //    {
-        //        Log.Error(er, "Ceva nu a mers bine la gasirea flotei in repository!");
-        //        throw new Exception("Ceva nu a mers bine la gasirea flotei in repository!", er);
-        //    }
-
-        //}
-
-
-        //public async Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota)
-        //{
-        //    try
-        //    {
-        //        var value = await _db.CaFlota.AddAsync(flota);
-        //        await _db.SaveChangesAsync();
-        //        return Result<CaFlota>.ResultOk(value.Entity);
-
-        //    }
-        //    catch (Exception er)
-        //    {
-        //        Log.Error(er, "Ceva nu a mers bine la adaugarea flotei in repository!");
-        //        throw new Exception("Ceva nu a mers bine la adaugarea flotei in repository!", er);
-        //    }
-        //}
-
-
-        //public async Task<Result<CaFlota>> GetFlotaByLableAsync(string label)
-        //{
-        //    try
-        //    {
-        //        label = string.IsNullOrEmpty(label) ? string.Empty : label.Trim();
-        //        var value = await _db.CaFlota.FirstOrDefaultAsync(x => x.Label.ToLower().Contains(label.ToLower()));
-        //        return Result<CaFlota>.ResultOk(value);
-        //    }
-        //    catch (Exception er)
-        //    {
-        //        Log.Error(er, "Ceva nu a mers bine la gasirea flotei in functie de label in repository!");
-        //        throw new Exception("Ceva nu a mers bine la gasirea flotei in functie de label in repository!", er);
-        //    }
-
-        //}
-
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-
         public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id)
         {
             try
@@ -385,7 +317,17 @@ namespace DeltaQrCode.Repositories
 
         public async Task<Result<CaMasina>> GetMasinaForSetIdAsync(int setId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var value = await _db.CaSetAnvelope.FirstOrDefaultAsync(x => x.Id == setId);
+                var masina = await _db.CaMasina.FirstOrDefaultAsync(x => x.Id == value.MasinaId);
+                return Result<CaMasina>.ResultOk(masina);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+            }
         }
 
         public async Task<Result<CaMasina>> AddMasinaAsync(CaMasina masina)
@@ -453,7 +395,17 @@ namespace DeltaQrCode.Repositories
 
         public async Task<Result<CaClientHotel>> GetClientForSetIdAsync(int setId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var value = await _db.CaSetAnvelope.FirstOrDefaultAsync(x => x.Id == setId);
+                var client = await _db.CaClientHotel.FirstOrDefaultAsync(x => x.Id == value.ClientId);
+                return Result<CaClientHotel>.ResultOk(client);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+            }
         }
 
         public async Task<Result<CaClientHotel>> AddClientAsync(CaClientHotel client)

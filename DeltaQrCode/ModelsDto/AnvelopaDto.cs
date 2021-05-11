@@ -2,7 +2,7 @@
 
 namespace DeltaQrCode.ModelsDto
 {
-    public class AnvelopDto
+    public class AnvelopaDto
     {
         public uint Id { get; set; }
         public uint? MarcaId { get; set; }

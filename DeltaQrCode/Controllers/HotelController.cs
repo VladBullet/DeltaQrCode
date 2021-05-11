@@ -52,9 +52,9 @@ namespace DeltaQrCode.Controllers
             var anvelope = anvelopeResult.Entity;
 
 
-            var paginatedModel = PaginatedList<AnvelopDto>.Create(anvelope, pageNumber, PageSize);
-            var model = new HotelListViewModel(paginatedModel);
-            return PartialView("_HotelList", model);
+            var paginatedModel = PaginatedList<AnvelopaDto>.Create(anvelope, pageNumber, PageSize);
+            //var model = new HotelListViewModel(paginatedModel);
+            return PartialView("_HotelList", null);
         }
 
 
@@ -96,7 +96,7 @@ namespace DeltaQrCode.Controllers
         {
             try
             {
-                var dto = _mapper.Map<AnvelopDto>(setAnvelope);
+                var dto = _mapper.Map<AnvelopaDto>(setAnvelope);
                 var result = await _hotelService.UpdateAnvelopaAsync(dto);
                 if (result.Successful)
                 {
@@ -119,7 +119,7 @@ namespace DeltaQrCode.Controllers
         {
             try
             {
-                var dto = _mapper.Map<AnvelopDto>(setAnvelope);
+                var dto = _mapper.Map<AnvelopaDto>(setAnvelope);
                 //dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
                 dto.UzuraString = dto.Uzura.ToCustomString();
 

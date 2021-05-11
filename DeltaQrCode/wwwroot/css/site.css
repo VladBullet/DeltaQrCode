@@ -426,3 +426,31 @@ p {
         transform: rotate(359deg);
     }
 }
+
+.hidediv-xl {
+    display: normal;
+}
+
+
+
+@media (min-width: 1200px) {
+    .hidediv-xl {
+        display: none;
+    }
+}
+
+
+.hidediv-md {
+    display: normal;
+}
+
+@media (max-width: 991px) {
+    .hidediv-md {
+        display: none;
+    }
+}
+
+.hiddenAnv {
+}
+
+
