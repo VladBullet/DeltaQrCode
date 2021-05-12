@@ -394,9 +394,6 @@ namespace DeltaQrCode.Data
                     .IsRequired()
                     .HasColumnType("varchar(45)");
 
-                entity.Property(e => e.Uzura)
-                    .IsRequired()
-                    .HasColumnType("varchar(100)");
             });
 
             modelBuilder.Entity<CaUsers>(entity =>

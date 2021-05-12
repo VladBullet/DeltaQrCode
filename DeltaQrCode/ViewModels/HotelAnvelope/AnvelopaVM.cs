@@ -44,6 +44,7 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public uint? OldMarcaId { get; set; }
         public string OldTipSezon { get; set; }
         public string OldObservatii { get; set; }
+        public uint SetAnvelopeId { get; set; }
 
     }
 }

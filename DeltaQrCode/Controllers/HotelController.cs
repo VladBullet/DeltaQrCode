@@ -50,8 +50,23 @@ namespace DeltaQrCode.Controllers
         {
             var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
             var anvelope = anvelopeResult.Entity;
-            var mapper = _mapper.Map<List<HotelAnvelopaVm>>(anvelope);
 
+            //var mapper = _mapper.Map<List<HotelAnvelopaVm>>(anvelope);
+
+            var mapper = new List<HotelAnvelopaVm>();
+            foreach (var item in anvelope)
+            {
+                var set = await _hotelService.GetSetAnvelopeByIdAsync(item.SetAnvelopeId);
+                var client = await _hotelService.GetClientByIdAsync(set.Entity.ClientId);
+                var masina = await _hotelService.GetMasinaByIdAsync(set.Entity.MasinaId);
+
+                var anv = _mapper.Map<HotelAnvelopaVm>(item);
+                anv.Client = _mapper.Map<ClientHotelVM>(client.Entity);
+                anv.Masina = _mapper.Map<MasinaVM>(masina.Entity);
+                anv.SetAnvelope = _mapper.Map<SetAnvelopeVM>(set.Entity);
+
+                mapper.Add(anv);
+            }
 
             var paginatedModel = PaginatedList<HotelAnvelopaVm>.Create(mapper, pageNumber, PageSize);
             var model = new HotelListViewModel(paginatedModel);
@@ -116,7 +131,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddModal(HotelAnvelopaVm setAnv)
+        public async Task<ActionResult> AddModal(AddEditSetAnvelopeVM setAnv)
         {
             try
             {
@@ -126,23 +141,74 @@ namespace DeltaQrCode.Controllers
                 var masinaToMapp = setAnv.Masina;
                 var masina = _mapper.Map<MasinaDto>(masinaToMapp);
 
-                var anvelopaToMapp = setAnv.Anvelopa;
-                var anvelopa = _mapper.Map<AnvelopaDto>(anvelopaToMapp);
 
-                //var anvelopa = _mapper.Map<AnvelopaDto>(setAnvelope);
-                //dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
-                anvelopa.UzuraString = anvelopa.Uzura.ToCustomString();
+                var anvList = new List<AnvelopaVM>();
 
-                anvelopa.Dimensiuni = new Dimensiuni(anvelopaToMapp.Diametru, anvelopaToMapp.Latime, anvelopaToMapp.Inaltime, anvelopaToMapp.Dot);
-                anvelopa.DimensiuniString = anvelopa.Dimensiuni.ToCustomString();
+                anvList.Add(setAnv.StangaFata);
+                anvList.Add(setAnv.DreaptaFata);
+                anvList.Add(setAnv.StangaSpate);
+                anvList.Add(setAnv.DreaptaSpate);
+                anvList.Add(setAnv.Optional1);
+                anvList.Add(setAnv.Optional2);
 
-                var addAnvelopa = await _hotelService.AddAnvelopaAsync(anvelopa);
-                var addClient = await _hotelService.AddClientAsync(client);
-                var addMasina = await _hotelService.AddMasinaAsync(masina);
+                anvList = anvList.Where(x => x.Uzura > 0).ToList();
+
+                var dtoAnvList = _mapper.Map<List<AnvelopaDto>>(anvList);
+
+                uint clientId = 0;
+                uint masinaId = 0;
+
+                var existingClient = await _hotelService.GetClientByNameAsync(setAnv.Client.NumeClient, setAnv.Client.NumarTelefon);
+
+                if (existingClient.Successful && existingClient.Entity != null)
+                {
+                    clientId = existingClient.Entity.Id;
+                }
+                else
+                {
+                    var addClient = await _hotelService.AddClientAsync(client);
+                    clientId = addClient.Entity.Id;
+
+                }
+
+                var existingMasina = await _hotelService.GetMasinaBySerieSasiuOrNrAutoAsync(setAnv.Client.NumeClient, setAnv.Client.NumarTelefon);
+
+                if (existingMasina.Successful && existingMasina.Entity != null)
+                {
+                    masinaId = existingMasina.Entity.Id;
+                }
+                else
+                {
+                    var addMasina = await _hotelService.AddMasinaAsync(masina);
+                    masinaId = addMasina.Entity.Id;
+                }
 
 
+                var setAnvelopeDto = new SetAnvelopeDto();
 
-                if (addAnvelopa.Successful)
+                setAnvelopeDto.MasinaId = masinaId;
+                setAnvelopeDto.ClientId = clientId;
+                setAnvelopeDto.NumeSet = setAnv.SetAnvelope.NumeSet;
+
+                var addSetAnvelope = await _hotelService.AddSetAnvelopeAsync(setAnvelopeDto);
+                bool addedAnvSuccessful = true;
+
+                foreach (var item in dtoAnvList)
+                {
+
+                    item.Dimensiuni = new Dimensiuni(item.Dimensiuni.Diam, item.Dimensiuni.Lat, item.Dimensiuni.H, item.Dimensiuni.Dot);
+                    item.DimensiuniString = item.Dimensiuni.ToCustomString();
+                    item.SetAnvelopeId = addSetAnvelope.Entity.Id;
+
+                    var  result = await _hotelService.AddAnvelopaAsync(item);
+
+                    if (!result.Successful)
+                    {
+                        addedAnvSuccessful = false;
+                    }
+                }
+
+                if (addedAnvSuccessful && clientId != 0 && masinaId !=0 )
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
                 }

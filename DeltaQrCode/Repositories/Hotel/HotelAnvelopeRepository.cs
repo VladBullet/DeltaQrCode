@@ -196,7 +196,7 @@ namespace DeltaQrCode.Repositories
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(int id)
+        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(uint id)
         {
             try
             {
@@ -210,7 +210,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByClientIdAsync(int clientId)
+        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByClientIdAsync(uint clientId)
         {
             try
             {
@@ -224,7 +224,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByMasinaIdAsync(int masinaId)
+        public async Task<Result<CaSetAnvelope>> GetSetAnvelopeByMasinaIdAsync(uint masinaId)
         {
             try
             {
@@ -273,7 +273,7 @@ namespace DeltaQrCode.Repositories
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-        public async Task<Result<CaMasina>> GetMasinaByIdAsync(int id)
+        public async Task<Result<CaMasina>> GetMasinaByIdAsync(uint id)
         {
             try
             {
@@ -315,7 +315,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaMasina>> GetMasinaForSetIdAsync(int setId)
+        public async Task<Result<CaMasina>> GetMasinaForSetIdAsync(uint setId)
         {
             try
             {
@@ -365,7 +365,7 @@ namespace DeltaQrCode.Repositories
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-        public async Task<Result<CaClientHotel>> GetClientByIdAsync(int id)
+        public async Task<Result<CaClientHotel>> GetClientByIdAsync(uint id)
         {
             try
             {
@@ -379,11 +379,11 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaClientHotel>> GetClientByNameAsync(string numeClient)
+        public async Task<Result<CaClientHotel>> GetClientByNameAsync(string numeClient, string numarTelefon)
         {
             try
             {
-                var value = await _db.CaClientHotel.FirstOrDefaultAsync(x => x.NumeClient.ToLower().Contains(numeClient.ToLower()));
+                var value = await _db.CaClientHotel.FirstOrDefaultAsync(x => x.NumeClient.ToLower().Contains(numeClient.ToLower()) && x.NumarTelefon == numarTelefon);
                 return Result<CaClientHotel>.ResultOk(value);
             }
             catch (Exception er)
@@ -393,7 +393,7 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<CaClientHotel>> GetClientForSetIdAsync(int setId)
+        public async Task<Result<CaClientHotel>> GetClientForSetIdAsync(uint setId)
         {
             try
             {

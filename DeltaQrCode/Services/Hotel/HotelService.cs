@@ -179,56 +179,56 @@ namespace DeltaQrCode.Services.Hotel
                     editSetAnv.Dimensiuni.Lat = editSetAnv.OldDimensiuni.Lat;
                     editSetAnv.Dimensiuni.Dot = editSetAnv.OldDimensiuni.Dot;
 
-                    var uzura = new Uzura(editSetAnv.Uzura);
+                    //var uzura = new Uzura(editSetAnv.Uzura);
 
-                    editSetAnv.Uzura = new Uzura();
+                    //editSetAnv.Uzura = new Uzura();
 
-                    if (editSetAnv.OldNumarBucati == 4)
-                    {
-                        if (editSetAnv.NrBucati < 4)
-                        {
-                            editSetAnv.Uzura.DrS = null;
-                            editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
-                            editSetAnv.Uzura.DrF = editSetAnv.OldUzura.StS;
-                            editSetAnv.Uzura.StS = editSetAnv.OldUzura.DrS;
+                    //if (editSetAnv.OldNumarBucati == 4)
+                    //{
+                    //    if (editSetAnv.NrBucati < 4)
+                    //    {
+                    //        editSetAnv.Uzura.DrS = null;
+                    //        editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
+                    //        editSetAnv.Uzura.DrF = editSetAnv.OldUzura.StS;
+                    //        editSetAnv.Uzura.StS = editSetAnv.OldUzura.DrS;
 
-                            if (editSetAnv.NrBucati < 3)
-                            {
-                                editSetAnv.Uzura.StS = null;
-                                editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.StS;
-                                editSetAnv.Uzura.DrF = editSetAnv.OldUzura.DrS;
+                    //        if (editSetAnv.NrBucati < 3)
+                    //        {
+                    //            editSetAnv.Uzura.StS = null;
+                    //            editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.StS;
+                    //            editSetAnv.Uzura.DrF = editSetAnv.OldUzura.DrS;
 
-                                if (editSetAnv.NrBucati == 1)
-                                {
-                                    editSetAnv.Uzura.DrF = null;
-                                    editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrS;
-                                }
-                            }
-                        }
-                    }
+                    //            if (editSetAnv.NrBucati == 1)
+                    //            {
+                    //                editSetAnv.Uzura.DrF = null;
+                    //                editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrS;
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
-                    if (editSetAnv.OldNumarBucati == 3)
-                    {
-                        if (editSetAnv.NrBucati < 3)
-                        {
-                            editSetAnv.Uzura.StS = null;
-                            editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
-                            editSetAnv.Uzura.DrF = editSetAnv.OldUzura.StS;
+                    //if (editSetAnv.OldNumarBucati == 3)
+                    //{
+                    //    if (editSetAnv.NrBucati < 3)
+                    //    {
+                    //        editSetAnv.Uzura.StS = null;
+                    //        editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
+                    //        editSetAnv.Uzura.DrF = editSetAnv.OldUzura.StS;
 
-                            if (editSetAnv.NrBucati == 1)
-                            {
-                                editSetAnv.Uzura.DrF = null;
-                                editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.StS;
-                            }
-                        }
+                    //        if (editSetAnv.NrBucati == 1)
+                    //        {
+                    //            editSetAnv.Uzura.DrF = null;
+                    //            editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.StS;
+                    //        }
+                    //    }
 
-                    }
+                    //}
 
-                    if(editSetAnv.OldNumarBucati == 2)
-                    {
-                        editSetAnv.Uzura.DrF = null;
-                        editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
-                    }
+                    //if(editSetAnv.OldNumarBucati == 2)
+                    //{
+                    //    editSetAnv.Uzura.DrF = null;
+                    //    editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
+                    //}
 
                     addSetAnv.Id = 0;
 
@@ -500,7 +500,7 @@ namespace DeltaQrCode.Services.Hotel
         public async Task<DataTable> GenerateDataForExcel()
         {
             DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[18] {
+            dt.Columns.AddRange(new DataColumn[14] {
                                             //new DataColumn("NumeClient"),
                                             //new DataColumn("NumarInmatriculare"),
                                             //new DataColumn("NumarTelefon"),
@@ -516,10 +516,10 @@ namespace DeltaQrCode.Services.Hotel
                                             new DataColumn("Latime"),
                                             new DataColumn("Inaltime"),
                                             new DataColumn("DOT"),
-                                            new DataColumn("StangaFata"),
-                                            new DataColumn("StangaSpate"),
-                                            new DataColumn("DreaptaFata"),
-                                            new DataColumn("DreaptaSpate"),
+                                            //new DataColumn("StangaFata"),
+                                            //new DataColumn("StangaSpate"),
+                                            //new DataColumn("DreaptaFata"),
+                                            //new DataColumn("DreaptaSpate"),
                                             new DataColumn("TipSezon"),
                                             new DataColumn("Observatii"),
                                             new DataColumn("StatusCurent"),
@@ -550,10 +550,10 @@ namespace DeltaQrCode.Services.Hotel
                     anvelope.Dimensiuni?.Lat,
                     anvelope.Dimensiuni?.H,
                     anvelope.Dimensiuni?.Dot,
-                    anvelope.Uzura?.StF,
-                    anvelope.Uzura?.StS,
-                    anvelope.Uzura?.DrF,
-                    anvelope.Uzura?.DrS,
+                    //anvelope.Uzura?.StF,
+                    //anvelope.Uzura?.StS,
+                    //anvelope.Uzura?.DrF,
+                    //anvelope.Uzura?.DrS,
                     anvelope.TipSezon,
                     anvelope.Observatii,
                     anvelope.StatusCurent,
@@ -564,7 +564,7 @@ namespace DeltaQrCode.Services.Hotel
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(int id)
+        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByIdAsync(uint id)
         {
             try
             {
@@ -579,7 +579,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByClientIdAsync(int clientId)
+        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByClientIdAsync(uint clientId)
         {
             try
             {
@@ -594,7 +594,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByMasinaIdAsync(int masinaId)
+        public async Task<Result<SetAnvelopeDto>> GetSetAnvelopeByMasinaIdAsync(uint masinaId)
         {
             try
             {
@@ -643,7 +643,7 @@ namespace DeltaQrCode.Services.Hotel
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-        public async Task<Result<MasinaDto>> GetMasinaByIdAsync(int id)
+        public async Task<Result<MasinaDto>> GetMasinaByIdAsync(uint id)
         {
             try
             {
@@ -688,7 +688,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<MasinaDto>> GetMasinaForSetIdAsync(int setId)
+        public async Task<Result<MasinaDto>> GetMasinaForSetIdAsync(uint setId)
         {
             try
             {
@@ -738,7 +738,7 @@ namespace DeltaQrCode.Services.Hotel
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-        public async Task<Result<ClientHotelDto>> GetClientByIdAsync(int id)
+        public async Task<Result<ClientHotelDto>> GetClientByIdAsync(uint id)
         {
             try
             {
@@ -753,11 +753,11 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<ClientHotelDto>> GetClientByNameAsync(string numeClient)
+        public async Task<Result<ClientHotelDto>> GetClientByNameAsync(string numeClient, string numarTelefon)
         {
             try
             {
-                var value = await _hotelRepository.GetClientByNameAsync(numeClient);
+                var value = await _hotelRepository.GetClientByNameAsync(numeClient,numarTelefon);
                 var model = _mapper.Map<ClientHotelDto>(value.Entity);
                 return Result<ClientHotelDto>.ResultOk(model);
             }
@@ -768,7 +768,7 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<ClientHotelDto>> GetClientForSetIdAsync(int setId)
+        public async Task<Result<ClientHotelDto>> GetClientForSetIdAsync(uint setId)
         {
             try
             {
@@ -812,6 +812,30 @@ namespace DeltaQrCode.Services.Hotel
             {
                 Log.Error(er, "Ceva nu a mers bine la editarea clientului in servicii!");
                 throw new Exception("Ceva nu a mers bine la editarea clientului in servicii!", er);
+            }
+        }
+
+        public async Task<Result<MasinaDto>> GetMasinaBySerieSasiuOrNrAutoAsync(string serieSasiu, string nrAuto)
+        {
+            try
+            {
+                var value = new Result<CaMasina>();
+
+                if (!string.IsNullOrEmpty(serieSasiu) && string.IsNullOrEmpty(nrAuto))
+                {
+                    value = await _hotelRepository.GetMasinaBySerieSasiuAsync(serieSasiu);
+                }
+                if (string.IsNullOrEmpty(serieSasiu) && !string.IsNullOrEmpty(nrAuto))
+                {
+                    value = await _hotelRepository.GetMasinaByNrAutoAsync(nrAuto);
+                }
+                var model = _mapper.Map<MasinaDto>(value.Entity);
+                return Result<MasinaDto>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in servicii!", er);
             }
         }
     }

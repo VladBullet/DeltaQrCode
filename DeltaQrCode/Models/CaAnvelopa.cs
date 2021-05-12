@@ -9,14 +9,14 @@ namespace DeltaQrCode.Models
         public uint? MarcaId { get; set; }
         public int NrBucati { get; set; }
         public string Dimensiuni { get; set; }
-        public string Uzura { get; set; }
+        public int Uzura { get; set; }
         public string TipSezon { get; set; }
         public string Observatii { get; set; }
         public string StatusCurent { get; set; }
         public DateTime DataUltimaModificare { get; set; }
         public bool Deleted { get; set; }
         public uint? PozitieId { get; set; }
-        public int SetAnvelopeId { get; set; }
+        public uint SetAnvelopeId { get; set; }
         public string PozitiePeMasina { get; set; }
     }
 }
