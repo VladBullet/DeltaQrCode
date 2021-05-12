@@ -50,11 +50,12 @@ namespace DeltaQrCode.Controllers
         {
             var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
             var anvelope = anvelopeResult.Entity;
+            var mapper = _mapper.Map<List<HotelAnvelopaVm>>(anvelope);
 
 
-            var paginatedModel = PaginatedList<AnvelopaDto>.Create(anvelope, pageNumber, PageSize);
-            //var model = new HotelListViewModel(paginatedModel);
-            return PartialView("_HotelList", null);
+            var paginatedModel = PaginatedList<HotelAnvelopaVm>.Create(mapper, pageNumber, PageSize);
+            var model = new HotelListViewModel(paginatedModel);
+            return PartialView("_HotelList", model);
         }
 
 
@@ -115,19 +116,33 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddModal(AnvelopaVM setAnvelope)
+        public async Task<ActionResult> AddModal(HotelAnvelopaVm setAnv)
         {
             try
             {
-                var dto = _mapper.Map<AnvelopaDto>(setAnvelope);
+                var clientToMapp = setAnv.Client;
+                var client = _mapper.Map<ClientHotelDto>(clientToMapp);
+
+                var masinaToMapp = setAnv.Masina;
+                var masina = _mapper.Map<MasinaDto>(masinaToMapp);
+
+                var anvelopaToMapp = setAnv.Anvelopa;
+                var anvelopa = _mapper.Map<AnvelopaDto>(anvelopaToMapp);
+
+                //var anvelopa = _mapper.Map<AnvelopaDto>(setAnvelope);
                 //dto.Uzura = new Uzura(setAnvelope.StangaFata, setAnvelope.StangaSpate, setAnvelope.DreaptaFata, setAnvelope.DreaptaSpate);
-                dto.UzuraString = dto.Uzura.ToCustomString();
+                anvelopa.UzuraString = anvelopa.Uzura.ToCustomString();
 
-                dto.Dimensiuni = new Dimensiuni(setAnvelope.Diametru, setAnvelope.Latime, setAnvelope.Inaltime, setAnvelope.Dot);
-                dto.DimensiuniString = dto.Dimensiuni.ToCustomString();
+                anvelopa.Dimensiuni = new Dimensiuni(anvelopaToMapp.Diametru, anvelopaToMapp.Latime, anvelopaToMapp.Inaltime, anvelopaToMapp.Dot);
+                anvelopa.DimensiuniString = anvelopa.Dimensiuni.ToCustomString();
 
-                var result = await _hotelService.AddAnvelopaAsync(dto);
-                if (result.Successful)
+                var addAnvelopa = await _hotelService.AddAnvelopaAsync(anvelopa);
+                var addClient = await _hotelService.AddClientAsync(client);
+                var addMasina = await _hotelService.AddMasinaAsync(masina);
+
+
+
+                if (addAnvelopa.Successful)
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
                 }

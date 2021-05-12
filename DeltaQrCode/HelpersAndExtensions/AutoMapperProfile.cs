@@ -85,6 +85,18 @@
             
             CreateMap<CaSetAnvelope, SetAnvelopeDto>();
             CreateMap<SetAnvelopeDto, CaSetAnvelope>();
+            
+            CreateMap<AnvelopaDto, HotelAnvelopaVm>();
+            CreateMap<HotelAnvelopaVm, AnvelopaDto>();
+
+            CreateMap<MasinaDto, MasinaVM>();
+            CreateMap<MasinaVM, MasinaDto>();
+            
+            CreateMap<ClientHotelDto, ClientHotelVM>();
+            CreateMap<ClientHotelVM, ClientHotelDto>();
+            
+            CreateMap<SetAnvelopeDto, SetAnvelopeVM>();
+            CreateMap<SetAnvelopeVM, SetAnvelopeDto>();
 
 
         }
