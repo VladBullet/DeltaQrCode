@@ -430,12 +430,32 @@ p {
 .hidediv-xl {
     display: normal;
 }
+.hidediv-lg {
+    display: normal;
+}
+.hidediv-sm {
+    display: normal;
+}
 
 
 
 @media (min-width: 1200px) {
     .hidediv-xl {
         display: none;
+    }
+}
+
+
+@media (min-width: 991px) {
+    .hidediv-lg {
+        display: none;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .hidediv-lg {
+        display: normal;
     }
 }
 

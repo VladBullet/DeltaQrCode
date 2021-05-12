@@ -29,7 +29,7 @@ $(".pozitieinraft").select2({
 });
 
 // Select2 for Marca
-$("#Marca").select2({
+$(".marca").select2({
     tags: true,
     dropdownParent: "#hotelModalBody",
     theme: "bootstrap4",
@@ -261,7 +261,7 @@ if (selPozVal != NaN && selPozVal != '') {
 }
 
 // select2 initial value for marca
-var marcaObj = $('#Marca');
+var marcaObj = $('.marca');
 var marcaVal = $("#defaultMarca").attr("data-value");
 if (marcaVal != NaN && marcaVal != '') {
     var optionMarca = new Option(marcaVal, marcaVal, true, true);
