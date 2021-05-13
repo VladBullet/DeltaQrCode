@@ -101,15 +101,15 @@ namespace DeltaQrCode.Controllers
                 setAnv.Client = clientvm;
                 setAnv.Masina = masinavm;
                 setAnv.SetAnvelope = setvm;
-                setAnv.StangaFata = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaFata") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaFata") : new AnvelopaVM("StangaFata") ;
-                setAnv.DreaptaFata = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaFata") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaFata") : new AnvelopaVM("DreaptaFata") ;
-                setAnv.StangaSpate = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaSpate") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaSpate") : new AnvelopaVM("StangaSpate") ;
-                setAnv.DreaptaSpate = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaSpate") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaSpate") : new AnvelopaVM("DreaptaSpate") ;
-                setAnv.Optional1 = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") : new AnvelopaVM("Optional1") ;
-                setAnv.Optional2 = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") : new AnvelopaVM("Optional2") ;
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaFata") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaFata") : new AnvelopaVM("StangaFata"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaFata") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaFata") : new AnvelopaVM("DreaptaFata"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaSpate") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaSpate") : new AnvelopaVM("StangaSpate"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaSpate") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaSpate") : new AnvelopaVM("DreaptaSpate"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") : new AnvelopaVM("Optional1"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") : new AnvelopaVM("Optional2"));
 
 
-                
+
 
                 //model.OldPozitieId = model.PozitieId;
                 //model.OldNumarBucati = model.NrBucati;
@@ -136,7 +136,7 @@ namespace DeltaQrCode.Controllers
                 Log.Error(e, "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
                 return BadRequest("Ceva nu a mers bine la modificarea setului de anvelope in controller!");
             }
-            
+
         }
 
 
@@ -178,12 +178,7 @@ namespace DeltaQrCode.Controllers
 
                 var anvList = new List<AnvelopaVM>();
 
-                anvList.Add(setAnv.StangaFata);
-                anvList.Add(setAnv.DreaptaFata);
-                anvList.Add(setAnv.StangaSpate);
-                anvList.Add(setAnv.DreaptaSpate);
-                anvList.Add(setAnv.Optional1);
-                anvList.Add(setAnv.Optional2);
+                anvList.AddRange(setAnv.Anvelope);
 
                 anvList = anvList.Where(x => x.Uzura > 0).ToList();
 
@@ -234,7 +229,7 @@ namespace DeltaQrCode.Controllers
                     item.DimensiuniString = item.Dimensiuni.ToCustomString();
                     item.SetAnvelopeId = addSetAnvelope.Entity.Id;
 
-                    var  result = await _hotelService.AddAnvelopaAsync(item);
+                    var result = await _hotelService.AddAnvelopaAsync(item);
 
                     if (!result.Successful)
                     {
@@ -242,7 +237,7 @@ namespace DeltaQrCode.Controllers
                     }
                 }
 
-                if (addedAnvSuccessful && clientId != 0 && masinaId !=0 )
+                if (addedAnvSuccessful && clientId != 0 && masinaId != 0)
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope adaugat cu success!"));
                 }

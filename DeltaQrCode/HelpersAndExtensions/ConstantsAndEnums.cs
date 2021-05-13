@@ -12,11 +12,12 @@ namespace DeltaQrCode
 
         public static readonly Dictionary<int, string> DiametruDictionary = new Dictionary<int, string> { { 13, "R13" }, { 14, "R14" }, { 15, "R15" }, { 16, "R16" }, { 17, "R17" }, { 18, "R18" }, { 19, "R19" }, { 20, "R20" }, { 21, "R21" }, { 22, "R22" } };
 
-        public static readonly string[] Latime = { "125", "135", "145", "155", "165", "175", "185", "195", "205", "215", "225", "235", "245", "255", "265", "275", "285", "295", "305", "315", "325", "335", "345", "355"}; 
+        public static readonly string[] Latime = { "125", "135", "145", "155", "165", "175", "185", "195", "205", "215", "225", "235", "245", "255", "265", "275", "285", "295", "305", "315", "325", "335", "345", "355" };
 
-        public static readonly string[] Inaltime = { "35", "40", "45", "50", "55", "60", "65", "70" }; 
+        public static readonly string[] Inaltime = { "35", "40", "45", "50", "55", "60", "65", "70" };
 
         public static readonly string[] Intervals = { "A", "B", "C", "D", "E" };
+        public static readonly string[] PozitiiPeMasina = { "StangaFata", "DreaptaFata", "StangaSpate", "DreaptaSpate", "Optional1", "Optional2" };
 
 
 
@@ -36,11 +37,11 @@ namespace DeltaQrCode
             return dotlist;
         }
 
-}
+    }
 
-   
 
-    
+
+
     public enum ServiceType
     {
         Vulcanizare = 1,
@@ -78,7 +79,7 @@ namespace DeltaQrCode
     {
         Adaugare = 1,
         Scoatere = 2,
-        Setare  =3
+        Setare = 3
     }
 
 }
