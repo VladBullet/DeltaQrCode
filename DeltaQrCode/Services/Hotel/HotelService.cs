@@ -838,5 +838,20 @@ namespace DeltaQrCode.Services.Hotel
                 throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in servicii!", er);
             }
         }
+
+        public async Task<Result<List<AnvelopaDto>>> GetAnvelopeBySetIdAsync(uint setId)
+        {
+            try
+            {
+                var list = await _hotelRepository.GetAnvelopeBySetIdAsync(setId);
+                var result = _mapper.Map<List<AnvelopaDto>>(list.Entity);
+                return Result<List<AnvelopaDto>>.ResultOk(result);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+            }
+        }
     }
 }

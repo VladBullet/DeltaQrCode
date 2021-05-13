@@ -9,7 +9,7 @@ namespace DeltaQrCode.ViewModels
         {
 
         }
-        public HotelModalVM(AnvelopaVM set, ActionType actionType)
+        public HotelModalVM(AddEditSetAnvelopeVM set, ActionType actionType)
         {
             SetAnvelope = set;
             ActionType = actionType;
@@ -17,7 +17,7 @@ namespace DeltaQrCode.ViewModels
 
 
         public TireType Tip { get; set; }
-        public AnvelopaVM SetAnvelope { get; set; }
+        public AddEditSetAnvelopeVM SetAnvelope { get; set; }
         public ActionType ActionType { get; set; }
     }
 

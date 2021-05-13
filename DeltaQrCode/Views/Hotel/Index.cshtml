@@ -114,10 +114,10 @@
                     $('#myHotelModal').modal('show');
 
                     console.log('edit resp');
-                    var pos = $("#selPoz");
+                    var pos = $(".pozitieinraft");
                     pos.removeAttr("disabled");
                     pos.removeClass("disabled");
-                    var statusVal = $("#statusAnv").val();
+                    var statusVal = $("#statuscurent").val();
                     if (statusVal != "InRaft") {
                         pos.attr("disabled", "disabled");
                         pos.addClass("disabled");

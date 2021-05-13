@@ -9,6 +9,7 @@ $(document).ready(function () {
 
         hideAllHiddenAnv();
         hideAllButtonEraseAnv();
+        checkUzuraVal();
         // when loading validate all inputs
         //var validator = new CustomValidation();
         //validator.addcustomValidationRules(uzuraStFRules);
@@ -301,6 +302,17 @@ var eraseData = function (element) {
     });
     var uzura = $(parent).find(".uzura");
     $(uzura).val("0");
+}
+
+var checkUzuraVal = function () {
+    var elements = $(document).find(".uzura");
+    $.each(elements, function (index, item) {
+        if ($(item).val() != 0) {
+            showHiddenAnv(item);
+            showButtonEraseAnv(item);
+        }
+
+    });
 }
 
 

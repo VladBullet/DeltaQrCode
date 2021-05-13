@@ -1,4 +1,4 @@
-﻿@*@using DeltaQrCode.ModelsDto
+﻿@using DeltaQrCode.ModelsDto
 @using Microsoft.AspNetCore.Razor.TagHelpers
 @model DeltaQrCode.ViewModels.HotelAnvelope.AddEditSetAnvelopeVM
 <style>
@@ -16,15 +16,6 @@
 </style>
 
 
-<input id="defaultPosition" hidden="hidden" data-value="@Model.PozitieInRaft" />
-<input id="defaultDiametru" hidden="hidden" data-value="@Model.Diametru" />
-<input id="defaultLatime" hidden="hidden" data-value="@Model.Latime" />
-<input id="defaultInaltime" hidden="hidden" data-value="@Model.Inaltime" />
-<input id="defaultDot" hidden="hidden" data-value="@Model.Dot" />
-<input id="defaultMarca" hidden="hidden" data-value="@Model.Marca" />
-<input id="defaultFlota" hidden="hidden" data-value="@Model.Flota" />
-<input id="defaultTipSezon" hidden="hidden" data-value="@Model.TipSezon" />
-<input id="defaultStatusAnv" hidden="hidden" data-value="@Model.StatusCurent" />
 
 
 <div class="modal-header">
@@ -39,205 +30,559 @@
     <div class="modal-body modal-min-height ui-front" id="hotelModalBody">
         <form id="apptform">
 
-            <input  hidden="hidden" asp-for="OldPozitieId", value="@Model.OldPozitieId" />
-            <input  hidden="hidden" asp-for="OldStangaFata", value="@Model.OldStangaFata" />
-            <input  hidden="hidden" asp-for="OldDreaptaFata", value="@Model.OldDreaptaFata" />
-            <input  hidden="hidden" asp-for="OldStangaSpate", value="@Model.OldStangaSpate" />
-            <input  hidden="hidden" asp-for="OldDreaptaSpate", value="@Model.OldDreaptaSpate" />
-            <input  hidden="hidden" asp-for="OldNumarBucati", value="@Model.OldNumarBucati" />
+            @*<input  hidden="hidden" asp-for="OldPozitieId", value="@Model.OldPozitieId" />
+                <input  hidden="hidden" asp-for="OldNumarBucati", value="@Model.OldNumarBucati" />
+                <input  hidden="hidden" asp-for="OldNumeClient", value="@Model.OldNumeClient" />
+                <input  hidden="hidden" asp-for="OldNumarInmatriculare", value="@Model.OldNumarInmatriculare" />
+                <input  hidden="hidden" asp-for="OldNumarTelefon", value="@Model.OldNumarTelefon" />
+                <input  hidden="hidden" asp-for="OldMarca", value="@Model.OldMarca" />
+                <input  hidden="hidden" asp-for="OldFlota", value="@Model.OldFlota" />
+                <input  hidden="hidden" asp-for="OldDiametru", value="@Model.OldDiametru" />
+                <input  hidden="hidden" asp-for="OldInaltime", value="@Model.OldInaltime" />
+                <input  hidden="hidden" asp-for="OldLatime", value="@Model.OldLatime" />
+                <input  hidden="hidden" asp-for="OldDot", value="@Model.OldDot" />
+                <input  hidden="hidden" asp-for="OldObservatii", value="@Model.OldObservatii" />
+                <input  hidden="hidden" asp-for="OldSerieSasiu", value="@Model.OldSerieSasiu" />
+                <input  hidden="hidden" asp-for="OldTipSezon", value="@Model.OldTipSezon" />*@
 
-            <input  hidden="hidden" asp-for="OldNumeClient", value="@Model.OldNumeClient" />
-            <input  hidden="hidden" asp-for="OldNumarInmatriculare", value="@Model.OldNumarInmatriculare" />
-            <input  hidden="hidden" asp-for="OldNumarTelefon", value="@Model.OldNumarTelefon" />
-            <input  hidden="hidden" asp-for="OldMarca", value="@Model.OldMarca" />
-            <input  hidden="hidden" asp-for="OldFlota", value="@Model.OldFlota" />
-            <input  hidden="hidden" asp-for="OldDiametru", value="@Model.OldDiametru" />
-            <input  hidden="hidden" asp-for="OldInaltime", value="@Model.OldInaltime" />
-            <input  hidden="hidden" asp-for="OldLatime", value="@Model.OldLatime" />
-            <input  hidden="hidden" asp-for="OldDot", value="@Model.OldDot" />
-            <input  hidden="hidden" asp-for="OldObservatii", value="@Model.OldObservatii" />
-            <input  hidden="hidden" asp-for="OldSerieSasiu", value="@Model.OldSerieSasiu" />
-            <input  hidden="hidden" asp-for="OldTipSezon", value="@Model.OldTipSezon" />
-
-            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
+            @Html.EditorFor(model => model.SetAnvelope.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })
             @Html.AntiForgeryToken()
+
             <div class="form-row">
                 <div class="col">
+                    <h4> Detalii client :</h4>
 
                     <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.NumeClient, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                        @Html.LabelFor(model => model.Client.NumeClient, "NumeClient/Flota", htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
-                            @Html.ValidationMessageFor(model => model.NumeClient, "", new { @class = "text-danger error_span" })
+                            @Html.EditorFor(model => model.Client.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                            @Html.ValidationMessageFor(model => model.Client.NumeClient, "", new { @class = "text-danger error_span" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.Client.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Client.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                            @Html.ValidationMessageFor(model => model.Client.NumarTelefon, "", new { @class = "text-danger error_span" })
                         </div>
                     </div>
 
                     <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                        @Html.LabelFor(model => model.Client.Sofer, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
-                            @Html.ValidationMessageFor(model => model.NumarInmatriculare, "", new { @class = "text-danger error_span" })
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.SerieSasiu, htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.SerieSasiu, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
-                            @Html.ValidationMessageFor(model => model.SerieSasiu, "", new { @class = "text-danger error_span" })
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
-                            @Html.ValidationMessageFor(model => model.NumarTelefon, "", new { @class = "text-danger error_span" })
+                            @Html.EditorFor(model => model.Client.Sofer, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                            @Html.ValidationMessageFor(model => model.Client.Sofer, "", new { @class = "text-danger error_span" })
                         </div>
                     </div>
 
                 </div>
                 <br />
                 <div class="col">
-                    <div class="row">
-                        <div class="col">
-                            <h6 style="margin-left: 50px;">Uzura: </h6>
+                    <h4> Detalii masina :</h4>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.StangaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.StangaFata, new { htmlAttributes = new { @class = "form-control col-2 col-sm-2 col-md-4 col-lg-6 half-margin-bottom uzura", @type = "text" } })
-                                    @Html.ValidationMessageFor(model => model.StangaFata, "", new { @class = "text-danger error_span" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.StangaSpate, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.StangaSpate, new { htmlAttributes = new { @class = "form-control col-2 col-sm-2 col-md-4 col-lg-6 half-margin-bottom uzura", @type = "text" } })
-                                    @Html.ValidationMessageFor(model => model.StangaSpate, "", new { @class = "text-danger error_span" })
-                                </div>
-                            </div>
-
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.Masina.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Masina.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                            @Html.ValidationMessageFor(model => model.Masina.NumarInmatriculare, "", new { @class = "text-danger error_span" })
                         </div>
-                        <div class="col" style="margin-top:27px;">
+                    </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.DreaptaFata, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.DreaptaFata, new { htmlAttributes = new { @class = "form-control col-2 col-sm-2 col-md-4 col-lg-6 half-margin-bottom uzura", @type = "text" } })
-                                    @Html.ValidationMessageFor(model => model.DreaptaFata, "", new { @class = "text-danger error_span" })
-                                </div>
-                            </div>
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.Masina.SerieSasiu, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Masina.SerieSasiu, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                            @Html.ValidationMessageFor(model => model.Masina.SerieSasiu, "", new { @class = "text-danger error_span" })
+                        </div>
+                    </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.DreaptaSpate, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.DreaptaSpate, new { htmlAttributes = new { @class = "form-control col-2 col-sm-2 col-md-4 col-lg-6 half-margin-bottom uzura", @type = "text" } })
-                                    @Html.ValidationMessageFor(model => model.DreaptaSpate, "", new { @class = "text-danger error_span" })
-                                </div>
-                            </div>
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.Masina.TipVehicul, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Masina.TipVehicul, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate" } })
+                            @Html.ValidationMessageFor(model => model.Masina.TipVehicul, "", new { @class = "text-danger error_span" })
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="form-row">
+            @*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//*@
 
-                <div class="form-group col-md-6 col-sm-4 col-4">
-                    @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-3  required-field" })
-                    <div class="col-md-9">
-                        <select id="Marca" class="form-control" asp-for="Marca" data-placeholder="@Model.Marca" value="@Model.Marca"></select>
-                        @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger error_span" })
-                    </div>
-                </div>
+            <hr class="bg-dark" />
 
-                <div class="form-group col-md-6 col-sm-4 col-4">
-                    @Html.LabelFor(model => model.Flota, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                    <div class="col-md-9">
-                        <select id="Flota" class="form-control" asp-for="Flota" data-placeholder="@Model.Flota" value="@Model.Flota"></select>
-                        @Html.ValidationMessageFor(model => model.Flota, "", new { @class = "text-danger" })
-                    </div>
-                </div>
 
-                <div class="form-group col-md-3 col-sm-3 col-3">
-                    @Html.LabelFor(model => model.NrBucati, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
-                    <div class="col-md-9 ">
-                        @Html.EditorFor(model => model.NrBucati, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @type = "text", @readonly = "readonly" } })
-                        @Html.ValidationMessageFor(model => model.NrBucati, "", new { @class = "text-danger error_span" })
-                    </div>
-                </div>
+            <div class="text-center form-group">
+                @Html.LabelFor(model => model.SetAnvelope.NumeSet, htmlAttributes: new { @class = "control-label col-md-3" })
+
+                @Html.EditorFor(model => model.SetAnvelope.NumeSet, new { htmlAttributes = new { @class = "form-control col-md-3 validate", @style = "margin:auto;" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.NumeSet, "", new { @class = "text-danger error_span" })
 
             </div>
+            <br />
 
-            <div class="form-row">
-                <h6 style="margin-left: 50px;">Dimensiuni: </h6>
+            <hr class="bg-dark" />
+
+            <div class="form-row parent">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-1 text-center ">
+                    <div>Stanga Fata</div>
+                    <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
+                </div>
+                <input type="hidden" class="pozitiepemasina" asp-for="StangaFata.PozitiePeMasina" value="StangaFata" />
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    @Html.LabelFor(model => model.StangaFata.Uzura, htmlAttributes: new { @class = "control-label required-field" })
+
+                    @Html.EditorFor(model => model.StangaFata.Uzura, new { htmlAttributes = new { @class = " col-5 col-sm-9 col-md-7 col-lg-9 col-xl-6 form-control half-margin-bottom uzura", @type = "text" } })
+                    @Html.ValidationMessageFor(model => model.StangaFata.Uzura, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group  col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaFata.Diametru, htmlAttributes: new { @class = "control-label required-field" })
+                    <input class="defaultDiametru" hidden="hidden" data-value="@Model.StangaFata.Diametru" />
+                    <select class="form-control diametru" asp-for="StangaFata.Diametru" data-placeholder="@Model.StangaFata.Diametru" value="@Model.StangaFata.Diametru"></select>
+                    @Html.ValidationMessageFor(model => model.StangaFata.Diametru, "", new { @class = "text-danger error_span" })
+
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaFata.Latime, htmlAttributes: new { @class = "control-label  required-field" })
+                    <input class="defaultLatime" hidden="hidden" data-value="@Model.StangaFata.Latime" />
+                    <select class="form-control latime" asp-for="StangaFata.Latime" data-placeholder="@Model.StangaFata.Latime" value="@Model.StangaFata.Latime"></select>
+                    @Html.ValidationMessageFor(model => model.StangaFata.Latime, "", new { @class = "text-danger error_span" })
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaFata.Inaltime, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultInaltime" hidden="hidden" data-value="@Model.StangaFata.Inaltime" />
+                    <select class="form-control inaltime" asp-for="StangaFata.Inaltime" data-placeholder="@Model.StangaFata.Inaltime" value="@Model.StangaFata.Inaltime"></select>
+                    @Html.ValidationMessageFor(model => model.StangaFata.Inaltime, "", new { @class = "text-danger error_span" })
+                </div>
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaFata.Dot, htmlAttributes: new { @class = "control-label required-field " })
+                    <input class="defaultDot" hidden="hidden" data-value="@Model.StangaFata.Dot" />
+                    <select class="form-control dot" asp-for="StangaFata.Dot" data-placeholder="@Model.StangaFata.Dot" value="@Model.StangaFata.Dot"></select>
+                    @Html.ValidationMessageFor(model => model.StangaFata.Dot, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class=" hidediv-md  col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="hidediv-md col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaFata.Marca, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultMarca" hidden="hidden" data-value="@Model.StangaFata.Marca" />
+                    <select class="form-control marca" asp-for="StangaFata.Marca"></select>
+                    @Html.ValidationMessageFor(model => model.StangaFata.Marca, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaFata.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultTipSezon" hidden="hidden" data-value="@Model.StangaFata.TipSezon" />
+                    <select class="form-control tipsezon" asp-for="StangaFata.TipSezon"></select>
+                    @Html.ValidationMessageFor(model => model.StangaFata.TipSezon, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaFata.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultStatusAnv" hidden="hidden" data-value="@Model.StangaFata.StatusCurent" />
+                    <select class="form-control statuscurent" id="statusAnv" asp-for="StangaFata.StatusCurent" data-placeholder="@Model.StangaFata.StatusCurent" value="@Model.StangaFata.StatusCurent"></select>
+                    @Html.ValidationMessageFor(model => model.StangaFata.StatusCurent, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaFata.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultPosition" hidden="hidden" data-value="@Model.StangaFata.PozitieInRaft" />
+                    <select class="form-control pozitieinraft" asp-for="StangaFata.PozitieId" data-placeholder="@Model.StangaFata.PozitieId" value="@Model.StangaFata.PozitieInRaft"></select>
+                    @Html.ValidationMessageFor(model => model.StangaFata.PozitieId, "", new { @class = "text-danger error_span" })
+                </div>
             </div>
 
-            <div class="form-row">
+            @*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//*@
 
-                <div class="form-group col-md-3 col-sm-3 col-3">
-                    @Html.LabelFor(model => model.Diametru, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <select class="form-control" id="Diametru" asp-for="Diametru" data-placeholder="@Model.Diametru" value="@Model.Diametru"></select>
-                    @Html.ValidationMessageFor(model => model.Diametru, "", new { @class = "text-danger error_span" })
+            <hr />
+
+            <div class="form-row parent">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-1 text-center ">
+                    <div>Dreapta Fata</div>
+                    <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
+                </div>
+                <input type="hidden" class="pozitiepemasina" asp-for="DreaptaFata.PozitiePeMasina" value="DreaptaFata" />
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 ">
+                    @Html.LabelFor(model => model.DreaptaFata.Uzura, htmlAttributes: new { @class = "control-label required-field" })
+                    @Html.EditorFor(model => model.DreaptaFata.Uzura, new { htmlAttributes = new { @class = " col-5 col-sm-9 col-md-7 col-lg-9 col-xl-6 form-control half-margin-bottom uzura", @type = "text" } })
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.Uzura, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group  col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaFata.Diametru, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultDiametru" hidden="hidden" data-value="@Model.DreaptaFata.Diametru" />
+                    <select class="form-control diametru" asp-for="DreaptaFata.Diametru" data-placeholder="@Model.DreaptaFata.Diametru" value="@Model.DreaptaFata.Diametru"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.Diametru, "", new { @class = "text-danger error_span" })
 
                 </div>
 
-                <div class="form-group col-md-3 col-sm-3 col-3">
-                    @Html.LabelFor(model => model.Latime, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <select class="form-control" id="Latime" asp-for="Latime" data-placeholder="@Model.Latime" value="@Model.Latime"></select>
-                    @Html.ValidationMessageFor(model => model.Latime, "", new { @class = "text-danger error_span" })
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaFata.Latime, htmlAttributes: new { @class = "control-label  required-field" })
+                    <input class="defaultLatime" hidden="hidden" data-value="@Model.DreaptaFata.Latime" />
+                    <select class="form-control latime" asp-for="DreaptaFata.Latime" data-placeholder="@Model.DreaptaFata.Latime" value="@Model.DreaptaFata.Latime"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.Latime, "", new { @class = "text-danger error_span" })
                 </div>
 
-                <div class="form-group col-md-3 col-sm-3 col-3">
-                    @Html.LabelFor(model => model.Inaltime, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <select class="form-control" id="Inaltime" asp-for="Inaltime" data-placeholder="@Model.Inaltime" value="@Model.Inaltime"></select>
-                    @Html.ValidationMessageFor(model => model.Inaltime, "", new { @class = "text-danger error_span" })
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaFata.Inaltime, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultInaltime" hidden="hidden" data-value="@Model.DreaptaFata.Inaltime" />
+                    <select class="form-control inaltime" asp-for="DreaptaFata.Inaltime" data-placeholder="@Model.DreaptaFata.Inaltime" value="@Model.DreaptaFata.Inaltime"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.Inaltime, "", new { @class = "text-danger error_span" })
                 </div>
 
-                <div class="form-group col-md-3 col-sm-3 col-3">
-                    @Html.LabelFor(model => model.Dot, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <select class="form-control" id="Dot" asp-for="Dot" data-placeholder="@Model.Dot" value="@Model.Dot"></select>
-                    @Html.ValidationMessageFor(model => model.Dot, "", new { @class = "text-danger error_span" })
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaFata.Dot, htmlAttributes: new { @class = "control-label required-field " })
+                    <input class="defaultDot" hidden="hidden" data-value="@Model.DreaptaFata.Dot" />
+                    <select class="form-control dot" asp-for="DreaptaFata.Dot" data-placeholder="@Model.DreaptaFata.Dot" value="@Model.DreaptaFata.Dot"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.Dot, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class=" hidediv-md  col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="hidediv-md col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaFata.Marca, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultMarca" hidden="hidden" data-value="@Model.DreaptaFata.Marca" />
+                    <select class="form-control marca" asp-for="DreaptaFata.Marca"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.Marca, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaFata.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultTipSezon" hidden="hidden" data-value="@Model.DreaptaFata.TipSezon" />
+                    <select class="form-control tipsezon" asp-for="DreaptaFata.TipSezon"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.TipSezon, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaFata.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultStatusAnv" hidden="hidden" data-value="@Model.DreaptaFata.StatusCurent" />
+                    <select class="form-control statuscurent" asp-for="DreaptaFata.StatusCurent" data-placeholder="@Model.DreaptaFata.StatusCurent" value="@Model.DreaptaFata.StatusCurent"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.StatusCurent, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaFata.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultPosition" hidden="hidden" data-value="@Model.DreaptaFata.PozitieInRaft" />
+                    <select class="form-control pozitieinraft" asp-for="DreaptaFata.PozitieId" data-placeholder="@Model.DreaptaFata.PozitieId" value="@Model.DreaptaFata.PozitieInRaft"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaFata.PozitieId, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
 
+            @*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//*@
 
-            <div class="form-row" style="margin-top: 30px;">
+            <hr />
 
-                <div class="form-group col-md-3 col-sm-3 col-3">
-                    @Html.LabelFor(model => model.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "tipSezonLabel", @name = "tipSezonLabel" })
-                    <div class="col-md-12">
-                        <select class="form-control" id="tipSezon" asp-for="TipSezon" data-placeholder="@Model.TipSezon" value="@Model.TipSezon"></select>
-
-                        @Html.ValidationMessageFor(model => model.TipSezon, "", new { @class = "text-danger error_span" })
-                    </div>
+            <div class="form-row parent">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-1 text-center ">
+                    <div>Stanga Spate</div>
+                    <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
                 </div>
-                <div class="form-group col-md-3 col-sm-3 col-3">
-                    @Html.LabelFor(model => model.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "statusAnvLabel", @name = "statusAnvLabel" })
-                    <div class="col-md-12">
-                        <select class="form-control" id="statusAnv" asp-for="StatusCurent" data-placeholder="@Model.StatusCurent" value="@Model.StatusCurent"></select>
+                <input type="hidden" class="pozitiepemasina" asp-for="StangaSpate.PozitiePeMasina" value="StangaSpate" />
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    @Html.LabelFor(model => model.StangaSpate.Uzura, htmlAttributes: new { @class = "control-label required-field" })
+                    @Html.EditorFor(model => model.StangaSpate.Uzura, new { htmlAttributes = new { @class = " col-5 col-sm-9 col-md-7 col-lg-9 col-xl-6 form-control half-margin-bottom uzura", @type = "text" } })
+                    @Html.ValidationMessageFor(model => model.StangaSpate.Uzura, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group  col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaSpate.Diametru, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultDiametru" hidden="hidden" data-value="@Model.StangaSpate.Diametru" />
+                    <select class="form-control diametru" asp-for="StangaSpate.Diametru" data-placeholder="@Model.StangaSpate.Diametru" value="@Model.StangaSpate.Diametru"></select>
+                    @Html.ValidationMessageFor(model => model.StangaSpate.Diametru, "", new { @class = "text-danger error_span" })
 
-                        @Html.ValidationMessageFor(model => model.StatusCurent, "", new { @class = "text-danger error_span" })
-                    </div>
                 </div>
 
-                <div class="form-group col-md-6 col-sm-6 col-6">
-                    @Html.LabelFor(model => model.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 ", @id = "pozitieInRaftLabel", @name = "pozitieInRaftLabel" })
-                    <div class="col-md-12">
-                        <select id="selPoz" class="form-control" asp-for="PozitieId" data-placeholder="@Model.PozitieId" value="@Model.PozitieInRaft"></select>
-                        @Html.ValidationMessageFor(model => model.PozitieId, "", new { @class = "text-danger error_span" })
-                    </div>
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaSpate.Latime, htmlAttributes: new { @class = "control-label  required-field" })
+                    <input class="defaultLatime" hidden="hidden" data-value="@Model.StangaSpate.Latime" />
+                    <select class="form-control latime" asp-for="StangaSpate.Latime" data-placeholder="@Model.StangaSpate.Latime" value="@Model.StangaSpate.Latime"></select>
+                    @Html.ValidationMessageFor(model => model.StangaSpate.Latime, "", new { @class = "text-danger error_span" })
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaSpate.Inaltime, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultInaltime" hidden="hidden" data-value="@Model.StangaSpate.Inaltime" />
+                    <select class="form-control inaltime" asp-for="StangaSpate.Inaltime" data-placeholder="@Model.StangaSpate.Inaltime" value="@Model.StangaSpate.Inaltime"></select>
+                    @Html.ValidationMessageFor(model => model.StangaSpate.Inaltime, "", new { @class = "text-danger error_span" })
+                </div>
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaSpate.Dot, htmlAttributes: new { @class = "control-label required-field " })
+                    <input class="defaultDot" hidden="hidden" data-value="@Model.StangaSpate.Dot" />
+                    <select class="form-control dot" asp-for="StangaSpate.Dot" data-placeholder="@Model.StangaSpate.Dot" value="@Model.StangaSpate.Dot"></select>
+                    @Html.ValidationMessageFor(model => model.StangaSpate.Dot, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class=" hidediv-md  col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="hidediv-md col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaSpate.Marca, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultMarca" hidden="hidden" data-value="@Model.StangaSpate.Marca" />
+                    <select class="form-control marca" asp-for="StangaSpate.Marca"></select>
+                    @Html.ValidationMessageFor(model => model.StangaSpate.Marca, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaSpate.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultTipSezon" hidden="hidden" data-value="@Model.StangaSpate.TipSezon" />
+                    <select class="form-control tipsezon" asp-for="StangaSpate.TipSezon"></select>
+                    @Html.ValidationMessageFor(model => model.StangaSpate.TipSezon, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaSpate.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultStatusAnv" hidden="hidden" data-value="@Model.StangaSpate.StatusCurent" />
+                    <select class="form-control statuscurent" asp-for="StangaSpate.StatusCurent" data-placeholder="@Model.StangaSpate.StatusCurent" value="@Model.StangaSpate.StatusCurent"></select>
+                    @Html.ValidationMessageFor(model => model.StangaSpate.StatusCurent, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.StangaSpate.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultPosition" hidden="hidden" data-value="@Model.StangaSpate.PozitieInRaft" />
+                    <select class="form-control pozitieinraft" asp-for="StangaSpate.PozitieId" data-placeholder="@Model.StangaSpate.PozitieId" value="@Model.StangaSpate.PozitieInRaft"></select>
+                    @Html.ValidationMessageFor(model => model.StangaSpate.PozitieId, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
 
-            <div class="form-row col-md-12 col-sm-12">
-                @Html.LabelFor(model => model.Observatii, htmlAttributes: new { @class = "control-label col-md-3 " })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Observatii, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @id = "observatii", @name = "observatii" } })
-                    @Html.ValidationMessageFor(model => model.Observatii, "", new { @class = "text-danger error_span" })
+            @*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//*@
+
+            <hr />
+            <div class="form-row parent">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-1 text-center ">
+                    <div>Dreapta Spate</div>
+                    <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
+                </div>
+                <input type="hidden" class="pozitiepemasina" asp-for="DreaptaSpate.PozitiePeMasina" value="DreaptaSpate" />
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    @Html.LabelFor(model => model.DreaptaSpate.Uzura, htmlAttributes: new { @class = "control-label required-field" })
+                    @Html.EditorFor(model => model.DreaptaSpate.Uzura, new { htmlAttributes = new { @class = " col-5 col-sm-9 col-md-7 col-lg-9 col-xl-6 form-control half-margin-bottom uzura", @type = "text" } })
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.Uzura, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group  col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaSpate.Diametru, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultDiametru" hidden="hidden" data-value="@Model.DreaptaSpate.Diametru" />
+                    <select class="form-control diametru" asp-for="DreaptaSpate.Diametru" data-placeholder="@Model.DreaptaSpate.Diametru" value="@Model.DreaptaSpate.Diametru"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.Diametru, "", new { @class = "text-danger error_span" })
+
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaSpate.Latime, htmlAttributes: new { @class = "control-label  required-field" })
+                    <input class="defaultLatime" hidden="hidden" data-value="@Model.DreaptaSpate.Latime" />
+                    <select class="form-control latime" asp-for="DreaptaSpate.Latime" data-placeholder="@Model.DreaptaSpate.Latime" value="@Model.DreaptaSpate.Latime"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.Latime, "", new { @class = "text-danger error_span" })
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaSpate.Inaltime, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultInaltime" hidden="hidden" data-value="@Model.DreaptaSpate.Inaltime" />
+                    <select class="form-control inaltime" asp-for="DreaptaSpate.Inaltime" data-placeholder="@Model.DreaptaSpate.Inaltime" value="@Model.DreaptaSpate.Inaltime"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.Inaltime, "", new { @class = "text-danger error_span" })
+                </div>
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaSpate.Dot, htmlAttributes: new { @class = "control-label required-field " })
+                    <input class="defaultDot" hidden="hidden" data-value="@Model.DreaptaSpate.Dot" />
+                    <select class="form-control dot" asp-for="DreaptaSpate.Dot" data-placeholder="@Model.DreaptaSpate.Dot" value="@Model.DreaptaSpate.Dot"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.Dot, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class=" hidediv-md  col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="hidediv-md col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaSpate.Marca, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultMarca" hidden="hidden" data-value="@Model.DreaptaSpate.Marca" />
+                    <select class="form-control marca" asp-for="DreaptaSpate.Marca"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.Marca, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaSpate.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultTipSezon" hidden="hidden" data-value="@Model.DreaptaSpate.TipSezon" />
+                    <select class="form-control tipsezon" asp-for="DreaptaSpate.TipSezon"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.TipSezon, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaSpate.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultStatusAnv" hidden="hidden" data-value="@Model.DreaptaSpate.StatusCurent" />
+                    <select class="form-control statuscurent" asp-for="DreaptaSpate.StatusCurent" data-placeholder="@Model.DreaptaSpate.StatusCurent" value="@Model.DreaptaSpate.StatusCurent"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.StatusCurent, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.DreaptaSpate.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultPosition" hidden="hidden" data-value="@Model.DreaptaSpate.PozitieInRaft" />
+                    <select class="form-control pozitieinraft" asp-for="DreaptaSpate.PozitieId" data-placeholder="@Model.DreaptaSpate.PozitieId" value="@Model.DreaptaSpate.PozitieInRaft"></select>
+                    @Html.ValidationMessageFor(model => model.DreaptaSpate.PozitieId, "", new { @class = "text-danger error_span" })
                 </div>
             </div>
+
+            @*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//*@
+
+            <hr />
+            <div class="form-row parent">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-1 text-center ">
+                    <div>Optional 1</div>
+                    <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
+                </div>
+                <input type="hidden" class="pozitiepemasina" asp-for="Optional1.PozitiePeMasina" value="Optional1" />
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    @Html.LabelFor(model => model.Optional1.Uzura, htmlAttributes: new { @class = "control-label required-field" })
+                    @Html.EditorFor(model => model.Optional1.Uzura, new { htmlAttributes = new { @class = " col-5 col-sm-9 col-md-7 col-lg-9 col-xl-6 form-control half-margin-bottom uzura", @type = "text" } })
+                    @Html.ValidationMessageFor(model => model.Optional1.Uzura, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group  col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional1.Diametru, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultDiametru" hidden="hidden" data-value="@Model.Optional1.Diametru" />
+                    <select class="form-control diametru" asp-for="Optional1.Diametru" data-placeholder="@Model.Optional1.Diametru" value="@Model.Optional1.Diametru"></select>
+                    @Html.ValidationMessageFor(model => model.Optional1.Diametru, "", new { @class = "text-danger error_span" })
+
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional1.Latime, htmlAttributes: new { @class = "control-label  required-field" })
+                    <input class="defaultLatime" hidden="hidden" data-value="@Model.Optional1.Latime" />
+                    <select class="form-control latime" asp-for="Optional1.Latime" data-placeholder="@Model.Optional1.Latime" value="@Model.Optional1.Latime"></select>
+                    @Html.ValidationMessageFor(model => model.Optional1.Latime, "", new { @class = "text-danger error_span" })
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional1.Inaltime, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultInaltime" hidden="hidden" data-value="@Model.Optional1.Inaltime" />
+                    <select class="form-control inaltime" asp-for="Optional1.Inaltime" data-placeholder="@Model.Optional1.Inaltime" value="@Model.Optional1.Inaltime"></select>
+                    @Html.ValidationMessageFor(model => model.Optional1.Inaltime, "", new { @class = "text-danger error_span" })
+                </div>
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional1.Dot, htmlAttributes: new { @class = "control-label required-field " })
+                    <input class="defaultDot" hidden="hidden" data-value="@Model.Optional1.Dot" />
+                    <select class="form-control dot" asp-for="Optional1.Dot" data-placeholder="@Model.Optional1.Dot" value="@Model.Optional1.Dot"></select>
+                    @Html.ValidationMessageFor(model => model.Optional1.Dot, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class=" hidediv-md  col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="hidediv-md col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional1.Marca, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultMarca" hidden="hidden" data-value="@Model.Optional1.Marca" />
+                    <select class="form-control marca" asp-for="Optional1.Marca"></select>
+                    @Html.ValidationMessageFor(model => model.Optional1.Marca, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional1.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultTipSezon" hidden="hidden" data-value="@Model.Optional1.TipSezon" />
+                    <select class="form-control tipsezon" asp-for="Optional1.TipSezon"></select>
+                    @Html.ValidationMessageFor(model => model.Optional1.TipSezon, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional1.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultStatusAnv" hidden="hidden" data-value="@Model.Optional1.StatusCurent" />
+                    <select class="form-control statuscurent" asp-for="Optional1.StatusCurent" data-placeholder="@Model.Optional1.StatusCurent" value="@Model.Optional1.StatusCurent"></select>
+                    @Html.ValidationMessageFor(model => model.Optional1.StatusCurent, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional1.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultPosition" hidden="hidden" data-value="@Model.Optional1.PozitieInRaft" />
+                    <select class="form-control pozitieinraft" asp-for="Optional1.PozitieId" data-placeholder="@Model.Optional1.PozitieId" value="@Model.Optional1.PozitieInRaft"></select>
+                    @Html.ValidationMessageFor(model => model.Optional1.PozitieId, "", new { @class = "text-danger error_span" })
+                </div>
+            </div>
+
+            @*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//*@
+
+            <hr />
+            <div class="form-row parent">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-1 text-center ">
+                    <div>Optional 2</div>
+                    <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
+                </div>
+                <input type="hidden" class="pozitiepemasina" asp-for="Optional2.PozitiePeMasina" value="Optional2" />
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    @Html.LabelFor(model => model.Optional2.Uzura, htmlAttributes: new { @class = "control-label required-field" })
+                    @Html.EditorFor(model => model.Optional2.Uzura, new { htmlAttributes = new { @class = " col-5 col-sm-9 col-md-7 col-lg-9 col-xl-6 form-control half-margin-bottom uzura", @type = "text" } })
+                    @Html.ValidationMessageFor(model => model.Optional2.Uzura, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group  col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional2.Diametru, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultDiametru" hidden="hidden" data-value="@Model.Optional2.Diametru" />
+                    <select class="form-control diametru" asp-for="Optional2.Diametru" data-placeholder="@Model.Optional2.Diametru" value="@Model.Optional2.Diametru"></select>
+                    @Html.ValidationMessageFor(model => model.Optional2.Diametru, "", new { @class = "text-danger error_span" })
+
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional2.Latime, htmlAttributes: new { @class = "control-label  required-field" })
+                    <input class="defaultLatime" hidden="hidden" data-value="@Model.Optional2.Latime" />
+                    <select class="form-control latime" asp-for="Optional2.Latime" data-placeholder="@Model.Optional2.Latime" value="@Model.Optional2.Latime"></select>
+                    @Html.ValidationMessageFor(model => model.Optional2.Latime, "", new { @class = "text-danger error_span" })
+                </div>
+
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional2.Inaltime, htmlAttributes: new { @class = "control-label   required-field" })
+                    <input class="defaultInaltime" hidden="hidden" data-value="@Model.Optional2.Inaltime" />
+                    <select class="form-control inaltime" asp-for="Optional2.Inaltime" data-placeholder="@Model.Optional2.Inaltime" value="@Model.Optional2.Inaltime"></select>
+                    @Html.ValidationMessageFor(model => model.Optional2.Inaltime, "", new { @class = "text-danger error_span" })
+                </div>
+
+                <div class="form-group col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional2.Dot, htmlAttributes: new { @class = "control-label required-field " })
+                    <input class="defaultDot" hidden="hidden" data-value="@Model.Optional2.Dot" />
+                    <select class="form-control dot" asp-for="Optional2.Dot" data-placeholder="@Model.Optional2.Dot" value="@Model.Optional2.Dot"></select>
+                    @Html.ValidationMessageFor(model => model.Optional2.Dot, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class=" hidediv-md  col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="hidediv-md col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2">
+
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional2.Marca, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultMarca" hidden="hidden" data-value="@Model.Optional2.Marca" />
+                    <select class="form-control marca" asp-for="Optional2.Marca"></select>
+                    @Html.ValidationMessageFor(model => model.Optional2.Marca, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional2.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultTipSezon" hidden="hidden" data-value="@Model.Optional2.TipSezon" />
+                    <select class="form-control tipsezon" asp-for="Optional2.TipSezon"></select>
+                    @Html.ValidationMessageFor(model => model.Optional2.TipSezon, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional2.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultStatusAnv" hidden="hidden" data-value="@Model.Optional2.StatusCurent" />
+                    <select class="form-control statuscurent" asp-for="Optional2.StatusCurent" data-placeholder="@Model.Optional2.StatusCurent" value="@Model.Optional2.StatusCurent"></select>
+                    @Html.ValidationMessageFor(model => model.Optional2.StatusCurent, "", new { @class = "text-danger error_span" })
+                </div>
+                <div class="form-group col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+                    @Html.LabelFor(model => model.Optional2.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })
+                    <input class="defaultPosition" hidden="hidden" data-value="@Model.Optional2.PozitieInRaft" />
+                    <select class="form-control pozitieinraft" asp-for="Optional2.PozitieId" data-placeholder="@Model.Optional2.PozitieId" value="@Model.Optional2.PozitieInRaft"></select>
+                    @Html.ValidationMessageFor(model => model.Optional2.PozitieId, "", new { @class = "text-danger error_span" })
+                </div>
+            </div>
+
+            <hr />
+
+            @*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//*@
+
+
 
         </form>
     </div>
@@ -252,4 +597,4 @@
     </div>
 </div>
 
-<script type="text/javascript" src="~/js/select2AddEdit.js"></script>*@
+<script type="text/javascript" src="~/js/select2AddEdit.js"></script>

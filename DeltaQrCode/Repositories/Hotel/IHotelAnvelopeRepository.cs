@@ -12,6 +12,7 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaAnvelopa>> UpdateAnvelopaAsync(CaAnvelopa setAnv);
         Task<Result<List<CaAnvelopa>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
         Task<Result<CaAnvelopa>> DeleteAnvelopaAsync(int id);
+        Task<Result<List<CaAnvelopa>>> GetAnvelopeBySetIdAsync(uint setId);
 
 
         Task<Result<CaMarca>> GetMarcaByIdAsync(uint id);

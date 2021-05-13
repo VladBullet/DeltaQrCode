@@ -7,6 +7,15 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
 {
     public class AnvelopaVM
     {
+        public AnvelopaVM()
+        {
+
+        }
+
+        public AnvelopaVM(string pozitiePeMasina)
+        {
+            PozitiePeMasina = pozitiePeMasina;
+        }
 
         public uint Id { get; set; }
         public string PozitieInRaft { get; set; }

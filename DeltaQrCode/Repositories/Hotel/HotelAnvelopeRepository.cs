@@ -441,6 +441,21 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+        public async Task<Result<List<CaAnvelopa>>> GetAnvelopeBySetIdAsync(uint setId)
+        {
+            try
+            {
+                var list = new List<CaAnvelopa>();
+                list = await _db.CaAnvelopa.Where(x => x.SetAnvelopeId == setId).ToListAsync();
+                return Result<List<CaAnvelopa>>.ResultOk(list);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+            }
+        }
+
 
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//

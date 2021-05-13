@@ -75,34 +75,68 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> EditModal(int id, string actionType)
+        public async Task<IActionResult> EditModal(uint id, string actionType)
         {
-            ActionType actType = ActionType.Edit;
-            if (actionType == "info")
+            try
             {
-                actType = ActionType.Info;
+                ActionType actType = ActionType.Edit;
+                if (actionType == "info")
+                {
+                    actType = ActionType.Info;
+                }
+                var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
+                var setvm = _mapper.Map<SetAnvelopeVM>(set.Entity);
+
+                var anvList = await _hotelService.GetAnvelopeBySetIdAsync(id);
+                var anvListvm = _mapper.Map<List<AnvelopaVM>>(anvList.Entity);
+
+                var masina = await _hotelService.GetMasinaForSetIdAsync(set.Entity.Id);
+                var masinavm = _mapper.Map<MasinaVM>(masina.Entity);
+
+                var client = await _hotelService.GetClientForSetIdAsync(set.Entity.Id);
+                var clientvm = _mapper.Map<ClientHotelVM>(client.Entity);
+
+                var setAnv = new AddEditSetAnvelopeVM();
+
+                setAnv.Client = clientvm;
+                setAnv.Masina = masinavm;
+                setAnv.SetAnvelope = setvm;
+                setAnv.StangaFata = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaFata") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaFata") : new AnvelopaVM("StangaFata") ;
+                setAnv.DreaptaFata = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaFata") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaFata") : new AnvelopaVM("DreaptaFata") ;
+                setAnv.StangaSpate = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaSpate") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaSpate") : new AnvelopaVM("StangaSpate") ;
+                setAnv.DreaptaSpate = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaSpate") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaSpate") : new AnvelopaVM("DreaptaSpate") ;
+                setAnv.Optional1 = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") : new AnvelopaVM("Optional1") ;
+                setAnv.Optional2 = anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") : new AnvelopaVM("Optional2") ;
+
+
+                
+
+                //model.OldPozitieId = model.PozitieId;
+                //model.OldNumarBucati = model.NrBucati;
+                ////model.OldNumeClient = model.NumeClient;
+                ////model.OldNumarInmatriculare = model.NumarInmatriculare;
+                ////model.OldSerieSasiu = model.SerieSasiu;
+                ////model.OldNumarTelefon = model.NumarTelefon;
+                //model.OldTipSezon = model.TipSezon;
+                //model.OldObservatii = model.Observatii;
+                //model.OldMarca = model.Marca;
+                //model.OldFlota = model.Flota;
+
+                HotelModalVM setVm = new HotelModalVM(setAnv, actType);
+
+                if (actType == ActionType.Info)
+                {
+                    return PartialView("_InfoSetAnvPartial", setVm.SetAnvelope);
+                }
+                return PartialView("_EditSetAnvPartial", setVm.SetAnvelope);
             }
-            var set = await _hotelService.GetAnvelopaByIdAsync(id);
-            var model = _mapper.Map<AnvelopaVM>(set.Entity);
-
-            model.OldPozitieId = model.PozitieId;
-            model.OldNumarBucati = model.NrBucati;
-            //model.OldNumeClient = model.NumeClient;
-            //model.OldNumarInmatriculare = model.NumarInmatriculare;
-            //model.OldSerieSasiu = model.SerieSasiu;
-            //model.OldNumarTelefon = model.NumarTelefon;
-            model.OldTipSezon = model.TipSezon;
-            model.OldObservatii = model.Observatii;
-            model.OldMarca = model.Marca;
-            //model.OldFlota = model.Flota;
-
-            HotelModalVM setVm = new HotelModalVM(model, actType);
-
-            if (actType == ActionType.Info)
+            catch (Exception e)
             {
-                return PartialView("_InfoSetAnvPartial", setVm.SetAnvelope);
+
+                Log.Error(e, "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la modificarea setului de anvelope in controller!");
             }
-            return PartialView("_EditSetAnvPartial", setVm.SetAnvelope);
+            
         }
 
 

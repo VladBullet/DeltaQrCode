@@ -14,6 +14,7 @@ namespace DeltaQrCode.Services.Hotel
         Task<Result<AnvelopaDto>> UpdateAnvelopaAsync(AnvelopaDto setAnv);
         Task<Result<AnvelopaDto>> DeleteAnvelopaAsync(int id);
         Task<Result<List<AnvelopaDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
+        Task<Result<List<AnvelopaDto>>> GetAnvelopeBySetIdAsync(uint setId);
 
         Task<Result<List<CaMarca>>> GetMarci();
         //Task<Result<List<CaFlota>>> GetFlote();
