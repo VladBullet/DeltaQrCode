@@ -845,6 +845,33 @@ namespace DeltaQrCode.Services.Hotel
             {
                 var list = await _hotelRepository.GetAnvelopeBySetIdAsync(setId);
                 var result = _mapper.Map<List<AnvelopaDto>>(list.Entity);
+                foreach (var item in result)
+                {
+                    if (item.PozitieId != null)
+                    {
+                        var position = await _hotelPositionsRepository.GetPositionByIdAsync(item.PozitieId.Value);
+
+                        if (!position.Successful)
+                        {
+                            Log.Error("Ceva nu a mers bine la gasirea pozitiei in metoda de editare anvelope in servicii!");
+                            throw new Exception("Ceva nu a mers bine la gasirea pozitiei in metoda de editare anvelope in servicii!");
+                        }
+
+                        item.Pozitie = _mapper.Map<HotelPositionsDto>(position.Entity);
+                    }
+
+
+                    // Marca
+                    var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
+                    if (!marca.Successful)
+                    {
+                        Log.Error("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                        throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                    }
+                    item.Marca = marca.Entity.Label;
+                }
+
+                
                 return Result<List<AnvelopaDto>>.ResultOk(result);
             }
             catch (Exception er)

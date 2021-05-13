@@ -201,17 +201,17 @@ $(document).ready(function () {
             });
 
         $(document).on("change",
-            "#selPoz",
+            ".selectedstatus",
             function () {
-                $("#selPoz").trigger("updatedStatus");
+                $(this).trigger("updatedStatus");
             });
 
-        $("#selPoz").on("updatedStatus",
+        $(".selectedstatus").on("updatedStatus",
             function () {
-                var pos = $("#selPoz");
+                var pos = $(this);
                 pos.removeAttr("disabled");
                 pos.removeClass("disabled");
-                var statusVal = $("#statusAnv").val();
+                var statusVal = $(pos).closest(".form-group").find(".statuscurent").val();
                 if (statusVal != "InRaft") {
                     pos.attr("disabled", "disabled");
                     pos.addClass("disabled");

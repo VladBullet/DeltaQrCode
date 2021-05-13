@@ -473,4 +473,52 @@ p {
 .hiddenAnv {
 }
 
+.margin-md{
+    margin-left:0;
+}
+.margin-md-uzura{
+    margin-left:0;
+}
 
+@media (max-width: 991px) {
+    .margin-md { 
+        margin-left: 15px;
+    }
+}
+
+@media (max-width: 767px) {
+    .margin-md {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .margin-md-uzura {
+        margin-left: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .margin-md-uzura {
+        margin-left: 0;
+    }
+}
+
+.margin-xs {
+    margin-left: 0;
+}
+
+.margin-xs-uzura {
+    margin-left: 0;
+}
+
+@media (max-width: 350px) {
+    .margin-xs {
+        margin-left: 3px;
+    }
+}
+@media (max-width: 350px) {
+    .margin-xs-uzura {
+        margin-left: 15px;
+    }
+}

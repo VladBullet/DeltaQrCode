@@ -17,13 +17,18 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public MasinaVM Masina { get; set; }
         public SetAnvelopeVM SetAnvelope { get; set; }
 
-        public AddEditSetAnvelopeVM()
+        public AddEditSetAnvelopeVM(bool initListAnv = false)
         {
             Anvelope = new List<AnvelopaVM>();
-            foreach (var item in ConstantsAndEnums.PozitiiPeMasina)
+
+            if (initListAnv)
             {
-                Anvelope.Add(new AnvelopaVM(item));
+                foreach (var item in ConstantsAndEnums.PozitiiPeMasina)
+                {
+                    Anvelope.Add(new AnvelopaVM(item));
+                }
             }
+            
             Client = new ClientHotelVM();
             Masina = new MasinaVM();
             SetAnvelope = new SetAnvelopeVM();
