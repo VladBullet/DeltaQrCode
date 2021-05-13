@@ -115,21 +115,12 @@
 
                     console.log('edit resp');
 
-                    var pos = $(".pozitieinraft");
-                    console.log("positions",pos);
+                    var statuses = $(".statuscurent");
+                    console.log("positions", pos);
 
-                    $.each(pos, function (index, item) {
-                        console.log("item", item);
-                        $(item).removeAttr("disabled");
-                        $(item).removeClass("disabled");
-                        var statusVal = $(item).closest(".form-group").find(".statuscurent").val();
-                        console.log("statusVal", statusVal);
-                        if (statusVal != "InRaft") {
-                            $(item).attr("disabled", "disabled");
-                            $(item).addClass("disabled");
-                        }
+                    $.each(statuses, function (index, item) {
+                        enableOrDisablePositionForStatus(item);
                     })
-                    
                 });
         };
         var deleteSetAnvModalDialog = function (id) {

@@ -114,7 +114,7 @@ $(document).ready(function () {
                 $this = $("#apptsEditSubmitButton");
                 $this.prop("disabled", true);
                 showLoading();
-/*                var result = validator.validate(validator);*/
+                /*                var result = validator.validate(validator);*/
                 if (result.formIsValid) {
                     console.log("edit");
                     $.ajax({
@@ -147,26 +147,26 @@ $(document).ready(function () {
                 $this = $("#apptsAddSubmitButton");
                 $this.prop("disabled", true);
                 showLoading();
-/*                var result = validator.validate(validator);*/
-/*                if (result.formIsValid) {*/
-                    console.log("submit add");
-                    $.ajax({
-                        type: "POST",
-                        url: "Hotel/AddModal",
-                        data: $('#apptform').serialize(),
-                        dataType: "json",
-                        success: function (response) {
-                            CloseModalById('myHotelModal');
-                            ShowHeaderAlert(response, "success", 5000);
-                            $('#hotelListState').change();
+                /*                var result = validator.validate(validator);*/
+                /*                if (result.formIsValid) {*/
+                console.log("submit add");
+                $.ajax({
+                    type: "POST",
+                    url: "Hotel/AddModal",
+                    data: $('#apptform').serialize(),
+                    dataType: "json",
+                    success: function (response) {
+                        CloseModalById('myHotelModal');
+                        ShowHeaderAlert(response, "success", 5000);
+                        $('#hotelListState').change();
 
-                        },
-                        error: function (error) {
-                            CloseModalById('myHotelModal');
-                            swalErrorTimer(error.responseText, 7000);
+                    },
+                    error: function (error) {
+                        CloseModalById('myHotelModal');
+                        swalErrorTimer(error.responseText, 7000);
 
-                        }
-                    });
+                    }
+                });
                 //}
                 //else {
                 //    //updateUi(result.validationResults, "form-group", "error_span");
@@ -200,23 +200,44 @@ $(document).ready(function () {
 
             });
 
+        // ==============================================================================================
         $(document).on("change",
-            ".selectedstatus",
+            ".statuscurent",
             function () {
-                $(this).trigger("updatedStatus");
-            });
 
+                var val = $(this).val();
+                console.log("val", val);
+                var selectedStatusElem = $(this).closest(".form-group").find(".selectedstatus");
+                $(selectedStatusElem).val(val);
+                $(selectedStatusElem).trigger("updatedStatus");
+            });
         $(".selectedstatus").on("updatedStatus",
             function () {
-                var pos = $(this);
-                pos.removeAttr("disabled");
-                pos.removeClass("disabled");
-                var statusVal = $(pos).closest(".form-group").find(".statuscurent").val();
-                if (statusVal != "InRaft") {
-                    pos.attr("disabled", "disabled");
-                    pos.addClass("disabled");
-                }
+                console.log("updatedStatus was hit!");
+                var element = $(this);
+                enableOrDisablePositionForStatus(element);
             });
+
+        //$(document).on("change",
+        //    ".selectedstatus",
+        //    function () {
+        //        $(this).trigger("updatedStatus");
+        //    });
+
+        //$(".selectedstatus").on("updatedStatus",
+        //    function () {
+        //        var pos = $(this);
+        //        pos.removeAttr("disabled");
+        //        pos.removeClass("disabled");
+        //        var statusVal = $(pos).closest(".form-group").find(".statuscurent").val();
+        //        if (statusVal != "InRaft") {
+        //            pos.attr("disabled", "disabled");
+        //            pos.addClass("disabled");
+        //        }
+        //    });
+
+        // ==============================================================================================
+
         //$(document).on("keyup",
         //    ".validate",
         //    function () {
@@ -315,5 +336,22 @@ var checkUzuraVal = function () {
     });
 }
 
+var enableOrDisablePositionForStatus = function (statusElem) {
+    var currentStatusElem = $(statusElem).closest(".form-group").find(".statuscurent");
+    var selectedStatusElem = $(currentStatusElem).closest(".form-group").find(".selectedstatus");
+    var positionElem = $(currentStatusElem).closest(".parent").find(".pozitieinraft");
+
+    positionElem.removeAttr("disabled");
+    positionElem.removeClass("disabled");
+
+    if ($(selectedStatusElem).val() != "InRaft") {
+        $(positionElem).attr("disabled", "disabled");
+        $(positionElem).addClass("disabled");
+        $(positionElem).val("").trigger("change");
+    }
+};
+
+// on change pe selectedStatus => enableOrDisablePositionForStatus
+// on change select2 for status = > change selectedStatus.val and trigger the change
 
 

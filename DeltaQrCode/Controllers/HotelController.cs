@@ -255,7 +255,7 @@ namespace DeltaQrCode.Controllers
         [HttpGet]
         public IActionResult AddModalNew()
         {
-            return PartialView("_AddSetAnvPartial", new AddEditSetAnvelopeVM());
+            return PartialView("_AddSetAnvPartial", new AddEditSetAnvelopeVM(true));
         }
 
 
