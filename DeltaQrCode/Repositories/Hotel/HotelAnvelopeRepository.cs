@@ -107,6 +107,22 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+        public async Task<Result<List<CaSetAnvelope>>> SearchAnvelopeSetAsync()
+        {
+            try
+            {
+                var list = await _db.CaSetAnvelope.ToListAsync();
+
+                return Result<List<CaSetAnvelope>>.ResultOk(list);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
+            }
+        }
+
+
         public async Task<Result<CaAnvelopa>> DeleteAnvelopaAsync(int id)
         {
             try

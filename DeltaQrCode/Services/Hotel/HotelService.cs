@@ -520,10 +520,29 @@ namespace DeltaQrCode.Services.Hotel
                                             //new DataColumn("StangaSpate"),
                                             //new DataColumn("DreaptaFata"),
                                             //new DataColumn("DreaptaSpate"),
+                                            //new DataColumn("Optional2"),
+                                            //new DataColumn("Optional1"),
                                             new DataColumn("TipSezon"),
                                             new DataColumn("Observatii"),
                                             new DataColumn("StatusCurent"),
                                             new DataColumn("DataUltimaModificare") });
+
+            //var allSetAnv = await SearchAnvelopeSetAsync();
+
+            //foreach (var item in allSetAnv.Entity)
+            //{
+            //    var anvList = await GetAnvelopeBySetIdAsync(item.Id);
+            //}
+
+
+            //var anvListvm = _mapper.Map<List<AnvelopaVM>>(anvList.Entity);
+
+            //var masina = await _hotelService.GetMasinaForSetIdAsync(set.Entity.Id);
+            //var masinavm = _mapper.Map<MasinaVM>(masina.Entity);
+
+            //var client = await _hotelService.GetClientForSetIdAsync(set.Entity.Id);
+            //var clientvm = _mapper.Map<ClientHotelVM>(client.Entity);
+
 
             var allAnv = await SearchAnvelopeAsync(string.Empty, 1, int.MaxValue);
             var model = _mapper.Map<List<AnvelopaDto>>(allAnv.Entity);
@@ -878,6 +897,23 @@ namespace DeltaQrCode.Services.Hotel
             {
                 Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
                 throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+            }
+        }
+
+        public async Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeSetAsync()
+        {
+            try
+            {
+                var result = await _hotelRepository.SearchAnvelopeSetAsync();
+                var model = _mapper.Map<List<SetAnvelopeDto>>(result.Entity);
+
+
+                    return Result<List<SetAnvelopeDto>>.ResultOk(model);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in servicii!", er);
             }
         }
     }

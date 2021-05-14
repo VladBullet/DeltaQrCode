@@ -17,6 +17,7 @@ namespace DeltaQrCode
         public static readonly string[] Inaltime = { "35", "40", "45", "50", "55", "60", "65", "70" };
 
         public static readonly string[] Intervals = { "A", "B", "C", "D", "E" };
+
         public static readonly string[] PozitiiPeMasina = { "StangaFata", "DreaptaFata", "StangaSpate", "DreaptaSpate", "Optional1", "Optional2" };
 
 
