@@ -115,7 +115,7 @@ $(document).ready(function () {
                 $this.prop("disabled", true);
                 showLoading();
                 /*                var result = validator.validate(validator);*/
-                if (result.formIsValid) {
+/*                if (result.formIsValid) {*/
                     console.log("edit");
                     $.ajax({
                         type: "POST",
@@ -134,9 +134,9 @@ $(document).ready(function () {
 
                         }
                     });
-                } else {
-                    updateUi(result.validationResults, "form-group", "error_span");
-                }
+                //} else {
+                //    updateUi(result.validationResults, "form-group", "error_span");
+                //}
                 setTimeout(function () {
                     $this.prop("disabled", false);
                     hideLoading();

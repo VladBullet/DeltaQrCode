@@ -142,13 +142,40 @@ namespace DeltaQrCode.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditModal(AnvelopaVM setAnvelope)
+        public async Task<ActionResult> EditModal(AddEditSetAnvelopeVM setAnv)
         {
             try
             {
-                var dto = _mapper.Map<AnvelopaDto>(setAnvelope);
-                var result = await _hotelService.UpdateAnvelopaAsync(dto);
-                if (result.Successful)
+                var client = setAnv.Client;
+                var clientDto = _mapper.Map<ClientHotelDto>(client);
+
+                var masina = setAnv.Masina;
+                var masinaDto = _mapper.Map<MasinaDto>(masina);
+
+                var setanvelope = setAnv.SetAnvelope;
+                var setDto = _mapper.Map<SetAnvelopeDto>(setanvelope);
+
+                var anvList = setAnv.Anvelope;
+                var anvListDto = _mapper.Map<List<AnvelopaDto>>(anvList);
+
+                var clientUpdate = await _hotelService.EditClientAsync(clientDto);
+                var masinaUpdate = await _hotelService.EditMasinaAsync(masinaDto);
+                var setAnvelopeUpdate = await _hotelService.EditSetAnvelopeAsync(setDto);
+
+                bool updatedAnvSuccessful = false;
+
+                foreach (var item in anvListDto)
+                {
+                    var result = await _hotelService.UpdateAnvelopaAsync(item);
+
+                    if (!result.Successful)
+                    {
+                        updatedAnvSuccessful = true;
+                    }
+                }
+
+
+                if (clientUpdate.Successful && masinaUpdate.Successful && setAnvelopeUpdate.Successful && updatedAnvSuccessful)
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
                 }
