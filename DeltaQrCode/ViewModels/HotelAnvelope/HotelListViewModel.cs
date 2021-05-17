@@ -24,7 +24,12 @@ namespace DeltaQrCode.ViewModels
         }
 
         public PaginatedList<HotelAnvelopaVm> List { get; set; }
-        
 
+        public HotelListViewModel(List<AnvelopaVM> list, int pageIndex, int pageSize)
+        {
+            anvList = PaginatedList<AnvelopaVM>.Create(list, pageIndex, pageSize);
+        }
+
+        public PaginatedList<AnvelopaVM> anvList { get; set; }
     }
 }

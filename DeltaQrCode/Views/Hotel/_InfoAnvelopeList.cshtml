@@ -1,0 +1,69 @@
+﻿@using DeltaQrCode.HelpersAndExtensions
+@using System.Security.Claims
+@model DeltaQrCode.ViewModels.HotelListViewModel
+
+
+
+<table class="table table-responsive table-sm table-responsive-md table-responsive-sm table-bordered table-hover">
+    <thead>
+        <tr class="text-center">
+            <th style="" scope="col">Actiune</th>
+            <th scope="col">Uzura</th>
+            <th scope="col">Diametru</th>
+            <th scope="col">Latime</th>
+            <th scope="col">Inaltime</th>
+            <th scope="col">DOT</th>
+            <th scope="col">Marca</th>
+            <th scope="col">TipSezon</th>
+            <th scope="col">Status Curent</th>
+            <th scope="col">Pozitie</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.anvList)
+        {
+            <tr class="text-center">
+                <td class="flex-row">
+                    <div class="col-md-12">
+                        <div class="btn btn-outline-info btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle "></i></div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="edit"><i class="fas fa-pencil-alt"></i></div>
+                    </div>
+                    @if (User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "admin")
+                    {
+                        <div class="col-md-12">
+                            <div class="btn btn-outline-danger btn-sm deleteButton" type="button" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    }
+                </td>
+                <td>@item.Uzura</td>
+                <td>@item.Diametru</td>
+                <td>@item.Latime</td>
+                <td>@item.Inaltime</td>
+                <td>@item.Dot</td>
+                <td>@item.Marca</td>
+                <td>@item.TipSezon</td>
+                <td>@item.StatusCurent</td>
+                <td>@item.PozitieInRaft</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div hidden="hidden" id="hasPrev" data-value="@Model.List.HasPreviousPage.ToString().ToLower()"></div>
+<div hidden="hidden" id="hasNext" data-value="@Model.List.HasNextPage.ToString().ToLower()"></div>
+
+
+<div class="text-center">
+    <button id="buttonPrev" data-pageNumber="@(Model.List.PageIndex - 1)"
+            class=" customPagination btn btn-default">
+        Previous
+    </button>
+    <button id="buttonNext" data-pageNumber="@(Model.List.PageIndex + 1)"
+            class=" customPagination btn btn-default">
+        Next
+    </button>
+</div>
