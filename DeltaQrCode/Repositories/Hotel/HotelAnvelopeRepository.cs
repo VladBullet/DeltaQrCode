@@ -94,10 +94,22 @@ namespace DeltaQrCode.Repositories
             {
                 var flote = _db.CaFlota.Where(x => x.Label.ToLower().Contains(searchString.ToLower()));
                 var list = await _db.CaAnvelopa.Where(x => !x.Deleted).ToListAsync();
-                //if (!string.IsNullOrEmpty(searchString))
-                //{
-                //    list = list.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || flote.Any(y => y.Id == x.FlotaId) || x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower())).ToList();
-                //}
+
+                return Result<List<CaAnvelopa>>.ResultOk(list);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
+            }
+        }
+
+        public async Task<Result<List<CaAnvelopa>>> SearchAnvelopeByStatusCurentAsync(string searchString, int page = 1, int itemsPerPage = 20)
+        {
+            try
+            {
+                var list = await _db.CaAnvelopa.Where(x => x.StatusCurent != "InRaft").ToListAsync();
+
                 return Result<List<CaAnvelopa>>.ResultOk(list);
             }
             catch (Exception er)

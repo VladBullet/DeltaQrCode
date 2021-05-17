@@ -414,11 +414,44 @@ namespace DeltaQrCode.Services.Hotel
                             var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
                             item.Marca = marca.Successful ? marca.Entity.Label : string.Empty;
                         }
-                        //if (item.FlotaId != null)
-                        //{
-                        //    var flota = await _hotelRepository.GetFlotaByIdAsync(item.FlotaId.Value);
-                        //    item.Flota = flota.Successful ? flota.Entity.Label : string.Empty;
-                        //}
+
+                    }
+                    return Result<List<AnvelopaDto>>.ResultOk(model);
+                }
+                return Result<List<AnvelopaDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in servicii!", er);
+            }
+        }
+
+        public async Task<Result<List<AnvelopaDto>>> SearchAnvelopeByStatusCurentAsync(string searchString, int page, int itemsPerPage)
+        {
+            try
+            {
+                var result = await _hotelRepository.SearchAnvelopeByStatusCurentAsync(searchString, page, itemsPerPage);
+                var model = new List<AnvelopaDto>();
+                if (result.Successful)
+                {
+
+                    model = _mapper.Map<List<AnvelopaDto>>(result.Entity);
+
+                    foreach (var item in model)
+                    {
+                        if (item.PozitieId != null)
+                        {
+                            var pozitie = await _hotelPositionsRepository.GetPositionByIdAsync(item.PozitieId.Value);
+                            var pozitiedto = _mapper.Map<HotelPositionsDto>(pozitie.Entity);
+                            item.Pozitie = pozitie.Successful ? pozitiedto : null;
+                        }
+
+                        if (item.MarcaId != null)
+                        {
+                            var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
+                            item.Marca = marca.Successful ? marca.Entity.Label : string.Empty;
+                        }
 
                     }
                     return Result<List<AnvelopaDto>>.ResultOk(model);
