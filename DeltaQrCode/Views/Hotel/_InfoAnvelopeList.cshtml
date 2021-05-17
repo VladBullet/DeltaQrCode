@@ -53,16 +53,16 @@
 </table>
 
 
-<div hidden="hidden" id="hasPrev" data-value="@Model.List.HasPreviousPage.ToString().ToLower()"></div>
-<div hidden="hidden" id="hasNext" data-value="@Model.List.HasNextPage.ToString().ToLower()"></div>
+<div hidden="hidden" id="hasPrev" data-value="@Model.anvList.HasPreviousPage.ToString().ToLower()"></div>
+<div hidden="hidden" id="hasNext" data-value="@Model.anvList.HasNextPage.ToString().ToLower()"></div>
 
 
 <div class="text-center">
-    <button id="buttonPrev" data-pageNumber="@(Model.List.PageIndex - 1)"
+    <button id="buttonPrev" data-pageNumber="@(Model.anvList.PageIndex - 1)"
             class=" customPagination btn btn-default">
         Previous
     </button>
-    <button id="buttonNext" data-pageNumber="@(Model.List.PageIndex + 1)"
+    <button id="buttonNext" data-pageNumber="@(Model.anvList.PageIndex + 1)"
             class=" customPagination btn btn-default">
         Next
     </button>

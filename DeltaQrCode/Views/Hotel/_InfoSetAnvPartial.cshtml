@@ -192,8 +192,10 @@
             }
 
             <hr class="bg-dark" />
-
-            <partial name="_InfoAnvelopeList" />
+            <div id="infoSetResult">
+                @*<partial name="_InfoAnvelopeList" />*@
+            </div>
+            
         </form>
     </div>
 
@@ -201,3 +203,38 @@
         <p id="serverErrorMsg" style="color:red; padding: 5px;"></p>
     </div>
 </div>
+
+<script>
+     type="text/javascript">
+        $(document).ready(function () {
+            var data = {searchString: $("#search").val(), page: 1 };
+            $("#infoSetResult").load("/Hotel/SearchAnvelopeForInfoSet",
+                data,
+                function () {
+            setPagination();
+                });
+        });
+        $("#search-addon").on("click",
+            function (event) {
+            event.preventDefault();
+                var data = {searchString: $("#search").val(), page: 1 };
+                $("#infoSetResult").load("/Hotel/SearchAnvelopeForInfoSet",
+                    data,
+                    function () {
+            setPagination();
+                    });
+            });
+
+        $(document).on("click",
+            ".customPagination",
+            function (event) {
+            event.preventDefault();
+                var page = $(this).attr("data-pageNumber");
+                var data = {searchString: $("#search").val(), pageNumber: page };
+                $("#infoSetResult").load("/Hotel/SearchAnvelopeForInfoSet",
+                    data,
+                    function () {
+            setPagination();
+                    });
+            });
+</script>
