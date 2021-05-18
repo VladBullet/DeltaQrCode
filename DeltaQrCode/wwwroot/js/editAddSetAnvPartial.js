@@ -117,36 +117,10 @@ $(document).ready(function () {
                 /*                var result = validator.validate(validator);*/
 /*                if (result.formIsValid) {*/
                 //console.log("edit");
-
-                var list = [];
-                $.each($(".parent"), function (index, item) {
-                    var anv = $(item).find(".inputOrSelect");
-                    list.push(anv.val());
-                })
-
-                var client = $(".client").serialize();
-                //var clientInputs = $(".client .inputOrSelect");
-                //for (var i = 0; i < clientInputs.length; i++) {
-                //    client.push($(clientInputs[i]).val());
-                //}
-                var masina = $(".masina .inputOrSelect");
-                var setanvelope = $(".setanvelope .inputOrSelect").val();
-                var data = {};
-                data.antiForgeryToken = $('#apptform input[name="__RequestVerificationToken"]').val();
-                data.client = client;
-                data.masina = masina;
-                data.setanvelope = setanvelope;
-                data.anvelope = list;
-                data = $(data).serialize();
-
-                var form = $("#apptform").serialize();
-
-                var model = { "setAnv": data };
-                
                     $.ajax({
                         type: "POST",
                         url: "/Hotel/EditModal",
-                        data: form,
+                        data: $("#apptform").serialize(),
                         dataType: "json",
                         success: function (response) {
                             CloseModalById('myHotelModal');
