@@ -4,7 +4,7 @@
 
 
 
-<table class="table table-responsive table-sm table-responsive-md table-responsive-sm table-bordered table-hover">
+<table class="table table table-responsive table-sm table-responsive-md table-responsive-sm table-bordered table-hover">
     <thead>
         <tr class="text-center">
             <th style="" scope="col">Actiune</th>
@@ -26,15 +26,15 @@
             <tr class="text-center">
                 <td class="flex-row">
                     <div class="col-md-12">
-                        <div class="btn btn-outline-info btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle "></i></div>
+                        <div class="btn btn-outline-info btn-sm " type="button" data-value="@item.Id" data-actionType="info"><i class="fas fa-info-circle "></i></div>
                     </div>
                     <div class="col-md-12">
-                        <div class="btn btn-outline-warning btn-sm actionButton" type="button" data-value="@item.Id" data-actionType="edit"><i class="fas fa-pencil-alt"></i></div>
+                        <div class="btn btn-outline-warning btn-sm " type="button" data-value="@item.Id" data-actionType="edit"><i class="fas fa-pencil-alt"></i></div>
                     </div>
                     @if (User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "admin")
                     {
                         <div class="col-md-12">
-                            <div class="btn btn-outline-danger btn-sm deleteButton" type="button" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
+                            <div class="btn btn-outline-danger btn-sm " type="button" data-value="@item.Id"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     }
                 </td>
