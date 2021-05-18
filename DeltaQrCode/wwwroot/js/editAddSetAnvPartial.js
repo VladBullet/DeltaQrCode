@@ -150,6 +150,7 @@ $(document).ready(function () {
                 /*                var result = validator.validate(validator);*/
                 /*                if (result.formIsValid) {*/
                 //console.log("submit add");
+                var form = $('#apptform').serialize();
                 $.ajax({
                     type: "POST",
                     url: "Hotel/AddModal",

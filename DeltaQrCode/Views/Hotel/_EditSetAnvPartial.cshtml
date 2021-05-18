@@ -50,7 +50,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-row">
-                <div class="col client">
+                <div class="col">
                     <h4> Detalii client :</h4>
 
                     <div class="form-group col-md-12">
@@ -78,7 +78,7 @@
 
                 </div>
                 <br />
-                <div class="col masina">
+                <div class="col">
                     <h4> Detalii masina :</h4>
 
                     <div class="form-group col-md-12">
@@ -112,7 +112,7 @@
             <hr class="bg-dark" />
 
 
-            <div class="text-center form-group setanvelope">
+            <div class="text-center form-group">
                 @Html.LabelFor(model => model.SetAnvelope.NumeSet, htmlAttributes: new { @class = "control-label col-md-3" })
 
                 @Html.EditorFor(model => model.SetAnvelope.NumeSet, new { htmlAttributes = new { @class = "form-control col-md-3 validate inputOrSelect", @style = "margin:auto;" } })
@@ -136,7 +136,7 @@
 
                     <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 margin-xs-uzura">
                         <label asp-for="@item.Uzura" id="@("Label_"+item.PozitiePeMasina + "_" +"Uzura")" class="control-label text-center required-field margin-md-uzura"></label>
-                        <input asp-for="@item.Uzura" id="@(item.PozitiePeMasina + "_" +"Uzura")" name="@("Anvelope[" + i + "]_"+item.PozitiePeMasina + "_" +"Uzura")" class=" col-12 col-sm-9 col-md-7 text-center col-lg-9 col-xl-6 form-control half-margin-bottom margin-md-uzura uzura inputOrSelect" type="text" />
+                        <input asp-for="@item.Uzura" id="@(item.PozitiePeMasina + "_" +"Uzura")" name="@("Anvelope[" + i + "].Uzura")" class=" col-12 col-sm-9 col-md-7 text-center col-lg-9 col-xl-6 form-control half-margin-bottom margin-md-uzura uzura inputOrSelect" type="text" />
                         <span asp-validation-for="@item.Uzura" class="text-danger error_span"></span>
                     </div>
                     <div class="form-group  col-3 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv margin-xs">
