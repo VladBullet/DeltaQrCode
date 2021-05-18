@@ -73,9 +73,9 @@ namespace DeltaQrCode.Controllers
             return PartialView("_HotelList", model);
         }
 
-        public async Task<IActionResult> SearchAnvelopeForInfoSet(string searchString, int pageNumber = 1)
+        public async Task<IActionResult> SearchAnvelopeForInfoSet(string searchString, uint setId, int pageNumber = 1)
         {
-            var anvelopeResult = await _hotelService.SearchAnvelopeByStatusCurentAsync(searchString, pageNumber, PageSize);
+            var anvelopeResult = await _hotelService.SearchAnvelopeByStatusCurentAsync(searchString,setId, pageNumber, PageSize);
             var anvelope = anvelopeResult.Entity;
 
             var result = _mapper.Map<List<AnvelopaVM>>(anvelope);

@@ -427,11 +427,11 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
-        public async Task<Result<List<AnvelopaDto>>> SearchAnvelopeByStatusCurentAsync(string searchString, int page, int itemsPerPage)
+        public async Task<Result<List<AnvelopaDto>>> SearchAnvelopeByStatusCurentAsync(string searchString, uint setId, int page, int itemsPerPage)
         {
             try
             {
-                var result = await _hotelRepository.SearchAnvelopeByStatusCurentAsync(searchString, page, itemsPerPage);
+                var result = await _hotelRepository.SearchAnvelopeByStatusCurentAsync(searchString,setId, page, itemsPerPage);
                 var model = new List<AnvelopaDto>();
                 if (result.Successful)
                 {

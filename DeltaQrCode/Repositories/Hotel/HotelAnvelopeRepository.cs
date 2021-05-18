@@ -104,11 +104,12 @@ namespace DeltaQrCode.Repositories
             }
         }
 
-        public async Task<Result<List<CaAnvelopa>>> SearchAnvelopeByStatusCurentAsync(string searchString, int page = 1, int itemsPerPage = 20)
+        public async Task<Result<List<CaAnvelopa>>> SearchAnvelopeByStatusCurentAsync(string searchString, uint setId, int page = 1, int itemsPerPage = 20)
         {
             try
             {
-                var list = await _db.CaAnvelopa.Where(x => x.StatusCurent != "InRaft").ToListAsync();
+
+                var list = await _db.CaAnvelopa.Where(x => x.StatusCurent != "InRaft" && x.SetAnvelopeId == setId).ToListAsync();
 
                 return Result<List<CaAnvelopa>>.ResultOk(list);
             }
