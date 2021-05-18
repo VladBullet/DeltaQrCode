@@ -195,7 +195,7 @@
             <div id="infoSetResult">
                 @*<partial name="_InfoAnvelopeList" />*@
             </div>
-            
+
         </form>
     </div>
 
@@ -205,78 +205,41 @@
 </div>
 
 <script>
-     type="text/javascript">
+
+
+    type = "text/javascript" >
         $(document).ready(function () {
             var setId = $(document).find("#SetAnvelope_Id").val();
             var data = { searchString: $("#search").val(), setId, page: 1 };
             $("#infoSetResult").load("/Hotel/SearchAnvelopeForInfoSet",
                 data,
                 function () {
-            setPagination();
+                    setPaginationInfo();
                 });
         });
-        $("#search-addon").on("click",
-            function (event) {
+    $("#search-addon").on("click",
+        function (event) {
             event.preventDefault();
-                var data = {searchString: $("#search").val(), page: 1 };
-                $("#infoSetResult").load("/Hotel/SearchAnvelopeForInfoSet",
-                    data,
-                    function () {
-            setPagination();
-                    });
-            });
+            var data = { searchString: $("#search").val(), page: 1 };
+            $("#infoSetResult").load("/Hotel/SearchAnvelopeForInfoSet",
+                data,
+                function () {
+                    setPaginationInfo();
+                });
+        });
 
-        $(document).on("click",
-            ".customPagination",
-            function (event) {
+    $(document).on("click",
+        ".customPagination",
+        function (event) {
             event.preventDefault();
-                var page = $(this).attr("data-pageNumber");
-                var data = {searchString: $("#search").val(), pageNumber: page };
-                $("#infoSetResult").load("/Hotel/SearchAnvelopeForInfoSet",
-                    data,
-                    function () {
-            setPagination();
-                    });
-            });
+            var page = $(this).attr("data-pageNumber");
+            var data = { searchString: $("#search").val(), pageNumber: page };
+            $("#infoSetResult").load("/Hotel/SearchAnvelopeForInfoSet",
+                data,
+                function () {
+                    setPaginationInfo();
+                });
+        });
 
-    var setPagination = function () {
-        var hasPrev = $("#hasPrev").attr("data-value");
-        var hasNext = $("#hasNext").attr("data-value");
-
-        if (hasPrev == "true") {
-            enablePrevious();
-        } else if (hasPrev == "false") {
-            disablePrevious();
-        }
-
-        if (hasNext == "true") {
-            enableNext();
-        } else if (hasNext == "false") {
-            disableNext();
-        }
-    };
-
-    var enablePrevious = function () {
-        $(document).find("#buttonPrev").removeAttr("disabled");
-        //$(document).find("#buttonPrev").removeClass("disabled");
-        console.log("Enable Previons");
-    };
-    var disablePrevious = function () {
-        $(document).find("#buttonPrev").attr("disabled", "disabled");
-        //$(document).find("#buttonPrev").addClass("disabled");
-        console.log("Disable Previons");
-
-    };
-    var enableNext = function () {
-        $(document).find("#buttonNext").removeAttr("disabled");
-        //$(document).find("#buttonNext").removeClass("disabled");
-        console.log("Enable Next");
-
-    };
-    var disableNext = function () {
-        $(document).find("#buttonNext").attr("disabled", "disabled");
-        //$(document).find("#buttonNext").addClass("disabled");
-        console.log("Disable Next");
-
-    };
+    
 </script>

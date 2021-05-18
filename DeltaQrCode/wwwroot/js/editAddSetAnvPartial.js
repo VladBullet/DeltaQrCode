@@ -116,24 +116,28 @@ $(document).ready(function () {
                 showLoading();
                 /*                var result = validator.validate(validator);*/
 /*                if (result.formIsValid) {*/
-                console.log("edit");
+                //console.log("edit");
 
                 var list = [];
                 $.each($(".parent"), function (index, item) {
                     var anv = $(item).find(".inputOrSelect");
-                    list.push(anv);
+                    list.push(anv.val());
                 })
 
-                var client = $(".client .inputOrSelect");
+                var client = $(".client").serialize();
+                //var clientInputs = $(".client .inputOrSelect");
+                //for (var i = 0; i < clientInputs.length; i++) {
+                //    client.push($(clientInputs[i]).val());
+                //}
                 var masina = $(".masina .inputOrSelect");
-                var setanvelope = $(".setanvelope .inputOrSelect");
+                var setanvelope = $(".setanvelope .inputOrSelect").val();
                 var data = {};
                 data.antiForgeryToken = $('#apptform input[name="__RequestVerificationToken"]').val();
                 data.client = client;
                 data.masina = masina;
                 data.setanvelope = setanvelope;
                 data.anvelope = list;
-                data = data.serialize();
+                data = $(data).serialize();
 
                 var form = $("#apptform").serialize();
 
@@ -142,7 +146,7 @@ $(document).ready(function () {
                     $.ajax({
                         type: "POST",
                         url: "/Hotel/EditModal",
-                        data: data,
+                        data: form,
                         dataType: "json",
                         success: function (response) {
                             CloseModalById('myHotelModal');
@@ -171,7 +175,7 @@ $(document).ready(function () {
                 showLoading();
                 /*                var result = validator.validate(validator);*/
                 /*                if (result.formIsValid) {*/
-                console.log("submit add");
+                //console.log("submit add");
                 $.ajax({
                     type: "POST",
                     url: "Hotel/AddModal",
@@ -228,7 +232,7 @@ $(document).ready(function () {
             function () {
 
                 var val = $(this).val();
-                console.log("val", val);
+                //console.log("val", val);
                 var selectedStatusElem = $(this).closest(".form-group").find(".selectedstatus");
                 $(selectedStatusElem).val(val);
                 $(selectedStatusElem).trigger("updatedStatus");

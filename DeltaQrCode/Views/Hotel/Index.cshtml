@@ -113,7 +113,7 @@
                     $('#partialInfo').html(data);
                     $('#myHotelModal').modal('show');
 
-                    console.log('edit resp');
+                    //console.log('edit resp');
 
                     var statuses = $(".statuscurent");
 
@@ -145,7 +145,7 @@
             function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
-                console.log('aici');
+                //console.log('aici');
                 var id = $(this).attr("data-value");
                 var actionType = $(this).attr("data-actionType");
 
@@ -191,24 +191,24 @@
         var enablePrevious = function () {
             $(document).find("#buttonPrev").removeAttr("disabled");
             //$(document).find("#buttonPrev").removeClass("disabled");
-            console.log("Enable Previons");
+            //console.log("Enable Previons");
         };
         var disablePrevious = function () {
             $(document).find("#buttonPrev").attr("disabled", "disabled");
             //$(document).find("#buttonPrev").addClass("disabled");
-            console.log("Disable Previons");
+            //console.log("Disable Previons");
 
         };
         var enableNext = function () {
             $(document).find("#buttonNext").removeAttr("disabled");
             //$(document).find("#buttonNext").removeClass("disabled");
-            console.log("Enable Next");
+          /*  //*///console.log("Enable Next");
 
         };
         var disableNext = function () {
             $(document).find("#buttonNext").attr("disabled", "disabled");
             //$(document).find("#buttonNext").addClass("disabled");
-            console.log("Disable Next");
+            //console.log("Disable Next");
 
         };
 
