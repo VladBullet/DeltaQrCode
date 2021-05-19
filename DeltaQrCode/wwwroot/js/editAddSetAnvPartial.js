@@ -349,7 +349,7 @@ var enableOrDisablePositionForStatus = function (statusElem) {
     if ($(selectedStatusElem).val() != "InRaft") {
         $(positionElem).attr("disabled", "disabled");
         $(positionElem).addClass("disabled");
-        $(positionElem).val("").trigger("change");
+        $(positionElem).val("").trigger("change"); ///////
     }
 };
 

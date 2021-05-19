@@ -75,7 +75,7 @@ namespace DeltaQrCode.Controllers
 
         public async Task<IActionResult> SearchAnvelopeForInfoSet(string searchString, uint setId, int pageNumber = 1)
         {
-            var anvelopeResult = await _hotelService.SearchAnvelopeByStatusCurentAsync(searchString,setId, pageNumber, PageSize);
+            var anvelopeResult = await _hotelService.SearchAnvelopeByStatusCurentAsync(searchString, setId, pageNumber, PageSize);
             var anvelope = anvelopeResult.Entity;
 
             var result = _mapper.Map<List<AnvelopaVM>>(anvelope);
@@ -165,13 +165,15 @@ namespace DeltaQrCode.Controllers
                 var masinaDto = _mapper.Map<MasinaDto>(masina);
 
                 var setanvelope = setAnv.SetAnvelope;
+                setanvelope.MasinaId = client.Id;
+                setanvelope.ClientId = clientDto.Id;
                 var setDto = _mapper.Map<SetAnvelopeDto>(setanvelope);
 
                 var anvList = setAnv.Anvelope;
                 var anvListDto = _mapper.Map<List<AnvelopaDto>>(anvList);
 
-                var clientUpdate = await _hotelService.EditClientAsync(clientDto);
-                var masinaUpdate = await _hotelService.EditMasinaAsync(masinaDto);
+                var updateClient = await _hotelService.EditClientAsync(clientDto);
+                var updateMasina = await _hotelService.EditMasinaAsync(masinaDto);
                 var setAnvelopeUpdate = await _hotelService.EditSetAnvelopeAsync(setDto);
 
                 bool updatedAnvSuccessful = false;
@@ -187,7 +189,7 @@ namespace DeltaQrCode.Controllers
                 }
 
 
-                if (clientUpdate.Successful && masinaUpdate.Successful && setAnvelopeUpdate.Successful && updatedAnvSuccessful)
+                if (updateClient.Successful && updateMasina.Successful && setAnvelopeUpdate.Successful && updatedAnvSuccessful)
                 {
                     return Ok(JsonConvert.SerializeObject("Set anvelope modificat cu success!"));
                 }
@@ -257,6 +259,7 @@ namespace DeltaQrCode.Controllers
                 setAnvelopeDto.MasinaId = masinaId;
                 setAnvelopeDto.ClientId = clientId;
                 setAnvelopeDto.NumeSet = setAnv.SetAnvelope.NumeSet;
+                setAnvelopeDto.NrBucati = setAnv.SetAnvelope.NrBucati;
 
                 var addSetAnvelope = await _hotelService.AddSetAnvelopeAsync(setAnvelopeDto);
                 bool addedAnvSuccessful = true;

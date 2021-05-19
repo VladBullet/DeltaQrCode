@@ -77,7 +77,7 @@ namespace DeltaQrCode.Services.Hotel
                         throw new Exception("Ceva nu a mers bine la gasirea pozitiei in metoda de adaugare anvelope in servicii!");
                     }
 
-                    //await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, setAnv.NrBucati, operatiunePoz);
+                    await _hotelPositionsService.UpdatePositionAsync(setAnv.PozitieId.Value, 1, operatiunePoz);
                     position = await _hotelPositionsRepository.GetPositionByIdAsync(setAnv.PozitieId.Value);
                     setAnv.Pozitie = _mapper.Map<HotelPositionsDto>(position.Entity);
                 }
@@ -179,57 +179,6 @@ namespace DeltaQrCode.Services.Hotel
                     editSetAnv.Dimensiuni.Lat = editSetAnv.OldDimensiuni.Lat;
                     editSetAnv.Dimensiuni.Dot = editSetAnv.OldDimensiuni.Dot;
 
-                    //var uzura = new Uzura(editSetAnv.Uzura);
-
-                    //editSetAnv.Uzura = new Uzura();
-
-                    //if (editSetAnv.OldNumarBucati == 4)
-                    //{
-                    //    if (editSetAnv.NrBucati < 4)
-                    //    {
-                    //        editSetAnv.Uzura.DrS = null;
-                    //        editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
-                    //        editSetAnv.Uzura.DrF = editSetAnv.OldUzura.StS;
-                    //        editSetAnv.Uzura.StS = editSetAnv.OldUzura.DrS;
-
-                    //        if (editSetAnv.NrBucati < 3)
-                    //        {
-                    //            editSetAnv.Uzura.StS = null;
-                    //            editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.StS;
-                    //            editSetAnv.Uzura.DrF = editSetAnv.OldUzura.DrS;
-
-                    //            if (editSetAnv.NrBucati == 1)
-                    //            {
-                    //                editSetAnv.Uzura.DrF = null;
-                    //                editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrS;
-                    //            }
-                    //        }
-                    //    }
-                    //}
-
-                    //if (editSetAnv.OldNumarBucati == 3)
-                    //{
-                    //    if (editSetAnv.NrBucati < 3)
-                    //    {
-                    //        editSetAnv.Uzura.StS = null;
-                    //        editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
-                    //        editSetAnv.Uzura.DrF = editSetAnv.OldUzura.StS;
-
-                    //        if (editSetAnv.NrBucati == 1)
-                    //        {
-                    //            editSetAnv.Uzura.DrF = null;
-                    //            editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.StS;
-                    //        }
-                    //    }
-
-                    //}
-
-                    //if(editSetAnv.OldNumarBucati == 2)
-                    //{
-                    //    editSetAnv.Uzura.DrF = null;
-                    //    editSetAnv.Uzura.StF = (int)editSetAnv.OldUzura.DrF;
-                    //}
-
                     addSetAnv.Id = 0;
 
                     //await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, /*addSetAnv.NrBucati,*/ OperatiunePozitie.Scoatere);
@@ -243,20 +192,20 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 
 
-                // case: was InRaft, will be different =>  Working!
-                //if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent != "InRaft")
-                //{
-                //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, /*editSetAnv.NrBucati,*/ OperatiunePozitie.Scoatere);
-                //    editSetAnv.PozitieId = null;
-                //}
+                 //case: was InRaft, will be different =>  Working!
+                if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent != "InRaft")
+                {
+                    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, 1, OperatiunePozitie.Scoatere);
+                    editSetAnv.PozitieId = null;
+                }
 
 
-                //// case: was inRaft, will be in raft, position changed => Working!
-                //if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.PozitieId != null && editSetAnv.NrBucati == editSetAnv.OldNumarBucati)
-                //{
-                //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, editSetAnv.NrBucati, OperatiunePozitie.Scoatere);
-                //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, editSetAnv.NrBucati, OperatiunePozitie.Adaugare);
-                //}
+                // case: was inRaft, will be in raft, position changed => Working!
+                if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.PozitieId != null)
+                {
+                    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, 1, OperatiunePozitie.Scoatere);
+                    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, 1, OperatiunePozitie.Adaugare);
+                }
 
 
                 //// case: was inRaft, will be in raft, nrBuc changed  => Working!
@@ -285,24 +234,24 @@ namespace DeltaQrCode.Services.Hotel
                 //{
                 //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, editSetAnv.OldNumarBucati, OperatiunePozitie.Scoatere);
                 //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, editSetAnv.NrBucati, OperatiunePozitie.Adaugare);
-                    
-                        
+
+
 
                 //}
 
 
-                //// case: was NOT InRaft, will be InRaft => Working!
-                //if (editSetAnv.PozitieId != null && editSetAnv.OldPozitieId == null)
-                //{
-                //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, editSetAnv.NrBucati, OperatiunePozitie.Adaugare);
-                //}
+                // case: was NOT InRaft, will be InRaft => Working!
+                if (editSetAnv.PozitieId != null && editSetAnv.OldPozitieId == null)
+                {
+                    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, 1, OperatiunePozitie.Adaugare);
+                }
 
 
-                //// case: was InRaft, will be InRaft, No Changes
-                //if (editSetAnv.NrBucati == editSetAnv.OldNumarBucati && editSetAnv.PozitieId == null && editSetAnv.StatusCurent == "InRaft")
-                //{
-                //    editSetAnv.PozitieId = editSetAnv.OldPozitieId;
-                //}
+                // case: was InRaft, will be InRaft, No Changes
+                if (editSetAnv.PozitieId == null && editSetAnv.StatusCurent == "InRaft")
+                {
+                    editSetAnv.PozitieId = editSetAnv.OldPozitieId;
+                }
 
 
                 if (editSetAnv.PozitieId != null)
