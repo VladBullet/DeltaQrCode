@@ -38,7 +38,7 @@
                 //.ForMember(d => d.Uzura, m => m.MapFrom(s => new Uzura(s.StangaFata, s.StangaSpate, s.DreaptaFata, s.DreaptaSpate,s.Optional1,s.Optional2)))
                 //.ForMember(d => d.OldUzura, m => m.MapFrom(s => new Uzura(s.OldStangaFata, s.OldStangaSpate, s.OldDreaptaFata, s.OldDreaptaSpate)))
                 .ForMember(d => d.DimensiuniString, m => m.MapFrom(s => s.DimensiuniString));
-            //.ForMember(d => d.Position, m => m.MapFrom(s => s.PozitieInRaft.ToPosition()));
+            //.ForMember(d => d.Pozitie, m => m.MapFrom(s => s.PozitieInRaft.to()))
 
             CreateMap<AnvelopaDto, AnvelopaVM>()
                 .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))

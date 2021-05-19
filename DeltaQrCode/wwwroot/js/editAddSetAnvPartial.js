@@ -117,6 +117,8 @@ $(document).ready(function () {
                 /*                var result = validator.validate(validator);*/
                 /*                if (result.formIsValid) {*/
                 //console.log("edit");
+
+                var form = $("#apptform").serialize();
                 $.ajax({
                     type: "POST",
                     url: "/Hotel/EditModal",

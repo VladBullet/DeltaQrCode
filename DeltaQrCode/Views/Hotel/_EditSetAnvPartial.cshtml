@@ -140,7 +140,7 @@
                 <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
             </div>
 
-            <input hidden="hidden" asp-for="@item.OldPozitieId" id="@("Label_"+item.PozitiePeMasina + "_" +"OldPozitieId")" name="@("Anvelope[" + i + "].OldPozitieId")" value="@item.OldPozitieId" />
+            <input type="hidden" asp-for="@item.OldPozitieId" id="@("Label_"+item.PozitiePeMasina + "_" +"OldPozitieId")" name="@("Anvelope[" + i + "].OldPozitieId")" value="@item.OldPozitieId" />
             <input type="hidden" asp-for="@item.SetAnvelopeId" id="@("Label_"+item.PozitiePeMasina + "_" +"SetAnvelopeId")" name="@("Anvelope[" + i + "].SetAnvelopeId")" value="@item.SetAnvelopeId" />
 
 
@@ -223,7 +223,7 @@
             <div class="form-group col-8 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
                 <label asp-for="@item.PozitieInRaft" id="@("Label_"+item.PozitiePeMasina + "_" +"PozitieInRaft")" class="control-label required-field col-md-3"></label>
                 @*@Html.LabelFor(model => model.@item.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })*@
-                <input class="default" hidden="hidden" asp-for="@item.PozitieId" id="@(item.PozitiePeMasina + "_" +"PozitieId")" name="@("Anvelope[" + i + "].PozitieId")" data-value="@item.PozitieId" data-text="@(item.PozitieInRaft)" />
+                <input class="default" hidden="hidden" asp-for="@item.PozitieId" id="@(item.PozitiePeMasina + "_" +"PozitieId")" name="@("Anvelope[" + i + "].PozitieId")" data-value="@item.PozitieId" data-text="@(item.PozitieId)" />
                 <select class="form-control pozitieinraft select2custom inputOrSelect" asp-for="@item.PozitieInRaft" id="@(item.PozitiePeMasina + "_" +"PozitieInRaft")" name="@("Anvelope[" + i + "].PozitieInRaft")" data-value="@item.PozitieInRaft"></select>
                 @*@Html.ValidationMessageFor(model => model.@item.PozitieId, "", new { @class = "text-danger error_span" })*@
                 <span asp-validation-for="@item.PozitieId" class="text-danger error_span"></span>
