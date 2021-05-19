@@ -101,6 +101,10 @@ namespace DeltaQrCode.Controllers
 
                 var anvList = await _hotelService.GetAnvelopeBySetIdAsync(id);
                 var anvListvm = _mapper.Map<List<AnvelopaVM>>(anvList.Entity);
+                foreach (var item in anvListvm)
+                {
+                    item.OldPozitieId = item.PozitieId;
+                }
 
                 var masina = await _hotelService.GetMasinaForSetIdAsync(set.Entity.Id);
                 var masinavm = _mapper.Map<MasinaVM>(masina.Entity);
@@ -165,8 +169,8 @@ namespace DeltaQrCode.Controllers
                 var masinaDto = _mapper.Map<MasinaDto>(masina);
 
                 var setanvelope = setAnv.SetAnvelope;
-                setanvelope.MasinaId = client.Id;
-                setanvelope.ClientId = clientDto.Id;
+                setanvelope.MasinaId = masina.Id;
+                setanvelope.ClientId = client.Id;
                 var setDto = _mapper.Map<SetAnvelopeDto>(setanvelope);
 
                 var anvList = setAnv.Anvelope;
@@ -176,16 +180,20 @@ namespace DeltaQrCode.Controllers
                 var updateMasina = await _hotelService.EditMasinaAsync(masinaDto);
                 var setAnvelopeUpdate = await _hotelService.EditSetAnvelopeAsync(setDto);
 
-                bool updatedAnvSuccessful = false;
+                bool updatedAnvSuccessful = true;
 
                 foreach (var item in anvListDto)
                 {
-                    var result = await _hotelService.UpdateAnvelopaAsync(item);
-
-                    if (!result.Successful)
+                    if(item.Uzura != 0)
                     {
-                        updatedAnvSuccessful = true;
+                        var result = await _hotelService.UpdateAnvelopaAsync(item);
+
+                        if (result.Successful)
+                        {
+                            updatedAnvSuccessful = false;
+                        }
                     }
+                    
                 }
 
 
