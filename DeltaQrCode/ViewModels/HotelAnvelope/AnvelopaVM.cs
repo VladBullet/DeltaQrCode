@@ -24,8 +24,6 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public int? OldPozitieId { get; set; }
         public string Marca { get; set; }
         public string OldMarca { get; set; }
-        public int OldNumarBucati { get; set; }
-        public int NrBucati { get; set; }
         public int Uzura { get; set; }
         public int OldUzura { get; set; }
         public string PozitiePeMasina { get; set; }

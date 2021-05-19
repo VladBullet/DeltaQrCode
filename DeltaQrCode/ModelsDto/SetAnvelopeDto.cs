@@ -11,5 +11,7 @@ namespace DeltaQrCode.ModelsDto
         public uint MasinaId { get; set; }
         public uint ClientId { get; set; }
         public string NumeSet { get; set; }
+        public int NrBucati { get; set; }
+
     }
 }

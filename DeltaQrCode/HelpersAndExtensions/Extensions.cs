@@ -110,7 +110,7 @@
                 return string.Empty;
             }
 
-            return string.Format("Rand:{0}, Poz:{1}, Int:{2}, NrBuc:{3}", setanv.Pozitie.Rand, setanv.Pozitie.Pozitie, setanv.Pozitie.Interval, setanv.NrBucati);
+            return string.Format("Rand:{0}, Poz:{1}, Int:{2}", setanv.Pozitie.Rand, setanv.Pozitie.Pozitie, setanv.Pozitie.Interval);
         }
 
 

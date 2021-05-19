@@ -109,6 +109,10 @@
                 @Html.EditorFor(model => model.SetAnvelope.NumeSet, new { htmlAttributes = new { @class = "form-control col-md-3 validate", @style = "margin:auto;" } })
                 @Html.ValidationMessageFor(model => model.SetAnvelope.NumeSet, "", new { @class = "text-danger error_span" })
 
+                @Html.LabelFor(model => model.SetAnvelope.NrBucati, htmlAttributes: new { @class = "control-label col-md-3" })
+
+                @Html.EditorFor(model => model.SetAnvelope.NrBucati, new { htmlAttributes = new { @class = "form-control col-md-3 validate", @style = "margin:auto;", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.SetAnvelope.NrBucati, "", new { @class = "text-danger error_span" })
             </div>
             <br />
 

@@ -7,7 +7,6 @@ namespace DeltaQrCode.Models
     {
         public uint Id { get; set; }
         public uint? MarcaId { get; set; }
-        public int NrBucati { get; set; }
         public string Dimensiuni { get; set; }
         public int Uzura { get; set; }
         public string TipSezon { get; set; }

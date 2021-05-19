@@ -7,7 +7,6 @@ namespace DeltaQrCode.ModelsDto
         public uint Id { get; set; }
         public uint? MarcaId { get; set; }
         public string Marca { get; set; }
-        public int NrBucati { get; set; }
         public Dimensiuni Dimensiuni { get; set; }
         public int Uzura { get; set; }
         public HotelPositionsDto Pozitie { get; set; }
@@ -25,7 +24,6 @@ namespace DeltaQrCode.ModelsDto
         public string OldTipSezon { get; set; }
         public string OldObservatii { get; set; }
         public uint? OldPozitieId { get; set; }
-        public int OldNumarBucati { get; set; }
         public string OldMarca { get; set; }
         public uint SetAnvelopeId { get; set; }
         public string PozitiePeMasina { get; set; }
