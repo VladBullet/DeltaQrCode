@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     var initialized = false;
     $("#myHotelModal").on("shown.bs.modal", function () {
-
+        calculateNrBucati();
         hideAllHiddenAnv();
         hideAllButtonEraseAnv();
         checkUzuraVal();
@@ -99,10 +99,10 @@ $(document).ready(function () {
         //    updateUi(result.validationResults, "form-group", "error_span");
         //}
 
-        var updateNrBucati = function (value) {
-            var nrBuc = $(document).find("#NrBucati");
-            nrBuc.val(value);
-        };
+        //var updateNrBucati = function (value) {
+        //    var nrBuc = $(document).find("#NrBucati");
+        //    nrBuc.val(value);
+        //};
 
         //updateAndValidateUzura(false);
 
@@ -115,25 +115,25 @@ $(document).ready(function () {
                 $this.prop("disabled", true);
                 showLoading();
                 /*                var result = validator.validate(validator);*/
-/*                if (result.formIsValid) {*/
+                /*                if (result.formIsValid) {*/
                 //console.log("edit");
-                    $.ajax({
-                        type: "POST",
-                        url: "/Hotel/EditModal",
-                        data: $("#apptform").serialize(),
-                        dataType: "json",
-                        success: function (response) {
-                            CloseModalById('myHotelModal');
-                            ShowHeaderAlert(response, "success", 5000);
-                            $('#hotelListState').change();
+                $.ajax({
+                    type: "POST",
+                    url: "/Hotel/EditModal",
+                    data: $("#apptform").serialize(),
+                    dataType: "json",
+                    success: function (response) {
+                        CloseModalById('myHotelModal');
+                        ShowHeaderAlert(response, "success", 5000);
+                        $('#hotelListState').change();
 
-                        },
-                        error: function (error) {
-                            CloseModalById('myHotelModal');
-                            swalErrorTimer(error.responseText, 7000);
+                    },
+                    error: function (error) {
+                        CloseModalById('myHotelModal');
+                        swalErrorTimer(error.responseText, 7000);
 
-                        }
-                    });
+                    }
+                });
                 //} else {
                 //    updateUi(result.validationResults, "form-group", "error_span");
                 //}
@@ -188,6 +188,7 @@ $(document).ready(function () {
 
                 showHiddenAnv($(this));
                 showButtonEraseAnv($(this));
+                calculateNrBucati();
 
             });
 
@@ -352,7 +353,23 @@ var enableOrDisablePositionForStatus = function (statusElem) {
     }
 };
 
+var calculateNrBucati = function () {
+    var elements = $(document).find(".uzura");
+    var count = 0;
+    $.each(elements, function (index, item) {
+        
+        if ($(item).val() != 0) {
+            count++;
+        }
+        
+    });
+    updateNrBucati(count);
+}
+
+var updateNrBucati = function (value) {
+    var nrBuc = $(document).find("#SetAnvelope_NrBucati");
+    nrBuc.val(value);
+};
+
 // on change pe selectedStatus => enableOrDisablePositionForStatus
 // on change select2 for status = > change selectedStatus.val and trigger the change
-
-
