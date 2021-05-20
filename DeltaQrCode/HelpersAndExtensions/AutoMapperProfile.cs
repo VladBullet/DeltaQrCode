@@ -85,10 +85,10 @@
             
             CreateMap<CaSetAnvelope, SetAnvelopeDto>();
             CreateMap<SetAnvelopeDto, CaSetAnvelope>();
-            
-            CreateMap<AnvelopaDto, HotelAnvelopaVm>()
-                .ForMember(d => d.Anvelopa, m => m.MapFrom(s => s));
-            CreateMap<HotelAnvelopaVm, AnvelopaDto>();
+
+            CreateMap<SetAnvelopeDto, HotelAnvelopaVm>()
+                .ForMember(d => d.SetAnvelope, m => m.MapFrom(s => s));
+            CreateMap<HotelAnvelopaVm, SetAnvelopeDto>();
             
 
             CreateMap<MasinaDto, MasinaVM>();

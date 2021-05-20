@@ -557,6 +557,8 @@ namespace DeltaQrCode.Data
                     .HasName("Id_UNIQUE")
                     .IsUnique();
 
+                entity.Property(e => e.Deleted).HasColumnType("bit(1)");
+
                 entity.Property(e => e.NumeSet)
                     .IsRequired()
                     .HasColumnName("Nume_Set")

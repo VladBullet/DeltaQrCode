@@ -9,11 +9,13 @@ namespace DeltaQrCode.Services.Hotel
 
     public interface IHotelService
     {
-        Task<Result<AnvelopaDto>> GetAnvelopaByIdAsync(int id);
+        Task<Result<AnvelopaDto>> GetAnvelopaByIdAsync(uint id);
         Task<Result<AnvelopaDto>> AddAnvelopaAsync(AnvelopaDto setAnv, OperatiunePozitie operatiunePoz = OperatiunePozitie.Adaugare);
         Task<Result<AnvelopaDto>> UpdateAnvelopaAsync(AnvelopaDto setAnv);
-        Task<Result<AnvelopaDto>> DeleteAnvelopaAsync(int id);
+        Task<Result<AnvelopaDto>> DeleteAnvelopaAsync(uint id);
+        Task<Result<SetAnvelopeDto>> DeleteSetAnvelopeAsync(uint id);
         Task<Result<List<AnvelopaDto>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
+        Task<Result<List<SetAnvelopeDto>>> SearchSetAnvelopeAsync(string searchString, int page, int itemsPerPage);
         Task<Result<List<AnvelopaDto>>> SearchAnvelopeByStatusCurentAsync(string searchString, uint setId, int page, int itemsPerPage );
         Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeSetAsync();
         Task<Result<List<AnvelopaDto>>> GetAnvelopeBySetIdAsync(uint setId);

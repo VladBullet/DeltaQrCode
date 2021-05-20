@@ -10,6 +10,7 @@ namespace DeltaQrCode.Models
         public uint ClientId { get; set; }
         public string NumeSet { get; set; }
         public int NrBucati { get; set; }
+        public bool Deleted { get; set; }
 
     }
 }

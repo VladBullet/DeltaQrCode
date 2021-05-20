@@ -48,22 +48,26 @@ namespace DeltaQrCode.Controllers
 
         public async Task<IActionResult> Search(string searchString, int pageNumber = 1)
         {
-            var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
-            var anvelope = anvelopeResult.Entity;
+            //var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
+            //var anvelope = anvelopeResult.Entity;
+
+            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString,pageNumber,PageSize);
+            var setsAnv = sets.Entity;
 
             //var mapper = _mapper.Map<List<HotelAnvelopaVm>>(anvelope);
 
             var mapper = new List<HotelAnvelopaVm>();
-            foreach (var item in anvelope)
+            //var listanvVm = _mapper.Map<List<SetAnvelopeVM>>(setsAnv);
+            foreach (var item in setsAnv)
             {
-                var set = await _hotelService.GetSetAnvelopeByIdAsync(item.SetAnvelopeId);
-                var client = await _hotelService.GetClientByIdAsync(set.Entity.ClientId);
-                var masina = await _hotelService.GetMasinaByIdAsync(set.Entity.MasinaId);
+               
+                var client = await _hotelService.GetClientByIdAsync(item.ClientId);
+                var masina = await _hotelService.GetMasinaByIdAsync(item.MasinaId);
 
+                
                 var anv = _mapper.Map<HotelAnvelopaVm>(item);
                 anv.Client = _mapper.Map<ClientHotelVM>(client.Entity);
                 anv.Masina = _mapper.Map<MasinaVM>(masina.Entity);
-                anv.SetAnvelope = _mapper.Map<SetAnvelopeVM>(set.Entity);
 
                 mapper.Add(anv);
             }
@@ -317,13 +321,46 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> ConfirmDelete(int id)
+        public async Task<ActionResult> ConfirmDelete(uint id)
         {
             try
             {
                 var result = await _hotelService.DeleteAnvelopaAsync(id);
 
                 if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Setul de anvelope a fost sters!"));
+                }
+
+                return BadRequest("Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la stergerea setului de anvelope in controller!");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ConfirmDeleteSet(uint id)
+        {
+            try
+            {
+               
+                var anvelope = await _hotelService.GetAnvelopeBySetIdAsync(id);
+                var anvelopeList = anvelope.Entity;
+                bool successful = true;
+                foreach (var item in anvelopeList)
+                {
+                    var result = await _hotelService.DeleteAnvelopaAsync(item.Id);
+                    if (!result.Successful)
+                    {
+                        successful = false;
+                    }
+                }
+                var deleteSet = await _hotelService.DeleteSetAnvelopeAsync(id);
+
+                if (deleteSet.Successful && successful)
                 {
                     return Ok(JsonConvert.SerializeObject("Setul de anvelope a fost sters!"));
                 }

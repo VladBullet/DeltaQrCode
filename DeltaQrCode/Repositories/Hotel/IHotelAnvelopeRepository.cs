@@ -7,13 +7,16 @@ namespace DeltaQrCode.Repositories
 
     public interface IHotelAnvelopeRepository
     {
-        Task<Result<CaAnvelopa>> GetAnvelopaByIdAsync(int id);
+        Task<Result<CaAnvelopa>> GetAnvelopaByIdAsync(uint id);
         Task<Result<CaAnvelopa>> AddAnvelopaAsync(CaAnvelopa setAnv);
         Task<Result<CaAnvelopa>> UpdateAnvelopaAsync(CaAnvelopa setAnv);
         Task<Result<List<CaAnvelopa>>> SearchAnvelopeAsync(string searchString, int page, int itemsPerPage);
+        Task<Result<List<CaSetAnvelope>>> SearchClientAsync(string searchString);
+        Task<Result<List<CaSetAnvelope>>> SearchMasinaAsync(string searchString);
         Task<Result<List<CaAnvelopa>>> SearchAnvelopeByStatusCurentAsync(string searchString, uint setId, int page, int itemsPerPage );
         Task<Result<List<CaSetAnvelope>>> SearchAnvelopeSetAsync();
-        Task<Result<CaAnvelopa>> DeleteAnvelopaAsync(int id);
+        Task<Result<CaAnvelopa>> DeleteAnvelopaAsync(uint id);
+        Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(uint id);
         Task<Result<List<CaAnvelopa>>> GetAnvelopeBySetIdAsync(uint setId);
 
 

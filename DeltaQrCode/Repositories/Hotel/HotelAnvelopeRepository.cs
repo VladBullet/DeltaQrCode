@@ -23,7 +23,7 @@ namespace DeltaQrCode.Repositories
         }
 
 
-        public async Task<Result<CaAnvelopa>> GetAnvelopaByIdAsync(int id)
+        public async Task<Result<CaAnvelopa>> GetAnvelopaByIdAsync(uint id)
         {
             try
             {
@@ -135,8 +135,52 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+        public async Task<Result<List<CaSetAnvelope>>> SearchClientAsync(string searchString)
+        {
+            try
+            {
+                var clientList = await _db.CaClientHotel.Select(x=>x.Id).ToListAsync();
 
-        public async Task<Result<CaAnvelopa>> DeleteAnvelopaAsync(int id)
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    clientList = await _db.CaClientHotel.Where(x => x.NumeClient.ToLower().Contains(searchString.ToLower()) || x.NumarTelefon.ToLower().Contains(searchString.ToLower()) || x.Sofer.ToLower().Contains(searchString.ToLower())).Select(x => x.Id).ToListAsync();
+
+                }
+
+                var list = await _db.CaSetAnvelope.Where(x=> clientList.Contains(x.ClientId)).ToListAsync();
+
+                return Result<List<CaSetAnvelope>>.ResultOk(list);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
+            }
+        }
+
+        public async Task<Result<List<CaSetAnvelope>>> SearchMasinaAsync(string searchString)
+        {
+            try
+            {
+                var masinaList = await _db.CaMasina.Select(x => x.Id).ToListAsync();
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    masinaList = await _db.CaMasina.Where(x => x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower()) || x.TipVehicul.ToLower().Contains(searchString.ToLower())).Select(x => x.Id).ToListAsync();
+                }
+                var list = await _db.CaSetAnvelope.Where(x => masinaList.Contains(x.MasinaId)).ToListAsync();
+
+                return Result<List<CaSetAnvelope>>.ResultOk(list);
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
+            }
+        }
+
+
+        public async Task<Result<CaAnvelopa>> DeleteAnvelopaAsync(uint id)
         {
             try
             {
@@ -146,6 +190,25 @@ namespace DeltaQrCode.Repositories
                 await _db.SaveChangesAsync();
 
                 return Result<CaAnvelopa>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la stergerea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la stergerea anvelopei in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaSetAnvelope>> DeleteSetAnvelopeAsync(uint id)
+        {
+            try
+            {
+                var entity = await _db.CaSetAnvelope.FirstAsync(x => x.Id == id);
+                entity.Deleted = true;
+                var value = _db.CaSetAnvelope.Update(entity);
+                await _db.SaveChangesAsync();
+
+                return Result<CaSetAnvelope>.ResultOk(value.Entity);
 
             }
             catch (Exception er)

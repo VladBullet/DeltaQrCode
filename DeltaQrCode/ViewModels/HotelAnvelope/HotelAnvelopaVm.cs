@@ -7,11 +7,9 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
 {
     public class HotelAnvelopaVm
     {
-        public AnvelopaVM Anvelopa { get; set; }
         public ClientHotelVM Client { get; set; }
         public MasinaVM Masina { get; set; }
         public SetAnvelopeVM SetAnvelope { get; set; }
-        public string PozitieSet { get; set; }
 
     }
 }
