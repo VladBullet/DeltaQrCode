@@ -188,7 +188,7 @@ namespace DeltaQrCode.Controllers
                     {
                         var result = await _hotelService.UpdateAnvelopaAsync(item);
 
-                        if (result.Successful)
+                        if (!result.Successful)
                         {
                             updatedAnvSuccessful = false;
                         }
