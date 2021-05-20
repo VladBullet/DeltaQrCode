@@ -39,10 +39,13 @@ namespace DeltaQrCode.Controllers
             _mapper = mapper;
         }
 
-        public  IActionResult EditSetAnv(string actionType, uint id)
+        public  IActionResult EditSetAnv(uint id, string actionType)
         {
-            
+
             return View();
+
+
+
         }
 
         public async Task<IActionResult> SearchAnvelopeByStatusCurent(string searchString, uint setId, int pageNumber = 1)
