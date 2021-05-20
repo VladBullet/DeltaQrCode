@@ -190,7 +190,7 @@
             <div class="form-group col-6 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
                 @*@Html.LabelFor(model => model.@item.Marca, htmlAttributes: new { @class = "control-label col-md-3 " })*@
                 <label asp-for="@item.Marca" id="@("Label_"+item.PozitiePeMasina + "_" +"Marca")" class="control-label required-field col-md-3"></label>
-                <input class="default " hidden="hidden" asp-for="@item.MarcaId" id="@(item.PozitiePeMasina + "_" +"MarcaId")" name="@("Anvelope[" + i + "].MarcaId")" data-value="@item.MarcaId" data-text="@(item.MarcaId)" />
+                <input class="default " hidden="hidden" data-value="@item.Marca" data-text="@(item.Marca)" />
                 <select class="form-control marca select2custom inputOrSelect" asp-for="@item.Marca" id="@(item.PozitiePeMasina + "_" +"Marca")" name="@("Anvelope[" + i + "].Marca")"></select>
                 <span asp-validation-for="@item.Marca" class="text-danger error_span"></span>
                 @* @Html.ValidationMessageFor(model => model.@item.Marca, "", new { @class = "text-danger error_span" })*@
@@ -223,8 +223,8 @@
             <div class="form-group col-8 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
                 <label asp-for="@item.PozitieInRaft" id="@("Label_"+item.PozitiePeMasina + "_" +"PozitieInRaft")" class="control-label required-field col-md-3"></label>
                 @*@Html.LabelFor(model => model.@item.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })*@
-                <input class="default" hidden="hidden" asp-for="@item.PozitieId" id="@(item.PozitiePeMasina + "_" +"PozitieId")" name="@("Anvelope[" + i + "].PozitieId")" data-value="@item.PozitieId" data-text="@(item.PozitieId)" />
-                <select class="form-control pozitieinraft select2custom inputOrSelect" asp-for="@item.PozitieInRaft" id="@(item.PozitiePeMasina + "_" +"PozitieInRaft")" name="@("Anvelope[" + i + "].PozitieInRaft")" data-value="@item.PozitieInRaft"></select>
+                <input class="default" hidden="hidden" data-value="@item.PozitieId" data-text="@(item.PozitieInRaft)" />
+                <select class="form-control pozitieinraft select2custom inputOrSelect" asp-for="@item.PozitieId" id="@(item.PozitiePeMasina + "_" +"PozitieId")" name="@("Anvelope[" + i + "].PozitieId")"></select>
                 @*@Html.ValidationMessageFor(model => model.@item.PozitieId, "", new { @class = "text-danger error_span" })*@
                 <span asp-validation-for="@item.PozitieId" class="text-danger error_span"></span>
             </div>
