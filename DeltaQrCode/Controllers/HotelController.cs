@@ -39,6 +39,23 @@ namespace DeltaQrCode.Controllers
             _mapper = mapper;
         }
 
+        public  IActionResult EditSetAnv(string actionType, uint id)
+        {
+            
+            return View();
+        }
+
+        public async Task<IActionResult> SearchAnvelopeByStatusCurent(string searchString, uint setId, int pageNumber = 1)
+        {
+            var anvelopeResult = await _hotelService.SearchAnvelopeByStatusCurentAsync(searchString, setId, pageNumber, PageSize);
+            var anvelope = anvelopeResult.Entity;
+
+            var result = _mapper.Map<List<AnvelopaVM>>(anvelope);
+
+            var paginatedModel = PaginatedList<AnvelopaVM>.Create(result, pageNumber, 3);
+            var model = new HotelListViewModel(paginatedModel);
+            return PartialView("_InfoAnvelopeList", model);
+        }
 
         public IActionResult Index()
         {

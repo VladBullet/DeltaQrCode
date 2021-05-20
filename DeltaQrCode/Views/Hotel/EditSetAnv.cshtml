@@ -1,0 +1,168 @@
+﻿
+@using DeltaQrCode.ModelsDto
+@using Microsoft.AspNetCore.Razor.TagHelpers
+@using System.Security.Claims
+@model DeltaQrCode.ViewModels.HotelAnvelope.AddEditSetAnvelopeVM
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h4> Detalii client :</h4>
+
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Client.NumeClient, "NumeClient/Flota", htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Client.NumeClient, new { htmlAttributes = new { @class = "form-control half-margin-bottom  validate inputOrSelect" } })
+                        @Html.ValidationMessageFor(model => model.Client.NumeClient, "", new { @class = "text-danger error_span" })
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Client.NumarTelefon, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Client.NumarTelefon, new { htmlAttributes = new { @class = "form-control half-margin-bottom  validate inputOrSelect" } })
+                        @Html.ValidationMessageFor(model => model.Client.NumarTelefon, "", new { @class = "text-danger error_span" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Client.Sofer, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Client.Sofer, new { htmlAttributes = new { @class = "form-control half-margin-bottom  validate inputOrSelect" } })
+                        @Html.ValidationMessageFor(model => model.Client.Sofer, "", new { @class = "text-danger error_span" })
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <div class="col">
+                <h4> Detalii masina :</h4>
+
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Masina.NumarInmatriculare, htmlAttributes: new { @class = "control-label col-md-3 required-field" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Masina.NumarInmatriculare, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate inputOrSelect" } })
+                        @Html.ValidationMessageFor(model => model.Masina.NumarInmatriculare, "", new { @class = "text-danger error_span" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Masina.SerieSasiu, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Masina.SerieSasiu, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate inputOrSelect" } })
+                        @Html.ValidationMessageFor(model => model.Masina.SerieSasiu, "", new { @class = "text-danger error_span" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Masina.TipVehicul, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Masina.TipVehicul, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate inputOrSelect" } })
+                        @Html.ValidationMessageFor(model => model.Masina.TipVehicul, "", new { @class = "text-danger error_span" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//*@
+
+        <hr class="bg-dark" />
+
+
+        <div class="text-center form-group">
+            @Html.LabelFor(model => model.SetAnvelope.NumeSet, htmlAttributes: new { @class = "control-label col-md-3" })
+
+            @Html.EditorFor(model => model.SetAnvelope.NumeSet, new { htmlAttributes = new { @class = "form-control col-md-3 validate inputOrSelect", @style = "margin:auto;" } })
+            @Html.ValidationMessageFor(model => model.SetAnvelope.NumeSet, "", new { @class = "text-danger error_span" })
+
+            @Html.LabelFor(model => model.SetAnvelope.NrBucati, htmlAttributes: new { @class = "control-label col-md-3" })
+
+            @Html.EditorFor(model => model.SetAnvelope.NrBucati, new { htmlAttributes = new { @class = "form-control col-md-3 validate nrbuc", @style = "margin:auto;", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.SetAnvelope.NrBucati, "", new { @class = "text-danger error_span" })
+        </div>
+        <br />
+
+        <hr class="bg-dark" />
+    </div>
+
+    <div id="Montate" class="tableSetAnv">
+
+    </div>
+    <div id="Predate" class="tableSetAnv">
+
+    </div>
+    <div id="Casate" class="tableSetAnv">
+
+    </div>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var setId = $(document).find("#SetAnvelope_Id").val();
+            var data = { searchString: "Montate", setId, page: 1 };
+            $("#Montate").load("/Hotel/SearchAnvelopeByStatusCurent",
+                data,
+                function () {
+                    setPagination();
+                });
+            data = { searchString: "Predate", setId, page: 1 };
+            $("#Predate").load("/Hotel/SearchAnvelopeByStatusCurent",
+                data,
+                function () {
+                    setPagination();
+                });
+            data = { searchString: "Casate", setId, page: 1 };
+            $("#Casate").load("/Hotel/SearchAnvelopeByStatusCurent",
+                data,
+                function () {
+                    setPagination();
+                });
+        });
+    $(document).on("click",
+        ".customPagination",
+        function (event) {
+            event.preventDefault();
+            var parent = $(this).closest(".tableSetAnv");
+            var status = $(parent).attr("id");
+            var page = $(this).attr("data-pageNumber");
+            var data = { searchString: status, pageNumber: page };
+            $("#" + status).load("/Hotel/SearchAnvelopeByStatusCurent",
+                data,
+                function () {
+                    setPagination();
+                });
+        });
+
+        var setPaginationEdit = function (table) {
+            var hasPrevEdit = $(table).closest(".tableSetAnv").find(".hasPrevEdit").attr("data-value");
+            var hasNextEdit = $(table).closest(".tableSetAnv").find(".hasNextEdit").attr("data-value");
+
+            if (hasPrevEdit == "true") {
+                enablePrevious();
+            } else if (hasPrevEdit == "false") {
+                disablePrevious();
+            }
+
+            if (hasNextEdit == "true") {
+                enableNext();
+            } else if (hasNextEdit == "false") {
+                disableNext();
+            }
+        };
+
+        var enablePreviousEdit = function (parent) {
+            $(parent).closest(".tableSetAnv").find(".buttonPrevEdit").removeAttr("disabled");
+        };
+        var disablePreviousEdit = function (parent) {
+            $(parent).closest(".tableSetAnv").find(".buttonPrevEdit").attr("disabled", "disabled");
+
+        };
+        var enableNextEdit = function (parent) {
+            $(parent).closest(".tableSetAnv").find(".buttonNextEdit").removeAttr("disabled");
+
+        };
+        var disableNextEdit = function (parent) {
+            $(parent).closest(".tableSetAnv").find(".buttonNextEdit").attr("disabled", "disabled");
+
+        };
+    </script>

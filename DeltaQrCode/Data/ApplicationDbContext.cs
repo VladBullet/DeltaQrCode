@@ -375,6 +375,8 @@ namespace DeltaQrCode.Data
 
                 entity.Property(e => e.DataUltimaModificare).HasColumnType("datetime");
 
+                entity.Property(e => e.DataAdaugare).HasColumnType("datetime");
+
                 entity.Property(e => e.Deleted).HasColumnType("bit(1)");
 
                 entity.Property(e => e.Dimensiuni)

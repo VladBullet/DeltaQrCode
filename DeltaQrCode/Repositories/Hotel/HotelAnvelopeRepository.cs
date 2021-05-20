@@ -57,6 +57,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
+                setAnv.DataAdaugare = DateTime.Now;
                 var value = await _db.CaAnvelopa.AddAsync(setAnv);
                 await _db.SaveChangesAsync();
                 return Result<CaAnvelopa>.ResultOk(value.Entity);
@@ -109,7 +110,7 @@ namespace DeltaQrCode.Repositories
             try
             {
 
-                var list = await _db.CaAnvelopa.Where(x => x.StatusCurent != "InRaft" && x.SetAnvelopeId == setId).ToListAsync();
+                var list = await _db.CaAnvelopa.Where(x => x.StatusCurent == searchString && x.SetAnvelopeId == setId).ToListAsync();
 
                 return Result<List<CaAnvelopa>>.ResultOk(list);
             }

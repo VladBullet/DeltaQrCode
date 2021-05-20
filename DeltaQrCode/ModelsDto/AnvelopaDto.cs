@@ -17,6 +17,7 @@ namespace DeltaQrCode.ModelsDto
         public string Observatii { get; set; }
         public string StatusCurent { get; set; }
         public DateTime DataUltimaModificare { get; set; }
+        public DateTime DataAdaugare { get; set; }
         public bool Deleted { get; set; }
         public uint? OldMarcaId { get; set; }
         public Dimensiuni OldDimensiuni { get; set; }

@@ -13,6 +13,7 @@ namespace DeltaQrCode.Models
         public string Observatii { get; set; }
         public string StatusCurent { get; set; }
         public DateTime DataUltimaModificare { get; set; }
+        public DateTime DataAdaugare { get; set; }
         public bool Deleted { get; set; }
         public uint? PozitieId { get; set; }
         public uint SetAnvelopeId { get; set; }
