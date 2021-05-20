@@ -249,7 +249,7 @@ namespace DeltaQrCode.Controllers
 
                 }
 
-                var existingMasina = await _hotelService.GetMasinaBySerieSasiuOrNrAutoAsync(setAnv.Client.NumeClient, setAnv.Client.NumarTelefon);
+                var existingMasina = await _hotelService.GetMasinaBySerieSasiuOrNrAutoAsync(setAnv.Masina.SerieSasiu,setAnv.Masina.NumarInmatriculare);
 
                 if (existingMasina.Successful && existingMasina.Entity != null)
                 {

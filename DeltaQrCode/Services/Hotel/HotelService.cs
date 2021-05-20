@@ -821,15 +821,18 @@ namespace DeltaQrCode.Services.Hotel
             try
             {
                 var value = new Result<CaMasina>();
-
-                if (!string.IsNullOrEmpty(serieSasiu) && string.IsNullOrEmpty(nrAuto))
+                if (!string.IsNullOrEmpty(serieSasiu) || !string.IsNullOrEmpty(nrAuto))
                 {
-                    value = await _hotelRepository.GetMasinaBySerieSasiuAsync(serieSasiu);
+                    if (!string.IsNullOrEmpty(serieSasiu))
+                    {
+                        value = await _hotelRepository.GetMasinaBySerieSasiuAsync(serieSasiu);
+                    }
+                    if (!string.IsNullOrEmpty(nrAuto))
+                    {
+                        value = await _hotelRepository.GetMasinaByNrAutoAsync(nrAuto);
+                    }
                 }
-                if (string.IsNullOrEmpty(serieSasiu) && !string.IsNullOrEmpty(nrAuto))
-                {
-                    value = await _hotelRepository.GetMasinaByNrAutoAsync(nrAuto);
-                }
+                   
                 var model = _mapper.Map<MasinaDto>(value.Entity);
                 return Result<MasinaDto>.ResultOk(model);
             }

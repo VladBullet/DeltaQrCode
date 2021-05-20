@@ -412,7 +412,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var value = await _db.CaClientHotel.FirstOrDefaultAsync(x => x.NumeClient.ToLower().Contains(numeClient.ToLower()) && x.NumarTelefon == numarTelefon);
+                var value = await _db.CaClientHotel.FirstOrDefaultAsync(x => x.NumeClient.ToLower() == numeClient.ToLower() && x.NumarTelefon == numarTelefon);
                 return Result<CaClientHotel>.ResultOk(value);
             }
             catch (Exception er)

@@ -198,10 +198,11 @@ $(document).ready(function () {
             ".erase-data-anv",
             function () {
 
+                
                 eraseData($(this));
                 hideHiddenAnv($(this));
                 hideButtonEraseAnv($(this));
-
+                calculateNrBucati();
             });
 
         // ==============================================================================================
