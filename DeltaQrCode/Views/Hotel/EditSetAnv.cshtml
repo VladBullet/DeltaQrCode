@@ -4,7 +4,14 @@
 @using System.Security.Claims
 @model DeltaQrCode.ViewModels.HotelAnvelope.AddEditSetAnvelopeVM
 
-<div class="container">
+
+<head>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link href="~/css/SchedulerIndexStyle.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+</head>
+
+<div class="container " id="editSetBody">
     <div class="row">
         <div class="col">
             <h4> Detalii client :</h4>
@@ -84,6 +91,113 @@
     <hr class="bg-dark" />
 </div>
 
+@{
+    int i = 0;
+}
+@foreach (var item in Model.Anvelope)
+{
+    <div class="form-row parent">
+        <div class="col-3 col-sm-2 col-md-2 col-lg-2 col-xl-1 text-center ">
+            <div>@item.PozitiePeMasina</div>
+            <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
+        </div>
+
+        <input type="hidden" asp-for="@item.OldPozitieId" id="@("Label_"+item.PozitiePeMasina + "_" +"OldPozitieId")" name="@("Anvelope[" + i + "].OldPozitieId")" value="@item.OldPozitieId" />
+        <input type="hidden" asp-for="@item.SetAnvelopeId" id="@("Label_"+item.PozitiePeMasina + "_" +"SetAnvelopeId")" name="@("Anvelope[" + i + "].SetAnvelopeId")" value="@item.SetAnvelopeId" />
+        <input type="hidden" asp-for="@item.Id" id="@("Label_"+item.PozitiePeMasina + "_" +"Id")" name="@("Anvelope[" + i + "].Id")" value="@item.Id" />
+
+
+
+        <input type="hidden" class="pozitiepemasina" asp-for="@item.PozitiePeMasina" id="@("Label_"+item.PozitiePeMasina + "_" +"PozitiePeMasina")" name="@("Anvelope[" + i + "].PozitiePeMasina")" value="@item.PozitiePeMasina" />
+
+        <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 margin-xs-uzura">
+            <label asp-for="@item.Uzura" id="@("Label_"+item.PozitiePeMasina + "_" +"Uzura")" class="control-label text-center required-field margin-md-uzura"></label>
+            <input asp-for="@item.Uzura" id="@(item.PozitiePeMasina + "_" +"Uzura")" name="@("Anvelope[" + i + "].Uzura")" class=" col-12 col-sm-9 col-md-7 text-center col-lg-9 col-xl-6 form-control half-margin-bottom margin-md-uzura uzura inputOrSelect" type="text" />
+            <span asp-validation-for="@item.Uzura" class="text-danger error_span"></span>
+        </div>
+        <div class="form-group  col-3 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv margin-xs">
+            <label asp-for="@item.Diametru" id="@("Label_"+item.PozitiePeMasina + "_" +"Diametru")" class="control-label required-field"></label>
+            <input class="default" hidden="hidden" data-value="@item.Diametru" data-text="@("R"+item.Diametru)" />
+            <select class="form-control diametru select2custom inputOrSelect" asp-for="@item.Diametru" id="@(item.PozitiePeMasina + "_" +"Diametru")" name="@("Anvelope[" + i + "].Diametru")" data-placeholder="@item.Diametru" value="@item.Diametru"></select>
+            <span asp-validation-for="@item.Diametru" class="text-danger error_span"></span>
+        </div>
+        <div class="form-group col-3 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv margin-xs">
+            @*@Html.LabelFor(model => model.@item.Latime, htmlAttributes: new { @class = "control-label  required-field" })*@
+            <label asp-for="@item.Latime" id="@("Label_"+item.PozitiePeMasina + "_" +"Latime")" class="control-label required-field"></label>
+            <input class="default" hidden="hidden" data-value="@item.Latime" data-text="@(item.Latime)" />
+            <select class="form-control latime select2custom inputOrSelect" asp-for="@item.Latime" id="@(item.PozitiePeMasina + "_" +"Latime")" name="@("Anvelope[" + i + "].Latime")" data-placeholder="@item.Latime" value="@item.Latime"></select>
+            @*@Html.ValidationMessageFor(model => model.@item.Latime, "", new { @class = "text-danger error_span" })*@
+            <span asp-validation-for="@item.Latime" class="text-danger error_span"></span>
+        </div>
+        <div class="form-group col-3 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+            <label asp-for="@item.Inaltime" id="@("Label_"+item.PozitiePeMasina + "_" +"Inaltime")" class="control-label required-field"></label>
+            @*@Html.LabelFor(model => model.@item.Inaltime, htmlAttributes: new { @class = "control-label   required-field" })*@
+            <input class="default" hidden="hidden" data-value="@item.Inaltime" data-text="@(item.Inaltime)" />
+            <select class="form-control inaltime select2custom inputOrSelect" asp-for="@item.Inaltime" id="@(item.PozitiePeMasina + "_" +"Inaltime")" name="@("Anvelope[" + i + "].Inaltime")" data-placeholder="@item.Inaltime" value="@item.Inaltime"></select>
+            @*@Html.ValidationMessageFor(model => model.@item.Inaltime, "", new { @class = "text-danger error_span" })*@
+            <span asp-validation-for="@item.Inaltime" class="text-danger error_span"></span>
+        </div>
+
+        <div class="form-group col-3 col-sm-2 col-md-2 col-lg-2 col-xl-2 hiddenAnv">
+            @*@Html.LabelFor(model => model.@item.Dot, htmlAttributes: new { @class = "control-label required-field " })*@
+            <label asp-for="@item.Dot" id="@("Label_"+item.PozitiePeMasina + "_" +"Dot")" class="control-label required-field"></label>
+            <input class="default" hidden="hidden" data-value="@item.Dot" data-text="@(item.Dot)" />
+            <select class="form-control dot select2custom inputOrSelect" asp-for="@item.Dot" id="@(item.PozitiePeMasina + "_" +"Dot")" name="@("Anvelope[" + i + "].Dot")" data-placeholder="@item.Dot" value="@item.Dot"></select>
+            <span asp-validation-for="@item.Dot" class="text-danger error_span"></span>
+            @*@Html.ValidationMessageFor(model => model.@item.Dot, "", new { @class = "text-danger error_span" })*@
+        </div>
+
+        <div class=" hidediv-md  col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2"></div>
+        <div class="hidediv-md col-lg-1 col-md-1 col-sm-1 col-1 col-xl-2"></div>
+
+        <div class="form-group col-6 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+            @*@Html.LabelFor(model => model.@item.Marca, htmlAttributes: new { @class = "control-label col-md-3 " })*@
+            <label asp-for="@item.Marca" id="@("Label_"+item.PozitiePeMasina + "_" +"Marca")" class="control-label required-field col-md-3"></label>
+            <input class="default " hidden="hidden" data-value="@item.Marca" data-text="@(item.Marca)" />
+            <select class="form-control marca select2custom inputOrSelect" asp-for="@item.Marca" id="@(item.PozitiePeMasina + "_" +"Marca")" name="@("Anvelope[" + i + "].Marca")"></select>
+            <span asp-validation-for="@item.Marca" class="text-danger error_span"></span>
+            @* @Html.ValidationMessageFor(model => model.@item.Marca, "", new { @class = "text-danger error_span" })*@
+        </div>
+        <div class="form-group col-5 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+            @*@Html.LabelFor(model => model.@item.TipSezon, htmlAttributes: new { @class = "control-label col-md-3 " })*@
+            <label asp-for="@item.TipSezon" id="@("Label_"+item.PozitiePeMasina + "_" +"TipSezon")" class="control-label required-field col-md-3"></label>
+            <input class="default" hidden="hidden" data-value="@item.TipSezon" data-text="@(item.TipSezon)" />
+            <select class="form-control tipsezon select2custom inputOrSelect" asp-for="@item.TipSezon" id="@(item.PozitiePeMasina + "_" +"TipSezon")" name="@("Anvelope[" + i + "].TipSezon")"></select>
+            @*@Html.ValidationMessageFor(model => model.@item.TipSezon, "", new { @class = "text-danger error_span" })*@
+            <span asp-validation-for="@item.TipSezon" class="text-danger error_span"></span>
+
+
+        </div>
+        @if (User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "admin")
+        {
+
+
+            <div class="form-group col-5 col-sm-3 col-md-3 col-lg-2 col-xl-2 hiddenAnv">
+                <label asp-for="@item.StatusCurent" id="@("Label_" + item.PozitiePeMasina + "_" +"StatusCurent" )" class="control-label required-field col-md-3"></label>
+                @*@Html.LabelFor(model => model.@item.StatusCurent, htmlAttributes: new { @class = "control-label col-md-3 " })*@
+                <input class="default" hidden="hidden" data-value="@item.StatusCurent" data-text="@(item.StatusCurent)" />
+                <input class="selectedstatus" hidden="hidden" value="@item.StatusCurent" />
+                <select class="form-control statuscurent select2custom inputOrSelect" asp-for="@item.StatusCurent" id="@(item.PozitiePeMasina + "_" +"StatusCurent")" name="@("Anvelope[" + i + "].StatusCurent")"></select>
+                @*@Html.ValidationMessageFor(model => model.@item.StatusCurent, "", new { @class = "text-danger error_span" })*@
+                <span asp-validation-for="@item.StatusCurent" class="text-danger error_span"></span>
+
+            </div>
+        }
+        <div class="form-group col-8 col-sm-3 col-md-3 col-lg-3 col-xl-2 hiddenAnv">
+            <label asp-for="@item.PozitieInRaft" id="@("Label_"+item.PozitiePeMasina + "_" +"PozitieInRaft")" class="control-label required-field col-md-3"></label>
+            @*@Html.LabelFor(model => model.@item.PozitieInRaft, htmlAttributes: new { @class = "control-label col-md-3 " })*@
+            <input class="default" hidden="hidden" data-value="@item.PozitieId" data-text="@(item.PozitieInRaft)" />
+            <select class="form-control pozitieinraft select2custom inputOrSelect" asp-for="@item.PozitieId" id="@(item.PozitiePeMasina + "_" +"PozitieId")" name="@("Anvelope[" + i + "].PozitieId")"></select>
+            @*@Html.ValidationMessageFor(model => model.@item.PozitieId, "", new { @class = "text-danger error_span" })*@
+            <span asp-validation-for="@item.PozitieId" class="text-danger error_span"></span>
+        </div>
+    </div>
+
+    <hr />
+
+    i++;
+}
+
 <div id="Montate" class="tableSetAnv">
 
 </div>
@@ -95,76 +209,82 @@
 </div>
 
 
-<script type="text/javascript">
 
-    $(document).ready(function () {
-        var setId = $(document).find("#SetAnvelope_Id").val();
-        var data = { searchString: "Montate", setId, page: 1 };
-        $("#Montate").load("/Hotel/SearchAnvelopeByStatusCurent",
-            data,
-            function () {
-                setPaginationEdit();
-            });
-        data = { searchString: "Predate", setId, page: 1 };
-        $("#Predate").load("/Hotel/SearchAnvelopeByStatusCurent",
-            data,
-            function () {
-                setPaginationEdit();
-            });
-        data = { searchString: "Casate", setId, page: 1 };
-        $("#Casate").load("/Hotel/SearchAnvelopeByStatusCurent",
-            data,
-            function () {
-                setPaginationEdit();
-            });
-    });
+@section Scripts{
 
-    $(document).on("click",
-        ".customPagination",
-        function (event) {
-            event.preventDefault();
-            var parent = $(this).closest(".tableSetAnv");
-            var status = $(parent).attr("id");
-            var page = $(this).attr("data-pageNumber");
-            var data = { searchString: status, pageNumber: page };
-            $("#" + status).load("/Hotel/SearchAnvelopeByStatusCurent",
+    <script type="text/javascript" src="~/js/select2AddEdit.js"></script>
+    <script type="text/javascript" src="~/js/editAddSetAnvPartial.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var setId = $(document).find("#SetAnvelope_Id").val();
+            var data = { searchString: "Montate", setId, page: 1 };
+            $("#Montate").load("/Hotel/SearchAnvelopeByStatusCurent",
+                data,
+                function () {
+                    setPaginationEdit();
+                });
+            data = { searchString: "Predate", setId, page: 1 };
+            $("#Predate").load("/Hotel/SearchAnvelopeByStatusCurent",
+                data,
+                function () {
+                    setPaginationEdit();
+                });
+            data = { searchString: "Casate", setId, page: 1 };
+            $("#Casate").load("/Hotel/SearchAnvelopeByStatusCurent",
                 data,
                 function () {
                     setPaginationEdit();
                 });
         });
 
-    var setPaginationEdit = function (table) {
-        var hasPrevEdit = $(table).closest(".tableSetAnv").find(".hasPrevEdit").attr("data-value");
-        var hasNextEdit = $(table).closest(".tableSetAnv").find(".hasNextEdit").attr("data-value");
+        $(document).on("click",
+            ".customPagination",
+            function (event) {
+                event.preventDefault();
+                var parent = $(this).closest(".tableSetAnv");
+                var status = $(parent).attr("id");
+                var page = $(this).attr("data-pageNumber");
+                var data = { searchString: status, pageNumber: page };
+                $("#" + status).load("/Hotel/SearchAnvelopeByStatusCurent",
+                    data,
+                    function () {
+                        setPaginationEdit();
+                    });
+            });
 
-        if (hasPrevEdit == "true") {
-            enablePreviousEdit();
-        } else if (hasPrevEdit == "false") {
-            disablePreviousEdit();
-        }
+        var setPaginationEdit = function (table) {
+            var hasPrevEdit = $(table).closest(".tableSetAnv").find(".hasPrevEdit").attr("data-value");
+            var hasNextEdit = $(table).closest(".tableSetAnv").find(".hasNextEdit").attr("data-value");
 
-        if (hasNextEdit == "true") {
-            enableNextEdit();
-        } else if (hasNextEdit == "false") {
-            disableNextEdit();
-        }
-    };
+            if (hasPrevEdit == "true") {
+                enablePreviousEdit();
+            } else if (hasPrevEdit == "false") {
+                disablePreviousEdit();
+            }
 
-    var enablePreviousEdit = function (parent) {
-        $(parent).closest(".tableSetAnv").find(".buttonPrevEdit").removeAttr("disabled");
-    };
-    var disablePreviousEdit = function (parent) {
-        $(parent).closest(".tableSetAnv").find(".buttonPrevEdit").attr("disabled", "disabled");
+            if (hasNextEdit == "true") {
+                enableNextEdit();
+            } else if (hasNextEdit == "false") {
+                disableNextEdit();
+            }
+        };
 
-    };
-    var enableNextEdit = function (parent) {
-        $(parent).closest(".tableSetAnv").find(".buttonNextEdit").removeAttr("disabled");
+        var enablePreviousEdit = function (parent) {
+            $(parent).closest(".tableSetAnv").find(".buttonPrevEdit").removeAttr("disabled");
+        };
+        var disablePreviousEdit = function (parent) {
+            $(parent).closest(".tableSetAnv").find(".buttonPrevEdit").attr("disabled", "disabled");
 
-    };
-    var disableNextEdit = function (parent) {
-        $(parent).closest(".tableSetAnv").find(".buttonNextEdit").attr("disabled", "disabled");
+        };
+        var enableNextEdit = function (parent) {
+            $(parent).closest(".tableSetAnv").find(".buttonNextEdit").removeAttr("disabled");
 
-    };
+        };
+        var disableNextEdit = function (parent) {
+            $(parent).closest(".tableSetAnv").find(".buttonNextEdit").attr("disabled", "disabled");
 
-</script>
+        };
+
+    </script>
+}

@@ -39,10 +39,47 @@ namespace DeltaQrCode.Controllers
             _mapper = mapper;
         }
 
-        public  IActionResult EditSetAnv(uint id, string actionType)
+        public async Task<IActionResult> EditSetAnv(uint id, string actionType)
         {
 
-            return View();
+            try
+            {
+                var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
+                var setvm = _mapper.Map<SetAnvelopeVM>(set.Entity);
+
+                var anvList = await _hotelService.GetAnvelopeBySetIdAsync(id);
+                var anvListvm = _mapper.Map<List<AnvelopaVM>>(anvList.Entity);
+                foreach (var item in anvListvm)
+                {
+                    item.OldPozitieId = item.PozitieId;
+                }
+
+                var masina = await _hotelService.GetMasinaForSetIdAsync(set.Entity.Id);
+                var masinavm = _mapper.Map<MasinaVM>(masina.Entity);
+
+                var client = await _hotelService.GetClientForSetIdAsync(set.Entity.Id);
+                var clientvm = _mapper.Map<ClientHotelVM>(client.Entity);
+
+                var setAnv = new AddEditSetAnvelopeVM();
+
+                setAnv.Client = clientvm;
+                setAnv.Masina = masinavm;
+                setAnv.SetAnvelope = setvm;
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaFata") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaFata") : new AnvelopaVM("StangaFata"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaFata") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaFata") : new AnvelopaVM("DreaptaFata"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaSpate") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "StangaSpate") : new AnvelopaVM("StangaSpate"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaSpate") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "DreaptaSpate") : new AnvelopaVM("DreaptaSpate"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") : new AnvelopaVM("Optional1"));
+                setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") : new AnvelopaVM("Optional2"));
+
+                return View(setAnv);
+            }
+            catch (Exception e)
+            {
+
+                Log.Error(e, "Ceva nu a mers bine la modificarea setului de anvelope in controller!");
+                return BadRequest("Ceva nu a mers bine la modificarea setului de anvelope in controller!");
+            }
 
 
 

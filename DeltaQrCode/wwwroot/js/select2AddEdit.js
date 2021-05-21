@@ -4,7 +4,7 @@
 // Initialize select2
 //Select2 for Position
 $(".pozitieinraft").select2({
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     allowClear: true,
     ajax: {
@@ -34,7 +34,7 @@ $(".pozitieinraft").select2({
 // Select2 for Marca
 $(".marca").select2({
     tags: true,
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     allowClear: true,
     ajax: {
@@ -63,7 +63,7 @@ $(".marca").select2({
 // Select2 for Flota
 $("#Flota").select2({
     tags: true,
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     allowClear: true,
     ajax: {
@@ -92,7 +92,7 @@ $("#Flota").select2({
 // Select2 for TipSezon
 $(".tipsezon").select2({
     tags: true,
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     minimumResultsForSearch: Infinity,
     ajax: {
@@ -114,7 +114,7 @@ $(".tipsezon").select2({
 // Select2 for StatusAnvelope
 $(".statuscurent").select2({
     tags: true,
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     minimumResultsForSearch: Infinity,
     ajax: {
@@ -137,7 +137,7 @@ $(".statuscurent").select2({
 // Select2 for Diametru
 $(".diametru").select2({
     tags: true,
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     allowClear: true,
     ajax: {
@@ -167,7 +167,7 @@ $(".diametru").select2({
 // Select2 for Latime
 $(".latime").select2({
     tags: true,
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     allowClear: true,
     ajax: {
@@ -196,7 +196,7 @@ $(".latime").select2({
 // Select2 for Inaltime
 $(".inaltime").select2({
     tags: true,
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     allowClear: true,
     ajax: {
@@ -225,7 +225,7 @@ $(".inaltime").select2({
 // Select2 for DOT
 $(".dot").select2({
     tags: true,
-    dropdownParent: "#hotelModalBody",
+    dropdownParent: "#editSetBody",
     theme: "bootstrap4",
     allowClear: true,
     ajax: {
