@@ -1,6 +1,4 @@
 ﻿
-
-
 // Initialize select2
 //Select2 for Position
 $(".pozitieinraft").select2({

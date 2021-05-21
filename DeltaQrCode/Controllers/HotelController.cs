@@ -94,7 +94,7 @@ namespace DeltaQrCode.Controllers
 
             var paginatedModel = PaginatedList<AnvelopaVM>.Create(result, pageNumber, 3);
             var model = new HotelListViewModel(paginatedModel);
-            return PartialView("_InfoAnvelopeList", model);
+            return PartialView("_EditSetAnvelopeListPartial", model);
         }
 
         public IActionResult Index()

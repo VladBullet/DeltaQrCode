@@ -11,7 +11,15 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
 </head>
 
-<div class="container " id="editSetBody">
+<div class="nav navbar sticky" style="height:60px;">
+    <div class="float-right ">
+        <a class="btn btn-default btn-info " asp-action="Index" asp-controller="Hotel">
+            Inapoi
+        </a>
+    </div>
+</div>
+<div class=" " id="editSetBody">
+    
     <div class="row">
         <div class="col">
             <h4> Detalii client :</h4>
@@ -198,6 +206,8 @@
     i++;
 }
 
+<a class="btn btn-default btn-success btn-ok" id="editSaveButton">Salveaza</a>
+
 <div id="Montate" class="tableSetAnv">
 
 </div>
@@ -210,9 +220,11 @@
 
 
 
+
+
 @section Scripts{
 
-    <script type="text/javascript" src="~/js/select2AddEdit.js"></script>
+    <script type="text/javascript" src="~/js/select2Edit.js"></script>
     <script type="text/javascript" src="~/js/editAddSetAnvPartial.js"></script>
     <script type="text/javascript">
 
