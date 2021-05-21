@@ -48,11 +48,14 @@ $(document).ready(function () {
                     data: $("#editform").serialize(),
                     dataType: "json",
                     success: function (response) {
-                        ShowHeaderAlert(response, "success", 5000);
-                        $('#hotelListState').change();
+                        $this.prop("disabled", false);
+                        hideLoading();
+                        swalSuccessTimer(response, "success", 5000);
 
                     },
                     error: function (error) {
+                        $this.prop("disabled", false);
+                        hideLoading();
                         swalErrorTimer(error.responseText, 7000);
 
                     }
@@ -60,10 +63,10 @@ $(document).ready(function () {
                 //} else {
                 //    updateUi(result.validationResults, "form-group", "error_span");
                 //}
-                setTimeout(function () {
-                    $this.prop("disabled", false);
-                    hideLoading();
-                }, 1000);
+                //setTimeout(function () {
+                //    $this.prop("disabled", false);
+                //    hideLoading();
+                //}, 1000);
             });
 
             initialized = true;

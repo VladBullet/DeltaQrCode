@@ -148,7 +148,7 @@ namespace DeltaQrCode.Repositories
 
                 }
 
-                var list = await _db.CaSetAnvelope.Where(x=> clientList.Contains(x.ClientId)).ToListAsync();
+                var list = await _db.CaSetAnvelope.Where(x=> clientList.Contains(x.ClientId) && !x.Deleted).ToListAsync();
 
                 return Result<List<CaSetAnvelope>>.ResultOk(list);
             }
@@ -169,7 +169,7 @@ namespace DeltaQrCode.Repositories
                 {
                     masinaList = await _db.CaMasina.Where(x => x.NumarInmatriculare.ToLower().Contains(searchString.ToLower()) || x.SerieSasiu.ToLower().Contains(searchString.ToLower()) || x.TipVehicul.ToLower().Contains(searchString.ToLower())).Select(x => x.Id).ToListAsync();
                 }
-                var list = await _db.CaSetAnvelope.Where(x => masinaList.Contains(x.MasinaId)).ToListAsync();
+                var list = await _db.CaSetAnvelope.Where(x => masinaList.Contains(x.MasinaId) && !x.Deleted).ToListAsync();
 
                 return Result<List<CaSetAnvelope>>.ResultOk(list);
             }

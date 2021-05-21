@@ -530,7 +530,7 @@ namespace DeltaQrCode.Controllers
 
         public IActionResult GetDot(string term)
         {
-            var list = ConstantsAndEnums.DOTlist();
+            var list = ConstantsAndEnums.DOTlist().OrderByDescending(x=>x).ToList();
             if (!string.IsNullOrEmpty(term))
             {
                 list = list.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();

@@ -36,8 +36,7 @@
         <input  hidden="hidden" asp-for="OldObservatii", value="@Model.OldObservatii" />
         <input  hidden="hidden" asp-for="OldSerieSasiu", value="@Model.OldSerieSasiu" />
         <input  hidden="hidden" asp-for="OldTipSezon", value="@Model.OldTipSezon" />*@
-            <input type="hidden" asp-for="Client.Id" value="@Model.Client.Id" />
-            <input type="hidden" asp-for="Masina.Id" value="@Model.Masina.Id" />
+            
             
 
             @Html.EditorFor(model => model.SetAnvelope.Id, new { htmlAttributes = new { @class = "form-control half-margin-bottom", @hidden = "hidden" } })

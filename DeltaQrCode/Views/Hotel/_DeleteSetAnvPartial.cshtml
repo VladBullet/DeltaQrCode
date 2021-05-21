@@ -30,7 +30,7 @@
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("ConfirmDelete", "Hotel")",
+            url: "@Url.Action("ConfirmDeleteSet", "Hotel")",
             data: model,
             dataType:"json",
             success: function (response) {
