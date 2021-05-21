@@ -52,7 +52,7 @@
 
 
 @section Scripts{
-    @*<script type="text/javascript" src="~/js/editAddSetAnvPartial.js"></script>*@
+    <script type="text/javascript" src="~/js/addSetAnvPartial.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -104,24 +104,7 @@
                 });
         };
 
-        var setAnvEditModalDialog = function (id, actionType) {
-
-            console.log('edit called');
-            var url = "/Hotel/EditModal"; // the url to the controller
-            $.get(url + '?id=' + id + '&actionType=' + actionType,
-                function (data) {
-                    $('#partialInfo').html(data);
-                    $('#myHotelModal').modal('show');
-
-                    //console.log('edit resp');
-
-                    var statuses = $(".statuscurent");
-
-                    $.each(statuses, function (index, item) {
-                        enableOrDisablePositionForStatus(item);
-                    });
-                });
-        };
+        
         var deleteSetAnvModalDialog = function (id) {
 
             var url = "/Hotel/DeleteModal"; // the url to the controller

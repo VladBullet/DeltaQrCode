@@ -39,6 +39,7 @@ namespace DeltaQrCode.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
         public async Task<IActionResult> EditSetAnv(uint id, string actionType)
         {
 

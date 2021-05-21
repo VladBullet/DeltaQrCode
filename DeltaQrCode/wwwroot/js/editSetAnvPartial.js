@@ -3,13 +3,11 @@
 $(document).ready(function () {
 
 
-
     var initialized = false;
-        calculateNrBucati();
-        hideAllHiddenAnv();
-        hideAllButtonEraseAnv();
-        checkUzuraVal();
-
+    calculateNrBucati();
+    hideAllHiddenAnv();
+    hideAllButtonEraseAnv();
+    checkUzuraVal();
 
         var disableElementsByIds = function (elements) {
             $.each(elements, function (index, element) {
@@ -35,28 +33,26 @@ $(document).ready(function () {
 
 
             // SAVE BTN CLICK EVENT
-            $(document).on("click", "#apptsEditSubmitButton", function () {
-                $this = $("#apptsEditSubmitButton");
+            $(document).on("click", "#editSaveButton", function () {
+                $this = $("#editSaveButton");
                 $this.prop("disabled", true);
                 showLoading();
                 /*                var result = validator.validate(validator);*/
                 /*                if (result.formIsValid) {*/
                 //console.log("edit");
 
-                var form = $("#apptform").serialize();
+                var form = $("#editform").serialize();
                 $.ajax({
                     type: "POST",
                     url: "/Hotel/EditModal",
-                    data: $("#apptform").serialize(),
+                    data: $("#editform").serialize(),
                     dataType: "json",
                     success: function (response) {
-                        CloseModalById('myHotelModal');
                         ShowHeaderAlert(response, "success", 5000);
                         $('#hotelListState').change();
 
                     },
                     error: function (error) {
-                        CloseModalById('myHotelModal');
                         swalErrorTimer(error.responseText, 7000);
 
                     }
@@ -69,42 +65,6 @@ $(document).ready(function () {
                     hideLoading();
                 }, 1000);
             });
-
-            $(document).on("click", "#apptsAddSubmitButton", function () {
-                $this = $("#apptsAddSubmitButton");
-                $this.prop("disabled", true);
-                showLoading();
-                /*                var result = validator.validate(validator);*/
-                /*                if (result.formIsValid) {*/
-                //console.log("submit add");
-                var form = $('#apptform').serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "Hotel/AddModal",
-                    data: $('#apptform').serialize(),
-                    dataType: "json",
-                    success: function (response) {
-                        CloseModalById('myHotelModal');
-                        ShowHeaderAlert(response, "success", 5000);
-                        $('#hotelListState').change();
-
-                    },
-                    error: function (error) {
-                        CloseModalById('myHotelModal');
-                        swalErrorTimer(error.responseText, 7000);
-
-                    }
-                });
-                //}
-                //else {
-                //    //updateUi(result.validationResults, "form-group", "error_span");
-                //}
-                setTimeout(function () {
-                    $this.prop("disabled", false);
-                    hideLoading();
-                }, 1000);
-            });
-
 
             initialized = true;
         }
