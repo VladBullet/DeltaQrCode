@@ -149,15 +149,12 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> EditModal(uint id, string actionType)
+        public async Task<IActionResult> InfoModal(uint id, string actionType)
         {
             try
             {
-                ActionType actType = ActionType.Edit;
-                if (actionType == "info")
-                {
-                    actType = ActionType.Info;
-                }
+                ActionType actType = ActionType.Info;
+
                 var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
                 var setvm = _mapper.Map<SetAnvelopeVM>(set.Entity);
 
@@ -186,27 +183,13 @@ namespace DeltaQrCode.Controllers
                 setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional1") : new AnvelopaVM("Optional1"));
                 setAnv.Anvelope.Add(anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") != null ? anvListvm.FirstOrDefault(x => x.PozitiePeMasina == "Optional2") : new AnvelopaVM("Optional2"));
 
-
-
-
                 //model.OldPozitieId = model.PozitieId;
-                //model.OldNumarBucati = model.NrBucati;
-                ////model.OldNumeClient = model.NumeClient;
-                ////model.OldNumarInmatriculare = model.NumarInmatriculare;
-                ////model.OldSerieSasiu = model.SerieSasiu;
-                ////model.OldNumarTelefon = model.NumarTelefon;
-                //model.OldTipSezon = model.TipSezon;
-                //model.OldObservatii = model.Observatii;
-                //model.OldMarca = model.Marca;
-                //model.OldFlota = model.Flota;
+
 
                 HotelModalVM setVm = new HotelModalVM(setAnv, actType);
 
-                if (actType == ActionType.Info)
-                {
-                    return PartialView("_InfoSetAnvPartial", setVm.SetAnvelope);
-                }
-                return PartialView("_EditSetAnvPartial", setVm.SetAnvelope);
+
+                return PartialView("_InfoSetAnvPartial", setVm.SetAnvelope);
             }
             catch (Exception e)
             {

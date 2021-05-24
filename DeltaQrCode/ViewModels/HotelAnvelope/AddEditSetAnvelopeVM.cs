@@ -13,13 +13,6 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
             SetAnvelope = new SetAnvelopeVM();
         }
         public List<AnvelopaVM> Anvelope { get; set; }
-        //public AnvelopaVM StangaFata { get; set; }
-        //public AnvelopaVM DreaptaFata { get; set; }
-        //public AnvelopaVM StangaSpate { get; set; }
-        //public AnvelopaVM DreaptaSpate { get; set; }
-        //public AnvelopaVM Optional1 { get; set; }
-        //public AnvelopaVM Optional2 { get; set; }
-
         public ClientHotelVM Client { get; set; }
         public MasinaVM Masina { get; set; }
         public SetAnvelopeVM SetAnvelope { get; set; }

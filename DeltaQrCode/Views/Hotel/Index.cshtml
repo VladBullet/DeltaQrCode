@@ -122,9 +122,24 @@
                 setAnvNewAddModalDialog();
             });
 
+        var setAnvInfoModalDialog = function (id, actionType) {
+
+            var url = "/Hotel/InfoModal"; // the url to the controller
+            $.get(url + '?id=' + id + '&actionType=' + "info",
+                function (data) {
+                    $('#partialInfo').html(data);
+                    $('#myHotelModal').modal('show');
+
+                    var statuses = $(".statuscurent");
+                    $.each(statuses, function (index, item) {
+                        enableOrDisablePositionForStatus(item);
+                    })
+                });
+        };
+
 
         $(document).on('click',
-            '.actionButton',
+            '.infoButton',
             function (event) {
                 // dont allow the event to propagate
                 event.stopPropagation();
@@ -132,7 +147,7 @@
                 var id = $(this).attr("data-value");
                 var actionType = $(this).attr("data-actionType");
 
-                //setAnvEditModalDialog(id, actionType);
+                setAnvInfoModalDialog(id, actionType);
             });
 
         $(document).on('click',
