@@ -356,14 +356,14 @@ namespace DeltaQrCode.Controllers
 
 
         [HttpGet]
-        public IActionResult DeleteModal(int id)
+        public IActionResult DeleteModal(uint id)
         {
             return PartialView("_DeleteSetAnvPartial", id);
         }
 
 
         [HttpPost]
-        public async Task<ActionResult> ConfirmDelete(uint id)
+        public async Task<ActionResult> ConfirmDeleteAnvelopa(uint id)
         {
             try
             {

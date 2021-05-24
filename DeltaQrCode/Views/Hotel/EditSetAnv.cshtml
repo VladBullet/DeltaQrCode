@@ -11,6 +11,15 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
 </head>
 
+<div id="myHotelDeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="partialInfoDelete"></div>
+        </div>
+    </div>
+</div>
+
+
 <div class="nav navbar sticky" style="height:60px;">
     <div class="float-right ">
         <a class="btn btn-default btn-info " asp-action="Index" asp-controller="Hotel">
@@ -115,18 +124,18 @@
             <div class="form-row parent">
                 <div class="col-3 col-sm-2 col-md-2 col-lg-2 col-xl-1 text-center ">
                     <div>@item.PozitiePeMasina</div>
-                    <div class="erase-data-anv"><i style="cursor:pointer;" class="far fa-times-circle"></i></div>
+                    <div class="erase-data-anv"><i style="cursor:pointer;" data-value="@item.Id" class="far fa-times-circle"></i></div>
                 </div>
 
                 <input type="hidden" asp-for="@item.OldPozitieId" id="@("Label_"+item.PozitiePeMasina + "_" +"OldPozitieId")" name="@("Anvelope[" + i + "].OldPozitieId")" value="@item.OldPozitieId" />
-                <input type="hidden" asp-for="@item.SetAnvelopeId" id="@("Label_"+item.PozitiePeMasina + "_" +"SetAnvelopeId")" name="@("Anvelope[" + i + "].SetAnvelopeId")" value="@Model.SetAnvelope.Id" />
-                <input type="hidden" asp-for="@item.Id" id="@("Label_"+item.PozitiePeMasina + "_" +"Id")" name="@("Anvelope[" + i + "].Id")" value="@item.Id" />
-                <input type="hidden" asp-for="@item.DataAdaugare" id="@("Label_"+item.PozitiePeMasina + "_" +"DataAdaugare")" name="@("Anvelope[" + i + "].DataAdaugare")" value="@item.DataAdaugare" />
+                <input type="hidden" class="form-control" asp-for="@item.SetAnvelopeId" id="@("Label_"+item.PozitiePeMasina + "_" +"SetAnvelopeId")" name="@("Anvelope[" + i + "].SetAnvelopeId")" value="@Model.SetAnvelope.Id" />
+                <input type="hidden" class="idElement" asp-for="@item.Id" id="@("Label_"+item.PozitiePeMasina + "_" +"Id")" name="@("Anvelope[" + i + "].Id")" value="@item.Id" />
+                <input type="hidden" class="form-control" asp-for="@item.DataAdaugare" id="@("Label_"+item.PozitiePeMasina + "_" +"DataAdaugare")" name="@("Anvelope[" + i + "].DataAdaugare")" value="@item.DataAdaugare" />
                 <input type="hidden" asp-for="@item.OldUzura" id="@("Label_"+item.PozitiePeMasina + "_" +"OldUzura")" name="@("Anvelope[" + i + "].OldUzura")" value="@item.OldUzura" />
 
 
 
-                <input type="hidden" class="pozitiepemasina" asp-for="@item.PozitiePeMasina" id="@("Label_"+item.PozitiePeMasina + "_" +"PozitiePeMasina")" name="@("Anvelope[" + i + "].PozitiePeMasina")" value="@item.PozitiePeMasina" />
+                <input type="hidden" class="pozitiepemasina form-control" asp-for="@item.PozitiePeMasina" id="@("Label_"+item.PozitiePeMasina + "_" +"PozitiePeMasina")" name="@("Anvelope[" + i + "].PozitiePeMasina")" value="@item.PozitiePeMasina" />
 
                 <div class="form-group col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 margin-xs-uzura">
                     <label asp-for="@item.Uzura" id="@("Label_"+item.PozitiePeMasina + "_" +"Uzura")" class="control-label text-center required-field margin-md-uzura"></label>
@@ -227,7 +236,7 @@
 <br />
 <br />
 
-<hr class="bg-dark"/>
+<hr class="bg-dark" />
 <div id="Montate" class="tableSetAnv">
 
 </div>
@@ -236,12 +245,12 @@
 <div id="Predate" class="tableSetAnv">
 
 </div>
-<hr  />
+<hr />
 
 <div id="Casate" class="tableSetAnv">
 
 </div>
-<hr  />
+<hr />
 
 <partial name="_LoadingSpinner" />
 
@@ -290,6 +299,8 @@
                         setPaginationEdit();
                     });
             });
+
+
 
         var setPaginationEdit = function (table) {
             var hasPrevEdit = $(table).closest(".tableSetAnv").find(".hasPrevEdit").attr("data-value");

@@ -183,9 +183,28 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
+
                 var entity = await _db.CaAnvelopa.FirstAsync(x => x.Id == id);
                 entity.Deleted = true;
                 var value = _db.CaAnvelopa.Update(entity);
+                await _db.SaveChangesAsync();
+
+                return Result<CaAnvelopa>.ResultOk(value.Entity);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la stergerea anvelopei in repository!");
+                throw new Exception("Ceva nu a mers bine la stergerea anvelopei in repository!", er);
+            }
+        }
+
+        public async Task<Result<CaAnvelopa>> DeleteAnvelopaFromDataBaseAsync(uint id)
+        {
+            try
+            {
+                var entity = await _db.CaAnvelopa.FirstAsync(x => x.Id == id);
+                var value = _db.CaAnvelopa.Remove(entity);
                 await _db.SaveChangesAsync();
 
                 return Result<CaAnvelopa>.ResultOk(value.Entity);

@@ -87,9 +87,16 @@ $(document).ready(function () {
 
         $(document).on("click",
             ".erase-data-anv",
-            function () {
+            function (event) {
 
-                
+                event.stopPropagation();
+
+                var parent = $(this).closest(".parent");
+                var idElement = $(parent).find(".idElement");
+                var id = $(idElement).val();
+                console.log("this", (this));
+                console.log(id);
+                deleteAnvModalDialog(id);
                 eraseData($(this));
                 hideHiddenAnv($(this));
                 hideButtonEraseAnv($(this));
@@ -130,6 +137,18 @@ $(document).ready(function () {
         });
 
 });
+
+
+var deleteAnvModalDialog = function (id) {
+
+    var url = "/Hotel/DeleteModal"; // the url to the controller
+    $.get(url + '?id=' + id,
+        function (data) {
+            $(document).find('#partialInfoDelete').html(data);
+            $(document).find('#myHotelDeleteModal').modal('show');
+            $(document).find('#confirmDelete').attr("data-deleteType", "anv")
+        });
+};
 
 var showHiddenAnv = function (currentUzuraElement) {
     var parent = $(currentUzuraElement).closest(".parent");
@@ -199,6 +218,8 @@ var eraseData = function (element) {
     var uzura = $(parent).find(".uzura");
     $(uzura).val("0");
 }
+
+
 
 var checkUzuraVal = function () {
     var elements = $(document).find(".uzura");

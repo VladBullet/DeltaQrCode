@@ -423,6 +423,23 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
+        public async Task<Result<AnvelopaDto>> DeleteAnvelopaFromDataBaseAsync(uint id)
+        {
+            try
+            {
+                var value = await _hotelRepository.DeleteAnvelopaFromDataBaseAsync(id);
+                var model = _mapper.Map<AnvelopaDto>(value.Entity);
+
+                return Result<AnvelopaDto>.ResultOk(model);
+
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la stergerea anvelopei in servicii!");
+                throw new Exception("Ceva nu a mers bine la stergerea anvelopei in servicii!", er);
+            }
+        }
+
 
         public async Task<Result<SetAnvelopeDto>> DeleteSetAnvelopeAsync(uint id)
         {

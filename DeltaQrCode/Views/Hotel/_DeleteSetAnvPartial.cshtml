@@ -1,6 +1,6 @@
 ﻿@using DeltaQrCode.ModelsDto
 @using Microsoft.AspNetCore.Razor.TagHelpers
-@model int
+@model uint
 
 
 
@@ -17,7 +17,7 @@
 
 <div class="modal-footer">
     <button type="button" class="btn btn-default btn-outline-dark " data-dismiss="modal">Inchide</button>
-    <a class="btn btn-outline-danger btn-ok" id="confirmDelete" data-value="@Model">Sterge</a>
+    <a class="btn btn-outline-danger btn-ok" id="confirmDelete" data-value="@Model" data-deleteType="">Sterge</a>
 </div>
 
 
@@ -27,10 +27,13 @@
                 $(this).attr("disabled", "disabled");
 
         var model = { id: $("#confirmDelete").attr("data-value") };
-
+        var url = "@Url.Action("ConfirmDeleteSet", "Hotel")";
+        if ($(this).attr("data-deleteType") == "anv") {
+            url = "@Url.Action("ConfirmDeleteAnvelopa", "Hotel")";
+        }
         $.ajax({
             type: "POST",
-            url: "@Url.Action("ConfirmDeleteSet", "Hotel")",
+            url: url,
             data: model,
             dataType:"json",
             success: function (response) {

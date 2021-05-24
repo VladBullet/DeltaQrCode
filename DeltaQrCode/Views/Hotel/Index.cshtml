@@ -112,6 +112,7 @@
                 function (data) {
                     $('#partialInfoDelete').html(data);
                     $('#myHotelDeleteModal').modal('show');
+                    $('#confirmDelete').attr("data-deleteType", "set")
                 });
         };
 
