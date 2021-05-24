@@ -48,7 +48,7 @@ namespace DeltaQrCode.Controllers
                 var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
                 var setvm = _mapper.Map<SetAnvelopeVM>(set.Entity);
 
-                var anvList = await _hotelService.GetAnvelopeBySetIdAsync(id);
+                var anvList = await _hotelService.SearchAnvelopeByStatusCurentAsync("InRaft",id,1,PageSize);
                 var anvListvm = _mapper.Map<List<AnvelopaVM>>(anvList.Entity);
                 foreach (var item in anvListvm)
                 {

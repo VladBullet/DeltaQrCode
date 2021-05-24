@@ -108,7 +108,7 @@ namespace DeltaQrCode.Repositories
             try
             {
 
-                var list = await _db.CaAnvelopa.Where(x => x.StatusCurent == searchString && x.SetAnvelopeId == setId).ToListAsync();
+                var list = await _db.CaAnvelopa.Where(x => x.StatusCurent == searchString && x.SetAnvelopeId == setId && !x.Deleted).ToListAsync();
 
                 return Result<List<CaAnvelopa>>.ResultOk(list);
             }
@@ -556,7 +556,7 @@ namespace DeltaQrCode.Repositories
             try
             {
                 var list = new List<CaAnvelopa>();
-                list = await _db.CaAnvelopa.Where(x => x.SetAnvelopeId == setId).ToListAsync();
+                list = await _db.CaAnvelopa.Where(x => x.SetAnvelopeId == setId && !x.Deleted).ToListAsync();
                 return Result<List<CaAnvelopa>>.ResultOk(list);
             }
             catch (Exception er)

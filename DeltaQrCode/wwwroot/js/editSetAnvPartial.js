@@ -60,9 +60,7 @@ $(document).ready(function () {
 
                     }
                 });
-                setTimeout(function () {
-                    location.reload();
-                }, 3000);
+
                 //} else {
                 //    updateUi(result.validationResults, "form-group", "error_span");
                 //}
