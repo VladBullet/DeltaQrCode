@@ -52,6 +52,7 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
         public string OldTipSezon { get; set; }
         public string OldObservatii { get; set; }
         public uint SetAnvelopeId { get; set; }
+        public DateTime DataAdaugare { get; set; }
 
     }
 }
