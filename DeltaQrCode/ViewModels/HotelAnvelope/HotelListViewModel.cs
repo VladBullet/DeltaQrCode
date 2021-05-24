@@ -2,7 +2,6 @@
 
 namespace DeltaQrCode.ViewModels
 {
-    using DeltaQrCode.ModelsDto;
     using DeltaQrCode.ViewModels.HotelAnvelope;
 
     public class HotelListViewModel

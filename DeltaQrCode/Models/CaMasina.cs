@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DeltaQrCode.Models
+﻿namespace DeltaQrCode.Models
 {
     public partial class CaMasina
     {

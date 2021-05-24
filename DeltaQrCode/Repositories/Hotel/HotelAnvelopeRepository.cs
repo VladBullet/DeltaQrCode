@@ -93,7 +93,6 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var flote = _db.CaFlota.Where(x => x.Label.ToLower().Contains(searchString.ToLower()));
                 var list = await _db.CaAnvelopa.Where(x => !x.Deleted).ToListAsync();
 
                 return Result<List<CaAnvelopa>>.ResultOk(list);

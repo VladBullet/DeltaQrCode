@@ -26,11 +26,6 @@ namespace DeltaQrCode.Repositories
         Task<Result<CaMarca>> GetMarcaByLableAsync(string label);
 
 
-        //Task<Result<CaFlota>> GetFlotaByIdAsync(uint id);
-        //Task<Result<List<CaFlota>>> GetFlotaAsync();
-        //Task<Result<CaFlota>> AddFlotaAsync(CaFlota flota);
-        //Task<Result<CaFlota>> GetFlotaByLableAsync(string label);
-
         Task<Result<CaSetAnvelope>> GetSetAnvelopeByIdAsync(uint id);
         Task<Result<CaSetAnvelope>> GetSetAnvelopeByClientIdAsync(uint clientId);
         Task<Result<CaSetAnvelope>> GetSetAnvelopeByMasinaIdAsync(uint masinaId);
