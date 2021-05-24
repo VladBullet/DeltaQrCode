@@ -50,17 +50,19 @@ $(document).ready(function () {
                     success: function (response) {
                         $this.prop("disabled", false);
                         hideLoading();
-                        swalSuccessTimer(response, "success", 5000);
+                        swalSuccessTimer(response, "success", 5000, autoRefresh);
 
                     },
                     error: function (error) {
                         $this.prop("disabled", false);
                         hideLoading();
-                        swalErrorTimer(error.responseText, 7000);
+                        swalErrorTimer(error.responseText, 7000, autoRefresh);
 
                     }
                 });
-
+                //setTimeout(function () {
+                //    location.reload();
+                //}, 3000);
                 //} else {
                 //    updateUi(result.validationResults, "form-group", "error_span");
                 //}
@@ -92,13 +94,17 @@ $(document).ready(function () {
                 var parent = $(this).closest(".parent");
                 var idElement = $(parent).find(".idElement");
                 var id = $(idElement).val();
-                console.log("this", (this));
-                console.log(id);
-                deleteAnvModalDialog(id);
-                eraseData($(this));
-                hideHiddenAnv($(this));
-                hideButtonEraseAnv($(this));
-                calculateNrBucati();
+
+                if (id != 0) {
+                    deleteAnvModalDialog(id);
+                } else {
+                    eraseData($(this));
+                    hideHiddenAnv($(this));
+                    hideButtonEraseAnv($(this));
+                    calculateNrBucati();
+                }
+                
+                
             });
 
         // ==============================================================================================
@@ -262,3 +268,7 @@ var updateNrBucati = function (value) {
     var nrBuc = $(document).find("#SetAnvelope_NrBucati");
     nrBuc.val(value);
 };
+
+var autoRefresh = function () {
+        location.reload();
+}
