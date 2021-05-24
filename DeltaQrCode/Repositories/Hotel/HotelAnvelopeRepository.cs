@@ -57,7 +57,6 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                setAnv.DataAdaugare = DateTime.Now;
                 var value = await _db.CaAnvelopa.AddAsync(setAnv);
                 await _db.SaveChangesAsync();
                 return Result<CaAnvelopa>.ResultOk(value.Entity);

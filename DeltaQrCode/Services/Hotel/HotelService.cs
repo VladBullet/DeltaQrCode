@@ -99,6 +99,7 @@ namespace DeltaQrCode.Services.Hotel
                 var modelForDatabase = _mapper.Map<CaAnvelopa>(setAnv);
 
                 modelForDatabase.DataUltimaModificare = DateTime.Now;
+                modelForDatabase.DataAdaugare = DateTime.Now;
 
                 modelForDatabase.Deleted = false;
 
@@ -121,127 +122,141 @@ namespace DeltaQrCode.Services.Hotel
             {
                 var editSetAnv = addSetAnv.Copy();
 
-                // case: Create new set => Working!
-                if (/*addSetAnv.OldNumarBucati > addSetAnv.NrBucati && */addSetAnv.PozitieId != addSetAnv.OldPozitieId && addSetAnv.PozitieId != null && addSetAnv.OldPozitieId != null)
+                if (editSetAnv.OldUzura == 0 && editSetAnv.Uzura != 0)
                 {
-                    //editSetAnv.NrBucati = editSetAnv.OldNumarBucati - editSetAnv.NrBucati;
-                    editSetAnv.PozitieId = editSetAnv.OldPozitieId;
-                    //editSetAnv.NumeClient = editSetAnv.OldNumeClient;
-                    //editSetAnv.NumarTelefon = editSetAnv.OldNumarTelefon;
-                    //editSetAnv.NumarInmatriculare = editSetAnv.OldNumarInmatriculare;
-                    //editSetAnv.SerieSasiu = editSetAnv.OldSerieSasiu;
-                    editSetAnv.Marca = editSetAnv.OldMarca;
-                    editSetAnv.TipSezon = editSetAnv.OldTipSezon;
-                    editSetAnv.Observatii = editSetAnv.OldObservatii;
-                    editSetAnv.Dimensiuni.Diam = editSetAnv.OldDimensiuni.Diam;
-                    editSetAnv.Dimensiuni.H = editSetAnv.OldDimensiuni.H;
-                    editSetAnv.Dimensiuni.Lat = editSetAnv.OldDimensiuni.Lat;
-                    editSetAnv.Dimensiuni.Dot = editSetAnv.OldDimensiuni.Dot;
+                    var addAnvelopa = await AddAnvelopaAsync(editSetAnv);
 
-                    addSetAnv.Id = 0;
+                    var returnModel = _mapper.Map<AnvelopaDto>(addAnvelopa.Entity);
 
-                    //await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, /*addSetAnv.NrBucati,*/ OperatiunePozitie.Scoatere);
-                    var addedOldSet = await AddAnvelopaAsync(addSetAnv, OperatiunePozitie.Setare);
+                    return Result<AnvelopaDto>.ResultOk(returnModel);
+                }
+                else {
+                    //// case: Create new set => Working!
 
-                    if (!addedOldSet.Successful)
+                    //if (addSetAnv.PozitieId != addSetAnv.OldPozitieId && addSetAnv.PozitieId != null && addSetAnv.OldPozitieId != null)
+                    //{
+                    //    editSetAnv.PozitieId = editSetAnv.OldPozitieId;
+                    //    editSetAnv.Marca = editSetAnv.OldMarca;
+                    //    editSetAnv.TipSezon = editSetAnv.OldTipSezon;
+                    //    editSetAnv.Observatii = editSetAnv.OldObservatii;
+                    //    editSetAnv.Dimensiuni.Diam = editSetAnv.OldDimensiuni.Diam;
+                    //    editSetAnv.Dimensiuni.H = editSetAnv.OldDimensiuni.H;
+                    //    editSetAnv.Dimensiuni.Lat = editSetAnv.OldDimensiuni.Lat;
+                    //    editSetAnv.Dimensiuni.Dot = editSetAnv.OldDimensiuni.Dot;
+
+                    //    addSetAnv.Id = 0;
+
+                    //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, 1, OperatiunePozitie.Scoatere);
+
+                    //    var addedOldSet = await AddAnvelopaAsync(addSetAnv, OperatiunePozitie.Setare);
+
+                    //    if (!addedOldSet.Successful)
+                    //    {
+                    //        Log.Error("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
+                    //        throw new Exception("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
+                    //    }
+                    //}
+
+
+
+
+                    //case: was InRaft, will be different =>  Working!
+                    if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent != "InRaft" && editSetAnv.OldUzura != 0)
                     {
-                        Log.Error("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
-                        throw new Exception("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
-                    }
-                }
-
-
-                //case: was InRaft, will be different =>  Working!
-                if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent != "InRaft")
-                {
-                    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, 1, OperatiunePozitie.Scoatere);
-                    editSetAnv.PozitieId = null;
-                }
-
-
-                // case: was inRaft, will be in raft, position changed => Working!
-                if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.PozitieId != null && editSetAnv.OldPozitieId != editSetAnv.PozitieId)
-                {
-                    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, 1, OperatiunePozitie.Scoatere);
-                    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, 1, OperatiunePozitie.Adaugare);
-                }
-
-
-               
-
-
-                //// case: was InRaft, will be InRaft, Position changed, NrBuc > OldNrBuc => Working!
-                //if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.PozitieId != editSetAnv.OldPozitieId && editSetAnv.NrBucati != editSetAnv.OldNumarBucati && editSetAnv.PozitieId != null)
-                //{
-                //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, editSetAnv.OldNumarBucati, OperatiunePozitie.Scoatere);
-                //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, editSetAnv.NrBucati, OperatiunePozitie.Adaugare);
-
-
-
-                //}
-
-
-                // case: was NOT InRaft, will be InRaft => Working!
-                if (editSetAnv.PozitieId != null && editSetAnv.OldPozitieId == null)
-                {
-                    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, 1, OperatiunePozitie.Adaugare);
-                }
-
-
-                // case: was InRaft, will be InRaft, No Changes
-                if (editSetAnv.PozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.OldPozitieId == editSetAnv.PozitieId)
-                {
-                    editSetAnv.PozitieId = editSetAnv.OldPozitieId;
-                }
-
-
-                if (editSetAnv.PozitieId != null)
-                {
-                    var position = await _hotelPositionsRepository.GetPositionByIdAsync(editSetAnv.PozitieId.Value);
-
-                    if (!position.Successful)
-                    {
-                        Log.Error("Ceva nu a mers bine la gasirea pozitiei in metoda de editare anvelope in servicii!");
-                        throw new Exception("Ceva nu a mers bine la gasirea pozitiei in metoda de editare anvelope in servicii!");
+                        await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, 1, OperatiunePozitie.Scoatere);
+                        editSetAnv.PozitieId = null;
                     }
 
-                    editSetAnv.Pozitie = _mapper.Map<HotelPositionsDto>(position.Entity);
+
+                    // case: was inRaft, will be in raft, position changed => Working!
+                    if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.PozitieId != null && editSetAnv.OldPozitieId != editSetAnv.PozitieId && editSetAnv.OldUzura != 0)
+                    {
+                        await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, 1, OperatiunePozitie.Scoatere);
+                        await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, 1, OperatiunePozitie.Adaugare);
+                    }
+
+
+
+
+
+                    //// case: was InRaft, will be InRaft, Position changed, NrBuc > OldNrBuc => Working!
+                    //if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.PozitieId != editSetAnv.OldPozitieId && editSetAnv.NrBucati != editSetAnv.OldNumarBucati && editSetAnv.PozitieId != null)
+                    //{
+                    //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, editSetAnv.OldNumarBucati, OperatiunePozitie.Scoatere);
+                    //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, editSetAnv.NrBucati, OperatiunePozitie.Adaugare);
+
+
+
+                    //}
+
+
+                    // case: was NOT InRaft, will be InRaft => Working!
+                    if (editSetAnv.PozitieId != null && editSetAnv.OldPozitieId == null && editSetAnv.OldUzura != 0)
+                    {
+                        await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, 1, OperatiunePozitie.Adaugare);
+                    }
+
+
+                    // case: was InRaft, will be InRaft, No Changes
+                    if (editSetAnv.PozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.OldPozitieId == editSetAnv.PozitieId && editSetAnv.OldUzura != 0)
+                    {
+                        editSetAnv.PozitieId = editSetAnv.OldPozitieId;
+                    }
+
+
+                    if (editSetAnv.PozitieId != null)
+                    {
+                        var position = await _hotelPositionsRepository.GetPositionByIdAsync(editSetAnv.PozitieId.Value);
+
+                        if (!position.Successful)
+                        {
+                            Log.Error("Ceva nu a mers bine la gasirea pozitiei in metoda de editare anvelope in servicii!");
+                            throw new Exception("Ceva nu a mers bine la gasirea pozitiei in metoda de editare anvelope in servicii!");
+                        }
+
+                        editSetAnv.Pozitie = _mapper.Map<HotelPositionsDto>(position.Entity);
+                    }
+
+
+                    // Marca
+                    var marca = await _hotelRepository.GetMarcaByLableAsync(editSetAnv.Marca);
+                    if (!marca.Successful)
+                    {
+                        Log.Error("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                        throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                    }
+
+                    if (marca.Entity == null && !string.IsNullOrEmpty(editSetAnv.Marca))
+                    {
+                        marca = await _hotelRepository.AddMarcaAsync(new CaMarca() { Label = editSetAnv.Marca.ToUpper() });
+                    }
+
+                    if (!marca.Successful)
+                    {
+                        Log.Error("Ceva nu a mers bine la adaugarea marcii in metoda de editare anvelope in servicii!");
+                        throw new Exception("Ceva nu a mers bine la adaugarea marcii in metoda de editare anvelope in servicii!");
+                    }
+                    editSetAnv.MarcaId = marca.Entity.Id;
+
+
+
+                    var modelForDatabase = _mapper.Map<CaAnvelopa>(editSetAnv);
+
+                    modelForDatabase.DataUltimaModificare = DateTime.Now;
+
+                    var value = await _hotelRepository.UpdateAnvelopaAsync(modelForDatabase);
+                    if (!value.Successful)
+                    {
+                        return Result<AnvelopaDto>.ResultError(value.Error);
+                    }
+                    var returnModel = _mapper.Map<AnvelopaDto>(value.Entity);
+
+
+                    return Result<AnvelopaDto>.ResultOk(returnModel);
                 }
 
 
-                // Marca
-                var marca = await _hotelRepository.GetMarcaByLableAsync(editSetAnv.Marca);
-                if (!marca.Successful)
-                {
-                    Log.Error("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
-                    throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
-                }
-
-                if (marca.Entity == null && !string.IsNullOrEmpty(editSetAnv.Marca))
-                {
-                    marca = await _hotelRepository.AddMarcaAsync(new CaMarca() { Label = editSetAnv.Marca.ToUpper() });
-                }
-
-                if (!marca.Successful)
-                {
-                    Log.Error("Ceva nu a mers bine la adaugarea marcii in metoda de editare anvelope in servicii!");
-                    throw new Exception("Ceva nu a mers bine la adaugarea marcii in metoda de editare anvelope in servicii!");
-                }
-                editSetAnv.MarcaId = marca.Entity.Id;
-
-                var modelForDatabase = _mapper.Map<CaAnvelopa>(editSetAnv);
-
-                modelForDatabase.DataUltimaModificare = DateTime.Now;
-
-                var value = await _hotelRepository.UpdateAnvelopaAsync(modelForDatabase);
-                if (!value.Successful)
-                {
-                    return Result<AnvelopaDto>.ResultError(value.Error);
-                }
-                var returnModel = _mapper.Map<AnvelopaDto>(value.Entity);
-
-
-                return Result<AnvelopaDto>.ResultOk(returnModel);
+                
             }
             catch (Exception er)
             {

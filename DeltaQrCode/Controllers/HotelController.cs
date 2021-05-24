@@ -52,6 +52,7 @@ namespace DeltaQrCode.Controllers
                 var anvListvm = _mapper.Map<List<AnvelopaVM>>(anvList.Entity);
                 foreach (var item in anvListvm)
                 {
+                    item.OldUzura = item.Uzura;
                     item.OldPozitieId = item.PozitieId;
                 }
 

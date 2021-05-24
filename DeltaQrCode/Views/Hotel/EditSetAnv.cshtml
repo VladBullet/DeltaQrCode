@@ -119,9 +119,10 @@
                 </div>
 
                 <input type="hidden" asp-for="@item.OldPozitieId" id="@("Label_"+item.PozitiePeMasina + "_" +"OldPozitieId")" name="@("Anvelope[" + i + "].OldPozitieId")" value="@item.OldPozitieId" />
-                <input type="hidden" asp-for="@item.SetAnvelopeId" id="@("Label_"+item.PozitiePeMasina + "_" +"SetAnvelopeId")" name="@("Anvelope[" + i + "].SetAnvelopeId")" value="@item.SetAnvelopeId" />
+                <input type="hidden" asp-for="@item.SetAnvelopeId" id="@("Label_"+item.PozitiePeMasina + "_" +"SetAnvelopeId")" name="@("Anvelope[" + i + "].SetAnvelopeId")" value="@Model.SetAnvelope.Id" />
                 <input type="hidden" asp-for="@item.Id" id="@("Label_"+item.PozitiePeMasina + "_" +"Id")" name="@("Anvelope[" + i + "].Id")" value="@item.Id" />
                 <input type="hidden" asp-for="@item.DataAdaugare" id="@("Label_"+item.PozitiePeMasina + "_" +"DataAdaugare")" name="@("Anvelope[" + i + "].DataAdaugare")" value="@item.DataAdaugare" />
+                <input type="hidden" asp-for="@item.OldUzura" id="@("Label_"+item.PozitiePeMasina + "_" +"OldUzura")" name="@("Anvelope[" + i + "].OldUzura")" value="@item.OldUzura" />
 
 
 
@@ -225,15 +226,22 @@
 <br />
 <br />
 <br />
+
+<hr class="bg-dark"/>
 <div id="Montate" class="tableSetAnv">
 
 </div>
+<hr />
+
 <div id="Predate" class="tableSetAnv">
 
 </div>
+<hr  />
+
 <div id="Casate" class="tableSetAnv">
 
 </div>
+<hr  />
 
 <partial name="_LoadingSpinner" />
 
