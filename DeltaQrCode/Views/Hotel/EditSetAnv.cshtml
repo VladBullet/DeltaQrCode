@@ -237,16 +237,17 @@
 <br />
 
 <hr class="bg-dark" />
+<h4 class="" style="margin-left:50px;">Montate:</h4>
 <div id="Montate" class="tableSetAnv">
-
+    
 </div>
 <hr />
-
+<h4 class="" style="margin-left:50px;">Predate:</h4>
 <div id="Predate" class="tableSetAnv">
 
 </div>
 <hr />
-
+<h4 class="" style="margin-left:50px;">Casate:</h4>
 <div id="Casate" class="tableSetAnv">
 
 </div>
@@ -269,19 +270,22 @@
             $("#Montate").load("/Hotel/SearchAnvelopeByStatusCurent",
                 data,
                 function () {
-                    setPaginationEdit();
+                    var table = $("#Montate").find(".table");
+                    setPaginationEdit(table);
                 });
             data = { searchString: "Predate", setId, page: 1 };
             $("#Predate").load("/Hotel/SearchAnvelopeByStatusCurent",
                 data,
                 function () {
-                    setPaginationEdit();
+                    var table = $("#Predate").find(".table");
+                    setPaginationEdit(table);
                 });
             data = { searchString: "Casate", setId, page: 1 };
             $("#Casate").load("/Hotel/SearchAnvelopeByStatusCurent",
                 data,
                 function () {
-                    setPaginationEdit();
+                    var table = $("#Casate").find(".table");
+                    setPaginationEdit(table);
                 });
         });
 
@@ -291,12 +295,16 @@
                 event.preventDefault();
                 var parent = $(this).closest(".tableSetAnv");
                 var status = $(parent).attr("id");
+                //var table = $(parent).find(".table");
                 var page = $(this).attr("data-pageNumber");
-                var data = { searchString: status, pageNumber: page };
+                var setId = $("#editform").find("#SetAnvelope_Id").val();
+
+                var data = { searchString: status, setId: setId, pageNumber: page };
+                console.log("data", data);
                 $("#" + status).load("/Hotel/SearchAnvelopeByStatusCurent",
                     data,
                     function () {
-                        setPaginationEdit();
+                        setPaginationEdit(parent);
                     });
             });
 
@@ -305,17 +313,20 @@
         var setPaginationEdit = function (table) {
             var hasPrevEdit = $(table).closest(".tableSetAnv").find(".hasPrevEdit").attr("data-value");
             var hasNextEdit = $(table).closest(".tableSetAnv").find(".hasNextEdit").attr("data-value");
+            console.log("hasPrevEdit", hasPrevEdit);
+            console.log("hasNextEdit", hasNextEdit);
+
 
             if (hasPrevEdit == "true") {
-                enablePreviousEdit();
+                enablePreviousEdit(table);
             } else if (hasPrevEdit == "false") {
-                disablePreviousEdit();
+                disablePreviousEdit(table);
             }
 
             if (hasNextEdit == "true") {
-                enableNextEdit();
+                enableNextEdit(table);
             } else if (hasNextEdit == "false") {
-                disableNextEdit();
+                disableNextEdit(table);
             }
         };
 
