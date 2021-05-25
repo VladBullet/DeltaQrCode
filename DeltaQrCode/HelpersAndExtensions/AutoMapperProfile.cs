@@ -100,7 +100,8 @@
             CreateMap<SetAnvelopeDto, SetAnvelopeVM>();
             CreateMap<SetAnvelopeVM, SetAnvelopeDto>();
 
-
+            CreateMap<HotelPositionsDto, HotelPositionsVM>();
+            CreateMap<HotelPositionsVM, HotelPositionsDto>();
 
 
         }

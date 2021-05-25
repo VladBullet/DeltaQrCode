@@ -13,6 +13,7 @@ namespace DeltaQrCode.Services.Hotel
     using DeltaQrCode.Repositories;
     using DeltaQrCode.Repositories.Hotel_Positions;
     using DeltaQrCode.Services.Hotel_Positions;
+    using DeltaQrCode.ViewModels.HotelAnvelope;
     using Serilog;
 
     public class HotelService : IHotelService
@@ -130,7 +131,8 @@ namespace DeltaQrCode.Services.Hotel
 
                     return Result<AnvelopaDto>.ResultOk(returnModel);
                 }
-                else {
+                else
+                {
                     //// case: Create new set => Working!
 
                     //if (addSetAnv.PozitieId != addSetAnv.OldPozitieId && addSetAnv.PozitieId != null && addSetAnv.OldPozitieId != null)
@@ -256,7 +258,7 @@ namespace DeltaQrCode.Services.Hotel
                 }
 
 
-                
+
             }
             catch (Exception er)
             {
@@ -314,8 +316,8 @@ namespace DeltaQrCode.Services.Hotel
                 var result = resultClient.Entity;
                 result.AddRange(resultMasina.Entity);
                 result = result.Distinct().ToList();
-                result = result.Skip((page-1) * itemsPerPage).Take(itemsPerPage).ToList();
-                
+                result = result.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+
                 var model = new List<SetAnvelopeDto>();
 
 
@@ -477,52 +479,70 @@ namespace DeltaQrCode.Services.Hotel
         public async Task<DataTable> GenerateDataForExcel()
         {
             DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[14] {
-                                            //new DataColumn("NumeClient"),
-                                            //new DataColumn("NumarInmatriculare"),
-                                            //new DataColumn("NumarTelefon"),
-                                            //new DataColumn("SerieSasiu"),
-                                            new DataColumn("Rand"),
-                                            new DataColumn("Pozitie"),
-                                            new DataColumn("Interval"),
-                                            new DataColumn("LocuriOcupate"),
-                                            new DataColumn("Marca"),
+            dt.Columns.AddRange(new DataColumn[24] {
+                                            new DataColumn("NumeClient"),
+                                            new DataColumn("NumarTelefon"),
+                                            new DataColumn("Sofer"),
+                                            new DataColumn("NumarInmatriculare"),
+                                            new DataColumn("SerieSasiu"),
+                                            new DataColumn("TipVehicul"),
+                                            new DataColumn("NumeSet"),
                                             new DataColumn("NrBucati"),
+                                            new DataColumn("Uzura"),
                                             new DataColumn("Diametru"),
                                             new DataColumn("Latime"),
                                             new DataColumn("Inaltime"),
                                             new DataColumn("DOT"),
-                                            //new DataColumn("StangaFata"),
-                                            //new DataColumn("StangaSpate"),
-                                            //new DataColumn("DreaptaFata"),
-                                            //new DataColumn("DreaptaSpate"),
-                                            //new DataColumn("Optional2"),
-                                            //new DataColumn("Optional1"),
+                                            new DataColumn("Marca"),
                                             new DataColumn("TipSezon"),
-                                            new DataColumn("Observatii"),
                                             new DataColumn("StatusCurent"),
-                                            new DataColumn("DataUltimaModificare") });
-
-            //var allSetAnv = await SearchAnvelopeSetAsync();
-
-            //foreach (var item in allSetAnv.Entity)
-            //{
-            //    var anvList = await GetAnvelopeBySetIdAsync(item.Id);
-            //}
-
-
-            //var anvListvm = _mapper.Map<List<AnvelopaVM>>(anvList.Entity);
-
-            //var masina = await _hotelService.GetMasinaForSetIdAsync(set.Entity.Id);
-            //var masinavm = _mapper.Map<MasinaVM>(masina.Entity);
-
-            //var client = await _hotelService.GetClientForSetIdAsync(set.Entity.Id);
-            //var clientvm = _mapper.Map<ClientHotelVM>(client.Entity);
+                                            new DataColumn("Rand"),
+                                            new DataColumn("Pozitie"),
+                                            new DataColumn("Interval"),
+                                            new DataColumn("LocuriOcupate"),
+                                            new DataColumn("PozitiePeMasina"),
+                                            new DataColumn("DataAdaugare"),
+                                            new DataColumn("DataUltimaModificare"),
+                                            new DataColumn("Observatii") });
 
 
             var allAnv = await SearchAnvelopeAsync(string.Empty, 1, int.MaxValue);
-            var model = _mapper.Map<List<AnvelopaDto>>(allAnv.Entity);
+            var allAnvs = allAnv.Entity;
+            var model = new List<DataForExcelVM>();
+            foreach (var item in allAnvs)
+            {
+                var client = await GetClientForSetIdAsync(item.SetAnvelopeId);
+                var clientMapp = _mapper.Map<ClientHotelVM>(client.Entity);
 
+                var masina = await GetMasinaForSetIdAsync(item.SetAnvelopeId);
+                var masinaMapp = _mapper.Map<MasinaVM>(masina.Entity);
+
+                var set = await GetSetAnvelopeByIdAsync(item.SetAnvelopeId);
+                var setMapp = _mapper.Map<SetAnvelopeVM>(set.Entity);
+
+                var poz = new Result<HotelPositionsDto>();
+                var pozMapp = new HotelPositionsVM();
+
+                if (item.PozitieId != null)
+                {
+                    poz = await _hotelPositionsService.GetPositionByIdAsync(item.PozitieId.Value);
+                    pozMapp = _mapper.Map<HotelPositionsVM>(poz.Entity);
+                }
+                
+
+                var anvMapp = _mapper.Map<AnvelopaVM>(item);
+
+
+                var anv = new DataForExcelVM();
+                anv.Client = clientMapp;
+                anv.Masina = masinaMapp;
+                anv.SetAnvelope = setMapp;
+                anv.Anvelopa = anvMapp;
+                anv.Pozitie = pozMapp;
+
+                model.Add(anv);
+
+            }
 
             var setanvelope = from anvelope in model
                               select anvelope;
@@ -530,28 +550,30 @@ namespace DeltaQrCode.Services.Hotel
             foreach (var anvelope in setanvelope)
             {
                 dt.Rows.Add(
-                    //anvelope.NumeClient,
-                    //    anvelope.NumarInmatriculare,
-                    //    anvelope.NumarTelefon,
-                    //    anvelope.SerieSasiu,
-                    anvelope.Pozitie?.Rand,
-                    anvelope.Pozitie?.Pozitie,
-                    anvelope.Pozitie?.Interval,
-                    anvelope.Pozitie?.Locuriocupate,
-                    anvelope.Marca,
-                    //anvelope.NrBucati,
-                    anvelope.Dimensiuni?.Diam,
-                    anvelope.Dimensiuni?.Lat,
-                    anvelope.Dimensiuni?.H,
-                    anvelope.Dimensiuni?.Dot,
-                    //anvelope.Uzura?.StF,
-                    //anvelope.Uzura?.StS,
-                    //anvelope.Uzura?.DrF,
-                    //anvelope.Uzura?.DrS,
-                    anvelope.TipSezon,
-                    anvelope.Observatii,
-                    anvelope.StatusCurent,
-                    anvelope.DataUltimaModificare);
+                    anvelope.Client.NumeClient,
+                    anvelope.Client.NumarTelefon,
+                    anvelope.Client.Sofer,
+                    anvelope.Masina.NumarInmatriculare,
+                    anvelope.Masina.SerieSasiu,
+                    anvelope.Masina.TipVehicul,
+                    anvelope.SetAnvelope.NumeSet,
+                    anvelope.SetAnvelope.NrBucati,
+                    anvelope.Anvelopa.Uzura,
+                    anvelope.Anvelopa.Diametru,
+                    anvelope.Anvelopa.Latime,
+                    anvelope.Anvelopa.Inaltime,
+                    anvelope.Anvelopa.Dot,
+                    anvelope.Anvelopa.Marca,
+                    anvelope.Anvelopa.TipSezon,
+                    anvelope.Anvelopa.StatusCurent,
+                    anvelope.Pozitie.Rand,
+                    anvelope.Pozitie.Pozitie,
+                    anvelope.Pozitie.Interval,
+                    anvelope.Pozitie.Locuriocupate,
+                    anvelope.Anvelopa.PozitiePeMasina,
+                    anvelope.Anvelopa.DataAdaugare,
+                    anvelope.Anvelopa.DataUltimaModificare,
+                    anvelope.Anvelopa.Observatii);
             }
             return dt;
         }

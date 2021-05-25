@@ -22,7 +22,7 @@ namespace DeltaQrCode.Services.Hotel_Positions
         }
 
 
-        public async Task<Result<List<HotelPositionsDto>>> GetAvailablePositionsAsync(int? nrbuc = null)
+        public async Task<Result<List<HotelPositionsDto>>> GetAvailablePositionsAsync(uint? nrbuc = null)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace DeltaQrCode.Services.Hotel_Positions
         }
 
 
-        public async Task<Result<HotelPositionsDto>> GetPositionByIdAsync(int id)
+        public async Task<Result<HotelPositionsDto>> GetPositionByIdAsync(uint id)
         {
             try
             {

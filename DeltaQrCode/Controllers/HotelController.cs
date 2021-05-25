@@ -419,7 +419,7 @@ namespace DeltaQrCode.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAvailablePositions(string term, int nrbuc)
+        public async Task<IActionResult> GetAvailablePositions(string term, uint nrbuc)
         {
             try
             {
