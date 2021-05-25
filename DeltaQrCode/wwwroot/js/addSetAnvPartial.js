@@ -51,13 +51,17 @@ $(document).ready(function () {
                     dataType: "json",
                     success: function (response) {
                         CloseModalById('myHotelModal');
-                        ShowHeaderAlert(response, "success", 5000);
+                        $this.prop("disabled", false);
+                        hideLoading();
+                        swalSuccessTimer(response, "success", 5000, autoRefresh);
                         $('#hotelListState').change();
 
                     },
                     error: function (error) {
                         CloseModalById('myHotelModal');
-                        swalErrorTimer(error.responseText, 7000);
+                        $this.prop("disabled", false);
+                        hideLoading();
+                        swalErrorTimer(error.responseText, 7000, autoRefresh);
 
                     }
                 });
@@ -65,10 +69,10 @@ $(document).ready(function () {
                 //else {
                 //    //updateUi(result.validationResults, "form-group", "error_span");
                 //}
-                setTimeout(function () {
-                    $this.prop("disabled", false);
-                    hideLoading();
-                }, 1000);
+                //setTimeout(function () {
+                //    $this.prop("disabled", false);
+                //    hideLoading();
+                //}, 1000);
             });
 
 
@@ -82,6 +86,37 @@ $(document).ready(function () {
                 showHiddenAnv($(this));
                 showButtonEraseAnv($(this));
                 calculateNrBucati();
+
+            });
+
+        $(document).on("keyup",
+            "#StangaFata_Uzura",
+            function () {
+
+                autoCompleteDrf();
+
+            });
+        $(document).on("keyup",
+            "#StangaSpate_Uzura",
+            function () {
+
+                autoCompleteDrS();
+
+            });
+
+        $(document).on("change",
+            ".duplicateValues",
+            function () {
+
+                var parent = $(this).closest(".parent");
+                console.log("parent",parent);
+                var form = 
+
+                var val = $(this).val();
+                var children = $(document).closest(".form-group").find(".toDuplicateValues");
+                console.log(val);
+                console.log($(this));
+                console.log(children);
 
             });
 
@@ -239,6 +274,32 @@ var calculateNrBucati = function () {
 
     });
     updateNrBucati(count);
+}
+
+var autoCompleteDrf = function () {
+
+    showHiddenAnv("#DreaptaFata_Uzura");
+    showButtonEraseAnv("#DreaptaFata_Uzura");
+
+    var StFVal = $(document).find("#StangaFata_Uzura").val();
+    var DrFVal = $(document).find("#DreaptaFata_Uzura");
+
+    DrFVal.val(StFVal);
+    calculateNrBucati();
+
+    
+}
+var autoCompleteDrS = function () {
+
+    showHiddenAnv("#DreaptaSpate_Uzura");
+    showButtonEraseAnv("#DreaptaSpate_Uzura");
+
+    var StSVal = $(document).find("#StangaSpate_Uzura").val();
+    var DrSVal = $(document).find("#DreaptaSpate_Uzura");
+
+    DrSVal.val(StSVal);
+    calculateNrBucati();
+    
 }
 
 var updateNrBucati = function (value) {
