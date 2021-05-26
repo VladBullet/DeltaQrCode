@@ -265,6 +265,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            initialize();
             var setId = $(document).find("#SetAnvelope_Id").val();
             var data = { searchString: "Montate", setId, page: 1 };
             $("#Montate").load("/Hotel/SearchAnvelopeByStatusCurent",

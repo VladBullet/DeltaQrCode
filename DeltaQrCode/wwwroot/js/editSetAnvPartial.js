@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
 
-
     var initialized = false;
     calculateNrBucati();
     hideAllHiddenAnv();
