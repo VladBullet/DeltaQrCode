@@ -90,14 +90,14 @@ $(document).ready(function () {
 
             });
 
-        $(document).on("keyup",
+        $(document).on("change",
             "#StangaFata_Uzura",
             function () {
 
                 autoCompleteDrf();
 
             });
-        $(document).on("keyup",
+        $(document).on("change",
             "#StangaSpate_Uzura",
             function () {
 
@@ -109,8 +109,12 @@ $(document).ready(function () {
             ".duplicateValues",
             function () {
 
-                duplicate($(this));
+                var duplicatedElementAttr = $(this).attr("data-duplicated");
+                console.log(duplicatedElementAttr);
+                if (duplicatedElementAttr == "false") {
 
+                    duplicate($(this));
+                }
             });
 
         $(document).on("click",
@@ -272,11 +276,6 @@ var autoCompleteDrf = function () {
 
     showHiddenAnv("#DreaptaFata_Uzura");
     showButtonEraseAnv("#DreaptaFata_Uzura");
-
-    var StFVal = $(document).find("#StangaFata_Uzura").val();
-    var DrFVal = $(document).find("#DreaptaFata_Uzura");
-
-    DrFVal.val(StFVal);
     calculateNrBucati();
 
     
@@ -285,11 +284,6 @@ var autoCompleteDrS = function () {
 
     showHiddenAnv("#DreaptaSpate_Uzura");
     showButtonEraseAnv("#DreaptaSpate_Uzura");
-
-    var StSVal = $(document).find("#StangaSpate_Uzura").val();
-    var DrSVal = $(document).find("#DreaptaSpate_Uzura");
-
-    DrSVal.val(StSVal);
     calculateNrBucati();
     
 }
@@ -302,6 +296,10 @@ var updateNrBucati = function (value) {
 var duplicate = function (element) {
     
     var parent = $(element).closest(".parent");
+    var duplicatedElementAttr = $(element).attr("data-duplicated");
+    if (duplicatedElementAttr == "false") {
+        $(element).attr("data-duplicated", "true");
+    }
     var foreach = $(document).find(".containsForeach");
     var index = $(foreach).children(".parent").index(parent);
     var elementName = $(element).attr("name").split(".")[1];
