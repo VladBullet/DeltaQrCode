@@ -3,6 +3,7 @@
 $(document).ready(function () {
 
     var initialized = false;
+    var firstTime = true;
 
     $("#myHotelModal").on("shown.bs.modal", function () {
 
@@ -53,7 +54,7 @@ $(document).ready(function () {
                         CloseModalById('myHotelModal');
                         $this.prop("disabled", false);
                         hideLoading();
-                        swalSuccessTimer(response, "success", 5000, autoRefresh);
+                        swalSuccessTimer(response, "success", 5000);
                         $('#hotelListState').change();
 
                     },
@@ -61,7 +62,7 @@ $(document).ready(function () {
                         CloseModalById('myHotelModal');
                         $this.prop("disabled", false);
                         hideLoading();
-                        swalErrorTimer(error.responseText, 7000, autoRefresh);
+                        swalErrorTimer(error.responseText, 7000);
 
                     }
                 });
@@ -108,15 +109,7 @@ $(document).ready(function () {
             ".duplicateValues",
             function () {
 
-                var parent = $(this).closest(".parent");
-                console.log("parent",parent);
-                var form = 
-
-                var val = $(this).val();
-                var children = $(document).closest(".form-group").find(".toDuplicateValues");
-                console.log(val);
-                console.log($(this));
-                console.log(children);
+                duplicate($(this));
 
             });
 
@@ -144,7 +137,6 @@ $(document).ready(function () {
             });
         $(".selectedstatus").on("updatedStatus",
             function () {
-                console.log("updatedStatus was hit!");
                 var element = $(this);
                 enableOrDisablePositionForStatus(element);
             });
@@ -305,4 +297,31 @@ var autoCompleteDrS = function () {
 var updateNrBucati = function (value) {
     var nrBuc = $(document).find("#SetAnvelope_NrBucati");
     nrBuc.val(value);
+};
+
+var duplicate = function (element) {
+    
+    var parent = $(element).closest(".parent");
+    var foreach = $(document).find(".containsForeach");
+    var index = $(foreach).children(".parent").index(parent);
+    var elementName = $(element).attr("name").split(".")[1];
+    var nextParent = $(foreach).children(".parent").eq(index + 1);
+    var nextElement = $(nextParent).find("." + elementName.toLowerCase());
+
+    var Val = $(element).val();
+    var textOption = $(element).find("option[value ='" + Val + "']");
+
+    var Text = $(textOption).text();
+
+    var option = new Option(Text, Val, true, true);
+
+    console.log($(nextElement).find("option[value ='" + Text + "']").length);
+    console.log(Text);
+
+        $(nextElement).append(option).trigger("change");
+        $(nextElement).val(Val).trigger("change");
+
+
+    var changeStatus = $(nextElement).closest(".parent").find(".statuscurent");
+    $(changeStatus).trigger("change");
 };

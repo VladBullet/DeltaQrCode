@@ -401,7 +401,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var value = await _db.CaMasina.FirstOrDefaultAsync(x => x.NumarInmatriculare.ToLower().Contains(nrAuto.ToLower()));
+                var value = await _db.CaMasina.FirstOrDefaultAsync(x => x.NumarInmatriculare.ToLower() == nrAuto.ToLower());
                 return Result<CaMasina>.ResultOk(value);
             }
             catch (Exception er)
@@ -415,7 +415,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var value = await _db.CaMasina.FirstOrDefaultAsync(x => x.SerieSasiu.ToLower().Contains(serieSasiu.ToLower()));
+                var value = await _db.CaMasina.FirstOrDefaultAsync(x => x.SerieSasiu.ToLower() == serieSasiu.ToLower());
                 return Result<CaMasina>.ResultOk(value);
             }
             catch (Exception er)
