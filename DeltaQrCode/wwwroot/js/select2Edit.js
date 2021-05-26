@@ -60,34 +60,6 @@
         }
     });
 
-    // Select2 for Flota
-    $("#Flota").select2({
-        tags: true,
-        dropdownParent: "#editSetBody",
-        theme: "bootstrap4",
-        allowClear: true,
-        ajax: {
-            url: '/Hotel/GetFlote',
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                var query = {
-                    term: params.term
-                }
-                return query;
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result,
-                        function (item) {
-                            return {
-                                id: item,
-                                text: item
-                            };
-                        }),
-                };
-            }
-        }
-    });
 
     // Select2 for TipSezon
     $(".tipsezon").select2({

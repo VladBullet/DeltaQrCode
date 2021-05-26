@@ -556,5 +556,11 @@ namespace DeltaQrCode.Controllers
             }
             return new JsonResult(result);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> SaveAnvelopaAuto(AnvelopaVM anvelopa)
+        //{
+            
+        //}
     }
 }

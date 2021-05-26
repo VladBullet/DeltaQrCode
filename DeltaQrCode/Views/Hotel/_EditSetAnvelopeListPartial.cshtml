@@ -5,41 +5,55 @@
 
 <div class="row justify-content-center">
     <div class="col-auto">
-        <table class=" editabletable table table-responsive table-sm table-responsive-md table-responsive-sm table-bordered table-hover">
-            <thead>
-                <tr class="text-center">
-                    <th scope="col">Uzura</th>
-                    <th scope="col">Diametru</th>
-                    <th scope="col">Latime</th>
-                    <th scope="col">Inaltime</th>
-                    <th scope="col">DOT</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">TipSezon</th>
-                    <th scope="col">PozitiePeMasina</th>
-                    <th scope="col">Status Curent</th>
-                    <th scope="col">Pozitie</th>
-                </tr>
-            </thead>
+        <div class=" editabletable table table-responsive table-sm table-responsive-md table-responsive-sm table-bordered table-hover">
+            <div>
+                <div class=" row text-center">
+                    <div class="col" scope="col">Diametru</div>
+                    <div class="col" scope="col">Latime</div>
+                    <div class="col" scope="col">Inaltime</div>
+                    <div class="col" scope="col">DOT</div>
+                    <div class="col" scope="col">Marca</div>
+                    <div class="col" scope="col">TipSezon</div>
+                    <div class="col" scope="col">PozitiePeMasina</div>
+                    <div class="col" scope="col">Uzura</div>
+                    <div class="col" scope="col">Status Curent</div>
+                    <div class="col" scope="col">Pozitie</div>
+                </div>
+            </div>
 
-            <tbody>
+            <div class="editTableSetBody">
+                @{
+                    int i = 0;
+                }
                 @foreach (var item in Model.anvList)
                 {
-                    <tr class="text-center">
-                       
-                        <td contenteditable="true">@item.Uzura</td>
-                        <td >@item.Diametru</td>
-                        <td >@item.Latime</td>
-                        <td >@item.Inaltime</td>
-                        <td >@item.Dot</td>
-                        <td >@item.Marca</td>
-                        <td >@item.TipSezon</td>
-                        <td >@item.PozitiePeMasina</td>
-                        <td contenteditable="true">@item.StatusCurent</td>
-                        <td contenteditable="true">@item.PozitieInRaft</td>
-                    </tr>
+                    <div class="text-center row">
+                        <div hidden="hidden">@item.Id</div>
+                        <div class="col">@item.Diametru</div>
+                        <div class="col">@item.Latime</div>
+                        <div class="col">@item.Inaltime</div>
+                        <div class="col">@item.Dot</div>
+                        <div class="col">@item.Marca</div>
+                        <div class="col">@item.TipSezon</div>
+                        <div class="col">@item.PozitiePeMasina</div>
+                        <div class="col">@item.Uzura</div>
+
+                        <div class="col">
+                            <input class="default" hidden="hidden" data-value="@item.StatusCurent" data-text="@(item.StatusCurent)" />
+                            <select class="select2customTable statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
+
+                        </div>
+
+
+                        <div class="col">
+                            <input class="default" hidden="hidden" data-value="@item.PozitieId" data-text="@(item.PozitieInRaft)" />
+                            <select class="select2customTable pozitieinraftTable inputOrSelect" asp-for="@item.PozitieId"></select>
+                        </div>
+                    </div>
+                    i++;
                 }
-            </tbody>
-        </table>
+            </div>
+        </div>
     </div>
 </div>
 <div hidden="hidden" class="hasPrevEdit" data-value="@Model.anvList.HasPreviousPage.ToString().ToLower()"></div>
@@ -57,6 +71,7 @@
     </button>
 </div>
 
-<script>
-
-</script>
+@section Scripts{
+    <script type="text/javascript"> 
+    </script>
+}

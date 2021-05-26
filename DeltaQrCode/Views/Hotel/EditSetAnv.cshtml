@@ -237,35 +237,38 @@
 <br />
 
 <hr class="bg-dark" />
-<h4 class="" style="margin-left:50px;">Montate:</h4>
-<div id="Montate" class="tableSetAnv">
-    
-</div>
-<hr />
-<h4 class="" style="margin-left:50px;">Predate:</h4>
-<div id="Predate" class="tableSetAnv">
+<div id="select2Tables">
+    <h4 class="" style="margin-left:50px;">Montate:</h4>
+    <div id="Montate" class="tableSetAnv">
 
-</div>
-<hr />
-<h4 class="" style="margin-left:50px;">Casate:</h4>
-<div id="Casate" class="tableSetAnv">
+    </div>
+    <hr />
+    <h4 class="" style="margin-left:50px;">Predate:</h4>
+    <div id="Predate" class="tableSetAnv">
 
+    </div>
+    <hr />
+    <h4 class="" style="margin-left:50px;">Casate:</h4>
+    <div id="Casate" class="tableSetAnv">
+
+    </div>
+    <hr />
 </div>
-<hr />
 
 <partial name="_LoadingSpinner" />
 
 
 
 @section Scripts{
-
+    <script type="text/javascript" src="~/js/select2EditTables.js"></script>
     <script type="text/javascript" src="~/js/select2Edit.js"></script>
     <script type="text/javascript" src="~/js/EditableTable.js"></script>
     <script type="text/javascript" src="~/js/editSetAnvPartial.js"></script>
     <script type="text/javascript">
-
+        initializeTableBody();
         $(document).ready(function () {
             initialize();
+
             var setId = $(document).find("#SetAnvelope_Id").val();
             var data = { searchString: "Montate", setId, page: 1 };
             $("#Montate").load("/Hotel/SearchAnvelopeByStatusCurent",
@@ -288,6 +291,84 @@
                     var table = $("#Casate").find(".table");
                     setPaginationEdit(table);
                 });
+
+            // Select2 for StatusAnvelope
+            $(document).find(".statuscurentTable").select2({
+                tags: true,
+                dropdownParent: "#select2Tables",
+                theme: "bootstrap4",
+                minimumResultsForSearch: Infinity,
+                ajax: {
+                    url: '/Hotel/GetStatusAnvelope',
+                    dataType: 'json',
+                    processResults: function (result) {
+                        return {
+                            results: $.map(result,
+                                function (item) {
+                                    return {
+                                        id: item,
+                                        text: item
+                                    };
+                                }),
+                        };
+                    }
+                }
+            });
+
+            // Initialize select2
+            //Select2 for Position
+
+            $(document).find(".pozitieinraftTable").select2({
+                dropdownParent: "#select2Tables",
+                theme: "bootstrap4",
+                allowClear: true,
+                ajax: {
+                    url: '/Hotel/GetAvailablePositions',
+                    contentType: "application/json; charset=utf-8",
+                    data: function (params) {
+                        var query = {
+                            term: params.term,
+                            nrbuc: $(document).find("#NrBucati").val()
+                        }
+                        return query;
+                    },
+                    processResults: function (result) {
+                        return {
+                            results: $.map(result,
+                                function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.text
+                                    };
+                                }),
+                        };
+                    }
+                }
+            });
+
+            var selectos = $(document).find(".select2customTable");
+
+            $.each(selectos, function (index, item) {
+
+
+                var defaultElem = $(item).closest("div").find(".default");
+                console.log("defaultElem", defaultElem)
+                var defaultVal = $(defaultElem).attr("data-value");
+                console.log("defaultVal", defaultVal)
+                var defaultText = $(defaultElem).attr("data-text");
+                console.log("defaultText", defaultText)
+
+                var option = new Option(defaultText, defaultVal, true, true);
+                $(item).append(option).trigger('change');
+                var data = { defaultText, defaultVal };
+                // manually trigger the select2:select event
+                $(item).trigger({
+                    type: 'select2:select',
+                    params: {
+                        data: data
+                    }
+                });
+            });
         });
 
         $(document).on("click",
@@ -346,6 +427,7 @@
         };
 
 
-
     </script>
+
+
 }
