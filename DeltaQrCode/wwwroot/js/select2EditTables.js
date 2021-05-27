@@ -73,4 +73,54 @@
             }
         });
     });
+
+    
+
+
 }
+
+var changeStatus = $(document).find(".statuscurentTable");
+$.each(changeStatus, function (index, item) {
+    $(item).trigger("change");
+});
+
+$(document).on("change",
+    ".statuscurentTable",
+    function () {
+
+        var val = $(this).val();
+
+        var selectedStatusElemTable = $(this).closest(".group").find(".selectedstatusTable");
+        console.log("selectedStatusElemTable", selectedStatusElemTable);
+
+        $(selectedStatusElemTable).val(val);
+
+        $(selectedStatusElemTable).trigger("update");
+
+
+    });
+$(document).on("update",".selectedstatusTable",
+    function () {
+        console.log("updatedStatusTable was hit!");
+        var element = $(this);
+
+        enableOrDisablePositionForStatusTable(element);
+    });
+
+var enableOrDisablePositionForStatusTable = function (statusElem) {
+    var currentStatusElemTable = $(statusElem).closest(".group").find(".statuscurentTable");
+    console.log("statusElem", statusElem);
+    var selectedStatusElemTable = $(currentStatusElemTable).closest(".group").find(".selectedstatusTable");
+    var positionElemTable = $(currentStatusElemTable).closest(".parenting").find(".pozitieinraftTable");
+
+    console.log("positionElemTable", positionElemTable);
+    positionElemTable.removeAttr("disabled");
+    positionElemTable.removeClass("disabled");
+
+    if ($(selectedStatusElemTable).val() != "InRaft") {
+        $(positionElemTable).attr("disabled", "disabled");
+        $(positionElemTable).addClass("disabled");
+        $(positionElemTable).val("").trigger("change"); ///////
+    }
+};
+

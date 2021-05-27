@@ -38,9 +38,10 @@
                         <th >@item.PozitiePeMasina</th>
                         <th >@item.Uzura</th>
 
-                        <th >
+                        <th class="group">
                             <input class="default" hidden="hidden" data-value="@item.StatusCurent" data-text="@(item.StatusCurent)" />
-                            <select style="min-width:100px;" class="select2customTable statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
+                            <input class="selectedstatusTable" hidden="hidden" value="@item.StatusCurent" />
+                            <select style="min-width:100px;" class="select2customTable  statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
 
                         </th>
 
