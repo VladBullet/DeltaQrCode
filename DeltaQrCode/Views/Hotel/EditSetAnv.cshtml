@@ -265,7 +265,7 @@
     <script type="text/javascript" src="~/js/EditableTable.js"></script>
     <script type="text/javascript" src="~/js/editSetAnvPartial.js"></script>
     <script type="text/javascript">
-        initializeTableBody();
+        
         $(document).ready(function () {
             initialize();
 
@@ -292,83 +292,13 @@
                     setPaginationEdit(table);
                 });
 
-            // Select2 for StatusAnvelope
-            $(document).find(".statuscurentTable").select2({
-                tags: true,
-                dropdownParent: "#select2Tables",
-                theme: "bootstrap4",
-                minimumResultsForSearch: Infinity,
-                ajax: {
-                    url: '/Hotel/GetStatusAnvelope',
-                    dataType: 'json',
-                    processResults: function (result) {
-                        return {
-                            results: $.map(result,
-                                function (item) {
-                                    return {
-                                        id: item,
-                                        text: item
-                                    };
-                                }),
-                        };
-                    }
-                }
-            });
+                            setTimeout(function () {
+                                initializeTableBody();
+                                //var changeStatus = $(this).closest(".parenting").find(".statuscurent");
+                                //$(changeStatus).trigger("change");
+                }, 500);
+            
 
-            // Initialize select2
-            //Select2 for Position
-
-            $(document).find(".pozitieinraftTable").select2({
-                dropdownParent: "#select2Tables",
-                theme: "bootstrap4",
-                allowClear: true,
-                ajax: {
-                    url: '/Hotel/GetAvailablePositions',
-                    contentType: "application/json; charset=utf-8",
-                    data: function (params) {
-                        var query = {
-                            term: params.term,
-                            nrbuc: $(document).find("#NrBucati").val()
-                        }
-                        return query;
-                    },
-                    processResults: function (result) {
-                        return {
-                            results: $.map(result,
-                                function (item) {
-                                    return {
-                                        id: item.id,
-                                        text: item.text
-                                    };
-                                }),
-                        };
-                    }
-                }
-            });
-
-            var selectos = $(document).find(".select2customTable");
-
-            $.each(selectos, function (index, item) {
-
-
-                var defaultElem = $(item).closest("div").find(".default");
-                console.log("defaultElem", defaultElem)
-                var defaultVal = $(defaultElem).attr("data-value");
-                console.log("defaultVal", defaultVal)
-                var defaultText = $(defaultElem).attr("data-text");
-                console.log("defaultText", defaultText)
-
-                var option = new Option(defaultText, defaultVal, true, true);
-                $(item).append(option).trigger('change');
-                var data = { defaultText, defaultVal };
-                // manually trigger the select2:select event
-                $(item).trigger({
-                    type: 'select2:select',
-                    params: {
-                        data: data
-                    }
-                });
-            });
         });
 
         $(document).on("click",
@@ -425,7 +355,6 @@
             $(parent).closest(".tableSetAnv").find(".buttonNextEdit").attr("disabled", "disabled");
 
         };
-
 
     </script>
 
