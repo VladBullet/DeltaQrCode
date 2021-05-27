@@ -4,7 +4,7 @@
     // Initialize select2
     //Select2 for Position
     $(".pozitieinraft").select2({
-        dropdownParent: "#editSetBody",
+        dropdownParent: $("#editSetBody"),
         theme: "bootstrap4",
         allowClear: true,
         ajax: {
@@ -34,7 +34,7 @@
     // Select2 for Marca
     $(".marca").select2({
         tags: true,
-        dropdownParent: "#editSetBody",
+        dropdownParent: $("#editSetBody"),
         theme: "bootstrap4",
         allowClear: true,
         ajax: {
@@ -64,7 +64,7 @@
     // Select2 for TipSezon
     $(".tipsezon").select2({
         tags: true,
-        dropdownParent: "#editSetBody",
+        dropdownParent: $("#editSetBody"),
         theme: "bootstrap4",
         minimumResultsForSearch: Infinity,
         ajax: {
@@ -86,7 +86,7 @@
     // Select2 for StatusAnvelope
     $(".statuscurent").select2({
         tags: true,
-        dropdownParent: "#editSetBody",
+        dropdownParent: $("#editSetBody"),
         theme: "bootstrap4",
         minimumResultsForSearch: Infinity,
         ajax: {
@@ -109,7 +109,7 @@
     // Select2 for Diametru
     $(".diametru").select2({
         tags: true,
-        dropdownParent: "#editSetBody",
+        dropdownParent: $("#editSetBody"),
         theme: "bootstrap4",
         allowClear: true,
         ajax: {
@@ -139,7 +139,7 @@
     // Select2 for Latime
     $(".latime").select2({
         tags: true,
-        dropdownParent: "#editSetBody",
+        dropdownParent: $("#editSetBody"),
         theme: "bootstrap4",
         allowClear: true,
         ajax: {
@@ -168,7 +168,7 @@
     // Select2 for Inaltime
     $(".inaltime").select2({
         tags: true,
-        dropdownParent: "#editSetBody",
+        dropdownParent: $("#editSetBody"),
         theme: "bootstrap4",
         allowClear: true,
         ajax: {
@@ -197,7 +197,7 @@
     // Select2 for DOT
     $(".dot").select2({
         tags: true,
-        dropdownParent: "#editSetBody",
+        dropdownParent: $("#editSetBody"),
         theme: "bootstrap4",
         allowClear: true,
         ajax: {
