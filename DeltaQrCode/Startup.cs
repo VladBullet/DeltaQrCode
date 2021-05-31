@@ -65,7 +65,7 @@ namespace DeltaQrCode
             services.AddScoped<IHttpHelper, HttpHelper>();
             services.AddScoped<IQrService, QrService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddTransient<IHotelService, HotelService>();
+            services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IGuestService, GuestService>();
@@ -73,7 +73,7 @@ namespace DeltaQrCode
             services.AddTransient<IHotelPositionsService, HotelPositionsService>();
 
             services.AddScoped<IGuestRepository, GuestRepository>();
-            services.AddTransient<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
+            services.AddScoped<IHotelAnvelopeRepository, HotelAnvelopeRepository>();
             services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
             services.AddScoped<ISchimbAnvelopeRepository, SchimbAnvelopeRepository>();
             services.AddTransient<IHotelPositionsRepository, HotelPositionsRepository>();

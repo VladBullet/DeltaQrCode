@@ -16,9 +16,9 @@ namespace DeltaQrCode.ViewModels.HotelAnvelope
 
         public uint Id { get; set; }
         public string PozitieInRaft { get; set; }
-        public int? MarcaId { get; set; }
-        public int? PozitieId { get; set; }
-        public int? OldPozitieId { get; set; }
+        public uint? MarcaId { get; set; }
+        public uint? PozitieId { get; set; }
+        public uint? OldPozitieId { get; set; }
         public string Marca { get; set; }
         public string OldMarca { get; set; }
         public int Uzura { get; set; }

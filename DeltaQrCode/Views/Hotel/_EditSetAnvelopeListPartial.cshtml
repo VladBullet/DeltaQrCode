@@ -15,7 +15,7 @@
                     <th scope="col">Marca</th>
                     <th scope="col">TipSezon</th>
                     <th scope="col">PozitiePeMasina</th>
-                    <th scope="col">Uzura</th>
+                    <th style="max-width:60px;" scope="col">Uzura</th>
                     <th style="min-width:100px;" scope="col">Status Curent</th>
                     <th style="min-width:150px;" scope="col">Pozitie</th>
                     @*<th scope="col">Actiune</th>*@
@@ -37,18 +37,20 @@
                         <th>@item.Marca</th>
                         <th>@item.TipSezon</th>
                         <th class="pozitiePeMasina">@item.PozitiePeMasina</th>
-                        <th contenteditable="true" class="uzuraTable">@item.Uzura</th>
+                        <th style="max-width:60px;">
+                            <input class="col form-control uzuraTable enableSaveBtn" value="@item.Uzura" />
+                        </th>
 
                         <th class="group">
                             <input class="default" hidden="hidden" data-value="@item.StatusCurent" data-text="@(item.StatusCurent)" />
-                            <input class="selectedstatusTable" hidden="hidden" value="@item.StatusCurent" />
+                            <input class="selectedstatusTable " hidden="hidden" value="@item.StatusCurent" />
                             @if (item.StatusCurent == "Casate")
                             {
                                 @item.StatusCurent
                             }
                             else
                             {
-                                <select style="min-width:100px;" class="select2customTable  statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
+                                <select style="min-width:100px;" class="select2customTable enableSaveBtn statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
 
                             }
 

@@ -48,7 +48,7 @@ namespace DeltaQrCode.Controllers
                 var set = await _hotelService.GetSetAnvelopeByIdAsync(id);
                 var setvm = _mapper.Map<SetAnvelopeVM>(set.Entity);
 
-                var anvList = await _hotelService.SearchAnvelopeByStatusCurentAsync("InRaft",id,1,PageSize);
+                var anvList = await _hotelService.SearchAnvelopeByStatusCurentAsync("InRaft", id, 1, PageSize);
                 var anvListvm = _mapper.Map<List<AnvelopaVM>>(anvList.Entity);
                 foreach (var item in anvListvm)
                 {
@@ -110,7 +110,7 @@ namespace DeltaQrCode.Controllers
             //var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
             //var anvelope = anvelopeResult.Entity;
 
-            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString,pageNumber,PageSize);
+            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString, pageNumber, PageSize);
             var setsAnv = sets.Entity;
 
             //var mapper = _mapper.Map<List<HotelAnvelopaVm>>(anvelope);
@@ -119,11 +119,11 @@ namespace DeltaQrCode.Controllers
             //var listanvVm = _mapper.Map<List<SetAnvelopeVM>>(setsAnv);
             foreach (var item in setsAnv)
             {
-               
+
                 var client = await _hotelService.GetClientByIdAsync(item.ClientId);
                 var masina = await _hotelService.GetMasinaByIdAsync(item.MasinaId);
 
-                
+
                 var anv = _mapper.Map<HotelAnvelopaVm>(item);
                 anv.Client = _mapper.Map<ClientHotelVM>(client.Entity);
                 anv.Masina = _mapper.Map<MasinaVM>(masina.Entity);
@@ -230,7 +230,7 @@ namespace DeltaQrCode.Controllers
 
                 foreach (var item in anvListDto)
                 {
-                    if(item.Uzura != 0)
+                    if (item.Uzura != 0)
                     {
                         var result = await _hotelService.UpdateAnvelopaAsync(item);
 
@@ -239,7 +239,7 @@ namespace DeltaQrCode.Controllers
                             updatedAnvSuccessful = false;
                         }
                     }
-                    
+
                 }
 
 
@@ -295,7 +295,7 @@ namespace DeltaQrCode.Controllers
 
                 }
 
-                var existingMasina = await _hotelService.GetMasinaBySerieSasiuOrNrAutoAsync(setAnv.Masina.SerieSasiu,setAnv.Masina.NumarInmatriculare);
+                var existingMasina = await _hotelService.GetMasinaBySerieSasiuOrNrAutoAsync(setAnv.Masina.SerieSasiu, setAnv.Masina.NumarInmatriculare);
 
                 if (existingMasina.Successful && existingMasina.Entity != null)
                 {
@@ -388,7 +388,7 @@ namespace DeltaQrCode.Controllers
         {
             try
             {
-               
+
                 var anvelope = await _hotelService.GetAnvelopeBySetIdAsync(id);
                 var anvelopeList = anvelope.Entity;
                 bool successful = true;
@@ -514,7 +514,7 @@ namespace DeltaQrCode.Controllers
 
         public IActionResult GetDot(string term)
         {
-            var list = ConstantsAndEnums.DOTlist().OrderByDescending(x=>x).ToList();
+            var list = ConstantsAndEnums.DOTlist().OrderByDescending(x => x).ToList();
             if (!string.IsNullOrEmpty(term))
             {
                 list = list.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
@@ -563,23 +563,28 @@ namespace DeltaQrCode.Controllers
             try
             {
                 var anv = await _hotelService.GetAnvelopaByIdAsync(anvelopa.Id);
-                var anvList = await _hotelService.SearchAnvelopeByStatusCurentAsync("InRaft", anv.Entity.SetAnvelopeId, 1, int.MaxValue);
-                var anvListEntity = anvList.Entity;
-                if (anvListEntity.Any(x => x.Id == anvelopa.Id))
+                if (anvelopa.StatusCurent == "InRaft")
                 {
-                    return BadRequest("Nu s-a putut salva deoarece exista deja o anvelopa In Raft pe pozitia + " + anvelopa.PozitiePeMasina + " in acest set");
-                }
-                else {
-                    anv.Entity.StatusCurent = anvelopa.StatusCurent;
-                    anv.Entity.Uzura = anvelopa.Uzura;
-                    if (anvelopa.PozitieId != null)
+                    var anvList = await _hotelService.SearchAnvelopeByStatusCurentAsync("InRaft", anv.Entity.SetAnvelopeId, 1, int.MaxValue);
+                    var anvListEntity = anvList.Entity;
+                    if (anvListEntity.Any(x => x.PozitiePeMasina == anvelopa.PozitiePeMasina))
                     {
-                        anv.Entity.PozitieId = (uint?)anvelopa.PozitieId;
-
+                        return BadRequest("Nu s-a putut salva deoarece exista deja o anvelopa In Raft pe pozitia " + anvelopa.PozitiePeMasina + " in acest set");
                     }
                 }
-                var anvDto = _mapper.Map<AnvelopaDto>(anv);
-                var result = await _hotelService.UpdateAnvelopaAsync(anvDto);
+
+                var anvToUpdate = anv.Entity;
+                anvToUpdate.StatusCurent = anvelopa.StatusCurent;
+                anvToUpdate.OldUzura = anvToUpdate.Uzura;
+                anvToUpdate.Uzura = anvelopa.Uzura;
+                anvToUpdate.OldPozitieId = anvToUpdate.PozitieId;
+                if (anvelopa.PozitieId != null)
+                {
+                    anvToUpdate.PozitieId = anvelopa.PozitieId;
+
+                }
+
+                var result = await _hotelService.UpdateAnvelopaAsync(anvToUpdate);
 
                 if (result.Successful)
                 {

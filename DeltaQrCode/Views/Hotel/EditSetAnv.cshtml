@@ -381,7 +381,13 @@
 
         }
 
+        $(document).on("change",
+            ".enableSaveBtn",
+            function () {
 
+                showSaveButton($(this));
+
+            });
 
         $(document).on("change",
             ".statuscurentTable",
@@ -397,7 +403,6 @@
 
                 $(selectedStatusElemTable).trigger("update");
 
-                showSaveButton($(this));
 
             });
         $(document).on("update", ".selectedstatusTable",
@@ -423,9 +428,8 @@
         };
 
          $(document).on("click", ".saveButton", function () {
-            console.log("save click");
                 $(this).attr("disabled", "disabled");
-
+             showLoading();
             var model = {
                 id: $(".saveButton").attr("data-value"),
                 statusCurent: $(this).closest(".parenting").find(".statuscurentTable").val(),
@@ -440,14 +444,14 @@
               url: url,
               data: model,
               dataType:"json",
-               success: function (response) {
-                    CloseModalById('myHotelDeleteModal');
-                    ShowHeaderAlert(response, "success", 5000);
+                success: function (response) {
+                    hideLoading();
+                   swalSuccessTimer(response, "success", 5000, autoRefresh);
                     $('#hotelListState').change();
                 },
                 error: function (error) {
-                    CloseModalById('myHotelDeleteModal');
-                    swalErrorTimer(error.responseText, 7000);
+                    hideLoading();
+                    swalErrorTimer(error.responseText, 7000, autoRefresh);
                 }
 
             });
