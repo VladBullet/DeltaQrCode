@@ -557,10 +557,43 @@ namespace DeltaQrCode.Controllers
             return new JsonResult(result);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> SaveAnvelopaAuto(AnvelopaVM anvelopa)
-        //{
-            
-        //}
+        [HttpPost]
+        public async Task<IActionResult> SaveAnvelopaAuto(AnvelopaVM anvelopa)
+        {
+            try
+            {
+                var anv = await _hotelService.GetAnvelopaByIdAsync(anvelopa.Id);
+                var anvList = await _hotelService.SearchAnvelopeByStatusCurentAsync("InRaft", anv.Entity.SetAnvelopeId, 1, int.MaxValue);
+                var anvListEntity = anvList.Entity;
+                if (anvListEntity.Any(x => x.Id == anvelopa.Id))
+                {
+                    return BadRequest("Nu s-a putut salva deoarece exista deja o anvelopa In Raft pe pozitia + " + anvelopa.PozitiePeMasina + " in acest set");
+                }
+                else {
+                    anv.Entity.StatusCurent = anvelopa.StatusCurent;
+                    anv.Entity.Uzura = anvelopa.Uzura;
+                    if (anvelopa.PozitieId != null)
+                    {
+                        anv.Entity.PozitieId = (uint?)anvelopa.PozitieId;
+
+                    }
+                }
+                var anvDto = _mapper.Map<AnvelopaDto>(anv);
+                var result = await _hotelService.UpdateAnvelopaAsync(anvDto);
+
+                if (result.Successful)
+                {
+                    return Ok(JsonConvert.SerializeObject("Anvelopa salvata cu success!"));
+                }
+                return BadRequest("Ceva nu a mers bine la salvarea anvelopei in controller!");
+            }
+            catch (Exception e)
+            {
+
+                Log.Error(e, "Ceva nu a mers bine la salvarea anvelopei in controller!");
+                return BadRequest("Ceva nu a mers bine la salvarea anvelopei in controller!");
+            }
+
+        }
     }
 }

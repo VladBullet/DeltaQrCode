@@ -8,16 +8,17 @@
         <table class=" editabletable table table-responsive table-sm table-responsive-md table-responsive-sm table-bordered table-hover">
             <thead>
                 <tr class=" text-center">
-                    <th  scope="col">Diametru</th>
-                    <th  scope="col">Latime</th>
-                    <th  scope="col">Inaltime</th>
-                    <th  scope="col">DOT</th>
-                    <th  scope="col">Marca</th>
-                    <th  scope="col">TipSezon</th>
-                    <th  scope="col">PozitiePeMasina</th>
-                    <th  scope="col">Uzura</th>
-                    <th  style="min-width:100px;" scope="col">Status Curent</th>
-                    <th  style="min-width:150px;" scope="col">Pozitie</th>
+                    <th scope="col">Diametru</th>
+                    <th scope="col">Latime</th>
+                    <th scope="col">Inaltime</th>
+                    <th scope="col">DOT</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">TipSezon</th>
+                    <th scope="col">PozitiePeMasina</th>
+                    <th scope="col">Uzura</th>
+                    <th style="min-width:100px;" scope="col">Status Curent</th>
+                    <th style="min-width:150px;" scope="col">Pozitie</th>
+                    @*<th scope="col">Actiune</th>*@
                 </tr>
             </thead>
 
@@ -29,27 +30,53 @@
                 {
                     <tr class="text-center parenting">
                         <th hidden="hidden">@item.Id</th>
-                        <th >@item.Diametru</th>
-                        <th >@item.Latime</th>
-                        <th >@item.Inaltime</th>
-                        <th >@item.Dot</th>
-                        <th >@item.Marca</th>
-                        <th >@item.TipSezon</th>
-                        <th >@item.PozitiePeMasina</th>
-                        <th >@item.Uzura</th>
+                        <th>@item.Diametru</th>
+                        <th>@item.Latime</th>
+                        <th>@item.Inaltime</th>
+                        <th>@item.Dot</th>
+                        <th>@item.Marca</th>
+                        <th>@item.TipSezon</th>
+                        <th class="pozitiePeMasina">@item.PozitiePeMasina</th>
+                        <th contenteditable="true" class="uzuraTable">@item.Uzura</th>
 
                         <th class="group">
                             <input class="default" hidden="hidden" data-value="@item.StatusCurent" data-text="@(item.StatusCurent)" />
                             <input class="selectedstatusTable" hidden="hidden" value="@item.StatusCurent" />
-                            <select style="min-width:100px;" class="select2customTable  statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
+                            @if (item.StatusCurent == "Casate")
+                            {
+                                @item.StatusCurent
+                            }
+                            else
+                            {
+                                <select style="min-width:100px;" class="select2customTable  statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
+
+                            }
 
                         </th>
 
 
-                        <th >
+                        <th>
                             <input class="default" hidden="hidden" data-value="@item.PozitieId" data-text="@(item.PozitieInRaft)" />
-                            <select style="min-width:150px;" class="select2customTable pozitieinraftTable inputOrSelect" asp-for="@item.PozitieId" id="@(item.Id + "_" +"PozitieId")" name="@("anvList[" + i + "].PozitieId")"></select>
+                            @if (item.StatusCurent == "Casate")
+                            {
+                                @("-")
+                            }
+                            else
+                            {
+                                <select style="min-width:150px;" class="select2customTable pozitieinraftTable inputOrSelect" asp-for="@item.PozitieId" id="@(item.Id + "_" + "PozitieId")" name="@("anvList[" + i + "].PozitieId")"></select>
+                            }
                         </th>
+
+                        @if (item.StatusCurent != "Casate")
+                        {
+                            <th class="saveColumn">
+                                <div class="col-md-12">
+                                    <div class="btn btn-outline-success btn-sm saveButton" data-value="@item.Id"><i class="fas fa-check-circle "></i></div>
+                                </div>
+
+                            </th>
+                        }
+
                     </tr>
                     i++;
                 }
@@ -73,6 +100,8 @@
 </div>
 
 @section Scripts{
-    <script type="text/javascript"> 
+    <script type="text/javascript">
+
+       
     </script>
 }

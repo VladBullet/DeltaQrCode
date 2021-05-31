@@ -266,7 +266,8 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-          
+
+
 
             var setId = $(document).find("#SetAnvelope_Id").val();
             var data = { searchString: "Montate", setId, page: 1 };
@@ -294,8 +295,14 @@
             setTimeout(function () {
                 initializeTableBody();
                 initialize();
-            }, 500);
+                hideAllSaveBtn();
 
+            }, 2000);
+
+            var changeStatus = $(document).find(".statuscurentTable");
+            $.each(changeStatus, function (index, item) {
+                $(item).trigger("change");
+            });
 
 
         });
@@ -311,7 +318,6 @@
                 var setId = $("#editform").find("#SetAnvelope_Id").val();
 
                 var data = { searchString: status, setId: setId, pageNumber: page };
-                console.log("data", data);
                 $("#" + status).load("/Hotel/SearchAnvelopeByStatusCurent",
                     data,
                     function () {
@@ -355,30 +361,47 @@
 
         };
 
+        var showSaveButton = function (element) {
+            var parent = $(element).closest(".parenting");
+            var saveBtn = $(parent).find(".saveColumn");
+            $(saveBtn).show();
 
-        var changeStatus = $(document).find(".statuscurentTable");
-        $.each(changeStatus, function (index, item) {
-            $(item).trigger("change");
-        });
+        }
+
+
+        var hideAllSaveBtn = function () {
+            var parent = $(document).find("#select2Tables");
+            console.log(parent);
+
+            var elements = $(parent).find(".saveColumn");
+            console.log(elements);
+            $.each(elements, function (index, item) {
+                $(item).hide();
+            });
+
+        }
+
+
 
         $(document).on("change",
             ".statuscurentTable",
             function () {
+                console.log("salut")
+
 
                 var val = $(this).val();
 
                 var selectedStatusElemTable = $(this).closest(".group").find(".selectedstatusTable");
-                console.log("selectedStatusElemTable", selectedStatusElemTable);
 
                 $(selectedStatusElemTable).val(val);
 
                 $(selectedStatusElemTable).trigger("update");
 
+                showSaveButton($(this));
 
             });
         $(document).on("update", ".selectedstatusTable",
             function () {
-                console.log("updatedStatusTable was hit!");
                 var element = $(this);
 
                 enableOrDisablePositionForStatusTable(element);
@@ -386,11 +409,9 @@
 
         var enableOrDisablePositionForStatusTable = function (statusElem) {
             var currentStatusElemTable = $(statusElem).closest(".group").find(".statuscurentTable");
-            console.log("statusElem", statusElem);
             var selectedStatusElemTable = $(currentStatusElemTable).closest(".group").find(".selectedstatusTable");
             var positionElemTable = $(currentStatusElemTable).closest(".parenting").find(".pozitieinraftTable");
 
-            console.log("positionElemTable", positionElemTable);
             positionElemTable.removeAttr("disabled");
             positionElemTable.removeClass("disabled");
 
@@ -401,6 +422,36 @@
             }
         };
 
+         $(document).on("click", ".saveButton", function () {
+            console.log("save click");
+                $(this).attr("disabled", "disabled");
+
+            var model = {
+                id: $(".saveButton").attr("data-value"),
+                statusCurent: $(this).closest(".parenting").find(".statuscurentTable").val(),
+                pozitieId: $(this).closest(".parenting").find(".pozitieinraftTable").val(),
+                pozitiePeMasina: $(this).closest(".parenting").find(".pozitiePeMasina").text(),
+                uzura: $(this).closest(".parenting").find(".uzuraTable").val()
+            };
+            console.log("model",model);
+        var url = "@Url.Action("SaveAnvelopaAuto", "Hotel")";
+            $.ajax({
+              type: "POST",
+              url: url,
+              data: model,
+              dataType:"json",
+               success: function (response) {
+                    CloseModalById('myHotelDeleteModal');
+                    ShowHeaderAlert(response, "success", 5000);
+                    $('#hotelListState').change();
+                },
+                error: function (error) {
+                    CloseModalById('myHotelDeleteModal');
+                    swalErrorTimer(error.responseText, 7000);
+                }
+
+            });
+         });
     </script>
 
 
