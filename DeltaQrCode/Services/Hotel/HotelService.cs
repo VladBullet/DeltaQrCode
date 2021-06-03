@@ -133,35 +133,7 @@ namespace DeltaQrCode.Services.Hotel
                 }
                 else
                 {
-                    //// case: Create new set => Working!
-
-                    //if (addSetAnv.PozitieId != addSetAnv.OldPozitieId && addSetAnv.PozitieId != null && addSetAnv.OldPozitieId != null)
-                    //{
-                    //    editSetAnv.PozitieId = editSetAnv.OldPozitieId;
-                    //    editSetAnv.Marca = editSetAnv.OldMarca;
-                    //    editSetAnv.TipSezon = editSetAnv.OldTipSezon;
-                    //    editSetAnv.Observatii = editSetAnv.OldObservatii;
-                    //    editSetAnv.Dimensiuni.Diam = editSetAnv.OldDimensiuni.Diam;
-                    //    editSetAnv.Dimensiuni.H = editSetAnv.OldDimensiuni.H;
-                    //    editSetAnv.Dimensiuni.Lat = editSetAnv.OldDimensiuni.Lat;
-                    //    editSetAnv.Dimensiuni.Dot = editSetAnv.OldDimensiuni.Dot;
-
-                    //    addSetAnv.Id = 0;
-
-                    //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, 1, OperatiunePozitie.Scoatere);
-
-                    //    var addedOldSet = await AddAnvelopaAsync(addSetAnv, OperatiunePozitie.Setare);
-
-                    //    if (!addedOldSet.Successful)
-                    //    {
-                    //        Log.Error("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
-                    //        throw new Exception("Nu am putut muta setul pe noua pozitie pentru ca nu a fost salvat vechiul set.");
-                    //    }
-                    //}
-
-
-
-
+                   
                     //case: was InRaft, will be different =>  Working!
                     if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent != "InRaft" && editSetAnv.OldUzura != 0)
                     {
@@ -178,20 +150,6 @@ namespace DeltaQrCode.Services.Hotel
                     }
 
 
-
-
-
-                    //// case: was InRaft, will be InRaft, Position changed, NrBuc > OldNrBuc => Working!
-                    //if (editSetAnv.OldPozitieId != null && editSetAnv.StatusCurent == "InRaft" && editSetAnv.PozitieId != editSetAnv.OldPozitieId && editSetAnv.NrBucati != editSetAnv.OldNumarBucati && editSetAnv.PozitieId != null)
-                    //{
-                    //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.OldPozitieId.Value, editSetAnv.OldNumarBucati, OperatiunePozitie.Scoatere);
-                    //    await _hotelPositionsService.UpdatePositionAsync(editSetAnv.PozitieId.Value, editSetAnv.NrBucati, OperatiunePozitie.Adaugare);
-
-
-
-                    //}
-
-
                     // case: was NOT InRaft, will be InRaft => Working!
                     if (editSetAnv.PozitieId != null && editSetAnv.OldPozitieId == null && editSetAnv.OldUzura != 0)
                     {
@@ -204,6 +162,12 @@ namespace DeltaQrCode.Services.Hotel
                     {
                         editSetAnv.PozitieId = editSetAnv.OldPozitieId;
                     }
+
+                    // case: was not InRaft, will not be InRaft
+                    //if (editSetAnv.PozitieId == null && editSetAnv.StatusCurent != "InRaft" && editSetAnv.OldPozitieId == null)
+                    //{
+                    //    editSetAnv.PozitieId = editSetAnv.OldPozitieId;
+                    //}
 
 
                     if (editSetAnv.PozitieId != null)

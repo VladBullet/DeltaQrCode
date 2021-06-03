@@ -74,6 +74,12 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
+                var x = _db.Find<CaAnvelopa>(setAnv.Id);
+                var changedEntries = _db.ChangeTracker.Entries().ToList();
+                foreach (var item in changedEntries)
+                {
+                    item.State = EntityState.Detached;
+                }
                 _db.CaAnvelopa.Update(setAnv);
                 await _db.SaveChangesAsync();
 
