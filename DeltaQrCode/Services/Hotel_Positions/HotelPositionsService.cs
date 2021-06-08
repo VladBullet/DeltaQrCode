@@ -44,7 +44,7 @@ namespace DeltaQrCode.Services.Hotel_Positions
         {
             try
             {
-                var value = await _hotelPositionsRepository.GetAvailablePositionsAsync(id);
+                var value = await _hotelPositionsRepository.GetPositionByIdAsync(id);
                 var model = _mapper.Map<HotelPositionsDto>(value.Entity);
                 return Result<HotelPositionsDto>.ResultOk(model);
             }
