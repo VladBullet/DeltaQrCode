@@ -31,6 +31,62 @@
         }
     });
 
+
+    $(".tipvehicul").select2({
+        tags: true,
+        dropdownParent: $("#editSetBody"),
+        theme: "bootstrap4",
+        allowClear: true,
+        ajax: {
+            url: '/Hotel/GetTipVehicul',
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term
+                }
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result,
+                        function (item) {
+                            return {
+                                id: item,
+                                text: item
+                            };
+                        }),
+                };
+            }
+        }
+    });
+
+    $(".numeSet").select2({
+        tags: true,
+        dropdownParent: $("#editSetBody"),
+        theme: "bootstrap4",
+        allowClear: true,
+        ajax: {
+            url: '/Hotel/GetNumeSet',
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term
+                }
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result,
+                        function (item) {
+                            return {
+                                id: item,
+                                text: item
+                            };
+                        }),
+                };
+            }
+        }
+    });
     // Select2 for Marca
     $(".marca").select2({
         tags: true,

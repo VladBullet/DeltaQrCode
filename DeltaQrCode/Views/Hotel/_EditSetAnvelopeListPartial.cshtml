@@ -18,6 +18,7 @@
                     <th style="max-width:60px;" scope="col">Uzura</th>
                     <th style="min-width:100px;" scope="col">Status Curent</th>
                     <th style="min-width:150px;" scope="col">Pozitie</th>
+                    <th scope="col">Data Introducere</th>
                     @*<th scope="col">Actiune</th>*@
                 </tr>
             </thead>
@@ -28,58 +29,61 @@
                 }
                 @foreach (var item in Model.anvList)
                 {
-                    <tr class="text-center parenting">
-                        <th hidden="hidden">@item.Id</th>
-                        <th>@item.Diametru</th>
-                        <th>@item.Latime</th>
-                        <th>@item.Inaltime</th>
-                        <th>@item.Dot</th>
-                        <th>@item.Marca</th>
-                        <th>@item.TipSezon</th>
-                        <th class="pozitiePeMasina">@item.PozitiePeMasina</th>
-                        <th style="max-width:60px;">
-                            <input class="col form-control uzuraTable enableSaveBtn" value="@item.Uzura" />
-                        </th>
+                <tr class="text-center parenting">
+                    <th hidden="hidden">@item.Id</th>
+                    <th>@item.Diametru</th>
+                    <th>@item.Latime</th>
+                    <th>@item.Inaltime</th>
+                    <th>@item.Dot</th>
+                    <th>@item.Marca</th>
+                    <th>@item.TipSezon</th>
+                    <th class="pozitiePeMasina">@item.PozitiePeMasina</th>
+                    <th style="max-width:60px;">
+                        <input class="col form-control uzuraTable enableSaveBtn" value="@item.Uzura" />
+                    </th>
 
-                        <th class="group">
-                            <input class="default" hidden="hidden" data-value="@item.StatusCurent" data-text="@(item.StatusCurent)" />
-                            <input class="selectedstatusTable " hidden="hidden" value="@item.StatusCurent" />
-                            @if (item.StatusCurent == "Casate")
-                            {
-                                @item.StatusCurent
-                            }
-                            else
-                            {
-                                <select style="min-width:100px;" class="select2customTable enableSaveBtn statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
-
-                            }
-
-                        </th>
-
-
-                        <th>
-                            <input class="default" hidden="hidden" data-value="@item.PozitieId" data-text="@(item.PozitieInRaft)" />
-                            @if (item.StatusCurent == "Casate")
-                            {
-                                @("-")
-                            }
-                            else
-                            {
-                                <select style="min-width:150px;" class="select2customTable pozitieinraftTable inputOrSelect" asp-for="@item.PozitieId" id="@(item.Id + "_" + "PozitieId")" name="@("anvList[" + i + "].PozitieId")"></select>
-                            }
-                        </th>
-
-                        @if (item.StatusCurent != "Casate")
+                    <th class="group">
+                        <input class="default" hidden="hidden" data-value="@item.StatusCurent" data-text="@(item.StatusCurent)" />
+                        <input class="selectedstatusTable " hidden="hidden" value="@item.StatusCurent" />
+                        @if (item.StatusCurent == "Casate")
                         {
-                            <th class="saveColumn">
-                                <div class="col-md-12">
-                                    <div class="btn btn-outline-success btn-sm saveButton" data-value="@item.Id"><i class="fas fa-check-circle "></i></div>
-                                </div>
+                            @item.StatusCurent
+                        }
+                        else
+                        {
+                            <select style="min-width:100px;" class="select2customTable enableSaveBtn statuscurentTable inputOrSelect" asp-for="@item.StatusCurent" id="@(item.Id + "_" +"StatusCurent")" name="@("anvList[" + i + "].StatusCurent")"></select>
 
-                            </th>
                         }
 
-                    </tr>
+                    </th>
+
+
+                    <th>
+                        <input class="default" hidden="hidden" data-value="@item.PozitieId" data-text="@(item.PozitieInRaft)" />
+                        @if (item.StatusCurent == "Casate")
+                        {
+                            @("-")
+                        }
+                        else
+                        {
+                            <select style="min-width:150px;" class="select2customTable pozitieinraftTable inputOrSelect" asp-for="@item.PozitieId" id="@(item.Id + "_" + "PozitieId")" name="@("anvList[" + i + "].PozitieId")"></select>
+                        }
+                    </th>
+
+                    <th>@item.DataAdaugare</th>
+
+                    @if (item.StatusCurent != "Casate")
+                    {
+                        <th class="saveColumn">
+                            <div class="col-md-12">
+                                <div class="btn btn-outline-success btn-sm saveButton" data-value="@item.Id"><i class="fas fa-check-circle "></i></div>
+                            </div>
+
+                        </th>
+                    }
+
+
+                </tr>
                     i++;
                 }
             </tbody>
@@ -104,6 +108,6 @@
 @section Scripts{
     <script type="text/javascript">
 
-       
+
     </script>
 }

@@ -87,7 +87,7 @@
                 <div class="form-group col-md-12">
                     @Html.LabelFor(model => model.Masina.TipVehicul, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.Masina.TipVehicul, new { htmlAttributes = new { @class = "form-control half-margin-bottom validate inputOrSelect" } })
+                        <select class="form-control tipvehicul select2custom inputOrSelect" asp-for="@Model.Masina.TipVehicul" data-placeholder="@Model.Masina.TipVehicul"></select>
                         @Html.ValidationMessageFor(model => model.Masina.TipVehicul, "", new { @class = "text-danger error_span" })
                     </div>
                 </div>
@@ -101,10 +101,10 @@
 
         <div class="text-center form-group">
             @Html.LabelFor(model => model.SetAnvelope.NumeSet, htmlAttributes: new { @class = "control-label col-md-3" })
-
-            @Html.EditorFor(model => model.SetAnvelope.NumeSet, new { htmlAttributes = new { @class = "form-control col-md-3 validate inputOrSelect", @style = "margin:auto;" } })
-            @Html.ValidationMessageFor(model => model.SetAnvelope.NumeSet, "", new { @class = "text-danger error_span" })
-
+            <div class="col-md-3" style="margin:auto;">
+                <select class="form-control numeSet select2custom inputOrSelect" asp-for="@Model.SetAnvelope.NumeSet" data-placeholder="@Model.SetAnvelope.NumeSet"></select>
+                @Html.ValidationMessageFor(model => model.SetAnvelope.NumeSet, "", new { @class = "text-danger error_span" })
+            </div>
             @Html.LabelFor(model => model.SetAnvelope.NrBucati, htmlAttributes: new { @class = "control-label col-md-3" })
 
             @Html.EditorFor(model => model.SetAnvelope.NrBucati, new { htmlAttributes = new { @class = "form-control col-md-3 validate nrbuc", @style = "margin:auto;", @readonly = "readonly" } })
