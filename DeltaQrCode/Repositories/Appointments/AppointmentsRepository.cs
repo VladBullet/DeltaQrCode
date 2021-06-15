@@ -199,7 +199,7 @@ namespace DeltaQrCode.Repositories
         {
             try
             {
-                var result = await _db.CaAppointments.Where(x => x.DataAppointment.ToShortDateString() == data.ToShortDateString() && !x.Deleted).ToListAsync();
+                var result = await _db.CaAppointments.Where(x => x.DataAppointment >= data.AddMonths(-1) && !x.Deleted).ToListAsync();
                 return Result<List<CaAppointments>>.ResultOk(result);
             }
             catch (Exception er)
