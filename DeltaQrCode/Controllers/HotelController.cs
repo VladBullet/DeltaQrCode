@@ -522,6 +522,27 @@ namespace DeltaQrCode.Controllers
             return new JsonResult(list);
         }
 
+        public IActionResult GetTipVehicul(string term)
+        {
+            var list = ConstantsAndEnums.TipVehicul;
+            List<string> result = list.ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                result = result.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
+            }
+            return new JsonResult(result);
+        }
+
+        public IActionResult GetNumeSet(string term)
+        {
+            var list = ConstantsAndEnums.NumeSet;
+            List<string> result = list.ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                result = result.Where(x => (x).ToLower().Contains(term.ToLower())).ToList();
+            }
+            return new JsonResult(result);
+        }
 
         public IActionResult GetDiametru(string term)
         {

@@ -58,34 +58,6 @@ $(".marca").select2({
     }
 });
 
-// Select2 for Flota
-$("#Flota").select2({
-    tags: true,
-    dropdownParent: "#hotelModalBody",
-    theme: "bootstrap4",
-    allowClear: true,
-    ajax: {
-        url: '/Hotel/GetFlote',
-        contentType: "application/json; charset=utf-8",
-        data: function (params) {
-            var query = {
-                term: params.term
-            }
-            return query;
-        },
-        processResults: function (result) {
-            return {
-                results: $.map(result,
-                    function (item) {
-                        return {
-                            id: item,
-                            text: item
-                        };
-                    }),
-            };
-        }
-    }
-});
 
 // Select2 for TipSezon
 $(".tipsezon").select2({
@@ -170,6 +142,62 @@ $(".latime").select2({
     allowClear: true,
     ajax: {
         url: '/Hotel/GetLatime',
+        contentType: "application/json; charset=utf-8",
+        data: function (params) {
+            var query = {
+                term: params.term
+            }
+            return query;
+        },
+        processResults: function (result) {
+            return {
+                results: $.map(result,
+                    function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
+            };
+        }
+    }
+});
+
+$(".tipvehicul").select2({
+    tags: true,
+    dropdownParent: "#hotelModalBody",
+    theme: "bootstrap4",
+    allowClear: true,
+    ajax: {
+        url: '/Hotel/GetTipVehicul',
+        contentType: "application/json; charset=utf-8",
+        data: function (params) {
+            var query = {
+                term: params.term
+            }
+            return query;
+        },
+        processResults: function (result) {
+            return {
+                results: $.map(result,
+                    function (item) {
+                        return {
+                            id: item,
+                            text: item
+                        };
+                    }),
+            };
+        }
+    }
+});
+
+$(".numeSet").select2({
+    tags: true,
+    dropdownParent: "#hotelModalBody",
+    theme: "bootstrap4",
+    allowClear: true,
+    ajax: {
+        url: '/Hotel/GetNumeSet',
         contentType: "application/json; charset=utf-8",
         data: function (params) {
             var query = {

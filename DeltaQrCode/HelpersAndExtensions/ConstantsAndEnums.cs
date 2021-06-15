@@ -20,6 +20,10 @@ namespace DeltaQrCode
 
         public static readonly string[] PozitiiPeMasina = { "StangaFata", "DreaptaFata", "StangaSpate", "DreaptaSpate", "Optional1", "Optional2" };
 
+        public static readonly string[] TipVehicul = { "Turism", "SUV", "Autoutilitara", "Run flat"};
+
+        public static readonly string[] NumeSet = { "Vara", "Iarna"};
+
 
 
         public static readonly int MaxLocuriPoz = 4;
