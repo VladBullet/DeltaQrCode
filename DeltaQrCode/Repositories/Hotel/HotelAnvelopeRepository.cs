@@ -120,8 +120,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
-                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in functie de status in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei  in functie de status in repository!", er);
             }
         }
 
@@ -135,8 +135,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
-                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea setului de anvelope in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea setului de anvelope in repository!", er);
             }
         }
 
@@ -158,8 +158,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
-                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea clientului in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea clientului in repository!", er);
             }
         }
 
@@ -179,8 +179,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in repository!");
-                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea masinii in repository!");
+                throw new Exception("Ceva nu a mers bine la cautarea masinii in repository!", er);
             }
         }
 
@@ -237,8 +237,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la stergerea anvelopei in repository!");
-                throw new Exception("Ceva nu a mers bine la stergerea anvelopei in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la stergerea setului de anvelope in repository!");
+                throw new Exception("Ceva nu a mers bine la stergerea setului de anvelope in repository!", er);
             }
         }
 
@@ -441,8 +441,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de setId in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de setId in repository!", er);
             }
         }
 
@@ -519,8 +519,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de setId in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de setId in repository!", er);
             }
         }
 
@@ -567,8 +567,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la gasirea anvelopei in functie de setId in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea anvelopei in functie de setId in repository!", er);
             }
         }
 
