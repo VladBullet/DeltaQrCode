@@ -280,7 +280,6 @@ namespace DeltaQrCode.Services.Hotel
                 var result = resultClient.Entity;
                 result.AddRange(resultMasina.Entity);
                 result = result.Distinct().ToList();
-                result = result.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
 
                 var model = new List<SetAnvelopeDto>();
 

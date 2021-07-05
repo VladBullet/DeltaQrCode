@@ -110,13 +110,42 @@ namespace DeltaQrCode.Controllers
             //var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
             //var anvelope = anvelopeResult.Entity;
 
-            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString, pageNumber, PageSize);
+            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString, pageNumber, 1);
             var setsAnv = sets.Entity;
 
             //var mapper = _mapper.Map<List<HotelAnvelopaVm>>(anvelope);
 
             var mapper = new List<HotelAnvelopaVm>();
             //var listanvVm = _mapper.Map<List<SetAnvelopeVM>>(setsAnv);
+            foreach (var item in setsAnv)
+            {
+
+                var client = await _hotelService.GetClientByIdAsync(item.ClientId);
+                var masina = await _hotelService.GetMasinaByIdAsync(item.MasinaId);
+
+
+                var anv = _mapper.Map<HotelAnvelopaVm>(item);
+                anv.Client = _mapper.Map<ClientHotelVM>(client.Entity);
+                anv.Masina = _mapper.Map<MasinaVM>(masina.Entity);
+
+                mapper.Add(anv);
+            }
+
+            var paginatedModel = PaginatedList<HotelAnvelopaVm>.Create(mapper, pageNumber, 1);
+            var model = new HotelListViewModel(paginatedModel);
+            return PartialView("_HotelList", model);
+        }
+
+
+
+        public async Task<IActionResult> SearchAnvSetByAnvStatus(string searchString, int pageNumber = 1)
+        {
+
+            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString, pageNumber, PageSize);
+            var setsAnv = sets.Entity;
+
+
+            var mapper = new List<HotelAnvelopaVm>();
             foreach (var item in setsAnv)
             {
 
@@ -504,6 +533,19 @@ namespace DeltaQrCode.Controllers
         public IActionResult GetStatusAnvelope()
         {
             var list = new List<string>();
+            list.Add(StatusAnvelope.Casate.ToDisplayString());
+            list.Add(StatusAnvelope.InRaft.ToDisplayString());
+            list.Add(StatusAnvelope.Montate.ToDisplayString());
+            list.Add(StatusAnvelope.Predate.ToDisplayString());
+            return new JsonResult(list);
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetStatusAnvelopeForIndex()
+        {
+            var list = new List<string>();
+            list.Add("Toate");
             list.Add(StatusAnvelope.Casate.ToDisplayString());
             list.Add(StatusAnvelope.InRaft.ToDisplayString());
             list.Add(StatusAnvelope.Montate.ToDisplayString());
