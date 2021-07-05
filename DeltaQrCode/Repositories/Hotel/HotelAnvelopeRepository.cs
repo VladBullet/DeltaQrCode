@@ -590,8 +590,8 @@ namespace DeltaQrCode.Repositories
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers binesitory!");
-                throw new Exception("Ceva nu a mers bine tId in repository!", er);
+                Log.Error(er, "Ceva nu a mers bile la gasirea anvelopei in functie de set si status!");
+                throw new Exception("Ceva nu a mers bile la gasirea anvelopei in functie de set si status!", er);
             }
         }
 

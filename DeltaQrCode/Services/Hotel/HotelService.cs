@@ -311,8 +311,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in servicii!");
-                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea setului in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea setului in servicii!", er);
             }
         }
 
@@ -373,8 +373,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in servicii!");
-                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea setului in functie de status in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea setului in functie de status in servicii!", er);
             }
         }
 
@@ -411,8 +411,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in servicii!");
-                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei dupa status  in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei dupa status in servicii!", er);
             }
         }
 
@@ -481,8 +481,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la stergerea anvelopei in servicii!");
-                throw new Exception("Ceva nu a mers bine la stergerea anvelopei in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la stergerea setului in servicii!");
+                throw new Exception("Ceva nu a mers bine la stergerea setului in servicii!", er);
             }
         }
 
@@ -827,8 +827,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de setId in servicii!");
-                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de setId in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la gasirea clientului in functie de setId in servicii!");
+                throw new Exception("Ceva nu a mers bine la gasirea clientului in functie de setId in servicii!", er);
             }
         }
 
@@ -911,8 +911,8 @@ namespace DeltaQrCode.Services.Hotel
 
                         if (!position.Successful)
                         {
-                            Log.Error("Ceva nu a mers bine la gasirea pozitiei in metoda de editare anvelope in servicii!");
-                            throw new Exception("Ceva nu a mers bine la gasirea pozitiei in metoda de editare anvelope in servicii!");
+                            Log.Error("Ceva nu a mers bine la gasirea pozitiei in metoda de gasire anvelope dupa setId in servicii!");
+                            throw new Exception("Ceva nu a mers bine la gasirea pozitiei in metoda de gasire anvelope dupa setId in servicii!");
                         }
 
                         item.Pozitie = _mapper.Map<HotelPositionsDto>(position.Entity);
@@ -923,8 +923,8 @@ namespace DeltaQrCode.Services.Hotel
                     var marca = await _hotelRepository.GetMarcaByIdAsync(item.MarcaId.Value);
                     if (!marca.Successful)
                     {
-                        Log.Error("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
-                        throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de editare anvelope in servicii!");
+                        Log.Error("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de gasire anvelope dupa setId in servicii!");
+                        throw new Exception("Ceva nu a mers bine la gasirea marcii in functie de label in metoda de gasire anvelope dupa setId in servicii!");
                     }
                     item.Marca = marca.Entity.Label;
                 }
@@ -934,8 +934,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!");
-                throw new Exception("Ceva nu a mers bine la gasirea masinii in functie de serieSasiu in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la gasirea anvelopei in functie de setId in repository!");
+                throw new Exception("Ceva nu a mers bine la gasirea anvelopei in functie de setId in repository!", er);
             }
         }
 
@@ -951,8 +951,8 @@ namespace DeltaQrCode.Services.Hotel
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in servicii!");
-                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in servicii!", er);
+                Log.Error(er, "Ceva nu a mers bine la cautarea setului in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea setului in servicii!", er);
             }
         }
     }

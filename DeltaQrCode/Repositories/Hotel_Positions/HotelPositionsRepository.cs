@@ -105,8 +105,8 @@ namespace DeltaQrCode.Repositories.Hotel_Positions
             }
             catch (Exception er)
             {
-                Log.Error(er, "Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!");
-                throw new Exception("Ceva nu a mers bine la adaugarea nr bucati pe pozitie in repository!", er);
+                Log.Error(er, "Ceva nu a mers bine la setarea nr bucati pe pozitie in repository!");
+                throw new Exception("Ceva nu a mers bine la setarea nr bucati pe pozitie in repository!", er);
             }
         }
 
