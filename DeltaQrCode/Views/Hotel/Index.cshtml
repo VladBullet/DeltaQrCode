@@ -78,13 +78,23 @@
         $("#selectStatus").on("change",
             function (event) {
                 event.preventDefault();
-                var data = { searchString: $("#selectStatus").val(), page: 1 };
-                console.log($("#selectStatus").val());
-                $("#tableResult").load("/Hotel/Search",
-                    data,
-                    function () {
-                        setPagination();
-                    });
+                var statusValue = $("#selectStatus").val();
+                if (statusValue != "Toate") {
+                    var data = { searchString: $("#search").val(), status: statusValue, page: 1 };
+                    $("#tableResult").load("/Hotel/SearchAnvSetByAnvStatus",
+                        data,
+                        function () {
+                            setPagination();
+                        });
+                } else {
+                    var data = { searchString: $("#search").val(), page: 1 };
+                    $("#tableResult").load("/Hotel/Search",
+                        data,
+                        function () {
+                            setPagination();
+                        });
+                }
+
             });
 
         $(document).on("click",
@@ -145,7 +155,7 @@
         });
 
 
-        
+
         var deleteSetAnvModalDialog = function (id) {
 
             var url = "/Hotel/DeleteModal"; // the url to the controller
@@ -242,7 +252,7 @@
         var enableNext = function () {
             $(document).find("#buttonNext").removeAttr("disabled");
             //$(document).find("#buttonNext").removeClass("disabled");
-          /*  //*///console.log("Enable Next");
+            /*  //*///console.log("Enable Next");
 
         };
         var disableNext = function () {

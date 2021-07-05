@@ -20,6 +20,7 @@ namespace DeltaQrCode.Services.Hotel
         Task<Result<List<AnvelopaDto>>> SearchAnvelopeByStatusCurentAsync(string searchString, uint setId, int page, int itemsPerPage );
         Task<Result<List<SetAnvelopeDto>>> SearchAnvelopeSetAsync();
         Task<Result<List<AnvelopaDto>>> GetAnvelopeBySetIdAsync(uint setId);
+        Task<Result<List<SetAnvelopeDto>>> SearchSetAnvelopeByStatusAsync(string searchString, string status, int page, int itemsPerPage);
 
         Task<Result<List<CaMarca>>> GetMarci();
         //Task<Result<List<CaFlota>>> GetFlote();

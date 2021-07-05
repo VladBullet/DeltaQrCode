@@ -572,6 +572,29 @@ namespace DeltaQrCode.Repositories
             }
         }
 
+        public async Task<Result<List<CaAnvelopa>>> GetAnvelopeBySetIdAndStatusAsync(uint setId,string status)
+        {
+            try
+            {
+                var list = new List<CaAnvelopa>();
+                list = await _db.CaAnvelopa.Where(x => x.SetAnvelopeId == setId && !x.Deleted).ToListAsync();
+                var verify = list.Where(x => x.StatusCurent == status).ToList();
+                if (verify.Count != 0)
+                {
+                    return Result<List<CaAnvelopa>>.ResultOk(list);
+
+                }
+                else {
+                    return Result<List<CaAnvelopa>>.ResultOk(new List<CaAnvelopa>());
+                }
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers binesitory!");
+                throw new Exception("Ceva nu a mers bine tId in repository!", er);
+            }
+        }
+
 
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//

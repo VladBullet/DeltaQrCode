@@ -110,7 +110,7 @@ namespace DeltaQrCode.Controllers
             //var anvelopeResult = await _hotelService.SearchAnvelopeAsync(searchString, pageNumber, PageSize);
             //var anvelope = anvelopeResult.Entity;
 
-            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString, pageNumber, 1);
+            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString, pageNumber, PageSize);
             var setsAnv = sets.Entity;
 
             //var mapper = _mapper.Map<List<HotelAnvelopaVm>>(anvelope);
@@ -131,17 +131,17 @@ namespace DeltaQrCode.Controllers
                 mapper.Add(anv);
             }
 
-            var paginatedModel = PaginatedList<HotelAnvelopaVm>.Create(mapper, pageNumber, 1);
+            var paginatedModel = PaginatedList<HotelAnvelopaVm>.Create(mapper, pageNumber, PageSize);
             var model = new HotelListViewModel(paginatedModel);
             return PartialView("_HotelList", model);
         }
 
 
 
-        public async Task<IActionResult> SearchAnvSetByAnvStatus(string searchString, int pageNumber = 1)
+        public async Task<IActionResult> SearchAnvSetByAnvStatus(string searchString,string status, int pageNumber = 1)
         {
 
-            var sets = await _hotelService.SearchSetAnvelopeAsync(searchString, pageNumber, PageSize);
+            var sets = await _hotelService.SearchSetAnvelopeByStatusAsync(searchString,status, pageNumber, PageSize);
             var setsAnv = sets.Entity;
 
 

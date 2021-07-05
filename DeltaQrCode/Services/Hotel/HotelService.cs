@@ -316,6 +316,68 @@ namespace DeltaQrCode.Services.Hotel
             }
         }
 
+        public async Task<Result<List<SetAnvelopeDto>>> SearchSetAnvelopeByStatusAsync(string searchString,string status, int page, int itemsPerPage)
+        {
+            try
+            {
+                var resultClient = await _hotelRepository.SearchClientAsync(searchString);
+                var resultMasina = await _hotelRepository.SearchMasinaAsync(searchString);
+
+                var result = resultClient.Entity;
+                result.AddRange(resultMasina.Entity);
+                result = result.Distinct().ToList();
+
+                var deleted = new List<CaSetAnvelope>();
+
+
+                foreach (var item in result)
+                {
+                    var anv = await _hotelRepository.GetAnvelopeBySetIdAndStatusAsync(item.Id, status);
+                    if (anv.Entity.Count == 0) {
+                        deleted.Add(item);
+                    }
+                }
+
+                foreach (var item in deleted) {
+
+                    result.Remove(item);
+                }
+
+                var model = new List<SetAnvelopeDto>();
+
+
+                if (resultClient.Successful && resultMasina.Successful)
+                {
+
+                    model = _mapper.Map<List<SetAnvelopeDto>>(result);
+
+                    foreach (var item in model)
+                    {
+                        var anvelope = await _hotelRepository.GetAnvelopeBySetIdAndStatusAsync(item.Id,status);
+                        var anvelopeInRaft = anvelope.Entity.Where(x => x.PozitieId != null && !x.Deleted);
+                        item.PozitieSet = string.Empty;
+                        var stringPozList = new List<string>();
+                        foreach (var anvelopa in anvelopeInRaft)
+                        {
+                            var pozitie = await _hotelPositionsRepository.GetPositionByIdAsync(anvelopa.PozitieId.Value);
+                            var pozitiedto = _mapper.Map<HotelPositionsDto>(pozitie.Entity);
+                            //item.PozitieSet = item.PozitieSet +  Environment.NewLine + pozitiedto.ToDisplayString() + ";";
+                            stringPozList.Add(pozitiedto.ToDisplayString());
+                        }
+
+                        item.PozitieSet = string.Join("\n", stringPozList);
+                    }
+                    return Result<List<SetAnvelopeDto>>.ResultOk(model);
+                }
+                return Result<List<SetAnvelopeDto>>.ResultError(model, null, "Eroare la citirea din serviciu!");
+            }
+            catch (Exception er)
+            {
+                Log.Error(er, "Ceva nu a mers bine la cautarea anvelopei in servicii!");
+                throw new Exception("Ceva nu a mers bine la cautarea anvelopei in servicii!", er);
+            }
+        }
+
         public async Task<Result<List<AnvelopaDto>>> SearchAnvelopeByStatusCurentAsync(string searchString, uint setId, int page, int itemsPerPage)
         {
             try
